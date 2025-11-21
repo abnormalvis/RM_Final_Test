@@ -1,0 +1,7 @@
+/usr/bin/cmake -S/home/idris/final_ws/src/rm_description_for_task -B/home/idris/final_ws/build/rm_description --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /home/idris/final_ws/build/rm_description/CMakeFiles /home/idris/final_ws/build/rm_description/CMakeFiles/progress.marks
+/usr/bin/make -f CMakeFiles/Makefile2 all
+make[1]: 进入目录“/home/idris/final_ws/build/rm_description”
+make[1]: 对“all”无需做任何事。
+make[1]: 离开目录“/home/idris/final_ws/build/rm_description”
+/usr/bin/cmake -E cmake_progress_start /home/idris/final_ws/build/rm_description/CMakeFiles 0

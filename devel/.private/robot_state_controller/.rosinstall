@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/idris/final_ws/devel/.private/robot_state_controller/setup.sh

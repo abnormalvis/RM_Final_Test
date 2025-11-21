@@ -1,0 +1,1 @@
+/home/idris/final_ws/devel/.private/mimic_joint_controller/lib/pkgconfig/mimic_joint_controller.pc
