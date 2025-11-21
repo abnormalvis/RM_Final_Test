@@ -1,0 +1,7 @@
+# Ignore cloned vendor/task description/controller directories
+/src/simple_chassis_controller/
+/src/rm_description_for_task/
+/src/rm_controllers/
+
+# Local IDE files
+.idea/
