@@ -1,0 +1,1 @@
+/home/idris/final_ws/devel/.private/mimic_joint_controller/share/mimic_joint_controller/cmake/mimic_joint_controllerConfig-version.cmake

@@ -1,0 +1,8 @@
+prefix=/home/idris/final_ws/install
+
+Name: mimic_joint_controller
+Description: Description of mimic_joint_controller
+Version: 0.1.11
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lmimic_joint_controller
+Requires: roscpp pluginlib controller_interface

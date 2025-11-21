@@ -1,0 +1,8 @@
+prefix=/home/idris/final_ws/devel/.private/rm_description
+
+Name: rm_description
+Description: Description of rm_description
+Version: 0.1.9
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
