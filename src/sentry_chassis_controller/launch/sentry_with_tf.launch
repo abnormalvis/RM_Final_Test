@@ -14,6 +14,8 @@
     <arg name="is_open_rviz" default="true"/>
     <arg name="load_chassis" default="true"/>
     <arg name="roller_type" default="realistic" doc="simple or realistic"/>
+  <!-- 若系统中没有其它 joint_states 发布者，可启用以下节点发布默认 joint_states -->
+  <arg name="use_joint_state_publisher" default="true"/>
 
     <!-- robot_description 使用 package 中的 xacro，传递必要参数 -->
   <param name="robot_description" command="$(find xacro)/xacro $(find rm_description)/urdf/sentry/sentry.urdf.xacro
@@ -39,6 +41,9 @@
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
       <param name="publish_frequency" type="double" value="30.0" />
     </node>
+
+    <!-- 当没有其它 /joint_states 发布者时，启动 joint_state_publisher 发布默认 joint_states -->
+    <node if="$(arg use_joint_state_publisher)" pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen"/>
 
     <!-- 静态 TF：发布 /map -> /base_link（默认零偏移），周期 1000 ms -->
     <node pkg="tf" type="static_transform_publisher" name="map2base" args="0 0 0 0 0 0 /map /base_link 1000"/>

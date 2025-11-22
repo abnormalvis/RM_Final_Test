@@ -230,5 +230,3 @@
   publish pivot targets (theta_i) and wheel velocity targets (omega_wheel_i) to PID control
 
 ---
-
-如果你愿意，我可以把上述公式以 C++ 代码片段的形式加入 `SimpleChassisController::update`（或作为 `cmd_vel` 回调的函数），并把 `wheel_radius`、`Vmax`、以及舵角连续性处理的逻辑一并实现为可配置参数。要我现在实现这个代码片段并在仓库中提交一个可运行的 demo 吗？
