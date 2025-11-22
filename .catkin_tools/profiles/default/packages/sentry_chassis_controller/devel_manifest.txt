@@ -1,0 +1,4 @@
+sentry_chassis_controller
+/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/pkgconfig/sentry_chassis_controller.pc /home/idris/final_ws/devel/lib/pkgconfig/sentry_chassis_controller.pc
+/home/idris/final_ws/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig-version.cmake /home/idris/final_ws/devel/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig-version.cmake
+/home/idris/final_ws/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig.cmake /home/idris/final_ws/devel/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig.cmake

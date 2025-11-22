@@ -2,6 +2,10 @@
 /src/simple_chassis_controller/
 /src/rm_description_for_task/
 /src/rm_controllers/
+/src/sentry_sim/
+/devel/
+/.vscode/
+/build/
 
 # Local IDE files
 .idea/
