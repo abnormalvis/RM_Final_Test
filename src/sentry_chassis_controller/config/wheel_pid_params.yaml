@@ -2,8 +2,12 @@ wheel_pid_controller:
   # Controller type so the controller_spawner can load it from the
   # parameter server if needed. Matches plugin XML/class name.
   type: "sentry_chassis_controller/WheelPidController"
+  # Physical defaults (can be overridden per-wheel below)
   wheel_track: 0.36
   wheel_base: 0.36
+
+  # Default PID for pivot (steering) and wheel (drive). These act as
+  # fallbacks if a per-wheel entry is not provided.
   pivot:
     p: 1.0
     i: 0.0
@@ -16,3 +20,74 @@ wheel_pid_controller:
     d: 0.0
     i_clamp: 0.0
     antiwindup: 0.0
+
+  # Optional explicit wheel ordering (controller can use this to iterate)
+  wheel_names:
+    - wheel_fl
+    - wheel_fr
+    - wheel_rl
+    - wheel_rr
+    - pivot_fl
+    - pivot_fr
+    - pivot_rl
+    - pivot_rr
+
+  # Per-wheel PID overrides. If a wheel entry is missing, controller should
+  # fallback to the `wheel` or `pivot` defaults above.
+  wheels:
+    wheel_fl:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    wheel_fr:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    wheel_rl:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    wheel_rr:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    pivot_fl:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
+    pivot_fr:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
+    pivot_rl:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
+    pivot_rr:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
