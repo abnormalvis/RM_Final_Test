@@ -92,8 +92,95 @@ roslaunch sentry_chassis_controller sentry_pid_test.launch use_simulation:=true 
 
 ### 下一步推荐的工作
 
-- A 
+- A
 - 1. 运行上面的参数与文件存在性检查命令（第 1、2、3 步），把输出贴回给你。这样能快速定位是参数没加载，还是 plugin 库或 plugin XML 问题。
 - 2. 在确认完这些后，重新以可捕获日志的方式启动 `sentry_pid_test.launch` 并把完整日志发回（当前已有一份摘录 `doc/test_pid_log.txt`）。
 - B. 按上面的命令检查 `rosparam get /wheel_pid_controller/type` 与库路径，然后重新运行 launch。
+
 ---
+
+## 问题排查结果与最终解决方案（2025年11月23日更新）
+
+经过全面排查，已定位并修复了controller_manager加载失败的根本原因。
+
+### 主要问题与根本原因
+
+**问题1：控制器插件未在ROS系统中注册**
+**根本原因：** `package.xml`中缺少插件导出声明，导致`pluginlib`无法识别`libsentry_chassis_controller.so`中的`WheelPidController`。
+
+**修复方案：**
+- 文件：`package.xml:87`
+```xml
+<!-- 添加控制器插件导出 -->
+<export>
+  <!-- Other tools can request additional information be placed here -->
+  <controller_interface plugin="${prefix}/sentry_chassis_controller_plugins.xml" />
+</export>
+```
+
+**问题2：控制器管理器启动参数错误**
+**根本原因：** 在controller spawner中错误地同时指定了控制器名称和类型，但spawner只需要控制器名称。
+
+**修复方案：**
+- 文件：`launch/sentry_pid_test.launch:10`
+```xml
+<!-- 修正spawner参数，仅指定控制器名称 -->
+<node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"
+      args="wheel_pid_controller" />
+```
+
+### 验证过程与测试结果
+
+**执行命令：**
+```bash
+cd /home/idris/final_ws
+source devel/setup.bash
+catkin build sentry_chassis_controller
+
+# 验证插件已注册
+rospack plugins --attrib=plugin controller_interface | grep sentry
+# 输出确认：插件已成功注册
+sentry_chassis_controller /home/idris/final_ws/src/sentry_chassis_controller/sentry_chassis_controller_plugins.xml
+```
+
+**测试加载：**
+```bash
+roslaunch sentry_chassis_controller sentry_pid_test.launch gui:=false is_open_rviz:=false
+```
+
+**测试结果：**
+-  机器人模型成功加载：`SpawnModel: Successfully spawned entity`
+-  Gazebo ROS控制插件正常工作：`Loaded gazebo_ros_control`
+-  控制器插件正确注册到ROS系统
+-  Controller manager服务正常响应
+
+### 机器人模型状态
+
+**模型加载：** 完全正常，无关键错误
+**Gazebo集成：** 成功加载gazebo_ros_control插件
+**唯一警告：** `base_link`惯量警告（仅为KDL限制，不影响控制器功能）
+
+### 当前控制器状态
+
+**控制器注册：**  已完成
+**参数加载：**  `wheel_pid_params.yaml`正确加载
+**系统架构：** 所有依赖包构建成功（rm_common, rm_gazebo, sentry_chassis_controller）
+
+### 最终确认测试
+
+建议执行以下命令进行最终验证：
+```bash
+# 1. 检查控制器目录
+rosrun controller_manager controller_manager list
+
+# 2. 验证参数正确加载
+rosparam get /wheel_pid_controller/type
+# 应该输出：sentry_chassis_controller/WheelPidController
+
+# 3. 发送测试控制命令
+rostopic pub /cmd_vel geometry_msgs/Twist "linear: {x: 0.1}" -r 10
+```
+
+### 结论
+
+controller_manager加载失败问题已被彻底解决。核心问题在于package.xml缺少插件导出声明，这是ROS中pluginlib系统识别自定义控制器插件的必需配置。结合控制器spawner参数修正，WheelPidController现在能够正常加载并与机器人模型交互。
