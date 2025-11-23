@@ -1,33 +1,23 @@
 <launch>
-  <!-- Allow selecting simulation mode when launching -->
   <arg name="use_simulation" default="true" />
 
-  <!-- Start simulation / TF / RViz from existing launch; forward use_simulation arg -->
-  <include file="$(find sentry_chassis_controller)/launch/sentry_with_tf.launch">
-    <arg name="use_simulation" value="$(arg use_simulation)" />
+  <include file="/launch/sentry_with_tf.launch">
+    <arg name="use_simulation" value="" />
   </include>
 
-  <!-- Load PID parameter defaults for the controller (synchronous) -->
-  <rosparam file="$(find sentry_chassis_controller)/config/wheel_pid_params.yaml" command="load" />
+  <rosparam file="/config/wheel_pid_params.yaml" command="load" />
 
-  <!-- Spawn the controller via controller_manager spawner. Params are loaded above. -->
   <node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"
         args="wheel_pid_controller" output="screen" />
 
-  <!-- rqt_reconfigure for dynamic PID tuning -->
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"
         output="screen" />
 
-  <!-- rqt_plot for visualization -->
   <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_wheels"
-        args="/wheel_pid_controller/wheel_cmd/0 /wheel_pid_controller/wheel_cmd/1 /wheel_pid_controller/wheel_cmd/2 /wheel_pid_controller/wheel_cmd/3
-              /sentry_chassis_controller/wheel_states/velocity/0 /sentry_chassis_controller/wheel_states/velocity/1 /sentry_chassis_controller/wheel_states/velocity/2 /sentry_chassis_controller/wheel_states/velocity/3
-              /cmd_vel/linear/x /cmd_vel/angular/z"
+        args="/wheel_pid_controller/wheel_cmd/0 /wheel_pid_controller/wheel_cmd/1 /wheel_pid_controller/wheel_cmd/2 /wheel_pid_controller/wheel_cmd/3 /sentry_chassis_controller/wheel_states/velocity/0 /sentry_chassis_controller/wheel_states/velocity/1 /sentry_chassis_controller/wheel_states/velocity/2 /sentry_chassis_controller/wheel_states/velocity/3 /cmd_vel/linear/x /cmd_vel/angular/z"
         output="screen" />
 
-  <!-- Optional: Start rqt_gui for accessing multiple plugins -->
-  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui"
-        args="--perspective-file $(find sentry_chassis_controller)/config/wheel_pid_tuning.perspective"
-        output="screen" />
+        If you want a saved layout, ensure the perspective file exists and restore this arg. -->
+  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" output="screen" />
 
 </launch>

@@ -14,6 +14,8 @@
 
 5. 新增了 `sentry_chassis_controller` 中的 `sentry_chassis_controller.cpp` 文件，并完成 `sentry_chassis_controller` 的实现。
 
-6. 修复了launch文件启动的时候提示Missing model.config以及controller_manager无法正常加载的问题，通过修改xml文件以及通过修改rm_control下的rm_gazebo，并成功编译得到gazebo环境中的仿真插件库so文件，已经能够在启动launch文件的时候 'rostopic list' 显示 '/cmd_vel'
+6. 修复了launch文件启动的时候提示Missing model.config以及controller_manager无法正常加载的问题，通过修改xml文件以及通过修改目录 `rm_control` 下的 `rm_gazebo`功能包，并成功编译得到gazebo环境中的仿真插件库 `so` 件，已经能够在启动launch文件 `sentry_pid_test.launch` 的时候 `rostopic list` 显示 `/cmd_vel`
 
-7. 
+7. 修改了 `wheel_pid_controller.cpp` 文件，并通过学习博客(见文章 `rqt_reconfigure_learning.md`，在新创建的 `cfg` 目录下创建了 `WheelPid.cfg` 文件。同时修改参数文件 `wheel_pid_params`，完成工作空间的重新编译后，测试动态调整参数。
+
+8. 集成了 `rqt_plot` `rqt_reconfigure` 插件到新的launch文件 `sentry_pid_test_fix.launch` 中，并成功在 `rqt` 中查看参数，能够支持动态调整参数。
