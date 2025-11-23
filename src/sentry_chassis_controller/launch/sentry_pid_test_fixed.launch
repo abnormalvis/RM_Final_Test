@@ -1,0 +1,30 @@
+<launch>
+  <!-- Allow selecting simulation mode when launching -->
+  <arg name="use_simulation" default="true" />
+
+  <!-- Start simulation / TF / RViz from existing launch; forward use_simulation arg -->
+  <include file="$(find sentry_chassis_controller)/launch/sentry_with_tf.launch">
+    <arg name="use_simulation" value="$(arg use_simulation)" />
+  </include>
+
+  <!-- Load PID parameter defaults for the controller (synchronous) -->
+  <rosparam file="$(find sentry_chassis_controller)/config/wheel_pid_params.yaml" command="load" />
+
+  <!-- Spawn the controller via controller_manager spawner. Params are loaded above. -->
+  <node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"
+        args="wheel_pid_controller" output="screen" />
+
+  <!-- rqt_reconfigure for dynamic PID tuning -->
+  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"
+        output="screen" />
+
+    <!-- rqt_plot for visualization removed to avoid XML line-wrapping issues in the args attribute.
+       If you need rqt_plot, re-add a single-line args attribute or reference a launch arg for the topics. -->
+
+
+  <!-- Optional: Start rqt_gui for accessing multiple plugins -->
+  <!-- Removed perspective-file to avoid launch failure when the perspective file is missing
+        If you want a saved layout, ensure the perspective file exists and restore this arg. -->
+  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" output="screen" />
+
+</launch>
