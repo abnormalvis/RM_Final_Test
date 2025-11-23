@@ -6,6 +6,8 @@
 #include <hardware_interface/joint_command_interface.h>
 #include <control_toolbox/pid.h>
 #include <geometry_msgs/Twist.h>
+#include <dynamic_reconfigure/server.h>
+#include <sentry_chassis_controller/WheelPidConfig.h>
 
 namespace sentry_chassis_controller
 {
@@ -41,7 +43,20 @@ namespace sentry_chassis_controller
         // cmd_vel subscriber
         ros::Subscriber cmd_vel_sub_;
 
+    // dynamic_reconfigure server
+    typedef sentry_chassis_controller::WheelPidConfig Config;
+    std::shared_ptr<dynamic_reconfigure::Server<Config>> dyn_server_;
+    void reconfigureCallback(Config &config, uint32_t level);
+
         void cmdVelCallback(const geometry_msgs::TwistConstPtr &msg);
+
+        // Helper functions for PID initialization
+        void initPivot(const std::string &name, control_toolbox::Pid &pid,
+                       ros::NodeHandle &controller_nh, double def_p, double def_i,
+                       double def_d, double def_i_clamp, double def_antiwindup);
+        void initWheel(const std::string &name, control_toolbox::Pid &pid,
+                       ros::NodeHandle &controller_nh, double def_wp, double def_wi,
+                       double def_wd, double def_wi_clamp, double def_wanti);
     };
 
 } // namespace sentry_chassis_controller

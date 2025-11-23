@@ -1,2 +1,6 @@
+11月22日更新：
 1. 支持运行时参数动态调节（rqt_reconfigure），为 PID 参数添加 dynamic_reconfigure 支持（会新增 cfg 文件并修改 CMakeLists）。
 2. 更完整的逆运动学（将 /cmd_vel 转为 4 个舵角与 4 个轮速）实现，替代当前的简化映射，满足逆运动学要求
+
+11月23日更新：
+1. 
