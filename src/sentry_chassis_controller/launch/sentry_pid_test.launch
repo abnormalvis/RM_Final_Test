@@ -7,6 +7,6 @@
 
   <!-- Spawn the controller via controller_manager spawner -->
   <node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"
-        args="wheel_pid_controller sentry_chassis_controller/WheelPidController" />
+        args="wheel_pid_controller" />
 
 </launch>
