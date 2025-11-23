@@ -1,10 +1,10 @@
-(base) idris@idris-ThinkPad-T14-Gen-1:~/final_ws$ roslaunch sentry_chassis_controller sentry_with_tf.launch 
-... logging to /home/idris/.ros/log/82ffdeca-c81e-11f0-8314-b1cdc7d648bc/roslaunch-idris-ThinkPad-T14-Gen-1-41897.log
+(base) idris@idris-ThinkPad-T14-Gen-1:~/final_ws$ roslaunch sentry_chassis_controller sentry_pid_test.launch 
+... logging to /home/idris/.ros/log/5888cf00-c821-11f0-8314-b1cdc7d648bc/roslaunch-idris-ThinkPad-T14-Gen-1-51926.log
 Checking log directory for disk usage. This may take a while.
 Press Ctrl-C to interrupt
 Done checking log file disk usage. Usage is <1GB.
 
-started roslaunch server http://idris-ThinkPad-T14-Gen-1:38123/
+started roslaunch server http://idris-ThinkPad-T14-Gen-1:43639/
 
 SUMMARY
 ========
@@ -19,6 +19,19 @@ PARAMETERS
  * /rosdistro: noetic
  * /rosversion: 1.17.4
  * /use_sim_time: True
+ * /wheel_pid_controller/pivot/antiwindup: 0.0
+ * /wheel_pid_controller/pivot/d: 0.0
+ * /wheel_pid_controller/pivot/i: 0.0
+ * /wheel_pid_controller/pivot/i_clamp: 0.0
+ * /wheel_pid_controller/pivot/p: 1.0
+ * /wheel_pid_controller/type: sentry_chassis_co...
+ * /wheel_pid_controller/wheel/antiwindup: 0.0
+ * /wheel_pid_controller/wheel/d: 0.0
+ * /wheel_pid_controller/wheel/i: 0.1
+ * /wheel_pid_controller/wheel/i_clamp: 0.0
+ * /wheel_pid_controller/wheel/p: 2.0
+ * /wheel_pid_controller/wheel_base: 0.36
+ * /wheel_pid_controller/wheel_track: 0.36
 
 NODES
   /
@@ -29,22 +42,43 @@ NODES
     robot_state_publisher (robot_state_publisher/robot_state_publisher)
     rviz (rviz/rviz)
     spawn_urdf (gazebo_ros/spawn_model)
+    spawner_wheel_pid (controller_manager/spawner)
 
 auto-starting new master
-process[master]: started with pid [41927]
+process[master]: started with pid [51952]
 ROS_MASTER_URI=http://localhost:11311
 
-setting /run_id to 82ffdeca-c81e-11f0-8314-b1cdc7d648bc
-process[rosout-1]: started with pid [41937]
+setting /run_id to 5888cf00-c821-11f0-8314-b1cdc7d648bc
+process[rosout-1]: started with pid [51962]
 started core service [/rosout]
-process[gazebo-2]: started with pid [41945]
-process[gazebo_gui-3]: started with pid [41950]
-process[spawn_urdf-4]: started with pid [41955]
-process[robot_state_publisher-5]: started with pid [41956]
-process[joint_state_publisher-6]: started with pid [41957]
-process[map2base-7]: started with pid [41959]
-[WARN] [1763869383.632465456]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
-process[rviz-8]: started with pid [41964]
+process[gazebo-2]: started with pid [51970]
+process[gazebo_gui-3]: started with pid [51975]
+process[spawn_urdf-4]: started with pid [51980]
+process[robot_state_publisher-5]: started with pid [51981]
+process[joint_state_publisher-6]: started with pid [51982]
+process[map2base-7]: started with pid [51987]
+[WARN] [1763870600.615867428]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+process[rviz-8]: started with pid [51990]
+process[spawner_wheel_pid-9]: started with pid [51996]
+Gazebo multi-robot simulator, version 11.15.1
+Copyright (C) 2012 Open Source Robotics Foundation.
+Released under the Apache 2 License.
+http://gazebosim.org
+
+
+#     # ####### ####### ###  #####  #######
+##    # #     #    #     #  #     # #
+# #   # #     #    #     #  #       #
+#  #  # #     #    #     #  #       #####
+#   # # #     #    #     #  #       #
+#    ## #     #    #     #  #     # #
+#     # #######    #    ###  #####  #######
+
+This version of Gazebo, now called Gazebo classic, reaches end-of-life
+in January 2025. Users are highly encouraged to migrate to the new Gazebo
+using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
+
+
 Gazebo multi-robot simulator, version 11.15.1
 Copyright (C) 2012 Open Source Robotics Foundation.
 Released under the Apache 2 License.
@@ -65,64 +99,52 @@ using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_mig
 
 
 [Wrn] [GuiIface.cc:194] g/gui-plugin is really loading a SystemPlugin. To load a GUI plugin please use --gui-client-plugin 
-Gazebo multi-robot simulator, version 11.15.1
-Copyright (C) 2012 Open Source Robotics Foundation.
-Released under the Apache 2 License.
-http://gazebosim.org
-
-
-#     # ####### ####### ###  #####  #######
-##    # #     #    #     #  #     # #
-# #   # #     #    #     #  #       #
-#  #  # #     #    #     #  #       #####
-#   # # #     #    #     #  #       #
-#    ## #     #    #     #  #     # #
-#     # #######    #    ###  #####  #######
-
-This version of Gazebo, now called Gazebo classic, reaches end-of-life
-in January 2025. Users are highly encouraged to migrate to the new Gazebo
-using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
-
-
 /opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
   * \param name Unique name to prepend to the goal id. This will
 /opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
   * \param name Set the name to prepend to the goal id. This will
-[INFO] [1763869384.956743105]: Finished loading Gazebo ROS API Plugin.
+[INFO] [1763870601.897457185]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...
+[INFO] [1763870601.902391638]: Finished loading Gazebo ROS API Plugin.
 [Msg] Waiting for master.
-[INFO] [1763869384.963885011]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...
+[Msg] Connected to gazebo master @ http://127.0.0.1:11345
+[Msg] Publicized address: 192.168.1.122
 /opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
   numpy.dot(M, v) for shape (4, \*) "point of arrays", respectively
 /opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:869: SyntaxWarning: invalid escape sequence '\*'
   v0 and v1 are shape (3, \*) or (4, \*) arrays of at least 3 vectors.
-[Msg] Connected to gazebo master @ http://127.0.0.1:11345
-[Msg] Publicized address: 192.168.1.122
-[INFO] [1763869385.120975, 0.000000]: Loading model XML from ros parameter robot_description
-[INFO] [1763869385.135677, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
-[INFO] [1763869385.528300544]: Finished loading Gazebo ROS API Plugin.
-[INFO] [1763869385.529994331]: waitForService: Service [/gazebo_gui/set_physics_properties] has not been advertised, waiting...
+[INFO] [1763870602.199116, 0.000000]: Loading model XML from ros parameter robot_description
+[INFO] [1763870602.204265, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
+[INFO] [1763870602.262081216]: Finished loading Gazebo ROS API Plugin.
 [Msg] Waiting for master.
+[INFO] [1763870602.263647660]: waitForService: Service [/gazebo_gui/set_physics_properties] has not been advertised, waiting...
 [Msg] Connected to gazebo master @ http://127.0.0.1:11345
 [Msg] Publicized address: 192.168.1.122
 [Msg] Loading world file [/usr/share/gazebo-11/worlds/empty.world]
-[INFO] [1763869385.992137395]: waitForService: Service [/gazebo/set_physics_properties] is now available.
-[INFO] [1763869386.050774, 0.000000]: Calling service /gazebo/spawn_urdf_model
-[INFO] [1763869386.065763888, 0.050000000]: Physics dynamic reconfigure ready.
-[INFO] [1763869386.270775, 0.127000]: Spawn status: SpawnModel: Successfully spawned entity
-[INFO] [1763869386.275740, 0.127000]: Unpausing physics
-[INFO] [1763869386.326201194, 0.127000000]: Loading gazebo_ros_control plugin
-[INFO] [1763869386.326495044, 0.127000000]: Starting gazebo_ros_control plugin in namespace: /
-[INFO] [1763869386.328030544, 0.127000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../.git"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../.github"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_common"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_control"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_dbus"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_gazebo"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_hw"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_msgs"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_referee"
-[Err] [InsertModelWidget.cc:403] Missing model.config for model "/home/idris/final_ws/src/rm_control/rm_gazebo/../rm_vt"
-[INFO] [1763869386.471725975, 0.127000000]: Loaded gazebo_ros_control.
+[INFO] [1763870602.560901670, 0.004000000]: waitForService: Service [/gazebo/set_physics_properties] is now available.
+[INFO] [1763870602.592852666, 0.033000000]: Physics dynamic reconfigure ready.
+[INFO] [1763870602.808462, 0.244000]: Calling service /gazebo/spawn_urdf_model
+[INFO] [1763870603.011930, 0.363000]: Spawn status: SpawnModel: Successfully spawned entity
+[INFO] [1763870603.013876, 0.363000]: Unpausing physics
+[INFO] [1763870603.059019166, 0.363000000]: Loading gazebo_ros_control plugin
+[INFO] [1763870603.059375932, 0.363000000]: Starting gazebo_ros_control plugin in namespace: /
+[INFO] [1763870603.060798244, 0.363000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.
+[INFO] [1763870603.181651509, 0.363000000]: Loaded gazebo_ros_control.
+[INFO] [1763870603.237296186, 0.419000000]: WheelPidController initialized
 [spawn_urdf-4] process has finished cleanly
-log file: /home/idris/.ros/log/82ffdeca-c81e-11f0-8314-b1cdc7d648bc/spawn_urdf-4*.log
+log file: /home/idris/.ros/log/5888cf00-c821-11f0-8314-b1cdc7d648bc/spawn_urdf-4*.log
+^C[rviz-8] killing on exit
+[spawner_wheel_pid-9] killing on exit
+[map2base-7] killing on exit
+[robot_state_publisher-5] killing on exit
+[joint_state_publisher-6] killing on exit
+[gazebo_gui-3] killing on exit
+[gazebo-2] killing on exit
+^C^[[A^[[A^[[B^[[B^[[B[spawner_wheel_pid-9] escalating to SIGTERM
+[gazebo_gui-3] escalating to SIGTERM
+[gazebo-2] escalating to SIGTERM
+[WARN] [1763870727.438687, 98.359000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+done
