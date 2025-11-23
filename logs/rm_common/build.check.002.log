@@ -1,0 +1,27 @@
+-- Using CATKIN_DEVEL_PREFIX: /home/idris/final_ws/devel/.private/rm_common
+-- Using CMAKE_PREFIX_PATH: /home/idris/final_ws/devel;/opt/ros/noetic
+-- This workspace overlays: /home/idris/final_ws/devel;/opt/ros/noetic
+-- Found PythonInterp: /home/idris/miniconda3/bin/python3 (found suitable version "3.13.9", minimum required is "3")
+-- Using PYTHON_EXECUTABLE: /home/idris/miniconda3/bin/python3
+-- Using Debian Python package layout
+-- Using empy: /home/idris/.local/lib/python3.13/site-packages/em.py
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/idris/final_ws/build/rm_common/test_results
+-- Forcing gtest/gmock from source, though one was otherwise available.
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /home/idris/miniconda3/bin/python3 (found version "3.13.9")
+-- Using Python nosetests: /usr/bin/nosetests3
+-- catkin 0.8.12
+-- BUILD_SHARED_LIBS is on
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+CMake Warning at /home/idris/final_ws/src/rm_control/rm_common/CMakeLists.txt:71 (message):
+  IMU filter packages not found; skipping src/filter/*.cpp.  If you need IMU
+  filters, install imu_complementary_filter or imu_filter_madgwick and
+  rebuild.
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/idris/final_ws/build/rm_common

@@ -1,1 +1,0 @@
-/usr/bin/cmake -S/home/idris/final_ws/src/rm_control/rm_msgs -B/home/idris/final_ws/build/rm_msgs --check-build-system CMakeFiles/Makefile.cmake 0
