@@ -19,3 +19,5 @@
 7. 修改了 `wheel_pid_controller.cpp` 文件，并通过学习博客(见文章 `rqt_reconfigure_learning.md`，在新创建的 `cfg` 目录下创建了 `WheelPid.cfg` 文件。同时修改参数文件 `wheel_pid_params`，完成工作空间的重新编译后，测试动态调整参数。
 
 8. 集成了 `rqt_plot` `rqt_reconfigure` 插件到新的launch文件 `sentry_pid_test_fix.launch` 中，并成功在 `rqt` 中查看参数，能够支持动态调整参数。
+
+9. ![运行时发现rqt_plot无法正常显示数据，通过解决环境依赖的问题，并重新编译，成功运行，同时rqt_reconfigure插件也成功运行。](src/sentry_chassis_controller/pictures/rqt_reconfigure_plot_demo.png)
