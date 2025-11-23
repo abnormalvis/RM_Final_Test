@@ -1,0 +1,66 @@
+[  0%] Built target dynamic_reconfigure_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target dynamic_reconfigure_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target control_toolbox_gencfg
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target control_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target control_msgs_generate_messages_lisp
+[  0%] Built target control_toolbox_generate_messages_eus
+[  0%] Built target control_toolbox_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target control_toolbox_generate_messages_nodejs
+[  0%] Built target control_msgs_generate_messages_cpp
+[  0%] Built target control_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_py
+[  0%] Built target control_toolbox_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_eus
+[  0%] Built target trajectory_msgs_generate_messages_nodejs
+[  0%] Built target dynamic_reconfigure_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[  0%] Built target control_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_cpp
+[  0%] Built target control_toolbox_generate_messages_py
+[  0%] Built target trajectory_msgs_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_py
+[  0%] Built target dynamic_reconfigure_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target dynamic_reconfigure_generate_messages_eus
+[  0%] Built target dynamic_reconfigure_gencfg
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[ 14%] Built target sentry_chassis_controller_gencfg
+[35m[1mScanning dependencies of target sentry_chassis_controller[0m
+[ 28%] [32mBuilding CXX object CMakeFiles/sentry_chassis_controller.dir/src/wheel_pid_controller.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/sentry_chassis_controller.dir/src/inverse_kinematics.cpp.o[0m
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/inverse_kinematics.cpp:14:12:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kstruct sentry_kinematics::IKResult[m[K’
+   14 |     struct [01;31m[KIKResult[m[K
+      |            [01;31m[K^~~~~~~~[m[K
+In file included from [01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/inverse_kinematics.cpp:5[m[K:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/include/sentry_chassis_controller/inverse_kinematics.hpp:8:8:[m[K [01;36m[Knote: [m[Kprevious definition of ‘[01m[Kstruct sentry_kinematics::IKResult[m[K’
+    8 | struct [01;36m[KIKResult[m[K {
+      |        [01;36m[K^~~~~~~~[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:76：CMakeFiles/sentry_chassis_controller.dir/src/inverse_kinematics.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:974：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

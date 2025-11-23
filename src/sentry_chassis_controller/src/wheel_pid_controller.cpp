@@ -6,6 +6,7 @@
 #include <string>
 #include <dynamic_reconfigure/server.h>
 #include <sentry_chassis_controller/WheelPidConfig.h>
+#include <sentry_chassis_controller/inverse_kinematics.hpp>
 
 namespace sentry_chassis_controller
 {
@@ -35,6 +36,7 @@ namespace sentry_chassis_controller
         // read kinematic parameters
         controller_nh.param("wheel_track", wheel_track_, 0.36);
         controller_nh.param("wheel_base", wheel_base_, 0.36);
+    controller_nh.param("wheel_radius", wheel_radius_, 0.05);
 
         // initialize PIDs with parameters (if present) or defaults
         double def_p, def_i, def_d, def_i_clamp, def_antwindup;
@@ -75,6 +77,9 @@ namespace sentry_chassis_controller
         // subscribe to cmd_vel to get desired chassis velocity (in chassis frame)
         cmd_vel_sub_ = root_nh.subscribe<geometry_msgs::Twist>("cmd_vel", 1, &WheelPidController::cmdVelCallback, this);
 
+    // publisher to expose desired wheel/pivot commands for testing/inspection
+    desired_pub_ = root_nh.advertise<sensor_msgs::JointState>("desired_wheel_states", 1);
+
     // dynamic_reconfigure server: allow runtime tuning of per-wheel PIDs
     dyn_server_.reset(new dynamic_reconfigure::Server<Config>(controller_nh));
     dynamic_reconfigure::Server<Config>::CallbackType cb = boost::bind(&WheelPidController::reconfigureCallback, this, _1, _2);
@@ -103,23 +108,31 @@ namespace sentry_chassis_controller
 
     void WheelPidController::cmdVelCallback(const geometry_msgs::TwistConstPtr &msg)
     {
-        // Very simple mapping: set pivot angles to 0 and distribute linear.x to all wheels.
-        // For angular.z, add differential term to left/right wheels.
+        // Use inverse kinematics to compute per-wheel steer angles and wheel angular velocities
         double vx = msg->linear.x;
-        double vy = msg->linear.y; // unused in this simple mapping
+        double vy = msg->linear.y;
         double wz = msg->angular.z;
 
-        // Basic differential contribution (not full mecanum/swerve inverse kinematics)
-        double ang_contrib = (wz * (wheel_base_ / 2.0));
+        auto ik = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base_, wheel_track_, wheel_radius_);
 
-        wheel_cmd_[0] = vx - ang_contrib; // front left
-        wheel_cmd_[1] = vx + ang_contrib; // front right
-        wheel_cmd_[2] = vx - ang_contrib; // back left
-        wheel_cmd_[3] = vx + ang_contrib; // back right
-
-        // keep pivot angles at zero (facing forward) for this minimal implementation
+        // ik.wheel_angular_vel is in rad/s, pivot angles in radians
         for (int i = 0; i < 4; ++i)
-            pivot_cmd_[i] = 0.0;
+        {
+            wheel_cmd_[i] = ik.wheel_angular_vel[i];
+            pivot_cmd_[i] = ik.steer_angle[i];
+        }
+
+                // publish desired commands for inspection
+                sensor_msgs::JointState js;
+                js.header.stamp = ros::Time::now();
+                js.name = {"wheel_fl","wheel_fr","wheel_rl","wheel_rr"};
+                js.position.resize(4);
+                js.velocity.resize(4);
+                for (int i=0;i<4;++i) {
+                    js.position[i] = pivot_cmd_[i];
+                    js.velocity[i] = wheel_cmd_[i];
+                }
+                desired_pub_.publish(js);
     }
 
     void WheelPidController::initPivot(const std::string &name, control_toolbox::Pid &pid,

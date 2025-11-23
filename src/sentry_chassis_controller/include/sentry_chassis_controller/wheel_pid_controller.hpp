@@ -8,6 +8,8 @@
 #include <geometry_msgs/Twist.h>
 #include <dynamic_reconfigure/server.h>
 #include <sentry_chassis_controller/WheelPidConfig.h>
+#include <sentry_chassis_controller/inverse_kinematics.hpp>
+#include <sensor_msgs/JointState.h>
 
 namespace sentry_chassis_controller
 {
@@ -35,6 +37,7 @@ namespace sentry_chassis_controller
         // parameters
         double wheel_track_{0.36};
         double wheel_base_{0.36};
+    double wheel_radius_{0.05};
 
         // desired commands
         double pivot_cmd_[4]{}; // desired pivot angles for 4 modules
@@ -42,6 +45,8 @@ namespace sentry_chassis_controller
 
         // cmd_vel subscriber
         ros::Subscriber cmd_vel_sub_;
+    // publisher for desired commands (for testing/inspection)
+    ros::Publisher desired_pub_;
 
     // dynamic_reconfigure server
     typedef sentry_chassis_controller::WheelPidConfig Config;

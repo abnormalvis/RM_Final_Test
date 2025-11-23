@@ -1,0 +1,17 @@
+<launch>
+  <!-- Start full simulation + controllers -->
+  <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
+
+  <!-- Start forward kinematics node to compute odometry from joint_states -->
+  <node pkg="sentry_chassis_controller" type="forward_kinematics_node" name="forward_kinematics_node" output="screen">
+    <param name="wheel_base" value="0.36"/>
+    <param name="wheel_track" value="0.36"/>
+    <param name="wheel_radius" value="0.05"/>
+    <!-- optionally override joint names if different -->
+    <!--
+    <param name="wheel_joints" value="['left_front_wheel_joint','right_front_wheel_joint','left_back_wheel_joint','right_back_wheel_joint']"/>
+    <param name="pivot_joints" value="['left_front_pivot_joint','right_front_pivot_joint','left_back_pivot_joint','right_back_pivot_joint']"/>
+    -->
+  </node>
+
+</launch>
