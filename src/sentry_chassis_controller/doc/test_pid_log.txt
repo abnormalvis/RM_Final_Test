@@ -1,0 +1,21 @@
+(base) idris@idris-ThinkPad-T14-Gen-1:~/final_ws/src/sentry_chassis_controller$ rostopic list
+/clicked_point
+/clock
+/gazebo/link_states
+/gazebo/model_states
+/gazebo/parameter_descriptions
+/gazebo/parameter_updates
+/gazebo/performance_metrics
+/gazebo/set_link_state
+/gazebo/set_model_state
+/initialpose
+/joint_states
+/move_base_simple/goal
+/rosout
+/rosout_agg
+/tf
+/tf_static
+(base) idris@idris-ThinkPad-T14-Gen-1:~/final_ws/src/sentry_chassis_controller$ rosrun teleop_twist_keyboard teleop_twist_keyboard.py 
+Waiting for subscriber to connect to /cmd_vel
+Waiting for subscriber to connect to /cmd_vel
+^CROS shutdown request

@@ -1,0 +1,15 @@
+wheel_pid_controller:
+  wheel_track: 0.36
+  wheel_base: 0.36
+  pivot:
+    p: 1.0
+    i: 0.0
+    d: 0.0
+    i_clamp: 0.0
+    antiwindup: 0.0
+  wheel:
+    p: 2.0
+    i: 0.1
+    d: 0.0
+    i_clamp: 0.0
+    antiwindup: 0.0

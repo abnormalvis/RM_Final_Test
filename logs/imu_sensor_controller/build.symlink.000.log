@@ -1,0 +1,4 @@
+Symlinking /home/idris/final_ws/devel/lib/libimu_sensor_controller.so
+Symlinking /home/idris/final_ws/devel/lib/pkgconfig/imu_sensor_controller.pc
+Symlinking /home/idris/final_ws/devel/share/imu_sensor_controller/cmake/imu_sensor_controllerConfig-version.cmake
+Symlinking /home/idris/final_ws/devel/share/imu_sensor_controller/cmake/imu_sensor_controllerConfig.cmake
