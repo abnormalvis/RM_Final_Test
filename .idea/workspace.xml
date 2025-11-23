@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -30,13 +30,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f2fbbb-7db1-45b7-a943-20d173d9bb22" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.catkin_tools/CATKIN_IGNORE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.catkin_tools/README" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.catkin_tools/VERSION" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.catkin_tools/profiles/default/devel_collisions.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.catkin_tools/profiles/profiles.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/final_ws.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/final_ws.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.009.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.010.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.011.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.012.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.013.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.004.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.005.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.006.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.007.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.008.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.009.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.010.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.011.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.012.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.013.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.005.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.006.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.007.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.008.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.009.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.018.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.019.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.020.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.021.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.022.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.023.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.024.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.025.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.026.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.027.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.005.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.006.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.007.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.008.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.009.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simple_chassis_controller/doc/catkin-tools-build-problem.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.catkin_tools/profiles/default/packages/sentry_chassis_controller/devel_manifest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.catkin_tools/profiles/default/packages/sentry_chassis_controller/devel_manifest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.catkin_tools/profiles/default/packages/sentry_chassis_controller/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.catkin_tools/profiles/default/packages/sentry_chassis_controller/package.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.000.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.001.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.002.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.cache-manifest.003.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.check.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.000.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.001.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.002.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.loadenv.003.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.make.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.008.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.009.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.010.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.011.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.012.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.013.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.014.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.015.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.016.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.mkdir.017.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/sentry_chassis_controller/build.symlink.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +105,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/src/rm_description_for_task" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="ProjectApplicationVersion">
@@ -78,7 +135,7 @@
     "cf.advertisement.text.has.clang-format": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "develop-reconfigure",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,12 +146,12 @@
   }
 }]]></component>
   <component name="RunManager" selected="CMake 应用程序.download_extra_data">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="_catkin_empty_exported_target" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="_catkin_empty_exported_target" CONFIG_NAME="Debug">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="_catkin_empty_exported_target" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="_catkin_empty_exported_target" CONFIG_NAME="Debug">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -166,6 +223,7 @@
       <option name="presentableId" value="Default" />
       <updated>1763729824373</updated>
       <workItem from="1763729826148" duration="5593000" />
+      <workItem from="1763879667154" duration="92000" />
     </task>
     <servers />
   </component>
