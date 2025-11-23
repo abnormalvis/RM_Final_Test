@@ -1,0 +1,1 @@
+### 要让基于 ros_control 的控制器（通过 controller_manager 管理）真正对底盘生效，必须有一个具体的 hardware_interface 实例供 controller_manager 使用；否则 控制器比如舵轮的控制器 wheel_pid_controller 虽然可以被“加载”为插件，但通常无法完成 init 或不能读到关节句柄/发布命令，系统上也不会出现控制器订阅 /cmd_vel 并执行输出的完整闭环
