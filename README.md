@@ -21,3 +21,5 @@
 8. 集成了 `rqt_plot` `rqt_reconfigure` 插件到新的launch文件 `sentry_pid_test_fix.launch` 中，并成功在 `rqt` 中查看参数，能够支持动态调整参数。
 
 9. ![运行时发现rqt_plot无法正常显示数据，通过解决环境依赖的问题，并重新编译，成功运行，同时rqt_reconfigure插件也成功运行。](src/sentry_chassis_controller/pictures/rqt_reconfigure_plot_demo.png)
+
+10. 正在测试运动学正逆解算 `forward_kinematics.cpp` `inverse_kinematics.cpp`
