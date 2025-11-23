@@ -1,0 +1,225 @@
+(ros_qt) idris@idris-ThinkPad-T14-Gen-1:~/final_ws$ roslaunch sentry_chassis_controller sentry_pid_test_fixed.launch 
+... logging to /home/idris/.ros/log/938b9732-c82f-11f0-8314-b1cdc7d648bc/roslaunch-idris-ThinkPad-T14-Gen-1-86697.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+
+started roslaunch server http://idris-ThinkPad-T14-Gen-1:37613/
+
+SUMMARY
+========
+
+CLEAR PARAMETERS
+ * /spawn_urdf/
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /robot_description: <?xml version="1....
+ * /robot_state_publisher/publish_frequency: 30.0
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+ * /use_sim_time: True
+ * /wheel_pid_controller/pivot/antiwindup: 0.0
+ * /wheel_pid_controller/pivot/d: 0.0
+ * /wheel_pid_controller/pivot/i: 0.0
+ * /wheel_pid_controller/pivot/i_clamp: 0.0
+ * /wheel_pid_controller/pivot/p: 1.0
+ * /wheel_pid_controller/type: sentry_chassis_co...
+ * /wheel_pid_controller/wheel/antiwindup: 0.0
+ * /wheel_pid_controller/wheel/d: 0.0
+ * /wheel_pid_controller/wheel/i: 0.1
+ * /wheel_pid_controller/wheel/i_clamp: 0.0
+ * /wheel_pid_controller/wheel/p: 2.0
+ * /wheel_pid_controller/wheel_base: 0.36
+ * /wheel_pid_controller/wheel_names: ['wheel_fl', 'whe...
+ * /wheel_pid_controller/wheel_track: 0.36
+ * /wheel_pid_controller/wheels/pivot_fl/d: 0.0
+ * /wheel_pid_controller/wheels/pivot_fl/i: 0.0
+ * /wheel_pid_controller/wheels/pivot_fl/i_clamp: 0.0
+ * /wheel_pid_controller/wheels/pivot_fl/output_max: 5.0
+ * /wheel_pid_controller/wheels/pivot_fl/output_min: -5.0
+ * /wheel_pid_controller/wheels/pivot_fl/p: 1.0
+ * /wheel_pid_controller/wheels/pivot_fr/d: 0.0
+ * /wheel_pid_controller/wheels/pivot_fr/i: 0.0
+ * /wheel_pid_controller/wheels/pivot_fr/i_clamp: 0.0
+ * /wheel_pid_controller/wheels/pivot_fr/output_max: 5.0
+ * /wheel_pid_controller/wheels/pivot_fr/output_min: -5.0
+ * /wheel_pid_controller/wheels/pivot_fr/p: 1.0
+ * /wheel_pid_controller/wheels/pivot_rl/d: 0.0
+ * /wheel_pid_controller/wheels/pivot_rl/i: 0.0
+ * /wheel_pid_controller/wheels/pivot_rl/i_clamp: 0.0
+ * /wheel_pid_controller/wheels/pivot_rl/output_max: 5.0
+ * /wheel_pid_controller/wheels/pivot_rl/output_min: -5.0
+ * /wheel_pid_controller/wheels/pivot_rl/p: 1.0
+ * /wheel_pid_controller/wheels/pivot_rr/d: 0.0
+ * /wheel_pid_controller/wheels/pivot_rr/i: 0.0
+ * /wheel_pid_controller/wheels/pivot_rr/i_clamp: 0.0
+ * /wheel_pid_controller/wheels/pivot_rr/output_max: 5.0
+ * /wheel_pid_controller/wheels/pivot_rr/output_min: -5.0
+ * /wheel_pid_controller/wheels/pivot_rr/p: 1.0
+ * /wheel_pid_controller/wheels/wheel_fl/d: 0.0
+ * /wheel_pid_controller/wheels/wheel_fl/i: 0.1
+ * /wheel_pid_controller/wheels/wheel_fl/i_clamp: 0.5
+ * /wheel_pid_controller/wheels/wheel_fl/output_max: 10.0
+ * /wheel_pid_controller/wheels/wheel_fl/output_min: -10.0
+ * /wheel_pid_controller/wheels/wheel_fl/p: 2.0
+ * /wheel_pid_controller/wheels/wheel_fr/d: 0.0
+ * /wheel_pid_controller/wheels/wheel_fr/i: 0.1
+ * /wheel_pid_controller/wheels/wheel_fr/i_clamp: 0.5
+ * /wheel_pid_controller/wheels/wheel_fr/output_max: 10.0
+ * /wheel_pid_controller/wheels/wheel_fr/output_min: -10.0
+ * /wheel_pid_controller/wheels/wheel_fr/p: 2.0
+ * /wheel_pid_controller/wheels/wheel_rl/d: 0.0
+ * /wheel_pid_controller/wheels/wheel_rl/i: 0.1
+ * /wheel_pid_controller/wheels/wheel_rl/i_clamp: 0.5
+ * /wheel_pid_controller/wheels/wheel_rl/output_max: 10.0
+ * /wheel_pid_controller/wheels/wheel_rl/output_min: -10.0
+ * /wheel_pid_controller/wheels/wheel_rl/p: 2.0
+ * /wheel_pid_controller/wheels/wheel_rr/d: 0.0
+ * /wheel_pid_controller/wheels/wheel_rr/i: 0.1
+ * /wheel_pid_controller/wheels/wheel_rr/i_clamp: 0.5
+ * /wheel_pid_controller/wheels/wheel_rr/output_max: 10.0
+ * /wheel_pid_controller/wheels/wheel_rr/output_min: -10.0
+ * /wheel_pid_controller/wheels/wheel_rr/p: 2.0
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    gazebo_gui (gazebo_ros/gzclient)
+    joint_state_publisher (joint_state_publisher/joint_state_publisher)
+    map2base (tf/static_transform_publisher)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    rqt_gui (rqt_gui/rqt_gui)
+    rqt_reconfigure (rqt_reconfigure/rqt_reconfigure)
+    rviz (rviz/rviz)
+    spawn_urdf (gazebo_ros/spawn_model)
+    spawner_wheel_pid (controller_manager/spawner)
+
+ROS_MASTER_URI=http://localhost:11311
+
+process[gazebo-1]: started with pid [86714]
+process[gazebo_gui-2]: started with pid [86719]
+process[spawn_urdf-3]: started with pid [86724]
+process[robot_state_publisher-4]: started with pid [86725]
+process[joint_state_publisher-5]: started with pid [86730]
+process[map2base-6]: started with pid [86735]
+[WARN] [1763885291.529263576]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+process[rviz-7]: started with pid [86739]
+process[spawner_wheel_pid-8]: started with pid [86746]
+process[rqt_reconfigure-9]: started with pid [86753]
+process[rqt_gui-10]: started with pid [86759]
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/gazebo_ros/spawn_model", line 34, in <module>
+    from tf.transformations import quaternion_from_euler
+  File "/opt/ros/noetic/lib/python3/dist-packages/tf/__init__.py", line 31, in <module>
+    from .listener import Transformer, TransformListener, TransformerROS
+  File "/opt/ros/noetic/lib/python3/dist-packages/tf/listener.py", line 29, in <module>
+    import numpy
+ModuleNotFoundError: No module named 'numpy'
+[INFO] [1763885292.014531, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[WARN] [1763885292.017827, 0.000000]: wait_for_service(/controller_manager/load_controller): failed to contact, will keep trying
+[spawn_urdf-3] process has died [pid 86724, exit code 1, cmd /opt/ros/noetic/lib/gazebo_ros/spawn_model -unpause -urdf -param robot_description -model sentry -x 0 -y 0 -z 0.5 __name:=spawn_urdf __log:=/home/idris/.ros/log/938b9732-c82f-11f0-8314-b1cdc7d648bc/spawn_urdf-3.log].
+log file: /home/idris/.ros/log/938b9732-c82f-11f0-8314-b1cdc7d648bc/spawn_urdf-3*.log
+Gazebo multi-robot simulator, version 11.15.1
+Copyright (C) 2012 Open Source Robotics Foundation.
+Released under the Apache 2 License.
+http://gazebosim.org
+
+
+#     # ####### ####### ###  #####  #######
+##    # #     #    #     #  #     # #
+# #   # #     #    #     #  #       #
+#  #  # #     #    #     #  #       #####
+#   # # #     #    #     #  #       #
+#    ## #     #    #     #  #     # #
+#     # #######    #    ###  #####  #######
+
+This version of Gazebo, now called Gazebo classic, reaches end-of-life
+in January 2025. Users are highly encouraged to migrate to the new Gazebo
+using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
+
+
+Gazebo multi-robot simulator, version 11.15.1
+Copyright (C) 2012 Open Source Robotics Foundation.
+Released under the Apache 2 License.
+http://gazebosim.org
+
+
+#     # ####### ####### ###  #####  #######
+##    # #     #    #     #  #     # #
+# #   # #     #    #     #  #       #
+#  #  # #     #    #     #  #       #####
+#   # # #     #    #     #  #       #
+#    ## #     #    #     #  #     # #
+#     # #######    #    ###  #####  #######
+
+This version of Gazebo, now called Gazebo classic, reaches end-of-life
+in January 2025. Users are highly encouraged to migrate to the new Gazebo
+using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
+
+
+[Wrn] [GuiIface.cc:194] g/gui-plugin is really loading a SystemPlugin. To load a GUI plugin please use --gui-client-plugin 
+[INFO] [1763885292.482840574]: Finished loading Gazebo ROS API Plugin.
+[INFO] [1763885292.484087050]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...
+[Msg] Waiting for master.
+[Msg] Connected to gazebo master @ http://127.0.0.1:11345
+[Msg] Publicized address: 192.168.1.122
+RosPluginProvider.load(qt_gui_cpp/CppPluginProvider) exception raised in __builtin__.__import__(qt_gui_cpp.cpp_plugin_provider, [CppPluginProvider]):
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rqt_gui/ros_plugin_provider.py", line 79, in load
+    module = __builtin__.__import__(
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
+    from .cpp_binding_helper import qt_gui_cpp
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
+    from . import libqt_gui_cpp_sip
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+RecursivePluginProvider.discover() loading plugin "qt_gui_cpp/CppPluginProvider" failed:
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui/recursive_plugin_provider.py", line 60, in discover
+    instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rqt_gui/ros_plugin_provider.py", line 90, in load
+    raise e
+  File "/opt/ros/noetic/lib/python3/dist-packages/rqt_gui/ros_plugin_provider.py", line 79, in load
+    module = __builtin__.__import__(
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
+    from .cpp_binding_helper import qt_gui_cpp
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
+    from . import libqt_gui_cpp_sip
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+RosPluginProvider.load(qt_gui_cpp/CppPluginProvider) exception raised in __builtin__.__import__(qt_gui_cpp.cpp_plugin_provider, [CppPluginProvider]):
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rqt_gui/ros_plugin_provider.py", line 79, in load
+    module = __builtin__.__import__(
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
+    from .cpp_binding_helper import qt_gui_cpp
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
+    from . import libqt_gui_cpp_sip
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+RecursivePluginProvider.discover() loading plugin "qt_gui_cpp/CppPluginProvider" failed:
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui/recursive_plugin_provider.py", line 60, in discover
+    instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rqt_gui/ros_plugin_provider.py", line 90, in load
+    raise e
+  File "/opt/ros/noetic/lib/python3/dist-packages/rqt_gui/ros_plugin_provider.py", line 79, in load
+    module = __builtin__.__import__(
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
+    from .cpp_binding_helper import qt_gui_cpp
+  File "/opt/ros/noetic/lib/python3/dist-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
+    from . import libqt_gui_cpp_sip
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+[INFO] [1763885292.837115910]: Finished loading Gazebo ROS API Plugin.
+[INFO] [1763885292.838707975]: waitForService: Service [/gazebo_gui/set_physics_properties] has not been advertised, waiting...
+[Msg] Waiting for master.
+[Msg] Connected to gazebo master @ http://127.0.0.1:11345
+[Msg] Publicized address: 192.168.1.122
+[Msg] Loading world file [/usr/share/gazebo-11/worlds/empty.world]
+[INFO] [1763885293.098702858]: waitForService: Service [/gazebo/set_physics_properties] is now available.
+[INFO] [1763885293.153169293, 0.044000000]: Physics dynamic reconfigure ready.
+[WARN] [1763885322.183460, 28.914000]: Controller Spawner couldn't find the expected controller_manager ROS interface.
+[spawner_wheel_pid-8] process has finished cleanly
+log file: /home/idris/.ros/log/938b9732-c82f-11f0-8314-b1cdc7d648bc/spawner_wheel_pid-8*.log
