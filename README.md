@@ -11,3 +11,9 @@
 4. 新增了 launch 文件 `sentry_with_rviz`，启动仿真时可以同时查看机器人底盘模型与坐标系的变化，便于后面调试底盘。
 
 备注：更多实现细节、代码分析与 pluginlib 学习笔记见 `doc/simple_chassis_controller_explanation.md`。
+
+5. 新增了 `sentry_chassis_controller` 中的 `sentry_chassis_controller.cpp` 文件，并完成 `sentry_chassis_controller` 的实现。
+
+6. 修复了launch文件启动的时候提示Missing model.config以及controller_manager无法正常加载的问题，通过修改xml文件以及通过修改rm_control下的rm_gazebo，并成功编译得到gazebo环境中的仿真插件库so文件，已经能够在启动launch文件的时候 'rostopic list' 显示 '/cmd_vel'
+
+7. 
