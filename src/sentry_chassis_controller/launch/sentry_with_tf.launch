@@ -11,17 +11,15 @@
     <arg name="R_pos" default="0"/>
     <arg name="P_pos" default="0"/>
     <arg name="Y_pos" default="0"/>
-    <arg name="is_open_rviz" default="true"/>
-    <arg name="load_chassis" default="true"/>
-    <arg name="roller_type" default="realistic" doc="simple or realistic"/>
+  <arg name="is_open_rviz" default="true"/>
+  <arg name="load_chassis" default="true"/>
+  <arg name="roller_type" default="realistic" doc="simple or realistic"/>
+  <arg name="use_simulation" default="true" />
   <!-- 若系统中没有其它 joint_states 发布者，可启用以下节点发布默认 joint_states -->
   <arg name="use_joint_state_publisher" default="true"/>
 
     <!-- robot_description 使用 package 中的 xacro，传递必要参数 -->
-  <param name="robot_description" command="$(find xacro)/xacro $(find rm_description)/urdf/sentry/sentry.urdf.xacro
-     load_chassis:=$(arg load_chassis)
-     use_simulation:=false roller_type:=$(arg roller_type)
-"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(find rm_description)/urdf/sentry/sentry.urdf.xacro load_chassis:=$(arg load_chassis) use_simulation:=$(arg use_simulation) roller_type:=$(arg roller_type)"/>
 
     <!-- 启动 gazebo，传递参数（可指定 world_name） -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">

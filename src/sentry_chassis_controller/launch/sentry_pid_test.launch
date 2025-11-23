@@ -1,0 +1,12 @@
+<launch>
+  <!-- Start simulation / TF / RViz from existing launch -->
+  <include file="$(find sentry_chassis_controller)/launch/sentry_with_tf.launch" />
+
+  <!-- Load PID parameter defaults for the controller -->
+  <rosparam file="$(find sentry_chassis_controller)/config/wheel_pid_params.yaml" command="load" />
+
+  <!-- Spawn the controller via controller_manager spawner -->
+  <node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"
+        args="wheel_pid_controller sentry_chassis_controller/WheelPidController" />
+
+</launch>

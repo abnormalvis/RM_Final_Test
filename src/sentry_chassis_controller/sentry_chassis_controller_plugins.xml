@@ -1,0 +1,11 @@
+<library path="lib/libsentry_chassis_controller">
+
+  <class name="sentry_chassis_controller/WheelPidController"
+         type="sentry_chassis_controller::WheelPidController"
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      Wheel PID controller for sentry chassis (4 pivots + 4 wheel velocity PIDs).
+    </description>
+  </class>
+
+</library>
