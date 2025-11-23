@@ -1,4 +1,7 @@
 wheel_pid_controller:
+  # Controller type so the controller_spawner can load it from the
+  # parameter server if needed. Matches plugin XML/class name.
+  type: "sentry_chassis_controller/WheelPidController"
   wheel_track: 0.36
   wheel_base: 0.36
   pivot:

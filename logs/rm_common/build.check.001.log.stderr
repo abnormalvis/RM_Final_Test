@@ -1,0 +1,6 @@
+[33m[1mCMake Warning[0m at /home/idris/final_ws/src/rm_control/rm_common/CMakeLists.txt:71 (message):
+  IMU filter packages not found; skipping src/filter/*.cpp.  If you need IMU
+  filters, install imu_complementary_filter or imu_filter_madgwick and
+  rebuild.
+
+
