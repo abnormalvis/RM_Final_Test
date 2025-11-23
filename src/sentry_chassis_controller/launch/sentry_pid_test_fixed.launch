@@ -17,7 +17,9 @@
   <!-- rqt_reconfigure for dynamic PID tuning -->
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"
         output="screen" />
-
+  
+  <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" 
+        output="screen" />
     <!-- rqt_plot for visualization removed to avoid XML line-wrapping issues in the args attribute.
        If you need rqt_plot, re-add a single-line args attribute or reference a launch arg for the topics. -->
 
