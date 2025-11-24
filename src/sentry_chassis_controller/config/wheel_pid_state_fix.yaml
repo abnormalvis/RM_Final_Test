@@ -1,0 +1,105 @@
+# FIXED wheel PID controller configuration
+# This addresses the joint state reporting issue
+
+wheel_pid_controller:
+  # Controller type
+  type: "sentry_chassis_controller/WheelPidController"
+
+  # Physical defaults
+  wheel_track: 0.36
+  wheel_base: 0.36
+
+  # STATE REPORTING FIX: Ensure joint states are properly read from hardware
+  joint_state_controller:
+    publish_rate: 10  # Match forward kinematics rate
+
+  # PID Parameters for steering pivot (use URDF names!!!)
+  pivot:
+    p: 1.0
+    i: 0.0
+    d: 0.0
+    i_clamp: 0.0
+    antiwindup: 0.0
+
+  # PID Parameters for wheel drive
+  wheel:
+    p: 2.0
+    i: 0.1
+    d: 0.0
+    i_clamp: 0.0
+    antiwindup: 0.0
+
+  # Ensure controller reads actual joint states - use REAL URDF NAMES!!!
+  # This is the key fix - the controller must report actual joint positions
+  enable_state_feedback: true
+  joint_names_reported:
+    - left_front_wheel_joint
+    - right_front_wheel_joint
+    - left_back_wheel_joint
+    - right_back_wheel_joint
+    - left_front_pivot_joint
+    - right_front_pivot_joint
+    - left_back_pivot_joint
+    - right_back_pivot_joint
+
+  # Per-wheel PID configurations
+  wheels:
+    # Wheel drive PID settings (using symbolic names from config)
+    wheel_fl:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    wheel_fr:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    wheel_rl:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+    wheel_rr:
+      p: 2.0
+      i: 0.1
+      d: 0.0
+      i_clamp: 0.5
+      output_min: -10.0
+      output_max: 10.0
+
+    # Pivot steering PID settings
+    pivot_fl:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
+    pivot_fr:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
+    pivot_rl:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0
+    pivot_rr:
+      p: 1.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
+      output_min: -5.0
+      output_max: 5.0

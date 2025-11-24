@@ -1,0 +1,4 @@
+  File "/home/idris/final_ws/src/sentry_chassis_controller/scripts/debug_fk_simple.py", line 81
+    static first_pose = None
+           ^^^^^^^^^^
+SyntaxError: invalid syntax
