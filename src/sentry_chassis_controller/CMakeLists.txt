@@ -16,6 +16,9 @@ find_package(catkin REQUIRED COMPONENTS
   pluginlib
   control_toolbox
   geometry_msgs
+  nav_msgs
+  gazebo_msgs
+  tf2_ros
   dynamic_reconfigure
 )
 
@@ -112,7 +115,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS roscpp roslint sensor_msgs controller_interface hardware_interface pluginlib control_toolbox geometry_msgs
+  CATKIN_DEPENDS roscpp roslint sensor_msgs controller_interface hardware_interface pluginlib control_toolbox geometry_msgs nav_msgs gazebo_msgs tf2_ros
 )
 
 ###########
@@ -131,6 +134,7 @@ include_directories(
 ## Declare a C++ library for the controller plugin
 add_library(${PROJECT_NAME}
   src/wheel_pid_controller.cpp
+  src/inverse_kinematics.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
@@ -138,6 +142,28 @@ add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
+
+## Test publisher executable (for IK quick-check)
+add_executable(ik_test_publisher src/ik_test_publisher.cpp)
+add_dependencies(ik_test_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ik_test_publisher ${catkin_LIBRARIES})
+
+add_executable(gazebo_odom_bridge src/gazebo_odom_bridge.cpp)
+add_dependencies(gazebo_odom_bridge ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(gazebo_odom_bridge ${catkin_LIBRARIES})
+
+add_executable(forward_kinematics_node src/forward_kinematics_node.cpp)
+add_dependencies(forward_kinematics_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(forward_kinematics_node ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
+
+add_executable(forward_kinematics src/forward_kinematics.cpp)
+add_dependencies(forward_kinematics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(forward_kinematics ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
+
+## C++ keyboard teleop node (replicates sentry_sim/sentry_controller behavior)
+add_executable(sentry_control_key src/sentry_control_key.cpp)
+add_dependencies(sentry_control_key ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sentry_control_key ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

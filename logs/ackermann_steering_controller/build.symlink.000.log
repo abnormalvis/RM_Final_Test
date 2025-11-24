@@ -1,0 +1,5 @@
+Symlinking /home/idris/final_ws/devel/lib/libackermann_steering_controller.so
+Symlinking /home/idris/final_ws/devel/lib/ackermann_steering_controller/ackermann_steering_controller_ackermann_steering_bot
+Symlinking /home/idris/final_ws/devel/lib/pkgconfig/ackermann_steering_controller.pc
+Symlinking /home/idris/final_ws/devel/share/ackermann_steering_controller/cmake/ackermann_steering_controllerConfig-version.cmake
+Symlinking /home/idris/final_ws/devel/share/ackermann_steering_controller/cmake/ackermann_steering_controllerConfig.cmake

@@ -1,0 +1,1014 @@
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 675
+  stamp: 
+    secs: 67
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 676
+  stamp: 
+    secs: 67
+    nsecs: 601000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 677
+  stamp: 
+    secs: 67
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 678
+  stamp: 
+    secs: 67
+    nsecs: 800000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 679
+  stamp: 
+    secs: 67
+    nsecs: 900000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 680
+  stamp: 
+    secs: 68
+    nsecs:         0
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 681
+  stamp: 
+    secs: 68
+    nsecs: 100000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 682
+  stamp: 
+    secs: 68
+    nsecs: 200000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 683
+  stamp: 
+    secs: 68
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 684
+  stamp: 
+    secs: 68
+    nsecs: 401000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 685
+  stamp: 
+    secs: 68
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 686
+  stamp: 
+    secs: 68
+    nsecs: 600000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 687
+  stamp: 
+    secs: 68
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 688
+  stamp: 
+    secs: 68
+    nsecs: 800000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 689
+  stamp: 
+    secs: 68
+    nsecs: 900000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 690
+  stamp: 
+    secs: 69
+    nsecs:         0
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 691
+  stamp: 
+    secs: 69
+    nsecs: 100000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 692
+  stamp: 
+    secs: 69
+    nsecs: 200000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 693
+  stamp: 
+    secs: 69
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 694
+  stamp: 
+    secs: 69
+    nsecs: 400000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 695
+  stamp: 
+    secs: 69
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 696
+  stamp: 
+    secs: 69
+    nsecs: 600000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 697
+  stamp: 
+    secs: 69
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 698
+  stamp: 
+    secs: 69
+    nsecs: 801000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 699
+  stamp: 
+    secs: 69
+    nsecs: 900000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 700
+  stamp: 
+    secs: 70
+    nsecs:         0
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 701
+  stamp: 
+    secs: 70
+    nsecs: 100000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 702
+  stamp: 
+    secs: 70
+    nsecs: 200000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 703
+  stamp: 
+    secs: 70
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 704
+  stamp: 
+    secs: 70
+    nsecs: 400000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 705
+  stamp: 
+    secs: 70
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 706
+  stamp: 
+    secs: 70
+    nsecs: 600000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 707
+  stamp: 
+    secs: 70
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 708
+  stamp: 
+    secs: 70
+    nsecs: 802000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 709
+  stamp: 
+    secs: 70
+    nsecs: 900000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 710
+  stamp: 
+    secs: 71
+    nsecs:         0
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 711
+  stamp: 
+    secs: 71
+    nsecs: 100000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 712
+  stamp: 
+    secs: 71
+    nsecs: 200000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 713
+  stamp: 
+    secs: 71
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 714
+  stamp: 
+    secs: 71
+    nsecs: 400000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 715
+  stamp: 
+    secs: 71
+    nsecs: 501000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 716
+  stamp: 
+    secs: 71
+    nsecs: 600000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 717
+  stamp: 
+    secs: 71
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 718
+  stamp: 
+    secs: 71
+    nsecs: 802000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 719
+  stamp: 
+    secs: 71
+    nsecs: 901000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 720
+  stamp: 
+    secs: 72
+    nsecs:         0
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 721
+  stamp: 
+    secs: 72
+    nsecs: 100000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 722
+  stamp: 
+    secs: 72
+    nsecs: 203000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 723
+  stamp: 
+    secs: 72
+    nsecs: 301000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 724
+  stamp: 
+    secs: 72
+    nsecs: 400000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 725
+  stamp: 
+    secs: 72
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 726
+  stamp: 
+    secs: 72
+    nsecs: 601000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 727
+  stamp: 
+    secs: 72
+    nsecs: 701000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---

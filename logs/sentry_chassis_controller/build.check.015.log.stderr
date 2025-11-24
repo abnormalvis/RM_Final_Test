@@ -1,0 +1,12 @@
+[33mWARNING: package 'gazebo_msgs' is deprecated (This package has been deprecated as of January 2025 with Gazebo classic 11 reaching[0m
+      end-of-life. Users are highly encouraged to migrate to the new Gazebo
+      using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration))
+[31m[1mCMake Error[0m at /opt/ros/noetic/share/catkin/cmake/catkin_package.cmake:196 (message):
+  catkin_package() the catkin package 'nav_msgs' has been find_package()-ed
+  but is not listed as a build dependency in the package.xml
+[36mCall Stack (most recent call first):[0m
+  /opt/ros/noetic/share/catkin/cmake/catkin_package.cmake:102 (_catkin_package)
+  CMakeLists.txt:115 (catkin_package)
+
+
+make: *** [Makefile:1254：cmake_check_build_system] 错误 1

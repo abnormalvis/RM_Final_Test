@@ -1,0 +1,16 @@
+<launch>
+	<!-- Include the standard simulation + controllers launch so the controller_manager and robot are started -->
+	<include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
+
+	<!-- Start a small test publisher that sends /cmd_vel for the controller to consume -->
+	<node pkg="sentry_chassis_controller" type="ik_test_publisher" name="ik_test_publisher" output="screen"/>
+
+		<!-- Start the gazebo->odom bridge so RViz can visualize base_link pose -->
+    <node pkg="sentry_chassis_controller" type="gazebo_odom_bridge" name="gazebo_odom_bridge" output="screen">
+        <param name="model_name" value="sentry"/>
+        <param name="base_link_frame" value="base_link"/>
+        <param name="odom_frame" value="odom"/>
+    </node>
+
+	<!-- For inspection: you can run 'rostopic echo /desired_wheel_states' to see the IK outputs -->
+</launch>
