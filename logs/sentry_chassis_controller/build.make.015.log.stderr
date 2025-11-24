@@ -1,0 +1,8 @@
+/usr/bin/ld: CMakeFiles/gazebo_odom_bridge.dir/src/gazebo_odom_bridge.cpp.o: in function `main::{lambda(boost::shared_ptr<gazebo_msgs::ModelStates_<std::allocator<void> > const> const&)#1}::operator()(boost::shared_ptr<gazebo_msgs::ModelStates_<std::allocator<void> > const> const&) const':
+gazebo_odom_bridge.cpp:(.text+0x3d0): undefined reference to `tf2_ros::TransformBroadcaster::sendTransform(geometry_msgs::TransformStamped_<std::allocator<void> > const&)'
+/usr/bin/ld: CMakeFiles/gazebo_odom_bridge.dir/src/gazebo_odom_bridge.cpp.o: in function `main':
+gazebo_odom_bridge.cpp:(.text+0xa0c): undefined reference to `tf2_ros::TransformBroadcaster::TransformBroadcaster()'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/gazebo_odom_bridge.dir/build.make:113：/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/gazebo_odom_bridge] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:250：CMakeFiles/gazebo_odom_bridge.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

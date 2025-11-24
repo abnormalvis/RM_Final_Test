@@ -19,7 +19,7 @@
   <arg name="use_joint_state_publisher" default="true"/>
 
     <!-- robot_description 使用 package 中的 xacro，传递必要参数 -->
-  <param name="robot_description" command="$(find xacro)/xacro $(find rm_description)/urdf/sentry/sentry.urdf.xacro load_chassis:=$(arg load_chassis) use_simulation:=$(arg use_simulation) roller_type:=$(arg roller_type)"/>
+  <param name="robot_description" command="$(find xacro)/xacro /home/idris/final_ws/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro load_chassis:=$(arg load_chassis) use_simulation:=$(arg use_simulation) roller_type:=$(arg roller_type)"/>
 
     <!-- 启动 gazebo，传递参数（可指定 world_name） -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
