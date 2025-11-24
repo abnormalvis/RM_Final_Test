@@ -135,7 +135,6 @@ include_directories(
 add_library(${PROJECT_NAME}
   src/wheel_pid_controller.cpp
   src/inverse_kinematics.cpp
-  src/forward_kinematics.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
@@ -156,6 +155,15 @@ target_link_libraries(gazebo_odom_bridge ${catkin_LIBRARIES})
 add_executable(forward_kinematics_node src/forward_kinematics_node.cpp)
 add_dependencies(forward_kinematics_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(forward_kinematics_node ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
+
+add_executable(forward_kinematics src/forward_kinematics.cpp)
+add_dependencies(forward_kinematics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(forward_kinematics ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
+
+## C++ keyboard teleop node (replicates sentry_sim/sentry_controller behavior)
+add_executable(sentry_control_key src/sentry_control_key.cpp)
+add_dependencies(sentry_control_key ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sentry_control_key ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

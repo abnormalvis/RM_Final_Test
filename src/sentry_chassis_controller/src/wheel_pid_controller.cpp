@@ -1,6 +1,3 @@
-// Minimal wheel PID controller using control_toolbox::Pid and exported as a plugin
-// Implementation is based on the simple_chassis_controller pattern: 4 pivot PIDs (position) and 4 wheel PIDs (velocity)
-
 #include "sentry_chassis_controller/wheel_pid_controller.hpp"
 #include <pluginlib/class_list_macros.hpp>
 #include <string>

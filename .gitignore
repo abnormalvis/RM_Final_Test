@@ -5,6 +5,7 @@
 /src/rm_control/
 /src/ros_controllers/
 /src/sentry_sim/
+/src/sentry_chassis_controller/bags
 /devel/
 /.vscode/
 /build/

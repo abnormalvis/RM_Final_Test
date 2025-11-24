@@ -42,6 +42,12 @@ private:
     void jointStatesCB(const sensor_msgs::JointState::ConstPtr &msg)
     {
         ros::Time now = msg->header.stamp.isZero() ? ros::Time::now() : msg->header.stamp;
+
+        // protect against large/negative dt on first callback or out-of-order stamps
+        if (last_time_.isZero() || last_time_ > now)
+        {
+            last_time_ = now;
+        }
         double dt = (now - last_time_).toSec();
         if (dt <= 0.0)
             dt = 1e-3;
@@ -50,6 +56,21 @@ private:
         std::unordered_map<std::string, size_t> idx;
         for (size_t i = 0; i < msg->name.size(); ++i)
             idx[msg->name[i]] = i;
+
+        // quick check: are expected wheel joints present?
+        int found_wheels = 0;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (idx.find(wheel_joint_names_[i]) != idx.end())
+                ++found_wheels;
+        }
+        if (found_wheels == 0)
+        {
+            ROS_WARN_THROTTLE(5.0, "forward_kinematics: no wheel joints found in /joint_states (names: %lu)", msg->name.size());
+            // still update last_time_ to avoid dt blowup
+            last_time_ = now;
+            return;
+        }
 
         // read per-wheel linear velocities and steer angles
         Eigen::VectorXd b(4);
@@ -63,8 +84,29 @@ private:
             if (idx.find(wheel_joint_names_[i]) != idx.end())
             {
                 size_t j = idx[wheel_joint_names_[i]];
+                // prefer velocity if available
                 if (j < msg->velocity.size())
+                {
                     wheel_vel = msg->velocity[j];
+                }
+                else if (j < msg->position.size())
+                {
+                    // fallback: estimate angular velocity from position difference
+                    double cur_pos = msg->position[j];
+                    auto it = prev_wheel_pos_.find(wheel_joint_names_[i]);
+                    if (it != prev_wheel_pos_.end())
+                    {
+                        double prev = it->second;
+                        double delta = cur_pos - prev;
+                        // simple unwrap if crossing +/-pi (optional)
+                        if (delta > M_PI)
+                            delta -= 2.0 * M_PI;
+                        else if (delta < -M_PI)
+                            delta += 2.0 * M_PI;
+                        wheel_vel = delta / dt;
+                    }
+                    prev_wheel_pos_[wheel_joint_names_[i]] = cur_pos;
+                }
             }
             if (idx.find(pivot_joint_names_[i]) != idx.end())
             {
@@ -111,11 +153,37 @@ private:
         odom.pose.pose.position.x = x_;
         odom.pose.pose.position.y = y_;
         odom.pose.pose.position.z = 0.0;
-        odom.pose.pose.orientation.z = std::sin(yaw_ * 0.5);
-        odom.pose.pose.orientation.w = std::cos(yaw_ * 0.5);
+        // full quaternion (assume planar robot)
+        double half_yaw = yaw_ * 0.5;
+        odom.pose.pose.orientation.x = 0.0;
+        odom.pose.pose.orientation.y = 0.0;
+        odom.pose.pose.orientation.z = std::sin(half_yaw);
+        odom.pose.pose.orientation.w = std::cos(half_yaw);
         odom.twist.twist.linear.x = vx;
         odom.twist.twist.linear.y = vy;
         odom.twist.twist.angular.z = wz;
+
+        // fill reasonable covariances: small on x,y,yaw; large on unused axes
+        // pose.covariance and twist.covariance are 6x6 flattened row-major
+        for (size_t i = 0; i < 36; ++i)
+        {
+            odom.pose.covariance[i] = 0.0;
+            odom.twist.covariance[i] = 0.0;
+        }
+        // pose: var(x), var(y), var(z), var(roll), var(pitch), var(yaw)
+        odom.pose.covariance[0] = 1e-3;  // x
+        odom.pose.covariance[7] = 1e-3;  // y
+        odom.pose.covariance[14] = 1e9;  // z (unused)
+        odom.pose.covariance[21] = 1e9;  // roll
+        odom.pose.covariance[28] = 1e9;  // pitch
+        odom.pose.covariance[35] = 1e-2; // yaw
+        // twist: var(vx), var(vy), var(vz), var(v_roll), var(v_pitch), var(v_yaw)
+        odom.twist.covariance[0] = 1e-3;  // vx
+        odom.twist.covariance[7] = 1e-3;  // vy
+        odom.twist.covariance[14] = 1e9;  // vz
+        odom.twist.covariance[21] = 1e9;  // v_roll
+        odom.twist.covariance[28] = 1e9;  // v_pitch
+        odom.twist.covariance[35] = 1e-2; // v_yaw
 
         odom_pub_.publish(odom);
 
@@ -141,6 +209,9 @@ private:
     double wheel_base_, wheel_track_, wheel_radius_;
     std::string odom_frame_, base_link_frame_;
     std::vector<std::string> wheel_joint_names_, pivot_joint_names_;
+
+    // store previous wheel positions to estimate velocity when velocity[] is absent
+    std::unordered_map<std::string, double> prev_wheel_pos_;
 
     double x_, y_, yaw_;
     ros::Time last_time_;

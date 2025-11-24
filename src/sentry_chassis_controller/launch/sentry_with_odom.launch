@@ -1,17 +1,29 @@
 <launch>
+  <!-- Launch args for rosbag recording -->
+  <arg name="bag_topic" default="/odom"/>
+  <arg name="bag_dir" default="/home/idris/final_ws/src/sentry_chassis_controller/bags"/>
+
   <!-- Start full simulation + controllers -->
   <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
 
   <!-- Start forward kinematics node to compute odometry from joint_states -->
-  <node pkg="sentry_chassis_controller" type="forward_kinematics_node" name="forward_kinematics_node" output="screen">
+  <node pkg="sentry_chassis_controller" type="forward_kinematics" name="forward_kinematics" output="screen">
     <param name="wheel_base" value="0.36"/>
     <param name="wheel_track" value="0.36"/>
     <param name="wheel_radius" value="0.05"/>
-    <!-- optionally override joint names if different -->
-    <!--
-    <param name="wheel_joints" value="['left_front_wheel_joint','right_front_wheel_joint','left_back_wheel_joint','right_back_wheel_joint']"/>
-    <param name="pivot_joints" value="['left_front_pivot_joint','right_front_pivot_joint','left_back_pivot_joint','right_back_pivot_joint']"/>
-    -->
   </node>
+
+  <!-- C++ keyboard teleop (alternate) -->
+  <node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
+    <param name="cmd_vel_topic" value="/cmd_vel"/>
+    <param name="velocity_linear" value="1"/>
+    <param name="velocity_angular" value="1"/>
+  </node>
+
+  <!-- rosbag record launched by roslaunch, configurable via args -->
+  <!-- Ensure bag dir exists and then start rosbag recording (uses bash -lc to run mkdir + rosbag) -->
+  <!-- node pkg="rosbag" type="record" name="rosbag_record" output="screen" launch-prefix="/bin/bash -lc">
+    <args>mkdir -p $(arg bag_dir) && rosbag record -O $(arg bag_dir)/odom $(arg bag_topic)</args>
+  </node> -->
 
 </launch>
