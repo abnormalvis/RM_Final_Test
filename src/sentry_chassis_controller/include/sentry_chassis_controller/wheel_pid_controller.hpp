@@ -37,7 +37,7 @@ namespace sentry_chassis_controller
         // parameters
         double wheel_track_{0.36};
         double wheel_base_{0.36};
-    double wheel_radius_{0.05};
+      double wheel_radius_{0.05};
 
         // desired commands
         double pivot_cmd_[4]{}; // desired pivot angles for 4 modules
@@ -45,12 +45,15 @@ namespace sentry_chassis_controller
 
         // cmd_vel subscriber
         ros::Subscriber cmd_vel_sub_;
-    // publisher for desired commands (for testing/inspection)
-    ros::Publisher desired_pub_;
+      // publisher for desired commands (for testing/inspection)
+      ros::Publisher desired_pub_;
+      // NEW: publisher for actual joint states (CRITICAL FIX)
+      ros::Publisher joint_states_pub_;
+      ros::Time last_state_pub_; // timestamp tracking for joint states
 
-    // dynamic_reconfigure server
-    typedef sentry_chassis_controller::WheelPidConfig Config;
-    std::shared_ptr<dynamic_reconfigure::Server<Config>> dyn_server_;
+      // dynamic_reconfigure server
+      typedef sentry_chassis_controller::WheelPidConfig Config;
+      std::shared_ptr<dynamic_reconfigure::Server<Config>> dyn_server_;
     void reconfigureCallback(Config &config, uint32_t level);
 
         void cmdVelCallback(const geometry_msgs::TwistConstPtr &msg);
