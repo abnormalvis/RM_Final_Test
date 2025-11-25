@@ -2,6 +2,7 @@ Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/libse
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics_node, /home/idris/final_ws/devel/lib/sentry_chassis_controller/forward_kinematics_node)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/ik_test_publisher, /home/idris/final_ws/devel/lib/sentry_chassis_controller/ik_test_publisher)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/gazebo_odom_bridge, /home/idris/final_ws/devel/lib/sentry_chassis_controller/gazebo_odom_bridge)
+Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics, /home/idris/final_ws/devel/lib/sentry_chassis_controller/forward_kinematics)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key, /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/__init__.py, /home/idris/final_ws/devel/lib/python3/dist-packages/sentry_chassis_controller/__init__.py)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/cfg/__init__.py, /home/idris/final_ws/devel/lib/python3/dist-packages/sentry_chassis_controller/cfg/__init__.py)
