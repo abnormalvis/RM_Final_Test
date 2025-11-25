@@ -20,6 +20,6 @@
 
 8. 集成了 `rqt_plot` `rqt_reconfigure` 插件到新的launch文件 `sentry_pid_test_fix.launch` 中，并成功在 `rqt` 中查看参数，能够支持动态调整参数。
 
-9. ![运行时发现rqt_plot无法正常显示数据，通过解决环境依赖的问题，并重新编译，成功运行，同时rqt_reconfigure插件也成功运行。](src/sentry_chassis_controller/pictures/rqt_reconfigure_plot_demo.png)
+9. 运行时发现rqt_plot无法正常显示数据，通过解决环境依赖的问题，并重新编译，成功运行，同时rqt_reconfigure插件也成功运行。![](src/sentry_chassis_controller/pictures/rqt_reconfigure_plot_demo.png)
 
-10. 正在测试运动学正逆解算 `forward_kinematics.cpp` `inverse_kinematics.cpp`
+10. 运动学正逆解算 `forward_kinematics.cpp` `inverse_kinematics.cpp` 测试完毕。现在可以通过键盘控制节点在仿真中控制底盘运动，同时通过rosbag的记录功能，记录/odom话题数据，在 `plotjuggler` 中回放查看数据，并完成数据可视化。![](src/sentry_chassis_controller/pictures/sentry_with_odom_running.png)
