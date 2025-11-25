@@ -1,6 +1,4 @@
-// Improved keyboard teleop based on learning notes.
-// Supports WASD for x/y strafing, Q/E for rotation, Shift+WASD for run, 'c' to stop.
-
+// 支持 W/A/S/D 键进行前后左右平移，Q/E 键进行左右转向，，c 键停止，Ctrl-C 退出程序
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <signal.h>
@@ -140,12 +138,12 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        // default stop for this key iteration
-        double lin = 0.0, lat = 0.0, ang = 0.0;
-        double lin_speed = walk_vel;
-        double ang_speed = yaw_rate;
+        // 持久化当前运动状态：按键只改变对应分量，允许平移与自转叠加
+        static double cur_lin = 0.0;
+        static double cur_lat = 0.0;
+        static double cur_ang = 0.0;
 
-        // handle uppercase (Shift) -> boost speeds
+        // handle uppercase (Shift) -> boost speeds for this key press
         bool shifted = false;
         if (c >= 'A' && c <= 'Z')
             shifted = true;
@@ -155,36 +153,34 @@ void TeleopTurtle::keyLoop()
         if (shifted)
             lower = c - 'A' + 'a';
 
-        if (shifted)
-        {
-            lin_speed = run_vel;
-            ang_speed = yaw_rate_run;
-        }
+        double lin_speed_use = shifted ? run_vel : walk_vel;
+        double ang_speed_use = shifted ? yaw_rate_run : yaw_rate;
 
         switch (lower)
         {
         case 'w':
-            lin = 1.0;
+            cur_lin = lin_speed_use;
             break; // forward
         case 's':
-            lin = -1.0;
+            cur_lin = -lin_speed_use;
             break; // back
         case 'a':
-            lat = 1.0;
+            cur_lat = lin_speed_use;
             break; // left strafe
         case 'd':
-            lat = -1.0;
+            cur_lat = -lin_speed_use;
             break; // right strafe
         case 'q':
-            ang = 1.0;
+            cur_ang = ang_speed_use;
             break; // turn left
         case 'e':
-            ang = -1.0;
+            cur_ang = -ang_speed_use;
             break; // turn right
         case 'c':
-            lin = 0.0;
-            lat = 0.0;
-            ang = 0.0;
+            // stop all motion
+            cur_lin = 0.0;
+            cur_lat = 0.0;
+            cur_ang = 0.0;
             break;   // stop
         case '\x03': // ctrl-c
             quit(0);
@@ -194,9 +190,9 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        twist.linear.x = lin * lin_speed;
-        twist.linear.y = lat * lin_speed;
-        twist.angular.z = ang * ang_speed;
+        twist.linear.x = cur_lin;
+        twist.linear.y = cur_lat;
+        twist.angular.z = cur_ang;
 
         twist_pub_.publish(twist);
         rate.sleep();
