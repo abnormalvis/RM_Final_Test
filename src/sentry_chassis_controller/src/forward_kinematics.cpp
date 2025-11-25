@@ -103,8 +103,56 @@ private:
 
         if (found_wheels == 0)
         {
-            ROS_WARN_THROTTLE(5.0, "forward_kinematics: no wheel joints found in /joint_states (names: %lu)", msg->name.size());
-            // still update last_time_ to avoid dt blowup
+            ROS_WARN_THROTTLE(5.0, "forward_kinematics: no wheel joints found in /joint_states (names: %lu). Publishing cached odom/tf to keep TF alive.", msg->name.size());
+            // Publish cached odom and TF so the transform remains available for other nodes (teleop, etc.).
+            nav_msgs::Odometry odom;
+            odom.header.stamp = now;
+            odom.header.frame_id = odom_frame_;
+            odom.child_frame_id = base_link_frame_;
+            odom.pose.pose.position.x = x_;
+            odom.pose.pose.position.y = y_;
+            odom.pose.pose.position.z = 0.0;
+            double half_yaw = yaw_ * 0.5;
+            odom.pose.pose.orientation.x = 0.0;
+            odom.pose.pose.orientation.y = 0.0;
+            odom.pose.pose.orientation.z = std::sin(half_yaw);
+            odom.pose.pose.orientation.w = std::cos(half_yaw);
+            // zero twist since we have no fresh wheel data
+            odom.twist.twist.linear.x = 0.0;
+            odom.twist.twist.linear.y = 0.0;
+            odom.twist.twist.angular.z = 0.0;
+            // copy covariances similar to normal publish
+            for (size_t i = 0; i < 36; ++i)
+            {
+                odom.pose.covariance[i] = 0.0;
+                odom.twist.covariance[i] = 0.0;
+            }
+            odom.pose.covariance[0] = 1e-3;
+            odom.pose.covariance[7] = 1e-3;
+            odom.pose.covariance[14] = 1e9;
+            odom.pose.covariance[21] = 1e9;
+            odom.pose.covariance[28] = 1e9;
+            odom.pose.covariance[35] = 1e-2;
+            odom.twist.covariance[0] = 1e-3;
+            odom.twist.covariance[7] = 1e-3;
+            odom.twist.covariance[14] = 1e9;
+            odom.twist.covariance[21] = 1e9;
+            odom.twist.covariance[28] = 1e9;
+            odom.twist.covariance[35] = 1e-2;
+
+            odom_pub_.publish(odom);
+
+            geometry_msgs::TransformStamped t;
+            t.header.stamp = now;
+            t.header.frame_id = odom_frame_;
+            t.child_frame_id = base_link_frame_;
+            t.transform.translation.x = x_;
+            t.transform.translation.y = y_;
+            t.transform.translation.z = 0.0;
+            t.transform.rotation = odom.pose.pose.orientation;
+            tf_broadcaster_.sendTransform(t);
+
+            // update last_time_ so dt remains reasonable
             last_time_ = now;
             return;
         }

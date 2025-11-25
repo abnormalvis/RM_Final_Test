@@ -11,6 +11,12 @@
 #include <unistd.h>
 #endif
 #include <poll.h>
+#include <nav_msgs/Odometry.h>
+#include <geometry_msgs/TwistStamped.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_ros/buffer.h>
+#include <tf2/exceptions.h>
+#include <cmath>
 
 struct TermiosGuard
 {
@@ -47,12 +53,22 @@ class TeleopTurtle
 public:
     TeleopTurtle();
     void keyLoop();
+    void odomCb(const nav_msgs::Odometry::ConstPtr &msg);
 
 private:
     ros::NodeHandle nh_;
     ros::NodeHandle nhPrivate_ = ros::NodeHandle("~");
     ros::Publisher twist_pub_;
+    ros::Publisher twist_stamped_pub_;
+    bool publish_zero_when_idle_ = true;
     std::string cmd_vel_topic_;
+    std::string cmd_vel_stamped_topic_;
+    // TF lookup objects
+    std::unique_ptr<tf2_ros::Buffer> tfBuffer_;
+    std::unique_ptr<tf2_ros::TransformListener> tfListener_;
+    double yaw_ = 0.0;
+    bool field_centric_ = true; // 当为 true 时，键盘输入表示世界坐标系下的方向，旋转不影响平移方向
+    bool spinning_top_mode_ = false; // 小陀螺模式开关
 };
 
 TermiosGuard term_guard;
@@ -60,7 +76,13 @@ TermiosGuard term_guard;
 TeleopTurtle::TeleopTurtle()
 {
     nhPrivate_.param("cmd_vel_topic", cmd_vel_topic_, std::string("/cmd_vel"));
+    nhPrivate_.param("cmd_vel_stamped_topic", cmd_vel_stamped_topic_, std::string("/cmd_vel_stamped"));
+    nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
     twist_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
+    twist_stamped_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(cmd_vel_stamped_topic_, 1);
+    // TF buffer & listener for odom->base_link lookup
+    tfBuffer_.reset(new tf2_ros::Buffer(ros::Duration(10)));
+    tfListener_.reset(new tf2_ros::TransformListener(*tfBuffer_));
 }
 
 void quit(int sig)
@@ -86,7 +108,7 @@ int main(int argc, char **argv)
 
 void TeleopTurtle::keyLoop()
 {
-    puts("Reading from keyboard (WASD to move, Q/E rotate, Shift+WASD run, c stop, Ctrl-C quit)");
+    puts("Reading from keyboard (WASD to move, Q/E rotate, Shift+WASD run, c stop, f toggle field-centric, t toggle spinning-top, Ctrl-C quit)");
     term_guard.setup();
 
     // parameters for speeds
@@ -126,7 +148,14 @@ void TeleopTurtle::keyLoop()
         if (num == 0)
         {
             // timeout: publish current twist (may be zero)
-            twist_pub_.publish(twist);
+                if (publish_zero_when_idle_) {
+                    twist_pub_.publish(twist);
+                } else {
+                    // If configured to not publish zero when idle, only publish if any component is non-zero
+                    if (std::abs(twist.linear.x) > 1e-9 || std::abs(twist.linear.y) > 1e-9 || std::abs(twist.angular.z) > 1e-9) {
+                        twist_pub_.publish(twist);
+                    } // else skip publishing to avoid topic contention when idle
+                }
             rate.sleep();
             continue;
         }
@@ -139,9 +168,14 @@ void TeleopTurtle::keyLoop()
         }
 
         // 持久化当前运动状态：按键只改变对应分量，允许平移与自转叠加
-        static double cur_lin = 0.0;
-        static double cur_lat = 0.0;
-        static double cur_ang = 0.0;
+        static double cur_lin_world = 0.0; // 当 field-centric 时，保存世界坐标系下的速度
+        static double cur_lat_world = 0.0;
+        static double cur_ang = 0.0;       // 角速度仍然按机体角速度发送
+
+        // 小陀螺模式专用变量
+        static double translation_magnitude = 0.0; // 平移速度大小
+        static double translation_angle = 0.0;     // 平移方向角（相对于底盘初始方向）
+        static bool translation_active = false;    // 是否处于平移状态
 
         // handle uppercase (Shift) -> boost speeds for this key press
         bool shifted = false;
@@ -159,16 +193,50 @@ void TeleopTurtle::keyLoop()
         switch (lower)
         {
         case 'w':
-            cur_lin = lin_speed_use;
+            if (spinning_top_mode_) {
+                // 小陀螺模式：更新平移方向和大小
+                double vx = lin_speed_use;  // 前向
+                double vy = 0;
+                translation_magnitude = std::hypot(vx, vy);
+                translation_angle = std::atan2(vy, vx);
+                translation_active = (translation_magnitude > 0);
+            } else {
+                // 将按键解释为在世界坐标系的前向命令（cur_lin_world）
+                cur_lin_world = lin_speed_use;
+            }
             break; // forward
         case 's':
-            cur_lin = -lin_speed_use;
+            if (spinning_top_mode_) {
+                double vx = -lin_speed_use;  // 后向
+                double vy = 0;
+                translation_magnitude = std::hypot(vx, vy);
+                translation_angle = std::atan2(vy, vx);
+                translation_active = (translation_magnitude > 0);
+            } else {
+                cur_lin_world = -lin_speed_use;
+            }
             break; // back
         case 'a':
-            cur_lat = lin_speed_use;
+            if (spinning_top_mode_) {
+                double vx = 0;
+                double vy = lin_speed_use;  // 左向
+                translation_magnitude = std::hypot(vx, vy);
+                translation_angle = std::atan2(vy, vx);
+                translation_active = (translation_magnitude > 0);
+            } else {
+                cur_lat_world = lin_speed_use;
+            }
             break; // left strafe
         case 'd':
-            cur_lat = -lin_speed_use;
+            if (spinning_top_mode_) {
+                double vx = 0;
+                double vy = -lin_speed_use;  // 右向
+                translation_magnitude = std::hypot(vx, vy);
+                translation_angle = std::atan2(vy, vx);
+                translation_active = (translation_magnitude > 0);
+            } else {
+                cur_lat_world = -lin_speed_use;
+            }
             break; // right strafe
         case 'q':
             cur_ang = ang_speed_use;
@@ -178,10 +246,43 @@ void TeleopTurtle::keyLoop()
             break; // turn right
         case 'c':
             // stop all motion
-            cur_lin = 0.0;
-            cur_lat = 0.0;
+            if (spinning_top_mode_) {
+                // 小陀螺模式：只停止平移，保持自转
+                translation_magnitude = 0.0;
+                translation_angle = 0.0;
+                translation_active = false;
+            } else {
+                // 普通模式：停止所有运动
+                cur_lin_world = 0.0;
+                cur_lat_world = 0.0;
+            }
             cur_ang = 0.0;
             break;   // stop
+        case 'f':
+            // 切换 field-centric 模式
+            field_centric_ = !field_centric_;
+            ROS_INFO("Field-centric mode: %s", field_centric_ ? "ON" : "OFF");
+            break;
+        case 't':
+            // 切换小陀螺模式
+            spinning_top_mode_ = !spinning_top_mode_;
+            if (spinning_top_mode_) {
+                // 进入小陀螺模式：转换当前速度到极坐标
+                double cur_vx = cur_lin_world;
+                double cur_vy = cur_lat_world;
+                translation_magnitude = std::hypot(cur_vx, cur_vy);
+                translation_angle = std::atan2(cur_vy, cur_vx);
+                translation_active = (translation_magnitude > 0);
+                ROS_INFO("Spinning-top mode: ON (translation locked at %.2f m/s, %.2f deg)",
+                         translation_magnitude, translation_angle * 180.0 / M_PI);
+            } else {
+                // 退出小陀螺模式：转换极坐标回笛卡尔坐标
+                cur_lin_world = translation_magnitude * std::cos(translation_angle);
+                cur_lat_world = translation_magnitude * std::sin(translation_angle);
+                translation_active = false;
+                ROS_INFO("Spinning-top mode: OFF");
+            }
+            break;
         case '\x03': // ctrl-c
             quit(0);
             break;
@@ -190,14 +291,114 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        twist.linear.x = cur_lin;
-        twist.linear.y = cur_lat;
-        twist.angular.z = cur_ang;
+        // Update yaw via TF lookup (odom -> base_link) for more robust, low-latency yaw
+        if (tfBuffer_)
+        {
+            try
+            {
+                geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform("odom", "base_link", ros::Time(0), ros::Duration(0.05));
+                const auto &q = tfst.transform.rotation;
+                double qw = q.w;
+                double qx = q.x;
+                double qy = q.y;
+                double qz = q.z;
+                yaw_ = std::atan2(2.0 * (qw * qz + qx * qy), 1.0 - 2.0 * (qy * qy + qz * qz));
+            }
+            catch (const tf2::TransformException &ex)
+            {
+                ROS_WARN_THROTTLE(5, "TF lookup odom->base_link failed: %s", ex.what());
+                // keep previous yaw_
+            }
+        }
 
-        twist_pub_.publish(twist);
+        // Publish a stamped Twist that encodes the requested velocity in the world frame (header.frame_id = "odom")
+        geometry_msgs::TwistStamped stamped;
+        stamped.header.stamp = ros::Time::now();
+        stamped.header.frame_id = "odom";
+
+        // compute world-frame requested velocities for the stamped message
+        if (spinning_top_mode_)
+        {
+            if (translation_active)
+            {
+                double v_world_x = translation_magnitude * std::cos(translation_angle);
+                double v_world_y = translation_magnitude * std::sin(translation_angle);
+                stamped.twist.linear.x = v_world_x;
+                stamped.twist.linear.y = v_world_y;
+            }
+            else
+            {
+                stamped.twist.linear.x = 0.0;
+                stamped.twist.linear.y = 0.0;
+            }
+            stamped.twist.angular.z = cur_ang; // requested yaw rate
+        }
+        else
+        {
+            stamped.twist.linear.x = cur_lin_world;
+            stamped.twist.linear.y = cur_lat_world;
+            stamped.twist.angular.z = cur_ang;
+        }
+
+        // publish stamped world-request
+        twist_stamped_pub_.publish(stamped);
+
+        // 根据 field_centric_ 将世界速度转换到机体速度并发布到 /cmd_vel（保持与控制器兼容）
+        if (spinning_top_mode_)
+        {
+            if (translation_active)
+            {
+                double v_world_x = stamped.twist.linear.x;
+                double v_world_y = stamped.twist.linear.y;
+                if (field_centric_)
+                {
+                    double vbx = cos(yaw_) * v_world_x + sin(yaw_) * v_world_y;
+                    double vby = -sin(yaw_) * v_world_x + cos(yaw_) * v_world_y;
+                    twist.linear.x = vbx;
+                    twist.linear.y = vby;
+                }
+                else
+                {
+                    twist.linear.x = v_world_x;
+                    twist.linear.y = v_world_y;
+                }
+            }
+            else
+            {
+                twist.linear.x = 0;
+                twist.linear.y = 0;
+            }
+            twist.angular.z = cur_ang;
+        }
+        else
+        {
+            if (field_centric_)
+            {
+                double vbx =  cos(yaw_) * cur_lin_world + sin(yaw_) * cur_lat_world;
+                double vby = -sin(yaw_) * cur_lin_world + cos(yaw_) * cur_lat_world;
+                twist.linear.x = vbx;
+                twist.linear.y = vby;
+            }
+            else
+            {
+                twist.linear.x = cur_lin_world;
+                twist.linear.y = cur_lat_world;
+            }
+            twist.angular.z = cur_ang;
+        }
+
+        if (publish_zero_when_idle_) {
+            twist_pub_.publish(twist);
+        } else {
+            if (std::abs(twist.linear.x) > 1e-9 || std::abs(twist.linear.y) > 1e-9 || std::abs(twist.angular.z) > 1e-9) {
+                twist_pub_.publish(twist);
+            }
+        }
         rate.sleep();
     }
 
     term_guard.restore();
     return;
 }
+
+// Note: yaw is obtained via TF lookup (odom->base_link) in the main loop using tf2.

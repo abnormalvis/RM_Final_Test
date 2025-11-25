@@ -1,0 +1,1 @@
+/usr/bin/cmake -S/home/idris/final_ws/src/sentry_chassis_controller -B/home/idris/final_ws/build/sentry_chassis_controller --check-build-system CMakeFiles/Makefile.cmake 0

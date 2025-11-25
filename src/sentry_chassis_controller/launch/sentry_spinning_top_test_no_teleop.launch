@@ -1,0 +1,14 @@
+<launch>
+  <!-- Start full simulation + controllers (same base include) -->
+  <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
+
+  <!-- Start forward kinematics node to compute odometry from joint_states -->
+  <node pkg="sentry_chassis_controller" type="forward_kinematics" name="forward_kinematics" output="screen">
+    <param name="wheel_base" value="0.36"/>
+    <param name="wheel_track" value="0.36"/>
+    <param name="wheel_radius" value="0.05"/>
+  </node>
+
+  <!-- NOTE: teleop node intentionally omitted for automated test to avoid topic contention -->
+
+</launch>

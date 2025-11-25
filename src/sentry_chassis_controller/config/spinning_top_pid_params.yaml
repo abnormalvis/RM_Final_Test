@@ -1,0 +1,43 @@
+# 小陀螺模式优化PID参数配置
+# 针对舵轮在运动+旋转过程中的表现进行调优
+
+wheel_pid_controller:
+  type: "sentry_chassis_controller/WheelPidController"
+
+  # 底盘几何参数
+  wheel_track: 0.36
+  wheel_base: 0.36
+
+  # 舵轮转向控制参数 - 针对小陀螺模式优化，更快的响应
+  pivot:
+    p: 3.0        # 提升转向响应速度
+    i: 0.0
+    d: 0.2        # 增加阻尼减少震荡
+    i_clamp: 0.0
+    antiwindup: 0.0
+
+  # 驱动轮速度控制参数 - 针对持续旋转优化
+  wheel:
+    p: 4.0        # 更快的速度响应
+    i: 0.2        # 增加积分项消除稳态误差
+    d: 0.1        # 增加微分阻尼
+    i_clamp: 0.0
+    antiwindup: 0.0
+    # 限制最大输出力矩 (备用)
+    output_max: 15.0
+    output_min: -15.0
+
+  # 轮子命名顺序
+  wheel_names:
+    - wheel_fl
+    - wheel_fr
+    - wheel_rl
+    - wheel_rr
+    - pivot_fl
+    - pivot_fr
+    - pivot_rl
+    - pivot_rr
+
+  # 按需调整每个轮子的参数 (空，使用全局默认值)
+  wheels:
+    # 在小陀螺模式下所有舵轮使用相同的参数
