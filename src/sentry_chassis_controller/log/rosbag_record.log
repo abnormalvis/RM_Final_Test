@@ -1,0 +1,6 @@
+[0m[INFO] [1764079871.806424291]: Subscribing to /cmd_vel[0m
+[0m[INFO] [1764079871.811934947]: Subscribing to /cmd_vel_stamped[0m
+[0m[INFO] [1764079871.814892442]: Subscribing to /joint_states[0m
+[0m[INFO] [1764079871.817491503]: Subscribing to /odom[0m
+[0m[INFO] [1764079871.820094095]: Subscribing to /tf[0m
+[0m[INFO] [1764079872.015117573, 2359.796000000]: Recording to '/home/idris/final_ws/src/sentry_chassis_controller/log/teleop_test_with_skip_zero.bag'.[0m

@@ -1,0 +1,7 @@
+[0m[INFO] [1764079455.702919769]: Subscribing to /cmd_vel[0m
+[0m[INFO] [1764079455.705272322]: Subscribing to /cmd_vel_stamped[0m
+[0m[INFO] [1764079455.706608342]: Subscribing to /desired_wheel_states[0m
+[0m[INFO] [1764079455.707907396]: Subscribing to /joint_states[0m
+[0m[INFO] [1764079455.709627130]: Subscribing to /odom[0m
+[0m[INFO] [1764079455.712442729]: Subscribing to /tf[0m
+[0m[INFO] [1764079455.906392745, 1945.254000000]: Recording to '/home/idris/final_ws/src/sentry_chassis_controller/log/teleop_test_no_teleop.bag'.[0m
