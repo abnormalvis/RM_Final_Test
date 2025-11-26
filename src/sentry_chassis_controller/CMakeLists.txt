@@ -160,10 +160,15 @@ add_executable(forward_kinematics src/forward_kinematics.cpp)
 add_dependencies(forward_kinematics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(forward_kinematics ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
 
-## C++ keyboard teleop node (replicates sentry_sim/sentry_controller behavior)
+## Original C++ keyboard teleop node (replicates sentry_sim/sentry_controller behavior)
 add_executable(sentry_control_key src/sentry_control_key.cpp)
 add_dependencies(sentry_control_key ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sentry_control_key ${catkin_LIBRARIES})
+
+## Optimized C++ keyboard teleop node with improved performance
+add_executable(sentry_control_key_optimized src/sentry_control_key_optimized.cpp)
+add_dependencies(sentry_control_key_optimized ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sentry_control_key_optimized ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -239,9 +244,15 @@ install(FILES
 )
 
 ## Install library
+## Install executables for installation
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Install keyboard control executable
+install(TARGETS sentry_control_key sentry_control_key_optimized
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

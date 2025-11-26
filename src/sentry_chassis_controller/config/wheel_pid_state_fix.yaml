@@ -1,6 +1,3 @@
-# FIXED wheel PID controller configuration
-# This addresses the joint state reporting issue
-
 wheel_pid_controller:
   # Controller type
   type: "sentry_chassis_controller/WheelPidController"
