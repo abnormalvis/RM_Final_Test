@@ -6,95 +6,95 @@
 #include "cap.h"
 #include "protect_task.h"
 
-void ChassisFun(void const * argument) 
+void ChassisFun(void const *argument)
 {
     portTickType currentTime;
 
-    CHASSIS_InitArgument();//åˆå§‹åŒ–åº•ç›˜ç›¸å…³å‚æ•°
-    
-    while(1)
+    CHASSIS_InitArgument(); // ³õÊ¼»¯µ×ÅÌÏà¹Ø²ÎÊý
+
+    while (1)
     {
-        currentTime = xTaskGetTickCount();//å½“å‰ç³»ç»Ÿæ—¶é—´
-        if(SystemValue == Starting)
+        currentTime = xTaskGetTickCount(); // µ±Ç°ÏµÍ³Ê±¼ä
+        if (SystemValue == Starting)
         {
-            //Chassis_open_init();
-            SystemValue = Running;      //ç³»ç»Ÿåˆå§‹åŒ–ç»“æŸ
+            // Chassis_open_init();
+            SystemValue = Running; // ÏµÍ³³õÊ¼»¯½áÊø
         }
         else
         {
-            if(rc.sw2==1)//é¥æŽ§å™¨æŽ§åˆ¶
-                actChassis=CHASSIS_FOLLOW_GIMBAL;	//åº•ç›˜è·Ÿéšäº‘å°
-            else if(rc.sw2==3)
-                actChassis=CHASSIS_NORMAL;	//åº•ç›˜ä¸è·Ÿéšäº‘å°
-            else if(rc.sw2==2)
-                actChassis=CHASSIS_GYROSCOPE;		//å°é™€èžºæ¨¡å¼
+            if (rc.sw2 == 1)                        // Ò£¿ØÆ÷¿ØÖÆ
+                actChassis = CHASSIS_FOLLOW_GIMBAL; // µ×ÅÌ¸úËæÔÆÌ¨
+            else if (rc.sw2 == 3)
+                actChassis = CHASSIS_NORMAL; // µ×ÅÌ²»¸úËæÔÆÌ¨
+            else if (rc.sw2 == 2)
+                actChassis = CHASSIS_GYROSCOPE; // Ð¡ÍÓÂÝÄ£Ê½
 
             RemoteControlChassis();
             CHASSIS_Single_Loop_Out();
         }
-        vTaskDelayUntil(&currentTime, TIME_STAMP_2MS);//ç»å¯¹å»¶æ—¶
+        vTaskDelayUntil(&currentTime, TIME_STAMP_2MS); // ¾ø¶ÔÑÓÊ±
     }
 }
 
-eChassisAction actChassis=CHASSIS_NORMAL;   //é»˜è®¤åº•ç›˜è·Ÿéšäº‘å°è¡Œèµ°
+eChassisAction actChassis = CHASSIS_NORMAL; // Ä¬ÈÏµ×ÅÌ¸úËæÔÆÌ¨ÐÐ×ß
 eChassisAction actChassis_last = CHASSIS_NORMAL;
 Chassis_Speed absolute_chassis_speed;
 
 PidTypeDef Chassis_Follow_PID;
-fp32 Chassis_Follow_pid[3]= {0.004,0,0.002}; 
+fp32 Chassis_Follow_pid[3] = {0.004, 0, 0.002};
 
-int16_t chassis_3508_setspeed[4];		//å››ä¸ª3508è½®å­ç›®æ ‡è½¬é€Ÿ
-fp32 chassis_3508_speed_pid[3] = {20,0,0};
-fp32 chassis_3508_Position_nothing[3]= {0,0,0};
+int16_t chassis_3508_setspeed[4]; // ËÄ¸ö3508ÂÖ×ÓÄ¿±ê×ªËÙ
+fp32 chassis_3508_speed_pid[3] = {20, 0, 0};
+fp32 chassis_3508_Position_nothing[3] = {0, 0, 0};
 
 /**
-  * @brief  åº•ç›˜å‚æ•°åˆå§‹åŒ–
-  * @param  void
-  * @retval void
-  * @attention åªåœ¨ç³»ç»Ÿå¯åŠ¨æ—¶è°ƒç”¨ä¸€æ¬¡
-  */
+ * @brief  µ×ÅÌ²ÎÊý³õÊ¼»¯
+ * @param  void
+ * @retval void
+ * @attention Ö»ÔÚÏµÍ³Æô¶¯Ê±µ÷ÓÃÒ»´Î
+ */
 void CHASSIS_InitArgument()
 {
-    //åº•ç›˜è·Ÿéšä¸“ç”¨
+    // µ×ÅÌ¸úËæ×¨ÓÃ
     pid_init(&Chassis_Follow_PID);
-    Chassis_Follow_PID.f_param_init(&Chassis_Follow_PID,PID_POSITION,Chassis_Follow_pid,3,     0.5,     1e30,  100,   0.2,    8192,         0);
-	  
-	  //3508
-    Motor_Init2(&Chassis_Motor[0],1,chassis_3508_Position_nothing,0,0,chassis_3508_speed_pid,20000,10000);
-    Motor_Init2(&Chassis_Motor[1],2,chassis_3508_Position_nothing,0,0,chassis_3508_speed_pid,20000,10000);
-    Motor_Init2(&Chassis_Motor[2],3,chassis_3508_Position_nothing,0,0,chassis_3508_speed_pid,20000,10000);
-    Motor_Init2(&Chassis_Motor[3],4,chassis_3508_Position_nothing,0,0,chassis_3508_speed_pid,20000,10000);
+    Chassis_Follow_PID.f_param_init(&Chassis_Follow_PID, PID_POSITION, Chassis_Follow_pid, 3, 0.5, 1e30, 100, 0.2, 8192, 0);
+
+    // 3508
+    Motor_Init2(&Chassis_Motor[0], 1, chassis_3508_Position_nothing, 0, 0, chassis_3508_speed_pid, 20000, 10000);
+    Motor_Init2(&Chassis_Motor[1], 2, chassis_3508_Position_nothing, 0, 0, chassis_3508_speed_pid, 20000, 10000);
+    Motor_Init2(&Chassis_Motor[2], 3, chassis_3508_Position_nothing, 0, 0, chassis_3508_speed_pid, 20000, 10000);
+    Motor_Init2(&Chassis_Motor[3], 4, chassis_3508_Position_nothing, 0, 0, chassis_3508_speed_pid, 20000, 10000);
 }
 
 /**
-  * @brief  é¥æŽ§å™¨æŽ§åˆ¶æ–¹å¼
-  * @param  void
-  * @retval void
-  * @attention
-  */
+ * @brief  Ò£¿ØÆ÷¿ØÖÆ·½Ê½
+ * @param  void
+ * @retval void
+ * @attention
+ */
 void RemoteControlChassis(void)
 {
-    switch(actChassis) 
+    switch (actChassis)
     {
-    case CHASSIS_FOLLOW_GIMBAL://è·Ÿéšäº‘å°
-        absolute_chassis_speed.vx =(fp32)rc.ch3/300; //å‰åŽè®¡ç®—
-        absolute_chassis_speed.vy =(fp32)rc.ch4/300; //å·¦å³è®¡ç®—
-        absolute_chassis_speed.vw=-Chassis_Follow_PID.f_cal_pid(&Chassis_Follow_PID,Find_Y_AnglePNY(),0);//PIDä½¿åº•ç›˜è·Ÿéšäº‘å°é€Ÿåº¦
+    case CHASSIS_FOLLOW_GIMBAL:                                                                               // ¸úËæÔÆÌ¨
+        absolute_chassis_speed.vx = (fp32)rc.ch3 / 300;                                                       // Ç°ºó¼ÆËã
+        absolute_chassis_speed.vy = (fp32)rc.ch4 / 300;                                                       // ×óÓÒ¼ÆËã
+        absolute_chassis_speed.vw = -Chassis_Follow_PID.f_cal_pid(&Chassis_Follow_PID, Find_Y_AnglePNY(), 0); // PIDÊ¹µ×ÅÌ¸úËæÔÆÌ¨ËÙ¶È
         break;
-    case CHASSIS_NORMAL://ä¸è·Ÿéšäº‘å°
-        absolute_chassis_speed.vx=(fp32)rc.ch3/300;
-        absolute_chassis_speed.vy=(fp32)rc.ch4/300;
-        absolute_chassis_speed.vw=0;
+    case CHASSIS_NORMAL: // ²»¸úËæÔÆÌ¨
+        absolute_chassis_speed.vx = (fp32)rc.ch3 / 300;
+        absolute_chassis_speed.vy = (fp32)rc.ch4 / 300;
+        absolute_chassis_speed.vw = 0;
         break;
-    case CHASSIS_GYROSCOPE:		//å°é™€èžºæ¨¡å¼
-        absolute_chassis_speed.vx=(fp32)rc.ch3/300;
-        absolute_chassis_speed.vy=(fp32)rc.ch4/300;
-        absolute_chassis_speed.vw=-2;
+    case CHASSIS_GYROSCOPE: // Ð¡ÍÓÂÝÄ£Ê½
+        absolute_chassis_speed.vx = (fp32)rc.ch3 / 300;
+        absolute_chassis_speed.vy = (fp32)rc.ch4 / 300;
+        absolute_chassis_speed.vw = -2;
         break;
-		case CHASSIS_SLOW:		//å°é™€èžºæ¨¡å¼
-        absolute_chassis_speed.vx=0;
-        absolute_chassis_speed.vy=0;
-        absolute_chassis_speed.vw=0;
+    case CHASSIS_SLOW: // Ð¡ÍÓÂÝÄ£Ê½
+        absolute_chassis_speed.vx = 0;
+        absolute_chassis_speed.vy = 0;
+        absolute_chassis_speed.vw = 0;
         break;
     default:
         break;
@@ -102,112 +102,109 @@ void RemoteControlChassis(void)
 }
 
 /**
-  * @brief  åº•ç›˜ç”µæœºè¾“å‡º
-  * @param  void
-  * @retval void
-  * @attention
-  */
+ * @brief  µ×ÅÌµç»úÊä³ö
+ * @param  void
+ * @retval void
+ * @attention
+ */
 void CHASSIS_Single_Loop_Out()
 {
-    if(actChassis==CHASSIS_FOLLOW_GIMBAL)
+    if (actChassis == CHASSIS_FOLLOW_GIMBAL)
     {
-      Absolute_Cal(&absolute_chassis_speed,0);//è®¡ç®—å„ä¸ªç”µæœºçš„ç›®æ ‡é€Ÿåº¦
+        Absolute_Cal(&absolute_chassis_speed, 0); // ¼ÆËã¸÷¸öµç»úµÄÄ¿±êËÙ¶È
     }
     else
     {
-      Absolute_Cal(&absolute_chassis_speed,(fp32)(Gimbal_MotorYaw.motor_value->angle-GIMBAL_YAW_ENCODER_MIDDLE1)*0.043945f);//è®¡ç®—å„ä¸ªç”µæœºçš„ç›®æ ‡é€Ÿåº¦
+        Absolute_Cal(&absolute_chassis_speed, (fp32)(Gimbal_MotorYaw.motor_value->angle - GIMBAL_YAW_ENCODER_MIDDLE1) * 0.043945f); // ¼ÆËã¸÷¸öµç»úµÄÄ¿±êËÙ¶È
     }
-     Omni_Set_Motor_Speed(chassis_3508_setspeed,Chassis_Motor);//è®¾ç½®å„ä¸ªç”µæœºçš„ç›®æ ‡é€Ÿåº¦
+    Omni_Set_Motor_Speed(chassis_3508_setspeed, Chassis_Motor); // ÉèÖÃ¸÷¸öµç»úµÄÄ¿±êËÙ¶È
 
- 		 //Chassis_Power_Limit();//åŠŸçŽ‡é™åˆ¶
-    /************************************åº•ç›˜3508ç”µæœºé€Ÿåº¦çŽ¯è®¡ç®—*********************************************/
-    Chassis_Motor[0].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[0].Motor_PID_Speed,Chassis_Motor[0].motor_value->speed_rpm,
-            Chassis_Motor[0].motor_value->target_speed_rpm);
-    Chassis_Motor[1].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[1].Motor_PID_Speed,Chassis_Motor[1].motor_value->speed_rpm,
-            Chassis_Motor[1].motor_value->target_speed_rpm);
-    Chassis_Motor[2].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[2].Motor_PID_Speed,Chassis_Motor[2].motor_value->speed_rpm,
-            Chassis_Motor[2].motor_value->target_speed_rpm);
-    Chassis_Motor[3].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[3].Motor_PID_Speed,Chassis_Motor[3].motor_value->speed_rpm,
-            Chassis_Motor[3].motor_value->target_speed_rpm);
-    /************************************å°†ç”µæµå‚æ•°å‘é€ç»™ç”µæœº*********************************************/
-    set_moto1234_current(&hcan2,Chassis_Motor[0].Motor_PID_Speed.out,Chassis_Motor[1].Motor_PID_Speed.out,Chassis_Motor[2].Motor_PID_Speed.out,Chassis_Motor[3].Motor_PID_Speed.out);
+    // Chassis_Power_Limit();//¹¦ÂÊÏÞÖÆ
+    /************************************µ×ÅÌ3508µç»úËÙ¶È»·¼ÆËã*********************************************/
+    Chassis_Motor[0].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[0].Motor_PID_Speed, Chassis_Motor[0].motor_value->speed_rpm,
+                                               Chassis_Motor[0].motor_value->target_speed_rpm);
+    Chassis_Motor[1].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[1].Motor_PID_Speed, Chassis_Motor[1].motor_value->speed_rpm,
+                                               Chassis_Motor[1].motor_value->target_speed_rpm);
+    Chassis_Motor[2].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[2].Motor_PID_Speed, Chassis_Motor[2].motor_value->speed_rpm,
+                                               Chassis_Motor[2].motor_value->target_speed_rpm);
+    Chassis_Motor[3].Motor_PID_Speed.f_cal_pid(&Chassis_Motor[3].Motor_PID_Speed, Chassis_Motor[3].motor_value->speed_rpm,
+                                               Chassis_Motor[3].motor_value->target_speed_rpm);
+    /************************************½«µçÁ÷²ÎÊý·¢ËÍ¸øµç»ú*********************************************/
+    set_moto1234_current(&hcan2, Chassis_Motor[0].Motor_PID_Speed.out, Chassis_Motor[1].Motor_PID_Speed.out, Chassis_Motor[2].Motor_PID_Speed.out, Chassis_Motor[3].Motor_PID_Speed.out);
 }
-
 
 /**
-  * @brief  å°†äº‘å°åæ ‡è½¬æ¢ä¸ºåº•ç›˜åæ ‡
-  * @param  absolute_speed ç»å¯¹åæ ‡éœ€è¦çš„é€Ÿåº¦ 
-  * @param  angle äº‘å°ç›¸å¯¹äºŽåº•ç›˜çš„è§’åº¦
-  * @retval åå·®è§’ï¼Œè§’åº¦åˆ¶
-  * @attention
-  */
-void Absolute_Cal(Chassis_Speed* absolute_speed, fp32 angle)
+ * @brief  ½«ÔÆÌ¨×ø±ê×ª»»Îªµ×ÅÌ×ø±ê
+ * @param  absolute_speed ¾ø¶Ô×ø±êÐèÒªµÄËÙ¶È
+ * @param  angle ÔÆÌ¨Ïà¶ÔÓÚµ×ÅÌµÄ½Ç¶È
+ * @retval Æ«²î½Ç£¬½Ç¶ÈÖÆ
+ * @attention
+ */
+void Absolute_Cal(Chassis_Speed *absolute_speed, fp32 angle)
 {
-    fp32 angle_hd=angle* PI / 180;
+    fp32 angle_hd = angle * PI / 180;
     Chassis_Speed temp_speed;
     temp_speed.vw = absolute_speed->vw;
-    temp_speed.vx = absolute_speed->vx*cos(angle_hd)-absolute_speed->vy*sin(angle_hd);
-    temp_speed.vy = absolute_speed->vx*sin(angle_hd)+absolute_speed->vy*cos(angle_hd);
+    temp_speed.vx = absolute_speed->vx * cos(angle_hd) - absolute_speed->vy * sin(angle_hd);
+    temp_speed.vy = absolute_speed->vx * sin(angle_hd) + absolute_speed->vy * cos(angle_hd);
 
-    //ä¿è¯åº•ç›˜æ˜¯ç›¸å¯¹æ‘„åƒå¤´åšç§»åŠ¨ï¼Œå½“æ‘„åƒå¤´è½¬è¿‡90åº¦æ—¶xæ–¹å‘é€Ÿåº¦ä»Ž1å˜0ï¼Œ
-    //yæ–¹å‘é€Ÿåº¦ä»Ž0å˜1ï¼Œä¿è¯è§†è§‰ä¸Šæ˜¯ç›¸å¯¹å³ç§»
-  
-    Omni_calc(&temp_speed,chassis_3508_setspeed);
+    // ±£Ö¤µ×ÅÌÊÇÏà¶ÔÉãÏñÍ·×öÒÆ¶¯£¬µ±ÉãÏñÍ·×ª¹ý90¶ÈÊ±x·½ÏòËÙ¶È´Ó1±ä0£¬
+    // y·½ÏòËÙ¶È´Ó0±ä1£¬±£Ö¤ÊÓ¾õÉÏÊÇÏà¶ÔÓÒÒÆ
+
+    Omni_calc(&temp_speed, chassis_3508_setspeed);
 }
 
-void Omni_calc(Chassis_Speed *speed, int16_t* out_speed) 
+void Omni_calc(Chassis_Speed *speed, int16_t *out_speed)
 {
     int16_t wheel_rpm[4];
     float wheel_rpm_ratio;
 
-    wheel_rpm_ratio = 60.0f/(WHEEL_PERIMETER*3.14f)*CHASSIS_DECELE_RATIO*1000;
+    wheel_rpm_ratio = 60.0f / (WHEEL_PERIMETER * 3.14f) * CHASSIS_DECELE_RATIO * 1000;
 
-    wheel_rpm[0] = (   speed->vx + speed->vy + speed->vw * (LENGTH_A+LENGTH_B))*wheel_rpm_ratio;//left//xï¼Œyæ–¹å‘é€Ÿåº¦,wåº•ç›˜è½¬åŠ¨é€Ÿåº¦
-    wheel_rpm[1] = (   speed->vx - speed->vy + speed->vw * (LENGTH_A+LENGTH_B))*wheel_rpm_ratio;//forward
-    wheel_rpm[2] = (  -speed->vx - speed->vy + speed->vw * (LENGTH_A+LENGTH_B))*wheel_rpm_ratio;//right
-    wheel_rpm[3] = (  -speed->vx + speed->vy + speed->vw * (LENGTH_A+LENGTH_B))*wheel_rpm_ratio;//back
+    wheel_rpm[0] = (speed->vx + speed->vy + speed->vw * (LENGTH_A + LENGTH_B)) * wheel_rpm_ratio;  // left//x£¬y·½ÏòËÙ¶È,wµ×ÅÌ×ª¶¯ËÙ¶È
+    wheel_rpm[1] = (speed->vx - speed->vy + speed->vw * (LENGTH_A + LENGTH_B)) * wheel_rpm_ratio;  // forward
+    wheel_rpm[2] = (-speed->vx - speed->vy + speed->vw * (LENGTH_A + LENGTH_B)) * wheel_rpm_ratio; // right
+    wheel_rpm[3] = (-speed->vx + speed->vy + speed->vw * (LENGTH_A + LENGTH_B)) * wheel_rpm_ratio; // back
 
-    memcpy(out_speed, wheel_rpm, 4*sizeof(int16_t));//copy the rpm to out_speed
+    memcpy(out_speed, wheel_rpm, 4 * sizeof(int16_t)); // copy the rpm to out_speed
 }
 /**
-  * @brief  è®¾ç½®3508ç›®æ ‡é€Ÿåº¦
-  * @param  out_speed ç›®æ ‡é€Ÿåº¦
-  * @param  Motor ç”µæœºç»“æž„ä½“
-  * @retval 
-  * @attention 
-  */
-void Omni_Set_Motor_Speed(int16_t*out_speed,Motortype* Motor ) 
+ * @brief  ÉèÖÃ3508Ä¿±êËÙ¶È
+ * @param  out_speed Ä¿±êËÙ¶È
+ * @param  Motor µç»ú½á¹¹Ìå
+ * @retval
+ * @attention
+ */
+void Omni_Set_Motor_Speed(int16_t *out_speed, Motortype *Motor)
 {
-    Motor[0].motor_value->target_speed_rpm=out_speed[0];
-    Motor[1].motor_value->target_speed_rpm=out_speed[1];
-    Motor[2].motor_value->target_speed_rpm=out_speed[2];
-    Motor[3].motor_value->target_speed_rpm=out_speed[3];
+    Motor[0].motor_value->target_speed_rpm = out_speed[0];
+    Motor[1].motor_value->target_speed_rpm = out_speed[1];
+    Motor[2].motor_value->target_speed_rpm = out_speed[2];
+    Motor[3].motor_value->target_speed_rpm = out_speed[3];
 }
 
 /**
-  * @brief  æ‰¾å‡ºä¸Ž+-yè½´æœ€å°åå·®è§’
-  * @param  void
-  * @retval åå·®è§’ï¼Œè§’åº¦åˆ¶
-  * @attention é€šè¿‡é¥æŽ§å™¨/é”®ç›˜
-  */
+ * @brief  ÕÒ³öÓë+-yÖá×îÐ¡Æ«²î½Ç
+ * @param  void
+ * @retval Æ«²î½Ç£¬½Ç¶ÈÖÆ
+ * @attention Í¨¹ýÒ£¿ØÆ÷/¼üÅÌ
+ */
 fp32 Find_Y_AnglePNY(void)
 {
     fp32 temp1 = Gimbal_MotorYaw.motor_value->angle - GIMBAL_YAW_ENCODER_MIDDLE1;
     fp32 temp2 = Gimbal_MotorYaw.motor_value->angle - GIMBAL_YAW_ENCODER_MIDDLE2;
     fp32 mintemp1;
-    if(temp1 > 4096)
+    if (temp1 > 4096)
         temp1 -= 8192;
-    else if(temp1 < -4096)
+    else if (temp1 < -4096)
         temp1 += 8192;
-    if(temp2 > 4096)
+    if (temp2 > 4096)
         temp2 -= 8192;
-    else if(temp2 < -4096)
+    else if (temp2 < -4096)
         temp2 += 8192;
 
     mintemp1 = (abs((int32_t)temp1) < abs((int32_t)temp2) ? temp1 : temp2);
-		if(fabs(mintemp1)<50)
-			 mintemp1=0;
+    if (fabs(mintemp1) < 50)
+        mintemp1 = 0;
     return mintemp1;
 }
-
-
