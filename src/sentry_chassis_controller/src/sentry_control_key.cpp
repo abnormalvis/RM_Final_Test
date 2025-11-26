@@ -1,22 +1,24 @@
-// 支持 W/A/S/D 键进行前后左右平移，Q/E 键进行左右转向，，c 键停止，Ctrl-C 退出程序
+/* ROS 相关头文件 */
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <signal.h>
-#include <stdio.h>
-#include <string>
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/transform_listener.h>
+#include <nav_msgs/Odometry.h>
+#include <geometry_msgs/TwistStamped.h>
+/* C++ 相关头文件 */
 #include <stdexcept>
+#include <cmath>
+#include <string>
 #include <cstring>
+#include <stdio.h>
+#include <signal.h>
+/* 终端控制相关头文件 */
 #ifndef _WIN32
 #include <termios.h>
 #include <unistd.h>
-#endif
 #include <poll.h>
-#include <nav_msgs/Odometry.h>
-#include <geometry_msgs/TwistStamped.h>
-#include <tf2_ros/transform_listener.h>
-#include <tf2_ros/buffer.h>
-#include <tf2/exceptions.h>
-#include <cmath>
+#endif
 
 struct TermiosGuard
 {
@@ -83,12 +85,10 @@ private:
     bool spinning_top_mode_ = false; // 小陀螺模式开关
 };
 
-//
 TermiosGuard term_guard;
 
 TeleopTurtle::TeleopTurtle()
 {
-    //
     nhPrivate_.param("cmd_vel_topic", cmd_vel_topic_, std::string("/cmd_vel"));
     nhPrivate_.param("cmd_vel_stamped_topic", cmd_vel_stamped_topic_, std::string("/cmd_vel_stamped"));
     nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
@@ -186,12 +186,13 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        // 持久化当前运动状态：按键只改变对应分量，允许平移与自转叠加
-        static double cur_lin_world = 0.0; // 当 field-centric 时，保存世界坐标系下的速度
-        static double cur_lat_world = 0.0;
-        static double cur_ang = 0.0; // 角速度仍然按机体角速度发送
+        // 每次循环重置本次按键请求（按下时生效，松开后不再保持）
+        double cur_lin_world = 0.0;   // 世界坐标系下的前向速度请求
+        double cur_lat_world = 0.0;   // 世界坐标系下的横向速度请求
+        double cur_ang = 0.0;         // 机体角速度请求（Q/E 直接控制角速度）
+        bool any_key_pressed = false; // 标记本次循环是否有按键输入
 
-        // 小陀螺模式专用变量
+        // 小陀螺模式保留的锁定平移状态（toggle 时使用，需为静态以跨循环保持）
         static double translation_magnitude = 0.0; // 平移速度大小
         static double translation_angle = 0.0;     // 平移方向角（相对于底盘初始方向）
         static bool translation_active = false;    // 是否处于平移状态
@@ -212,85 +213,42 @@ void TeleopTurtle::keyLoop()
         switch (lower)
         {
         case 'w':
-            if (spinning_top_mode_)
-            {
-                // 小陀螺模式：更新平移方向和大小
-                double vx = lin_speed_use; // 前向
-                double vy = 0;
-                translation_magnitude = std::hypot(vx, vy);
-                translation_angle = std::atan2(vy, vx);
-                translation_active = (translation_magnitude > 0);
-            }
-            else
-            {
-                // 将按键解释为在世界坐标系的前向命令（cur_lin_world）
-                cur_lin_world = lin_speed_use;
-            }
-            break; 
+            // 前进（世界系） — 仅在按下时生效，本次循环有效
+            cur_lin_world = lin_speed_use;
+            cur_lat_world = 0.0;
+            any_key_pressed = true;
+            break;
         case 's':
-            if (spinning_top_mode_)
-            {
-                double vx = -lin_speed_use; // 后向
-                double vy = 0;
-                translation_magnitude = std::hypot(vx, vy);
-                translation_angle = std::atan2(vy, vx);
-                translation_active = (translation_magnitude > 0);
-            }
-            else
-            {
-                cur_lin_world = -lin_speed_use;
-            }
-            break; 
+            cur_lin_world = -lin_speed_use;
+            cur_lat_world = 0.0;
+            any_key_pressed = true;
+            break;
         case 'a':
-            if (spinning_top_mode_)
-            {
-                double vx = 0;
-                double vy = lin_speed_use;
-                translation_magnitude = std::hypot(vx, vy);
-                translation_angle = std::atan2(vy, vx);
-                translation_active = (translation_magnitude > 0);
-            }
-            else
-            {
-                cur_lat_world = lin_speed_use;
-            }
-            break; 
+            cur_lin_world = 0.0;
+            cur_lat_world = lin_speed_use;
+            any_key_pressed = true;
+            break;
         case 'd':
-            if (spinning_top_mode_)
-            {
-                double vx = 0;
-                double vy = -lin_speed_use; // 右向
-                translation_magnitude = std::hypot(vx, vy);
-                translation_angle = std::atan2(vy, vx);
-                translation_active = (translation_magnitude > 0);
-            }
-            else
-            {
-                cur_lat_world = -lin_speed_use;
-            }
+            cur_lin_world = 0.0;
+            cur_lat_world = -lin_speed_use;
+            any_key_pressed = true;
             break; // right strafe
         case 'q':
+            // Q/E 直接作为角速度命令（按下时有效）
             cur_ang = ang_speed_use;
+            any_key_pressed = true;
             break; // turn left
         case 'e':
             cur_ang = -ang_speed_use;
+            any_key_pressed = true;
             break; // turn right
         case 'c':
             // stop all motion
-            if (spinning_top_mode_)
-            {
-                // 小陀螺模式：只停止平移，保持自转
-                translation_magnitude = 0.0;
-                translation_angle = 0.0;
-                translation_active = false;
-            }
-            else
-            {
-                // 普通模式：停止所有运动
-                cur_lin_world = 0.0;
-                cur_lat_world = 0.0;
-            }
+            // 立即清除所有本次请求（相当于发送 0 命令）
+            cur_lin_world = 0.0;
+            cur_lat_world = 0.0;
             cur_ang = 0.0;
+            any_key_pressed = true;
             break; // stop
         case 'f':
             // 切换 field-centric 模式
@@ -349,93 +307,51 @@ void TeleopTurtle::keyLoop()
             }
         }
 
-        // 发布一个带时间戳的 Twist，表示请求的世界坐标系速度（header.frame_id = "odom"）
+        // 发布一个带时间戳的 TwistStamped，表示请求的世界坐标系速度（header.frame_id = "odom")
         geometry_msgs::TwistStamped stamped;
         stamped.header.stamp = ros::Time::now();
         stamped.header.frame_id = "odom";
 
-        // 如果处于小陀螺模式，则计算带时间戳消息的世界坐标系请求速度
-        if (spinning_top_mode_)
-        {
-            if (translation_active)
-            {
-                // 解算：平移速度左乘旋转矩阵
-                double v_world_x = translation_magnitude * std::cos(translation_angle);
-                double v_world_y = translation_magnitude * std::sin(translation_angle);
-                stamped.twist.linear.x = v_world_x;
-                stamped.twist.linear.y = v_world_y;
-            }
-            else
-            {
-                stamped.twist.linear.x = 0.0;
-                stamped.twist.linear.y = 0.0;
-            }
-            stamped.twist.angular.z = cur_ang; // 请求的航向角速度
-        }
-        else
-        {
-            stamped.twist.linear.x = cur_lin_world;
-            stamped.twist.linear.y = cur_lat_world;
-            stamped.twist.angular.z = cur_ang;
-        }
+        // 将本次按键请求包装为世界坐标系下的速度（仅按下按键时 non-zero）
+        stamped.twist.linear.x = cur_lin_world;
+        stamped.twist.linear.y = cur_lat_world;
+        stamped.twist.angular.z = cur_ang;
 
         // 发布带时间戳的世界坐标系请求速度
         twist_stamped_pub_.publish(stamped);
 
-        // 根据 field_centric_ 将世界速度转换到机体速度并发布到 /cmd_vel（保持与控制器兼容）
-        if (spinning_top_mode_)
+        // 根据 field_centric_ 将世界速度转换到机体速度并发布到 /cmd_vel（明确使用 2x2 旋转矩阵）
+        double v_world_x = stamped.twist.linear.x;
+        double v_world_y = stamped.twist.linear.y;
+        // 旋转矩阵 R(-yaw) 的计算（将 world -> body）
+        // R(-yaw) = [ cos(yaw)  -sin(yaw)
+        //             sin(yaw)  cos(yaw) ]
+        if (field_centric_)
         {
-            if (translation_active)
-            {
-                double v_world_x = stamped.twist.linear.x;
-                double v_world_y = stamped.twist.linear.y;
-                if (field_centric_)
-                {
-                    double vbx = cos(yaw_) * v_world_x + sin(yaw_) * v_world_y;
-                    double vby = -sin(yaw_) * v_world_x + cos(yaw_) * v_world_y;
-                    twist.linear.x = vbx;
-                    twist.linear.y = vby;
-                }
-                else
-                {
-                    twist.linear.x = v_world_x;
-                    twist.linear.y = v_world_y;
-                }
-            }
-            else
-            {
-                twist.linear.x = 0;
-                twist.linear.y = 0;
-            }
-            twist.angular.z = cur_ang;
+            double c = cos(yaw_);
+            double s = sin(yaw_);
+            double vbx = c * v_world_x - s * v_world_y;
+            double vby = s * v_world_x + c * v_world_y;
+            twist.linear.x = vbx;
+            twist.linear.y = vby;
         }
         else
         {
-            if (field_centric_)
-            {
-                double vbx = cos(yaw_) * cur_lin_world + sin(yaw_) * cur_lat_world;
-                double vby = -sin(yaw_) * cur_lin_world + cos(yaw_) * cur_lat_world;
-                twist.linear.x = vbx;
-                twist.linear.y = vby;
-            }
-            else
-            {
-                twist.linear.x = cur_lin_world;
-                twist.linear.y = cur_lat_world;
-            }
-            twist.angular.z = cur_ang;
+            twist.linear.x = v_world_x;
+            twist.linear.y = v_world_y;
         }
+        // 角速度直接由 Q/E 键控制（按下时有效）
+        twist.angular.z = stamped.twist.angular.z;
 
-        if (publish_zero_when_idle_)
+        // 仅当本次按键请求非零（或用户允许空闲零发布）时发送
+        bool has_motion = (std::abs(twist.linear.x) > 1e-9) || (std::abs(twist.linear.y) > 1e-9) || (std::abs(twist.angular.z) > 1e-9);
+        if (any_key_pressed || publish_zero_when_idle_)
         {
-            twist_pub_.publish(twist);
-        }
-        else
-        {
-            if (std::abs(twist.linear.x) > 1e-9 || std::abs(twist.linear.y) > 1e-9 || std::abs(twist.angular.z) > 1e-9)
-            {
+            // 发布带时间戳的世界意图（方便上层/记录）
+            twist_stamped_pub_.publish(stamped);
+            // 如果有运动或配置允许空闲零发布，发布到 /cmd_vel
+            if (has_motion || publish_zero_when_idle_)
                 twist_pub_.publish(twist);
-            }
         }
         rate.sleep();
     }

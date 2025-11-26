@@ -16,7 +16,7 @@
 namespace sentry_control
 {
 
-    // Constants for better maintainability
+    // 维护常量
     constexpr double VELOCITY_EPSILON = 1e-9;
     constexpr double TF_LOOKUP_TIMEOUT = 0.05;       // 50ms
     constexpr double TF_VALID_MAX_AGE = 0.2;         // 200ms
@@ -26,7 +26,7 @@ namespace sentry_control
     constexpr double SPINNING_TOP_ANGULAR_VEL = 3.0; // rad/s for spinning top mode
     constexpr int KEYBOARD_POLL_TIMEOUT = 100;       // ms for poll
 
-    // Global quit flag
+    // 全局退出标志
     static bool g_quit = false;
 
     class KeyboardControlNode
@@ -57,39 +57,39 @@ namespace sentry_control
         void printHelp();
         bool shouldQuit() const { return g_quit || quit_requested_; }
 
-        // ROS interfaces
+        // ROS接口
         ros::NodeHandle nh_;
         ros::NodeHandle private_nh_;
 
-        // Publishers
+        // 速度指令发布者
         ros::Publisher cmd_vel_pub_;
         ros::Publisher cmd_vel_stamped_pub_;
 
-        // TF components
+        // TF组件
         std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
         std::unique_ptr<tf2_ros::TransformListener> tf_listener_;
 
-        // State variables
-        bool field_centric_;
-        bool publish_zero_when_idle_;
-        bool spinning_top_mode_;
-        bool spinning_active_;
-        bool quit_requested_;
+        // 状态变量
+        bool field_centric_;    // 当为 true 时，键盘输入表示世界坐标系下的方向，旋转不影响平移方向
+        bool publish_zero_when_idle_;   // 当机器人处于空闲状态时，是否发布零速度
+        bool spinning_top_mode_;        // 小陀螺模式开关
+        bool spinning_active_;          // 小陀螺模式激活状态
+        bool quit_requested_;           // 退出请求标志
 
-        // TF state
+        // TF状态
         bool tf_valid_{false};
         bool tf_updated_{false};
         double yaw_{0.0};
         double cached_cos_yaw_{1.0};
         double cached_sin_yaw_{0.0};
-        geometry_msgs::TransformStamped last_transform_;
+        geometry_msgs::TransformStamped last_transform_;    // 上一次有效的变换
         ros::Time last_tf_update_;
 
-        // Velocity states
+        // 速度状态
         geometry_msgs::Twist current_twist_;
         geometry_msgs::Twist target_world_vel_;
 
-        // Parameters
+        // 速度参数
         double vel_scale_linear_;
         double vel_scale_angular_;
         double vel_scale_smart_linear_;
@@ -114,11 +114,13 @@ namespace sentry_control
         resetVelocityStates();
     }
 
+    // 析构函数
     KeyboardControlNode::~KeyboardControlNode()
     {
         struct termios term;
         if (tcgetattr(STDIN_FILENO, &term) == 0)
         {
+            // 恢复终端设置
             term.c_lflag |= (ICANON | ECHO);
             tcsetattr(STDIN_FILENO, TCSANOW, &term);
         }
@@ -128,25 +130,29 @@ namespace sentry_control
     {
         ros::Rate rate(50); // 50Hz control loop
 
-        // Wait for TF to be available
+        // 等待 TF 可用
         if (!waitForTransform())
         {
+            // 等待
             ROS_ERROR("Failed to get TF transform. Exiting.");
             return;
         }
 
         ROS_INFO("Keyboard control node started. Use 'h' for help, 'q' to quit");
 
+        // 主循环只要roscore处于运行状态，run函数就会一直运行
         while (ros::ok() && !quit_requested_ && !shouldQuit())
         {
+            // 更新 TF 状态，然后获取键盘输入，处理并发布速度指令
             updateTransform();
+            waitForTransform();
             processKeyboardInput();
             updateAndPublish();
             ros::spinOnce();
             rate.sleep();
         }
 
-        // Stop the robot on exit
+        // 退出时停止机器人
         publishStopCommand();
     }
 
@@ -175,8 +181,7 @@ namespace sentry_control
 
     void KeyboardControlNode::setupSubscribers()
     {
-        
-    }
+        }
 
     void KeyboardControlNode::resetVelocityStates()
     {
@@ -203,13 +208,19 @@ namespace sentry_control
         {
             try
             {
+                // 尝试获取变换
                 geometry_msgs::TransformStamped transform = tf_buffer_->lookupTransform(
                     "odom", "base_link", ros::Time(0), ros::Duration(0.05));
 
                 if ((ros::Time::now() - transform.header.stamp).toSec() < TF_VALID_MAX_AGE)
                 {
+                    // 获取变换的欧拉角
                     const auto &q = transform.transform.rotation;
+
+                    // 计算偏航角
                     yaw_ = std::atan2(2.0 * (q.w * q.z + q.x * q.y), 1.0 - 2.0 * (q.y * q.y + q.z * q.z));
+
+                    // 更新tf状态
                     last_transform_ = transform;
                     last_tf_update_ = ros::Time::now();
                     tf_valid_ = true;
@@ -424,9 +435,9 @@ namespace sentry_control
 
         if (field_centric_ && tf_valid_ && tf_updated_)
         {
-            // Use cached rotation components for efficiency
-            robot_vel.linear.x = world_vel.linear.x * cached_cos_yaw_ + world_vel.linear.y * cached_sin_yaw_;
-            robot_vel.linear.y = -world_vel.linear.x * cached_sin_yaw_ + world_vel.linear.y * cached_cos_yaw_;
+            // 使用缓存的旋转分量以提高效率
+            robot_vel.linear.x = world_vel.linear.x * cached_cos_yaw_ - world_vel.linear.y * cached_sin_yaw_;
+            robot_vel.linear.y = world_vel.linear.x * cached_sin_yaw_ + world_vel.linear.y * cached_cos_yaw_;
         }
         else
         {
