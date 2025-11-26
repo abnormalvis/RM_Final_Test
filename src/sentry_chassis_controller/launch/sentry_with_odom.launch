@@ -14,7 +14,7 @@
   </node>
 
   <!-- C++ keyboard teleop (alternate) -->
-  <node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
+  <node pkg="sentry_chassis_controller" type="sentry_control_key_optimized" name="sentry_control_key_optimized" output="screen">
     <param name="cmd_vel_topic" value="/cmd_vel"/>
     <param name="velocity_linear" value="1"/>
     <param name="velocity_angular" value="1"/>
