@@ -324,14 +324,14 @@ void TeleopTurtle::keyLoop()
         double v_world_x = stamped.twist.linear.x;
         double v_world_y = stamped.twist.linear.y;
         // 旋转矩阵 R(-yaw) 的计算（将 world -> body）
-        // R(-yaw) = [ cos(yaw)  sin(yaw)
-        //             -sin(yaw)  cos(yaw) ]
+        // R(-yaw) = [ cos(yaw)  -sin(yaw)
+        //             sin(yaw)  cos(yaw) ]
         if (field_centric_)
         {
             double c = cos(yaw_);
             double s = sin(yaw_);
-            double vbx = c * v_world_x + s * v_world_y;
-            double vby = -s * v_world_x + c * v_world_y;
+            double vbx = c * v_world_x - s * v_world_y;
+            double vby = s * v_world_x + c * v_world_y;
             twist.linear.x = vbx;
             twist.linear.y = vby;
         }
