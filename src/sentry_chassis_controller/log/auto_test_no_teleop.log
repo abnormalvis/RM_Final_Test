@@ -1,9 +1,0 @@
-/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Unique name to prepend to the goal id. This will
-/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Set the name to prepend to the goal id. This will
-[INFO] [1764079457.939961, 1947.285000]: Auto teleop test starting in 2s...
-[INFO] [1764079459.941162, 1949.282000]: Phase 1: forward only (3s)
-[INFO] [1764079462.949642, 1952.283000]: Phase 2: forward + spin (6s)
-[INFO] [1764079469.016987, 1958.333000]: Phase 3: stop (2s)
-[INFO] [1764079471.070323, 1960.383000]: Auto teleop test finished

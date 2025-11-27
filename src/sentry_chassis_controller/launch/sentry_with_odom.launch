@@ -14,10 +14,19 @@
   </node>
 
   <!-- C++ keyboard teleop (alternate) -->
-  <node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
+  <!-- node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
     <param name="cmd_vel_topic" value="/cmd_vel"/>
     <param name="velocity_linear" value="1"/>
     <param name="velocity_angular" value="1"/>
+  </node -->
+
+  <!-- 双模式底盘控制器 -->
+  <node pkg="sentry_chassis_controller" type="dual_mode_chassis_controller" name="dual_mode_chassis_controller" output="screen">
+    <!-- 坐标系参数 -->
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="control_loop_rate" value="20.0"/>  <!-- 控制循环频率 (Hz) -->
+    <param name="tf_timeout" value="0.2"/>          <!-- TF查找超时时间 (s) -->
   </node>
 
   <!-- rosbag record launched by roslaunch, configurable via args -->

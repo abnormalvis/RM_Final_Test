@@ -170,6 +170,11 @@ add_executable(sentry_control_key_optimized src/sentry_control_key_optimized.cpp
 add_dependencies(sentry_control_key_optimized ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sentry_control_key_optimized ${catkin_LIBRARIES})
 
+## Dual mode chassis controller for rotation matrix solution
+add_executable(dual_mode_chassis_controller src/dual_mode_chassis_controller.cpp)
+add_dependencies(dual_mode_chassis_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(dual_mode_chassis_controller ${catkin_LIBRARIES})
+
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
