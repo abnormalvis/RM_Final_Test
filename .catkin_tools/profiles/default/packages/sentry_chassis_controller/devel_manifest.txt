@@ -1,5 +1,6 @@
 sentry_chassis_controller
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/libsentry_chassis_controller.so /home/idris/final_ws/devel/lib/libsentry_chassis_controller.so
+/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/chassis_controller /home/idris/final_ws/devel/lib/sentry_chassis_controller/chassis_controller
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics_node /home/idris/final_ws/devel/lib/sentry_chassis_controller/forward_kinematics_node
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key_optimized /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key_optimized
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/ik_test_publisher /home/idris/final_ws/devel/lib/sentry_chassis_controller/ik_test_publisher
@@ -7,6 +8,7 @@ sentry_chassis_controller
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics /home/idris/final_ws/devel/lib/sentry_chassis_controller/forward_kinematics
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/dual_mode_chassis_controller /home/idris/final_ws/devel/lib/sentry_chassis_controller/dual_mode_chassis_controller
+/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/yaw_publisher /home/idris/final_ws/devel/lib/sentry_chassis_controller/yaw_publisher
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/__init__.py /home/idris/final_ws/devel/lib/python3/dist-packages/sentry_chassis_controller/__init__.py
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/cfg/__init__.py /home/idris/final_ws/devel/lib/python3/dist-packages/sentry_chassis_controller/cfg/__init__.py
 /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/cfg/WheelPidConfig.py /home/idris/final_ws/devel/lib/python3/dist-packages/sentry_chassis_controller/cfg/WheelPidConfig.py

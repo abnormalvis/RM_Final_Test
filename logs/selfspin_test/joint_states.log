@@ -1,0 +1,570 @@
+header: 
+  seq: 1785
+  stamp: 
+    secs: 180
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008766532289676832, -0.001997737172383829, -0.000878372855291687, -0.003110051623373522, -0.03331406454281982, -5.4421953017858016e-05, -0.03331359094092612, 0.03300264988792545]
+velocity: [-4.369639499572056e-06, -0.001096734408822721, -3.683577919478913e-06, -4.390774355750605e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1803
+  stamp: 
+    secs: 180
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1804
+  stamp: 
+    secs: 180
+    nsecs: 400000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1786
+  stamp: 
+    secs: 180
+    nsecs: 401000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008742293346060137, -0.0019953417261877604, -0.0008759504040165567, -0.0031077113047848215, -0.03331405107271301, -5.57635237674603e-05, -0.033313595631463855, 0.03300265164578864]
+velocity: [-4.356961742731281e-06, -0.00109671469718932, -3.671239190725724e-06, -4.389584892632503e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1805
+  stamp: 
+    secs: 180
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1787
+  stamp: 
+    secs: 180
+    nsecs: 502000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008718041962669787, -0.0019929450329225773, -0.0008735267114010625, -0.0031053697496465915, -0.03331403758719009, -5.7118617978524355e-05, -0.033313600300759916, 0.03300265342720987]
+velocity: [-4.344316101942403e-06, -0.0010966950085660094, -3.658932452304739e-06, -4.388398574879174e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1806
+  stamp: 
+    secs: 180
+    nsecs: 600000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1788
+  stamp: 
+    secs: 180
+    nsecs: 603000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008693778173443079, -0.001990547095875428, -0.0008711017808744614, -0.003103026961149169, -0.03331402408616135, -5.848634410998699e-05, -0.033313604948709497, 0.033002655232137634]
+velocity: [-4.331702562379553e-06, -0.0010966753430277645, -3.6466576509260387e-06, -4.3872153987512767e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1807
+  stamp: 
+    secs: 180
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1789
+  stamp: 
+    secs: 180
+    nsecs: 704000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008669502012264019, -0.001988147918321914, -0.0008686756158606812, -0.003100682942479338, -0.033314010569544195, -5.9865883659249164e-05, -0.03331360957521845, 0.033002657060543505]
+velocity: [-4.319121059035162e-06, -0.0010966557003265574, -3.6344147419821308e-06, -4.386035363337324e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1808
+  stamp: 
+    secs: 180
+    nsecs: 801000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1790
+  stamp: 
+    secs: 180
+    nsecs: 805000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008645213513025496, -0.0019857475035385264, -0.0008662482197818733, -0.0030983376968221066, -0.033313997037271115, -6.125648466070999e-05, -0.033313614180199735, 0.03300265891240528]
+velocity: [-4.306571543948463e-06, -0.001096636080652936, -3.622203699762597e-06, -4.3848584632157414e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1809
+  stamp: 
+    secs: 180
+    nsecs: 900000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1791
+  stamp: 
+    secs: 180
+    nsecs: 906000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008620912709558226, -0.001983345854793761, -0.0008638195960610773, -0.003095991227355377, -0.03331398348927461, -6.265745572253678e-05, -0.03331361876356986, 0.033002660787700755]
+velocity: [-4.294053996769739e-06, -0.0010966164837739453, -3.610024471435865e-06, -4.38368469415572e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1810
+  stamp: 
+    secs: 181
+    nsecs:         0
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1792
+  stamp: 
+    secs: 181
+    nsecs:   7000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008596599635692925, -0.0019809429753490093, -0.0008613897481151156, -0.003093643537255275, -0.03331396992550317, -6.406816061765852e-05, -0.03331362332525423, 0.03300266268641039]
+velocity: [-4.281568351579472e-06, -0.001096596909971946, -3.5978770161578433e-06, -4.382514051656591e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1811
+  stamp: 
+    secs: 181
+    nsecs: 100000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1793
+  stamp: 
+    secs: 181
+    nsecs: 108000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008572274325207019, -0.0019785388684718797, -0.0008589586793616988, -0.00309129462969171, -0.03331395634590528, -6.548801336148102e-05, -0.03331362786518888, 0.03300266460851642]
+velocity: [-4.269114566129881e-06, -0.0010965773588889303, -3.5857612808173976e-06, -4.3813465323987264e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1812
+  stamp: 
+    secs: 181
+    nsecs: 200000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1794
+  stamp: 
+    secs: 181
+    nsecs: 209000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.000854793681186905, -0.0019761335374157696, -0.0008565263932132083, -0.0030889445078319255, -0.03331394275044364, -6.691647375323129e-05, -0.03331363238331342, 0.03300266655400996]
+velocity: [-4.256692588075332e-06, -0.0010965578306269565, -3.573677208932772e-06, -4.380182131991182e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1813
+  stamp: 
+    secs: 181
+    nsecs: 300000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1795
+  stamp: 
+    secs: 181
+    nsecs: 310000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008523587129394272, -0.001973726985434965, -0.0008540928930793612, -0.0030865931748387254, -0.033313929139085374, -6.835304331165304e-05, -0.033313636879581665, 0.033002668522879475]
+velocity: [-4.2443023874601325e-06, -0.0010965383252486633, -3.56162475527631e-06, -4.3790208444970254e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1814
+  stamp: 
+    secs: 181
+    nsecs: 400000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1796
+  stamp: 
+    secs: 181
+    nsecs: 411000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008499225311480174, -0.001971319215773981, -0.000851658182368098, -0.0030842406338686956, -0.033313915511800296, -6.979726160860622e-05, -0.03331364135394921, 0.0330026705151063]
+velocity: [-4.231943886565202e-06, -0.0010965188425588208, -3.5496038620269133e-06, -4.3778626644879474e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1815
+  stamp: 
+    secs: 181
+    nsecs: 500000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1797
+  stamp: 
+    secs: 181
+    nsecs: 512000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008474851391779836, -0.0019689102316720053, -0.0008492222644838066, -0.003081886888072205, -0.03331390186856886, -7.124870295083241e-05, -0.03331364580637697, 0.03300267253067268]
+velocity: [-4.219617051596283e-06, -0.0010964993825339762, -3.5376144876006856e-06, -4.376707589319185e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1816
+  stamp: 
+    secs: 181
+    nsecs: 600000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1798
+  stamp: 
+    secs: 181
+    nsecs: 613000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008450465403937457, -0.0019665000363762175, -0.0008467851428273221, -0.003079531940596958, -0.0333138882093742, -7.270697335659548e-05, -0.03331365023683297, 0.033002674569568846]
+velocity: [-4.2073218173196145e-06, -0.001096479945228121, -3.525656565759786e-06, -4.375555612625749e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
+header: 
+  seq: 1817
+  stamp: 
+    secs: 181
+    nsecs: 700000000
+  frame_id: ''
+name: 
+  - left_front_pivot_joint
+  - left_front_wheel_joint
+  - right_front_pivot_joint
+  - right_front_wheel_joint
+  - left_back_pivot_joint
+  - left_back_wheel_joint
+  - right_back_pivot_joint
+  - right_back_wheel_joint
+position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity: []
+effort: []
+---
+header: 
+  seq: 1799
+  stamp: 
+    secs: 181
+    nsecs: 714000000
+  frame_id: ''
+name: 
+  - left_front_wheel_joint
+  - right_front_wheel_joint
+  - left_back_wheel_joint
+  - right_back_wheel_joint
+  - left_front_pivot_joint
+  - right_front_pivot_joint
+  - left_back_pivot_joint
+  - right_back_pivot_joint
+position: [-0.0008426067381499536, -0.0019640886331107055, -0.0008443468207985916, -0.0030771757945862177, -0.033313874534215415, -7.417170782897387e-05, -0.03331365464527991, 0.033002676631774364]
+velocity: [-4.195058110839514e-06, -0.0010964605305981692, -3.513730066986566e-06, -4.3744067298369046e-05, 0.0, 0.0, 0.0, 0.0]
+effort: []
+---
