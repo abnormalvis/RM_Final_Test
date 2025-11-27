@@ -1,10 +1,6 @@
 /* ROS 相关头文件 */
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <tf2_ros/buffer.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <tf2_ros/transform_listener.h>
-#include <nav_msgs/Odometry.h>
 #include <geometry_msgs/TwistStamped.h>
 /* C++ 相关头文件 */
 #include <stdexcept>
@@ -55,48 +51,66 @@ class TeleopTurtle
 public:
     TeleopTurtle();
     void keyLoop();
-    void odomCb(const nav_msgs::Odometry::ConstPtr &msg);
 
 private:
-    // 变量
+    // ROS
     ros::NodeHandle nh_;
-    ros::NodeHandle nhPrivate_ = ros::NodeHandle("~");
+    ros::NodeHandle nhPrivate_{"~"};
 
-    // 速度指令发布方，用于发布底盘在世界坐标系下的速度
-    ros::Publisher twist_pub_;
+    // 分离发布者：
+    // 1) 线速度（odom坐标系，带时间戳）
+    ros::Publisher linear_pub_;
+    // 2) 角速度（直接使用）
+    ros::Publisher angular_pub_;
+    // 3) 合并发布（传统 /cmd_vel 接口）
+    ros::Publisher merged_pub_;
 
-    // 速度指令发布方，用于发布底盘在odom坐标系下的速度
-    ros::Publisher twist_stamped_pub_;
-
-    // 空闲状态下是否发布零速度
+    // 参数
+    std::string linear_topic_ = "/cmd_vel_linear_absolute";
+    std::string angular_topic_ = "/cmd_vel_angular_direct";
+    std::string frame_id_ = "odom"; // 线速度TwistStamped的坐标系
+    std::string merged_topic_ = "/cmd_vel"; // 合并发布的底盘速度（无需外部合成）
     bool publish_zero_when_idle_ = false;
+    int publish_rate_hz_ = 20; // 发布频率
+    double release_timeout_ = 0.25; // 松手后保持的持续时间(s)
 
-    // 速度指令话题名称
-    std::string cmd_vel_topic_;
-    std::string cmd_vel_stamped_topic_;
+    // 速度标定
+    double linear_speed_ = 0.5;       // 基础线速度 m/s
+    double linear_speed_run_ = 1.0;   // 按住Shift的线速度 m/s
+    double angular_speed_ = 1.0;      // 基础角速度 rad/s
+    double angular_speed_run_ = 1.5;  // 按住Shift的角速度 rad/s
 
-    // 使用一个buffer对象来寻找tf变换的对象来实现底盘到odom坐标系的转换
-    std::unique_ptr<tf2_ros::Buffer> tfBuffer_;
-    std::unique_ptr<tf2_ros::TransformListener> tfListener_;
-
-    // 底盘的航向偏角
-    double yaw_ = 0.0;
-    bool field_centric_ = true;      // 当为 true 时，键盘输入表示世界坐标系下的方向，旋转不影响平移方向
-    bool spinning_top_mode_ = false; // 小陀螺模式开关
+    // 按键保持状态（按下才运动 + 释放后短暂保持）
+    double linear_x_state_ = 0.0; // odom系前向
+    double linear_y_state_ = 0.0; // odom系侧向
+    double angular_z_state_ = 0.0; // 角速度
+    ros::Time last_linear_stamp_;
+    ros::Time last_angular_stamp_;
 };
 
 TermiosGuard term_guard;
 
 TeleopTurtle::TeleopTurtle()
 {
-    nhPrivate_.param("cmd_vel_topic", cmd_vel_topic_, std::string("/cmd_vel"));
-    nhPrivate_.param("cmd_vel_stamped_topic", cmd_vel_stamped_topic_, std::string("/cmd_vel_stamped"));
+    // 可配置参数
+    nhPrivate_.param("linear_topic", linear_topic_, linear_topic_);
+    nhPrivate_.param("angular_topic", angular_topic_, angular_topic_);
+    nhPrivate_.param("frame_id", frame_id_, frame_id_);
+    nhPrivate_.param("merged_topic", merged_topic_, merged_topic_);
     nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
-    twist_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
-    twist_stamped_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(cmd_vel_stamped_topic_, 1);
-    // 监听baselink -> odom 变换
-    tfBuffer_.reset(new tf2_ros::Buffer(ros::Duration(10)));
-    tfListener_.reset(new tf2_ros::TransformListener(*tfBuffer_));
+    nhPrivate_.param("publish_rate_hz", publish_rate_hz_, publish_rate_hz_);
+    nhPrivate_.param("release_timeout", release_timeout_, release_timeout_);
+    nhPrivate_.param("linear_speed", linear_speed_, linear_speed_);
+    nhPrivate_.param("linear_speed_run", linear_speed_run_, linear_speed_run_);
+    nhPrivate_.param("angular_speed", angular_speed_, angular_speed_);
+    nhPrivate_.param("angular_speed_run", angular_speed_run_, angular_speed_run_);
+
+    linear_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(linear_topic_, 10);
+    angular_pub_ = nh_.advertise<geometry_msgs::Twist>(angular_topic_, 10);
+    merged_pub_ = nh_.advertise<geometry_msgs::Twist>(merged_topic_, 10);
+
+    ROS_INFO("Keyboard teleop (single-node) initialized: linear_topic=%s, angular_topic=%s, merged_topic=%s, frame_id=%s, rate=%d Hz, release_timeout=%.2fs",
+             linear_topic_.c_str(), angular_topic_.c_str(), merged_topic_.c_str(), frame_id_.c_str(), publish_rate_hz_, release_timeout_);
 }
 
 void quit(int sig)
@@ -122,240 +136,131 @@ int main(int argc, char **argv)
 
 void TeleopTurtle::keyLoop()
 {
-    puts("Reading from keyboard (WASD to move, Q/E rotate, Shift+WASD run, c stop, f toggle field-centric, t toggle spinning-top, Ctrl-C quit)");
+    puts("Keyboard: WASD move (odom), Q/E rotate, Shift for faster, C/Space stop, Ctrl-C quit");
     term_guard.setup();
 
-    // 速度参数
-    double walk_vel = 0.5;
-    double run_vel = 1.0;
-    double yaw_rate = 1.0;
-    double yaw_rate_run = 1.5;
-    int hz = 10;
-    nhPrivate_.param("walk_vel", walk_vel, walk_vel);
-    nhPrivate_.param("run_vel", run_vel, run_vel);
-    nhPrivate_.param("yaw_rate", yaw_rate, yaw_rate);
-    nhPrivate_.param("yaw_rate_run", yaw_rate_run, yaw_rate_run);
-    nhPrivate_.param("hz", hz, hz);
-
-    // 组织速度信息
-    geometry_msgs::Twist twist;
-    twist.linear.x = 0;
-    twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
-
-    // 创建 poll 结构体用于监听键盘输入
+    // poll 键盘
     struct pollfd ufd;
     ufd.fd = 0;          // stdin
-    ufd.events = POLLIN; // 数据可读事件标志位
+    ufd.events = POLLIN; // 可读
 
-    ros::Rate rate(hz);
+    ros::Rate rate(publish_rate_hz_);
     while (ros::ok())
     {
-        int num = poll(&ufd, 1, 1000 / hz);
+        int num = poll(&ufd, 1, 1000 / publish_rate_hz_);
         if (num < 0)
         {
             perror("poll():");
             break;
         }
 
-        if (num == 0)
+        if (num > 0)
         {
-            // 当前速度可能发布超时：发布当前速度（可能为零）
-            if (publish_zero_when_idle_)
+            char c = 0;
+            if (read(0, &c, 1) < 0)
             {
-                twist_pub_.publish(twist);
+                perror("read():");
+                break;
             }
-            else
+
+            // Shift检测（大写表示按下了Shift）
+            bool shifted = (c >= 'A' && c <= 'Z');
+            char lower = shifted ? static_cast<char>(c - 'A' + 'a') : c;
+            double lin = shifted ? linear_speed_run_ : linear_speed_;
+            double ang = shifted ? angular_speed_run_ : angular_speed_;
+
+            switch (lower)
             {
-                if (std::abs(twist.linear.x) > 1e-9 || std::abs(twist.linear.y) > 1e-9 || std::abs(twist.angular.z) > 1e-9)
-                {
-                    twist_pub_.publish(twist);
-                }
-            }
-            rate.sleep();
-            continue;
-        }
-
-        char c = 0;
-        if (read(0, &c, 1) < 0)
-        {
-            perror("read():");
-            break;
-        }
-
-        // 每次循环重置本次按键请求（按下时生效，松开后不再保持）
-        double cur_lin_world = 0.0;   // 世界坐标系下的前向速度请求
-        double cur_lat_world = 0.0;   // 世界坐标系下的横向速度请求
-        double cur_ang = 0.0;         // 机体角速度请求（Q/E 直接控制角速度）
-        bool any_key_pressed = false; // 标记本次循环是否有按键输入
-
-        // 小陀螺模式保留的锁定平移状态（toggle 时使用，需为静态以跨循环保持）
-        static double translation_magnitude = 0.0; // 平移速度大小
-        static double translation_angle = 0.0;     // 平移方向角（相对于底盘初始方向）
-        static bool translation_active = false;    // 是否处于平移状态
-
-        // 处理shift加速
-        bool shifted = false;
-        if (c >= 'A' && c <= 'Z')
-            shifted = true;
-
-        // 处理大小写字母统一映射
-        char lower = c;
-        if (shifted)
-            lower = c - 'A' + 'a';
-
-        double lin_speed_use = shifted ? run_vel : walk_vel;
-        double ang_speed_use = shifted ? yaw_rate_run : yaw_rate;
-
-        switch (lower)
-        {
-        case 'w':
-            // 前进（世界系） — 仅在按下时生效，本次循环有效
-            cur_lin_world = lin_speed_use;
-            cur_lat_world = 0.0;
-            any_key_pressed = true;
-            break;
-        case 's':
-            cur_lin_world = -lin_speed_use;
-            cur_lat_world = 0.0;
-            any_key_pressed = true;
-            break;
-        case 'a':
-            cur_lin_world = 0.0;
-            cur_lat_world = lin_speed_use;
-            any_key_pressed = true;
-            break;
-        case 'd':
-            cur_lin_world = 0.0;
-            cur_lat_world = -lin_speed_use;
-            any_key_pressed = true;
-            break; // right strafe
-        case 'q':
-            // Q/E 直接作为角速度命令（按下时有效）
-            cur_ang = ang_speed_use;
-            any_key_pressed = true;
-            break; // turn left
-        case 'e':
-            cur_ang = -ang_speed_use;
-            any_key_pressed = true;
-            break; // turn right
-        case 'c':
-            // stop all motion
-            // 立即清除所有本次请求（相当于发送 0 命令）
-            cur_lin_world = 0.0;
-            cur_lat_world = 0.0;
-            cur_ang = 0.0;
-            any_key_pressed = true;
-            break; // stop
-        case 'f':
-            // 切换 field-centric 模式
-            field_centric_ = !field_centric_;
-            ROS_INFO("Field-centric mode: %s", field_centric_ ? "ON" : "OFF");
-            break;
-        case 't':
-            // 切换小陀螺模式
-            spinning_top_mode_ = !spinning_top_mode_;
-            if (spinning_top_mode_)
-            {
-                // 进入小陀螺模式：转换当前速度到极坐标
-                double cur_vx = cur_lin_world;
-                double cur_vy = cur_lat_world;
-                translation_magnitude = std::hypot(cur_vx, cur_vy);
-                translation_angle = std::atan2(cur_vy, cur_vx);
-                translation_active = (translation_magnitude > 0);
-                ROS_INFO("Spinning-top mode: ON (translation locked at %.2f m/s, %.2f deg)",
-                         translation_magnitude, translation_angle * 180.0 / M_PI);
-            }
-            else
-            {
-                // 退出小陀螺模式：转换极坐标回笛卡尔坐标
-                cur_lin_world = translation_magnitude * std::cos(translation_angle);
-                cur_lat_world = translation_magnitude * std::sin(translation_angle);
-                translation_active = false;
-                ROS_INFO("Spinning-top mode: OFF");
-            }
-            break;
-        case '\x03': // ctrl-c
-            quit(0);
-            break;
-        default:
-            // ignore other keys
-            break;
-        }
-
-        // 更新底盘航向角 yaw_
-        if (tfBuffer_)
-        {
-            try
-            {
-                // 尝试通过 TF 查询 odom -> base_link 变换以获取航向角
-                geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform("odom", "base_link", ros::Time(0), ros::Duration(0.05));
-                const auto &q = tfst.transform.rotation;
-                double qw = q.w;
-                double qx = q.x;
-                double qy = q.y;
-                double qz = q.z;
-                yaw_ = std::atan2(2.0 * (qw * qz + qx * qy), 1.0 - 2.0 * (qy * qy + qz * qz));
-            }
-            catch (const tf2::TransformException &ex)
-            {
-                // 查找失败就保持之前的 yaw_ 不变
-                ROS_WARN_THROTTLE(5, "TF lookup odom->base_link failed: %s", ex.what());
+            case 'w':
+                linear_x_state_ = lin;
+                linear_y_state_ = 0.0;
+                last_linear_stamp_ = ros::Time::now();
+                break;
+            case 's':
+                linear_x_state_ = -lin;
+                linear_y_state_ = 0.0;
+                last_linear_stamp_ = ros::Time::now();
+                break;
+            case 'a':
+                linear_x_state_ = 0.0;
+                linear_y_state_ = lin;
+                last_linear_stamp_ = ros::Time::now();
+                break;
+            case 'd':
+                linear_x_state_ = 0.0;
+                linear_y_state_ = -lin;
+                last_linear_stamp_ = ros::Time::now();
+                break;
+            case 'q':
+                angular_z_state_ = ang;
+                last_angular_stamp_ = ros::Time::now();
+                break;
+            case 'e':
+                angular_z_state_ = -ang;
+                last_angular_stamp_ = ros::Time::now();
+                break;
+            case 'c':
+            case ' ': // space
+                linear_x_state_ = 0.0;
+                linear_y_state_ = 0.0;
+                angular_z_state_ = 0.0;
+                last_linear_stamp_ = ros::Time::now();
+                last_angular_stamp_ = ros::Time::now();
+                break;
+            case '\x03': // ctrl-c
+                quit(0);
+                break;
+            default:
+                break;
             }
         }
 
-        // 发布一个带时间戳的 TwistStamped，表示请求的世界坐标系速度（header.frame_id = "odom")
-        geometry_msgs::TwistStamped stamped;
-        stamped.header.stamp = ros::Time::now();
-        stamped.header.frame_id = "odom";
+        // 基于释放超时的按住逻辑
+        const ros::Time now = ros::Time::now();
+        bool linear_active = (now - last_linear_stamp_).toSec() < release_timeout_;
+        bool angular_active = (now - last_angular_stamp_).toSec() < release_timeout_;
 
-        // 将本次按键请求包装为世界坐标系下的速度（仅按下按键时 non-zero）
-        stamped.twist.linear.x = cur_lin_world;
-        stamped.twist.linear.y = cur_lat_world;
-        stamped.twist.angular.z = cur_ang;
+        double vx_world = linear_active ? linear_x_state_ : 0.0;
+        double vy_world = linear_active ? linear_y_state_ : 0.0;
+        double wz = angular_active ? angular_z_state_ : 0.0;
 
-        // 发布带时间戳的世界坐标系请求速度
-        twist_stamped_pub_.publish(stamped);
+        // 发布线速度（odom系）
+        geometry_msgs::TwistStamped lin_msg;
+        lin_msg.header.stamp = now;
+        lin_msg.header.frame_id = frame_id_;
+        lin_msg.twist.linear.x = vx_world;
+        lin_msg.twist.linear.y = vy_world;
+        lin_msg.twist.linear.z = 0.0;
+        lin_msg.twist.angular.z = 0.0; // 仅线速度通道，角速度走独立话题
 
-        // 根据 field_centric_ 将世界速度转换到机体速度并发布到 /cmd_vel（明确使用 2x2 旋转矩阵）
-        double v_world_x = stamped.twist.linear.x;
-        double v_world_y = stamped.twist.linear.y;
-        // 旋转矩阵 R(-yaw) 的计算（将 world -> body）
-        // R(-yaw) = [ cos(yaw)  -sin(yaw)
-        //             sin(yaw)  cos(yaw) ]
-        if (field_centric_)
+        // 发布角速度（直接）
+        geometry_msgs::Twist ang_msg;
+        ang_msg.linear.x = ang_msg.linear.y = ang_msg.linear.z = 0.0;
+        ang_msg.angular.x = ang_msg.angular.y = 0.0;
+        ang_msg.angular.z = wz;
+
+        bool should_publish = publish_zero_when_idle_ ||
+                              std::fabs(vx_world) > 1e-9 || std::fabs(vy_world) > 1e-9 || std::fabs(wz) > 1e-9;
+
+        if (should_publish)
         {
-            double c = cos(yaw_);
-            double s = sin(yaw_);
-            double vbx = c * v_world_x - s * v_world_y;
-            double vby = s * v_world_x + c * v_world_y;
-            twist.linear.x = vbx;
-            twist.linear.y = vby;
-        }
-        else
-        {
-            twist.linear.x = v_world_x;
-            twist.linear.y = v_world_y;
-        }
-        // 角速度直接由 Q/E 键控制（按下时有效）
-        twist.angular.z = stamped.twist.angular.z;
+            // 分离发布
+            linear_pub_.publish(lin_msg);
+            angular_pub_.publish(ang_msg);
 
-        // 仅当本次按键请求非零（或用户允许空闲零发布）时发送
-        bool has_motion = (std::abs(twist.linear.x) > 1e-9) || (std::abs(twist.linear.y) > 1e-9) || (std::abs(twist.angular.z) > 1e-9);
-        if (any_key_pressed || publish_zero_when_idle_)
-        {
-            // 发布带时间戳的世界意图（方便上层/记录）
-            twist_stamped_pub_.publish(stamped);
-            // 如果有运动或配置允许空闲零发布，发布到 /cmd_vel
-            if (has_motion || publish_zero_when_idle_)
-                twist_pub_.publish(twist);
+            // 合并发布到 /cmd_vel （这里直接使用世界系的 vx, vy，不做坐标变换；如果需要机体系可后续加 TF）
+            geometry_msgs::Twist merged;
+            merged.linear.x = vx_world;
+            merged.linear.y = vy_world;
+            merged.linear.z = 0.0;
+            merged.angular.x = 0.0;
+            merged.angular.y = 0.0;
+            merged.angular.z = wz;
+            merged_pub_.publish(merged);
         }
+
         rate.sleep();
     }
 
     term_guard.restore();
-    return;
 }

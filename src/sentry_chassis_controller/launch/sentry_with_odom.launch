@@ -13,20 +13,19 @@
     <param name="wheel_radius" value="0.05"/>
   </node>
 
-  <!-- C++ keyboard teleop (alternate) -->
-  <!-- node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
-    <param name="cmd_vel_topic" value="/cmd_vel"/>
-    <param name="velocity_linear" value="1"/>
-    <param name="velocity_angular" value="1"/>
-  </node -->
-
-  <!-- 双模式底盘控制器 -->
-  <node pkg="sentry_chassis_controller" type="dual_mode_chassis_controller" name="dual_mode_chassis_controller" output="screen">
-    <!-- 坐标系参数 -->
-    <param name="odom_frame" value="odom"/>
-    <param name="base_frame" value="base_link"/>
-    <param name="control_loop_rate" value="20.0"/>  <!-- 控制循环频率 (Hz) -->
-    <param name="tf_timeout" value="0.2"/>          <!-- TF查找超时时间 (s) -->
+  <!-- Keyboard teleop (dual-mode source). Publishes odom-frame linear + direct angular. -->
+  <node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
+    <!-- Dual-mode keyboard parameters -->
+    <param name="linear_topic" value="/cmd_vel_linear_absolute"/>
+    <param name="angular_topic" value="/cmd_vel_angular_direct"/>
+    <param name="frame_id" value="odom"/>
+    <param name="publish_rate_hz" value="20"/>
+    <param name="release_timeout" value="0.25"/>
+    <param name="publish_zero_when_idle" value="false"/>
+    <param name="linear_speed" value="0.5"/>
+    <param name="linear_speed_run" value="1.0"/>
+    <param name="angular_speed" value="1.0"/>
+    <param name="angular_speed_run" value="1.5"/>
   </node>
 
   <!-- rosbag record launched by roslaunch, configurable via args -->
