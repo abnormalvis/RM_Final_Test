@@ -3,7 +3,7 @@ wheel_pid_controller:
   # parameter server if needed. Matches plugin XML/class name.
   type: "sentry_chassis_controller/WheelPidController"
   # Subscribe directly to the resolver's output (absolute topic recommended)
-  cmd_vel_topic: "/cmd_vel_final"
+  cmd_vel_topic: "/cmd_vel"
   # Do not synthesize fake joint movement by default
   synthetic_fallback: false
   # Physical defaults (can be overridden per-wheel below)
