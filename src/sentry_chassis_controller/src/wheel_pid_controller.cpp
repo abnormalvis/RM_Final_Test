@@ -78,7 +78,10 @@ namespace sentry_chassis_controller
         cmd_vel_sub_ = root_nh.subscribe<geometry_msgs::Twist>(cmd_vel_topic_, 1, &WheelPidController::cmdVelCallback, this);
 
         // publisher to expose desired wheel/pivot commands for testing/inspection
-        desired_pub_ = root_nh.advertise<sensor_msgs::JointState>("desired_wheel_states", 1);
+    // Publish desired wheel states to a root-level, conflict-safe topic.
+    // Using an absolute topic avoids namespace confusion and prevents shadowing by Gazebo's JointState.
+    // Note: We choose "/desired_wheel_states_controller" to avoid colliding with Gazebo's "/desired_wheel_states".
+    desired_pub_ = root_nh.advertise<sensor_msgs::JointState>("/desired_wheel_states_controller", 1);
 
         // dynamic_reconfigure server: allow runtime tuning of per-wheel PIDs
         dyn_server_.reset(new dynamic_reconfigure::Server<Config>(controller_nh));

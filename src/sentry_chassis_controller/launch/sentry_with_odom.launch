@@ -13,13 +13,18 @@
     <param name="wheel_radius" value="0.05"/>
   </node>
 
-  <!-- Keyboard teleop: publishes separated topics AND merged /cmd_vel directly (no dual_mode node). -->
+  <!-- Control whether to resolve inline (inside teleop) or via standalone chassis_controller -->
+  <arg name="inline_resolver" default="true"/>
+
+  <!-- Keyboard teleop: now can also publish /cmd_vel_final inline -->
   <node pkg="sentry_chassis_controller" type="sentry_control_key" name="sentry_control_key" output="screen">
     <!-- Dual-mode keyboard parameters -->
     <param name="linear_topic" value="/cmd_vel_linear_absolute"/>
     <param name="angular_topic" value="/cmd_vel_angular_direct"/>
     <param name="merged_topic" value="/cmd_vel"/>
     <param name="frame_id" value="odom"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
     <param name="publish_rate_hz" value="20"/>
     <param name="release_timeout" value="0.25"/>
     <param name="publish_zero_when_idle" value="false"/>
@@ -28,10 +33,11 @@
     <param name="angular_speed" value="1.0"/>
     <param name="angular_speed_run" value="1.5"/>
     <param name="forward_cmd_vel_final" value="true"/>
+    <param name="inline_resolver" value="$(arg inline_resolver)"/>
   </node>
 
   <!-- Rotation-matrix resolver (方案A): consume separated topics and publish base-frame velocities -->
-  <node pkg="sentry_chassis_controller" type="chassis_controller" name="chassis_controller" output="screen">
+  <node pkg="sentry_chassis_controller" type="chassis_controller" name="chassis_controller" output="screen" unless="$(arg inline_resolver)">
     <param name="odom_frame" value="odom"/>
     <param name="base_frame" value="base_link"/>
   </node>

@@ -2,6 +2,8 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/TwistStamped.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 /* C++ 相关头文件 */
 #include <stdexcept>
 #include <cmath>
@@ -65,20 +67,26 @@ private:
     ros::Publisher linear_pub_;
     // 2) 角速度（直接使用）
     ros::Publisher angular_pub_;
-    // 3) 合并发布（传统 /cmd_vel 接口）——仅用于转发解算器输出
+    // 3) 合并发布（传统 /cmd_vel 接口）——用于转发或内联直接发布最终底盘速度
     ros::Publisher merged_pub_;
     // 4) 订阅 /cmd_vel_final（解算器输出），用于兼容转发到 /cmd_vel
     ros::Subscriber final_sub_;
+    // 5) 直接在本节点内发布合成后的底盘速度到 merged_topic（通常为 /cmd_vel）
+    ros::Publisher final_pub_;
 
     // 参数
     std::string linear_topic_ = "/cmd_vel_linear_absolute";
     std::string angular_topic_ = "/cmd_vel_angular_direct";
     std::string frame_id_ = "odom";         // 线速度TwistStamped的坐标系
-    std::string merged_topic_ = "/cmd_vel"; // 底盘最终速度话题（本节点不再主动合成，只做订阅/转发）
+    // 控制器专用合并话题，避免与 Gazebo 争用 /cmd_vel
+    std::string merged_topic_ = "/wheel_pid_controller/cmd_vel"; // 可通过 ~merged_topic 参数覆盖
+    std::string odom_frame_ = "odom";       // 解算时查询的世界帧
+    std::string base_frame_ = "base_link";  // 解算时查询的底盘帧
     bool publish_zero_when_idle_ = false;
     int publish_rate_hz_ = 20;          // 发布频率
     double release_timeout_ = 0.25;     // 松手后保持的持续时间(s)
     bool forward_cmd_vel_final_ = true; // 将 /cmd_vel_final 转发到 merged_topic (/cmd_vel)
+    bool inline_resolver_ = true;       // 是否在本节点内进行 TF 旋转解算并发布 /cmd_vel_final
 
     // 速度标定
     double linear_speed_ = 0.5;      // 基础线速度 m/s
@@ -95,6 +103,10 @@ private:
 
     // 实时追踪按住的键集合（本周期内采集到的所有按键）
     std::unordered_set<char> keys_pressed_;
+
+    // TF for inline resolver
+    std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
+    std::unique_ptr<tf2_ros::TransformListener> tf_listener_;
 };
 
 TermiosGuard term_guard;
@@ -106,10 +118,14 @@ TeleopTurtle::TeleopTurtle()
     nhPrivate_.param("angular_topic", angular_topic_, angular_topic_);
     nhPrivate_.param("frame_id", frame_id_, frame_id_);
     nhPrivate_.param("merged_topic", merged_topic_, merged_topic_);
+    nhPrivate_.param("odom_frame", odom_frame_, odom_frame_);
+    nhPrivate_.param("base_frame", base_frame_, base_frame_);
     nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
     nhPrivate_.param("publish_rate_hz", publish_rate_hz_, publish_rate_hz_);
     nhPrivate_.param("release_timeout", release_timeout_, release_timeout_);
     nhPrivate_.param("forward_cmd_vel_final", forward_cmd_vel_final_, forward_cmd_vel_final_);
+    nhPrivate_.param("inline_resolver", inline_resolver_, inline_resolver_);
+    nhPrivate_.param("merged_topic", merged_topic_, merged_topic_);
     nhPrivate_.param("linear_speed", linear_speed_, linear_speed_);
     nhPrivate_.param("linear_speed_run", linear_speed_run_, linear_speed_run_);
     nhPrivate_.param("angular_speed", angular_speed_, angular_speed_);
@@ -118,6 +134,15 @@ TeleopTurtle::TeleopTurtle()
     linear_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(linear_topic_, 10);
     angular_pub_ = nh_.advertise<geometry_msgs::Twist>(angular_topic_, 10);
     merged_pub_ = nh_.advertise<geometry_msgs::Twist>(merged_topic_, 10);
+    if (inline_resolver_)
+    {
+        // inline resolver publishes directly to merged_topic (e.g., /cmd_vel)
+        final_pub_ = merged_pub_;
+        tf_buffer_.reset(new tf2_ros::Buffer());
+        tf_listener_.reset(new tf2_ros::TransformListener(*tf_buffer_));
+        ROS_INFO("Keyboard teleop inline resolver enabled: publishing %s (odom=%s, base=%s)",
+                 merged_topic_.c_str(), odom_frame_.c_str(), base_frame_.c_str());
+    }
     if (forward_cmd_vel_final_)
     {
         final_sub_ = nh_.subscribe("/cmd_vel_final", 10, &TeleopTurtle::finalCmdCB, this);
@@ -287,6 +312,40 @@ void TeleopTurtle::keyLoop()
             // 仅发布解耦后的指令：线速度(odom)与角速度(直接)
             linear_pub_.publish(lin_msg);
             angular_pub_.publish(ang_msg);
+
+            // 内联解算：使用 TF 将 odom 意图旋转到底盘帧并发布最终速度到 merged_topic (/cmd_vel)
+            if (inline_resolver_ && final_pub_)
+            {
+                try
+                {
+                    geometry_msgs::TransformStamped tf = tf_buffer_->lookupTransform(
+                        base_frame_, odom_frame_, ros::Time(0), ros::Duration(0.05));
+
+                    tf2::Quaternion q(
+                        tf.transform.rotation.x,
+                        tf.transform.rotation.y,
+                        tf.transform.rotation.z,
+                        tf.transform.rotation.w);
+                    tf2::Matrix3x3 m(q);
+                    double roll, pitch, yaw;
+                    m.getRPY(roll, pitch, yaw);
+
+                    const double c = std::cos(yaw);
+                    const double s = std::sin(yaw);
+                    const double vx_base = c * vx_world + s * vy_world;
+                    const double vy_base = -s * vx_world + c * vy_world;
+
+                    geometry_msgs::Twist final_cmd;
+                    final_cmd.linear.x = vx_base;
+                    final_cmd.linear.y = vy_base;
+                    final_cmd.angular.z = wz;
+                    final_pub_.publish(final_cmd);
+                }
+                catch (tf2::TransformException &ex)
+                {
+                    ROS_WARN_THROTTLE(2.0, "[teleop inline resolver] TF lookup failed: %s", ex.what());
+                }
+            }
         }
 
         // 清空集合，下一周期重新采集（termios无法获得KeyUp事件）

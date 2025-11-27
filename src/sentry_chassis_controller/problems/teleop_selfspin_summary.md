@@ -13,7 +13,9 @@
   - 要点：使用非阻塞终端读取；支持多键组合；将线速度意图发布为 `geometry_msgs/TwistStamped` 到 `/cmd_vel_linear_absolute`（frame_id=odom），角速度发布为 `geometry_msgs/Twist` 到 `/cmd_vel_angular_direct`。增加可选转发参数 `forward_cmd_vel_final`，当启用时订阅 `/cmd_vel_final` 并转发到兼容的 `merged_topic`（默认为 `/cmd_vel`）。
 
 - 解析器（Rotation-matrix resolver）
-  - 文件：`src/chassis_controller.cpp`（新增）
+  - 两种实现可选：
+    1) 独立节点 `src/chassis_controller.cpp`
+    2) 内联到键盘节点 `src/sentry_control_key.cpp`（参数 `~inline_resolver=true` 时启用）
   - 要点：订阅 `/cmd_vel_linear_absolute` 和 `/cmd_vel_angular_direct`，通过 TF 查询 `odom -> base_link` 的 yaw，用显式 2×2 旋转矩阵把世界线速度转换为底盘线速度，发布结果到 `/cmd_vel_final`（geometry_msgs/Twist）。
 
 - Yaw 调试节点
@@ -22,7 +24,8 @@
 
 - 启动文件与 remap
   - 编辑：`launch/sentry_pid_test_fixed.launch`（新增 arg `controller_ns`，并在调用 controller spawner 时添加 `<remap from="/cmd_vel" to="/$(arg controller_ns)/cmd_vel"/>`）
-  - 编辑：`launch/sentry_with_odom.launch`（已包含 `sentry_control_key` 与 `chassis_controller` 节点的启动）
+  - 编辑：`launch/sentry_with_odom.launch`
+    - 新增 arg `inline_resolver`（默认 true）。当为 true 时：`sentry_control_key` 内联发布 `/cmd_vel_final`，并且不再启动独立的 `chassis_controller` 节点；为 false 时继续启动独立解析器。
 
 - CMake / 构建
   - 已更新 CMakeLists 以包含新节点并链接所需的 tf2 库（在先前实现步骤中已完成构建验证，构建成功）。
