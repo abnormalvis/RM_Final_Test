@@ -24,3 +24,5 @@
 9. 运行时发现rqt_plot无法正常显示数据，通过解决环境依赖的问题，并重新编译，成功运行，同时rqt_reconfigure插件也成功运行。![](src/sentry_chassis_controller/pictures/rqt_reconfigure_plot_demo.png)
 
 10. 运动学正逆解算 `forward_kinematics.cpp` `inverse_kinematics.cpp` 测试完毕。现在可以通过键盘控制节点在仿真中控制底盘运动，同时通过rosbag的记录功能，记录/odom话题数据，在 `plotjuggler` 中回放查看数据，并完成数据可视化。![](src/sentry_chassis_controller/pictures/sentry_with_odom_running.png)
+
+11. 正在努力实现按下按键wsad时底盘才会，qe按下后底盘旋转，两种运动可以独立进行并进行速度指令融合的效果，但是遇到了很多问题。
