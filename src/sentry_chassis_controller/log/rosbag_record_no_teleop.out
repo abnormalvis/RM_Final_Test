@@ -1,5 +1,0 @@
-[0m[INFO] [1764080472.560725077]: Subscribing to /cmd_vel[0m
-[0m[INFO] [1764080472.566120844]: Subscribing to /cmd_vel_stamped[0m
-[0m[INFO] [1764080472.569193790]: Subscribing to /odom[0m
-[0m[INFO] [1764080472.571602090]: Subscribing to /tf[0m
-[0m[INFO] [1764080472.826964712, 2958.401000000]: Recording to '2025-11-25-22-21-12.bag'.[0m
