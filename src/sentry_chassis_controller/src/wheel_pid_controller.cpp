@@ -71,8 +71,11 @@ namespace sentry_chassis_controller
             wheel_cmd_[iidx] = 0.0;
         }
 
+        // configurable cmd_vel topic (absolute recommended)
+        controller_nh.param<std::string>("cmd_vel_topic", cmd_vel_topic_, cmd_vel_topic_);
+        controller_nh.param("synthetic_fallback", synthetic_fallback_, synthetic_fallback_);
         // subscribe to cmd_vel to get desired chassis velocity (in chassis frame)
-        cmd_vel_sub_ = root_nh.subscribe<geometry_msgs::Twist>("cmd_vel", 1, &WheelPidController::cmdVelCallback, this);
+        cmd_vel_sub_ = root_nh.subscribe<geometry_msgs::Twist>(cmd_vel_topic_, 1, &WheelPidController::cmdVelCallback, this);
 
         // publisher to expose desired wheel/pivot commands for testing/inspection
         desired_pub_ = root_nh.advertise<sensor_msgs::JointState>("desired_wheel_states", 1);
@@ -86,7 +89,7 @@ namespace sentry_chassis_controller
         joint_states_pub_ = root_nh.advertise<sensor_msgs::JointState>("joint_states", 1);
         last_state_pub_ = ros::Time(0);
 
-        ROS_INFO("WheelPidController initialized with enhanced state feedback!");
+        ROS_INFO("WheelPidController initialized. cmd_vel_topic=%s, synthetic_fallback=%s", cmd_vel_topic_.c_str(), synthetic_fallback_ ? "true" : "false");
         return true;
     }
 
@@ -208,17 +211,20 @@ namespace sentry_chassis_controller
         }
 
         // ENSURE NON-ZERO STATES (SAFETY FALLBACK)
-        // If ALL positions are zero (simulated sensor failure), report minimal movement
-        double min_movement = 0.001; // Minimal non-zero to prevent division by zero
-        if (fabs(lf_wheel_pos) + fabs(rf_wheel_pos) + fabs(lb_wheel_pos) + fabs(rb_wheel_pos) < min_movement * 4)
+        // Guarded by parameter to avoid masking wiring/config issues that lead to "very small" motions.
+        if (synthetic_fallback_)
         {
-            // Provide minimal synthetic movement to keep odom alive (only if commanded)
-            double synthetic_pos = min_movement * wheel_cmd_[0] * 0.01; // Tiny deflection based on command
-            lf_wheel_pos = synthetic_pos;
-            rf_wheel_pos = synthetic_pos;
-            lb_wheel_pos = synthetic_pos;
-            rb_wheel_pos = synthetic_pos;
-            ROS_WARN_THROTTLE(2.0, "All joint positions zero! Using synthetic backup values");
+            double min_movement = 0.001; // Minimal non-zero to prevent division by zero
+            if (fabs(lf_wheel_pos) + fabs(rf_wheel_pos) + fabs(lb_wheel_pos) + fabs(rb_wheel_pos) < min_movement * 4)
+            {
+                // Provide minimal synthetic movement to keep odom alive (only if commanded)
+                double synthetic_pos = min_movement * wheel_cmd_[0] * 0.01; // Tiny deflection based on command
+                lf_wheel_pos = synthetic_pos;
+                rf_wheel_pos = synthetic_pos;
+                lb_wheel_pos = synthetic_pos;
+                rb_wheel_pos = synthetic_pos;
+                ROS_WARN_THROTTLE(2.0, "All joint positions zero! Using synthetic backup values (enabled)");
+            }
         }
 
         // PUBLISH ACTUAL JOINT STATES (CRITICAL FIX FOR FK)

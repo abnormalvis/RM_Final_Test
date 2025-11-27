@@ -9,6 +9,7 @@
 #include <cstring>
 #include <stdio.h>
 #include <signal.h>
+#include <unordered_set>
 /* 终端控制相关头文件 */
 #ifndef _WIN32
 #include <termios.h>
@@ -28,8 +29,9 @@ struct TermiosGuard
         struct termios raw;
         memcpy(&raw, &cooked, sizeof(struct termios));
         raw.c_lflag &= ~(ICANON | ECHO);
-        raw.c_cc[VEOL] = 1;
-        raw.c_cc[VEOF] = 2;
+        // 非阻塞立即返回，便于每周期读取所有按键
+        raw.c_cc[VMIN] = 0;
+        raw.c_cc[VTIME] = 0;
         tcsetattr(fd, TCSANOW, &raw);
         active = true;
 #endif
@@ -51,6 +53,7 @@ class TeleopTurtle
 public:
     TeleopTurtle();
     void keyLoop();
+    void finalCmdCB(const geometry_msgs::Twist::ConstPtr &msg);
 
 private:
     // ROS
@@ -62,30 +65,36 @@ private:
     ros::Publisher linear_pub_;
     // 2) 角速度（直接使用）
     ros::Publisher angular_pub_;
-    // 3) 合并发布（传统 /cmd_vel 接口）
+    // 3) 合并发布（传统 /cmd_vel 接口）——仅用于转发解算器输出
     ros::Publisher merged_pub_;
+    // 4) 订阅 /cmd_vel_final（解算器输出），用于兼容转发到 /cmd_vel
+    ros::Subscriber final_sub_;
 
     // 参数
     std::string linear_topic_ = "/cmd_vel_linear_absolute";
     std::string angular_topic_ = "/cmd_vel_angular_direct";
-    std::string frame_id_ = "odom"; // 线速度TwistStamped的坐标系
-    std::string merged_topic_ = "/cmd_vel"; // 合并发布的底盘速度（无需外部合成）
+    std::string frame_id_ = "odom";         // 线速度TwistStamped的坐标系
+    std::string merged_topic_ = "/cmd_vel"; // 底盘最终速度话题（本节点不再主动合成，只做订阅/转发）
     bool publish_zero_when_idle_ = false;
-    int publish_rate_hz_ = 20; // 发布频率
-    double release_timeout_ = 0.25; // 松手后保持的持续时间(s)
+    int publish_rate_hz_ = 20;          // 发布频率
+    double release_timeout_ = 0.25;     // 松手后保持的持续时间(s)
+    bool forward_cmd_vel_final_ = true; // 将 /cmd_vel_final 转发到 merged_topic (/cmd_vel)
 
     // 速度标定
-    double linear_speed_ = 0.5;       // 基础线速度 m/s
-    double linear_speed_run_ = 1.0;   // 按住Shift的线速度 m/s
-    double angular_speed_ = 1.0;      // 基础角速度 rad/s
-    double angular_speed_run_ = 1.5;  // 按住Shift的角速度 rad/s
+    double linear_speed_ = 0.5;      // 基础线速度 m/s
+    double linear_speed_run_ = 1.0;  // 按住Shift的线速度 m/s
+    double angular_speed_ = 2.0;     // 基础角速度 rad/s
+    double angular_speed_run_ = 3.0; // 按住Shift的角速度 rad/s
 
     // 按键保持状态（按下才运动 + 释放后短暂保持）
-    double linear_x_state_ = 0.0; // odom系前向
-    double linear_y_state_ = 0.0; // odom系侧向
+    double linear_x_state_ = 0.0;  // odom系前向
+    double linear_y_state_ = 0.0;  // odom系侧向
     double angular_z_state_ = 0.0; // 角速度
     ros::Time last_linear_stamp_;
     ros::Time last_angular_stamp_;
+
+    // 实时追踪按住的键集合（本周期内采集到的所有按键）
+    std::unordered_set<char> keys_pressed_;
 };
 
 TermiosGuard term_guard;
@@ -100,6 +109,7 @@ TeleopTurtle::TeleopTurtle()
     nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
     nhPrivate_.param("publish_rate_hz", publish_rate_hz_, publish_rate_hz_);
     nhPrivate_.param("release_timeout", release_timeout_, release_timeout_);
+    nhPrivate_.param("forward_cmd_vel_final", forward_cmd_vel_final_, forward_cmd_vel_final_);
     nhPrivate_.param("linear_speed", linear_speed_, linear_speed_);
     nhPrivate_.param("linear_speed_run", linear_speed_run_, linear_speed_run_);
     nhPrivate_.param("angular_speed", angular_speed_, angular_speed_);
@@ -108,8 +118,13 @@ TeleopTurtle::TeleopTurtle()
     linear_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(linear_topic_, 10);
     angular_pub_ = nh_.advertise<geometry_msgs::Twist>(angular_topic_, 10);
     merged_pub_ = nh_.advertise<geometry_msgs::Twist>(merged_topic_, 10);
+    if (forward_cmd_vel_final_)
+    {
+        final_sub_ = nh_.subscribe("/cmd_vel_final", 10, &TeleopTurtle::finalCmdCB, this);
+        ROS_INFO("Keyboard teleop forwarding enabled: /cmd_vel_final -> %s", merged_topic_.c_str());
+    }
 
-    ROS_INFO("Keyboard teleop (single-node) initialized: linear_topic=%s, angular_topic=%s, merged_topic=%s, frame_id=%s, rate=%d Hz, release_timeout=%.2fs",
+    ROS_INFO("Keyboard teleop initialized: linear_topic=%s, angular_topic=%s, merged_topic=%s, frame_id=%s, rate=%d Hz, release_timeout=%.2fs",
              linear_topic_.c_str(), angular_topic_.c_str(), merged_topic_.c_str(), frame_id_.c_str(), publish_rate_hz_, release_timeout_);
 }
 
@@ -144,10 +159,11 @@ void TeleopTurtle::keyLoop()
     ufd.fd = 0;          // stdin
     ufd.events = POLLIN; // 可读
 
-    ros::Rate rate(publish_rate_hz_);
+    ros::Rate rate(std::max(20, publish_rate_hz_));
     while (ros::ok())
     {
-        int num = poll(&ufd, 1, 1000 / publish_rate_hz_);
+        // 非阻塞poll，尽可能读取缓冲区内所有按键
+        int num = poll(&ufd, 1, 0);
         if (num < 0)
         {
             perror("poll():");
@@ -156,14 +172,49 @@ void TeleopTurtle::keyLoop()
 
         if (num > 0)
         {
-            char c = 0;
-            if (read(0, &c, 1) < 0)
+            // 循环读取直到缓冲区为空
+            while (true)
             {
-                perror("read():");
-                break;
-            }
+                char c = 0;
+                int ret = read(0, &c, 1);
+                if (ret <= 0)
+                    break;
 
-            // Shift检测（大写表示按下了Shift）
+                // 转小写以识别Shift加速
+                bool shifted = (c >= 'A' && c <= 'Z');
+                char lower = shifted ? static_cast<char>(c - 'A' + 'a') : c;
+
+                // 空格或c：立即清空集合并停
+                if (lower == ' ' || lower == 'c')
+                {
+                    keys_pressed_.clear();
+                    linear_x_state_ = 0.0;
+                    linear_y_state_ = 0.0;
+                    angular_z_state_ = 0.0;
+                    last_linear_stamp_ = ros::Time::now();
+                    last_angular_stamp_ = ros::Time::now();
+                    continue;
+                }
+
+                // Ctrl-C 退出
+                if (lower == '\x03')
+                {
+                    quit(0);
+                }
+
+                // 记录按键（本周期内累加处理）
+                keys_pressed_.insert(c);
+            }
+        }
+
+        // 基于集合计算当前期望速度（odom系vx/vy，角速度wz）
+        const ros::Time now = ros::Time::now();
+        double vx_world = 0.0;
+        double vy_world = 0.0;
+        double wz = 0.0;
+
+        for (char c : keys_pressed_)
+        {
             bool shifted = (c >= 'A' && c <= 'Z');
             char lower = shifted ? static_cast<char>(c - 'A' + 'a') : c;
             double lin = shifted ? linear_speed_run_ : linear_speed_;
@@ -172,57 +223,46 @@ void TeleopTurtle::keyLoop()
             switch (lower)
             {
             case 'w':
-                linear_x_state_ = lin;
-                linear_y_state_ = 0.0;
-                last_linear_stamp_ = ros::Time::now();
+                vx_world += lin;
+                last_linear_stamp_ = now;
                 break;
             case 's':
-                linear_x_state_ = -lin;
-                linear_y_state_ = 0.0;
-                last_linear_stamp_ = ros::Time::now();
+                vx_world -= lin;
+                last_linear_stamp_ = now;
                 break;
             case 'a':
-                linear_x_state_ = 0.0;
-                linear_y_state_ = lin;
-                last_linear_stamp_ = ros::Time::now();
+                vy_world += lin;
+                last_linear_stamp_ = now;
                 break;
             case 'd':
-                linear_x_state_ = 0.0;
-                linear_y_state_ = -lin;
-                last_linear_stamp_ = ros::Time::now();
+                vy_world -= lin;
+                last_linear_stamp_ = now;
                 break;
             case 'q':
-                angular_z_state_ = ang;
-                last_angular_stamp_ = ros::Time::now();
+                wz += ang;
+                last_angular_stamp_ = now;
                 break;
             case 'e':
-                angular_z_state_ = -ang;
-                last_angular_stamp_ = ros::Time::now();
-                break;
-            case 'c':
-            case ' ': // space
-                linear_x_state_ = 0.0;
-                linear_y_state_ = 0.0;
-                angular_z_state_ = 0.0;
-                last_linear_stamp_ = ros::Time::now();
-                last_angular_stamp_ = ros::Time::now();
-                break;
-            case '\x03': // ctrl-c
-                quit(0);
+                wz -= ang;
+                last_angular_stamp_ = now;
                 break;
             default:
                 break;
             }
         }
 
-        // 基于释放超时的按住逻辑
-        const ros::Time now = ros::Time::now();
+        // 松手检测：根据release_timeout做短暂保持（避免掉帧抖动）
         bool linear_active = (now - last_linear_stamp_).toSec() < release_timeout_;
         bool angular_active = (now - last_angular_stamp_).toSec() < release_timeout_;
-
-        double vx_world = linear_active ? linear_x_state_ : 0.0;
-        double vy_world = linear_active ? linear_y_state_ : 0.0;
-        double wz = angular_active ? angular_z_state_ : 0.0;
+        if (!linear_active)
+        {
+            vx_world = 0.0;
+            vy_world = 0.0;
+        }
+        if (!angular_active)
+        {
+            wz = 0.0;
+        }
 
         // 发布线速度（odom系）
         geometry_msgs::TwistStamped lin_msg;
@@ -244,23 +284,22 @@ void TeleopTurtle::keyLoop()
 
         if (should_publish)
         {
-            // 分离发布
+            // 仅发布解耦后的指令：线速度(odom)与角速度(直接)
             linear_pub_.publish(lin_msg);
             angular_pub_.publish(ang_msg);
-
-            // 合并发布到 /cmd_vel （这里直接使用世界系的 vx, vy，不做坐标变换；如果需要机体系可后续加 TF）
-            geometry_msgs::Twist merged;
-            merged.linear.x = vx_world;
-            merged.linear.y = vy_world;
-            merged.linear.z = 0.0;
-            merged.angular.x = 0.0;
-            merged.angular.y = 0.0;
-            merged.angular.z = wz;
-            merged_pub_.publish(merged);
         }
+
+        // 清空集合，下一周期重新采集（termios无法获得KeyUp事件）
+        keys_pressed_.clear();
 
         rate.sleep();
     }
 
     term_guard.restore();
+}
+
+void TeleopTurtle::finalCmdCB(const geometry_msgs::Twist::ConstPtr &msg)
+{
+    // 将解算器输出的底盘速度直接转发到 merged_topic（通常为 /cmd_vel）
+    merged_pub_.publish(*msg);
 }

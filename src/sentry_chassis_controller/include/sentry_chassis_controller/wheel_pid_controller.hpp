@@ -45,6 +45,8 @@ namespace sentry_chassis_controller
 
         // cmd_vel subscriber
         ros::Subscriber cmd_vel_sub_;
+        std::string cmd_vel_topic_{"/cmd_vel"}; // configurable cmd_vel topic (absolute recommended)
+        bool synthetic_fallback_{false};         // guard synthetic joint state fallback
       // publisher for desired commands (for testing/inspection)
       ros::Publisher desired_pub_;
       // NEW: publisher for actual joint states (CRITICAL FIX)
