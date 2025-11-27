@@ -19,8 +19,6 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   gazebo_msgs
   tf2_ros
-  tf2
-  tf2_geometry_msgs
   dynamic_reconfigure
 )
 
@@ -176,16 +174,6 @@ target_link_libraries(sentry_control_key_optimized ${catkin_LIBRARIES})
 add_executable(dual_mode_chassis_controller src/dual_mode_chassis_controller.cpp)
 add_dependencies(dual_mode_chassis_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(dual_mode_chassis_controller ${catkin_LIBRARIES})
-
-## Explicit rotation-matrix resolver node (方案A)
-add_executable(chassis_controller src/chassis_controller.cpp)
-add_dependencies(chassis_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(chassis_controller ${catkin_LIBRARIES})
-
-## Yaw publisher node: extract yaw from /odom and publish as std_msgs/Float64
-add_executable(yaw_publisher src/yaw_publisher.cpp)
-add_dependencies(yaw_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(yaw_publisher ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
