@@ -1,0 +1,17 @@
+[33mWARNING: package 'gazebo_msgs' is deprecated (This package has been deprecated as of January 2025 with Gazebo classic 11 reaching[0m
+      end-of-life. Users are highly encouraged to migrate to the new Gazebo
+      using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration))
+[31m[1mCMake Error[0m at /home/idris/final_ws/src/sentry_chassis_controller/CMakeLists.txt:171 (add_executable):
+  Cannot find source file:
+
+    src/sentry_control_key_optimized.cpp
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+  .hpp .hxx .in .txx
+
+
+[31m[1mCMake Error[0m at /home/idris/final_ws/src/sentry_chassis_controller/CMakeLists.txt:171 (add_executable):
+  No SOURCES given to target: sentry_control_key_optimized
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
