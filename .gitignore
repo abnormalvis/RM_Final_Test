@@ -9,6 +9,7 @@
 /home/idris/final_ws/reference
 /home/idris/final_ws/src/sentry_chassis_controller/log/
 /home/idris/final_ws/src/sentry_chassis_controller/log/*.log
+/home/idris/final_ws/reference/ */
 # Local IDE files
 .idea/
 /devel/
