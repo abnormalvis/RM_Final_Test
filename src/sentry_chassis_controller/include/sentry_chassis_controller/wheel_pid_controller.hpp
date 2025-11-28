@@ -10,6 +10,9 @@
 #include <sentry_chassis_controller/WheelPidConfig.h>
 #include <sentry_chassis_controller/inverse_kinematics.hpp>
 #include <sensor_msgs/JointState.h>
+#include <nav_msgs/Odometry.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf2/LinearMath/Quaternion.h>
 
 namespace sentry_chassis_controller
 {
@@ -39,6 +42,17 @@ namespace sentry_chassis_controller
         double wheel_base_{0.36};
       double wheel_radius_{0.05};
 
+        // power limiting parameters (borrowed from hero_chassis_controller)
+        double power_limit_{0.0};
+        double effort_coeff_{0.0};
+        double velocity_coeff_{0.0};
+        double power_offset_{0.0};
+        bool power_limit_enabled_{false};
+
+        // geometry helpers
+        double rx_{0.0}; // wheel_track/2
+        double ry_{0.0}; // wheel_base/2
+
         // desired commands
         double pivot_cmd_[4]{}; // desired pivot angles for 4 modules
         double wheel_cmd_[4]{}; // desired wheel speeds for 4 modules
@@ -52,6 +66,17 @@ namespace sentry_chassis_controller
       // NEW: publisher for actual joint states (CRITICAL FIX)
       ros::Publisher joint_states_pub_;
       ros::Time last_state_pub_; // timestamp tracking for joint states
+
+  // Odometry publishing integrated into controller
+  ros::Publisher odom_pub_;
+  tf2_ros::TransformBroadcaster tf_broadcaster_;
+  std::string odom_frame_{"odom"};
+  std::string base_link_frame_{"base_link"};
+  // odom state
+  double odom_x_{0.0};
+  double odom_y_{0.0};
+  double odom_yaw_{0.0};
+  ros::Time last_odom_time_;
 
       // dynamic_reconfigure server
       typedef sentry_chassis_controller::WheelPidConfig Config;
@@ -67,6 +92,10 @@ namespace sentry_chassis_controller
         void initWheel(const std::string &name, control_toolbox::Pid &pid,
                        ros::NodeHandle &controller_nh, double def_wp, double def_wi,
                        double def_wd, double def_wi_clamp, double def_wanti);
+
+  // Helpers
+    void publishOdometry_(const ros::Time &stamp, double vx_body, double vy_body, double wz);
+    void odom_update(const ros::Time &time, const ros::Duration &period);
     };
 
 } // namespace sentry_chassis_controller

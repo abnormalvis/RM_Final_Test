@@ -95,3 +95,10 @@ wheel_pid_controller:
       i_clamp: 0.0
       output_min: -5.0
       output_max: 5.0
+
+# 底盘功率限制值
+    power_limit: 100.0
+    power:
+      effort_coeff: 12.0
+      velocity_coeff: 0.0048
+      power_offset: 0
