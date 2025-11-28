@@ -1,0 +1,319 @@
+[  0%] Built target tf2_msgs_generate_messages_nodejs
+[  0%] Built target dynamic_reconfigure_generate_messages_lisp
+[  0%] Built target tf2_msgs_generate_messages_lisp
+[  0%] Built target actionlib_generate_messages_py
+[  0%] Built target actionlib_generate_messages_cpp
+[  0%] Built target actionlib_generate_messages_nodejs
+[  0%] Built target std_srvs_generate_messages_lisp
+[  0%] Built target std_srvs_generate_messages_nodejs
+[  0%] Built target std_srvs_generate_messages_eus
+[  0%] Built target gazebo_msgs_generate_messages_py
+[  0%] Built target gazebo_msgs_generate_messages_cpp
+[  0%] Built target gazebo_msgs_generate_messages_nodejs
+[  0%] Built target nav_msgs_generate_messages_lisp
+[  0%] Built target nav_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target nav_msgs_generate_messages_nodejs
+[  0%] Built target gazebo_msgs_generate_messages_lisp
+[  0%] Built target tf2_msgs_generate_messages_py
+[  0%] Built target dynamic_reconfigure_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_py
+[  0%] Built target actionlib_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_srvs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target control_toolbox_gencfg
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target control_msgs_generate_messages_py
+[  0%] Built target tf2_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target std_srvs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target control_msgs_generate_messages_lisp
+[  0%] Built target nav_msgs_generate_messages_cpp
+[  0%] Built target control_toolbox_generate_messages_eus
+[  0%] Built target control_toolbox_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target control_toolbox_generate_messages_nodejs
+[  0%] Built target control_msgs_generate_messages_cpp
+[  0%] Built target control_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_py
+[  0%] Built target control_toolbox_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_eus
+[  0%] Built target trajectory_msgs_generate_messages_nodejs
+[  0%] Built target dynamic_reconfigure_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[  0%] Built target control_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_cpp
+[  0%] Built target nav_msgs_generate_messages_eus
+[  6%] Built target sentry_chassis_controller_gencfg
+[  6%] Built target std_msgs_generate_messages_eus
+[  6%] Built target actionlib_msgs_generate_messages_lisp
+[  6%] Built target actionlib_msgs_generate_messages_nodejs
+[  6%] Built target control_toolbox_generate_messages_py
+[  6%] Built target trajectory_msgs_generate_messages_cpp
+[  6%] Built target trajectory_msgs_generate_messages_lisp
+[  6%] Built target actionlib_generate_messages_eus
+[  6%] Built target rosgraph_msgs_generate_messages_cpp
+[  6%] Built target trajectory_msgs_generate_messages_py
+[  6%] Built target dynamic_reconfigure_generate_messages_cpp
+[  6%] Built target gazebo_msgs_generate_messages_eus
+[  6%] Built target geometry_msgs_generate_messages_nodejs
+[  6%] Built target dynamic_reconfigure_generate_messages_eus
+[  6%] Built target dynamic_reconfigure_gencfg
+[  6%] Built target tf2_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target sentry_control_key_feature[0m
+[ 18%] Built target sentry_control_key
+[ 25%] [32mBuilding CXX object CMakeFiles/sentry_control_key_feature.dir/src/sentry_control_key_feature.cpp.o[0m
+[ 37%] Built target forward_kinematics
+[ 50%] Built target gazebo_odom_bridge
+[ 62%] Built target ik_test_publisher
+[35m[1mScanning dependencies of target yaw_publisher[0m
+[ 68%] [32mBuilding CXX object CMakeFiles/yaw_publisher.dir/src/yaw_publisher.cpp.o[0m
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:136:1:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ at end of input
+  136 | [01;31m[K}[m[K
+      | [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:10:1:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+   10 | [01;36m[K{[m[K
+      | [01;36m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:[m[K In constructor ‘[01m[KYawPublisher::YawPublisher()[m[K’:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:13:11:[m[K [01;31m[Kerror: [m[Kclass ‘[01m[KYawPublisher[m[K’ does not have any field named ‘[01m[Knh_[m[K’
+   13 |         : [01;31m[Knh_[m[K(), pnh_("~"), tf_buffer_(ros::Duration(10.0)), tf_listener_(tf_buffer_)
+      |           [01;31m[K^~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:13:18:[m[K [01;31m[Kerror: [m[Kclass ‘[01m[KYawPublisher[m[K’ does not have any field named ‘[01m[Kpnh_[m[K’
+   13 |         : nh_(), [01;31m[Kpnh_[m[K("~"), tf_buffer_(ros::Duration(10.0)), tf_listener_(tf_buffer_)
+      |                  [01;31m[K^~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:13:29:[m[K [01;31m[Kerror: [m[Kclass ‘[01m[KYawPublisher[m[K’ does not have any field named ‘[01m[Ktf_buffer_[m[K’
+   13 |         : nh_(), pnh_("~"), [01;31m[Ktf_buffer_[m[K(ros::Duration(10.0)), tf_listener_(tf_buffer_)
+      |                             [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:13:62:[m[K [01;31m[Kerror: [m[Kclass ‘[01m[KYawPublisher[m[K’ does not have any field named ‘[01m[Ktf_listener_[m[K’
+   13 |         : nh_(), pnh_("~"), tf_buffer_(ros::Duration(10.0)), [01;31m[Ktf_listener_[m[K(tf_buffer_)
+      |                                                              [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:13:75:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf_buffer_[m[K’ was not declared in this scope
+   13 |         : nh_(), pnh_("~"), tf_buffer_(ros::Duration(10.0)), tf_listener_([01;31m[Ktf_buffer_[m[K)
+      |                                                                           [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:15:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kpnh_[m[K’ was not declared in this scope
+   15 |         [01;31m[Kpnh_[m[K.param<std::string>("odom_topic", odom_topic_, "/odom");
+      |         [01;31m[K^~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:15:31:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   15 |         pnh_.param<std::string[01;31m[K>[m[K("odom_topic", odom_topic_, "/odom");
+      |                               [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:15:47:[m[K [01;31m[Kerror: [m[K‘[01m[Kodom_topic_[m[K’ was not declared in this scope
+   15 |         pnh_.param<std::string>("odom_topic", [01;31m[Kodom_topic_[m[K, "/odom");
+      |                                               [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:16:31:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   16 |         pnh_.param<std::string[01;31m[K>[m[K("yaw_topic", yaw_topic_, "/robot_yaw");
+      |                               [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:16:46:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_topic_[m[K’ was not declared in this scope
+   16 |         pnh_.param<std::string>("yaw_topic", [01;31m[Kyaw_topic_[m[K, "/robot_yaw");
+      |                                              [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:17:31:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   17 |         pnh_.param<std::string[01;31m[K>[m[K("global_frame", global_frame_, "odom");
+      |                               [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:17:49:[m[K [01;31m[Kerror: [m[K‘[01m[Kglobal_frame_[m[K’ was not declared in this scope
+   17 |         pnh_.param<std::string>("global_frame", [01;31m[Kglobal_frame_[m[K, "odom");
+      |                                                 [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:18:31:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   18 |         pnh_.param<std::string[01;31m[K>[m[K("base_link_frame", base_link_frame_, "base_link");
+      |                               [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:18:52:[m[K [01;31m[Kerror: [m[K‘[01m[Kbase_link_frame_[m[K’ was not declared in this scope
+   18 |         pnh_.param<std::string>("base_link_frame", [01;31m[Kbase_link_frame_[m[K, "base_link");
+      |                                                    [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:19:31:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   19 |         pnh_.param<std::string[01;31m[K>[m[K("source", source_, std::string("auto")); // tf | odom | auto
+      |                               [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:19:43:[m[K [01;31m[Kerror: [m[K‘[01m[Ksource_[m[K’ was not declared in this scope
+   19 |         pnh_.param<std::string>("source", [01;31m[Ksource_[m[K, std::string("auto")); // tf | odom | auto
+      |                                           [01;31m[K^~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:20:20:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Kdouble[m[K’
+   20 |         pnh_.param<[01;31m[Kdouble[m[K>("hz", hz_, 50.0);
+      |                    [01;31m[K^~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:21:20:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Kdouble[m[K’
+   21 |         pnh_.param<[01;31m[Kdouble[m[K>("tf_timeout_sec", tf_timeout_sec_, 0.05);
+      |                    [01;31m[K^~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:22:20:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Kdouble[m[K’
+   22 |         pnh_.param<[01;31m[Kdouble[m[K>("stale_sec", stale_sec_, 1.0);
+      |                    [01;31m[K^~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:24:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_pub_[m[K’ was not declared in this scope
+   24 |         [01;31m[Kyaw_pub_[m[K = nh_.advertise<std_msgs::Float64>(yaw_topic_, 10);
+      |         [01;31m[K^~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:24:20:[m[K [01;31m[Kerror: [m[K‘[01m[Knh_[m[K’ was not declared in this scope
+   24 |         yaw_pub_ = [01;31m[Knh_[m[K.advertise<std_msgs::Float64>(yaw_topic_, 10);
+      |                    [01;31m[K^~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:24:51:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   24 |         yaw_pub_ = nh_.advertise<std_msgs::Float64[01;31m[K>[m[K(yaw_topic_, 10);
+      |                                                   [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:25:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kodom_sub_[m[K’ was not declared in this scope
+   25 |         [01;31m[Kodom_sub_[m[K = nh_.subscribe(odom_topic_, 10, &YawPublisher::odomCB, this);
+      |         [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:25:67:[m[K [01;31m[Kerror: [m[K‘[01m[KodomCB[m[K’ is not a member of ‘[01m[KYawPublisher[m[K’
+   25 |         odom_sub_ = nh_.subscribe(odom_topic_, 10, &YawPublisher::[01;31m[KodomCB[m[K, this);
+      |                                                                   [01;31m[K^~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:26:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktimer_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktimer_t[m[K’?
+   26 |         [01;31m[Ktimer_[m[K = nh_.createTimer(ros::Duration(1.0 / std::max(1.0, hz_)), &YawPublisher::onTimer, this);
+      |         [01;31m[K^~~~~~[m[K
+      |         [32m[Ktimer_t[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:26:68:[m[K [01;31m[Kerror: [m[K‘[01m[Khz_[m[K’ was not declared in this scope
+   26 |         timer_ = nh_.createTimer(ros::Duration(1.0 / std::max(1.0, [01;31m[Khz_[m[K)), &YawPublisher::onTimer, this);
+      |                                                                    [01;31m[K^~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:[m[K In member function ‘[01m[Kvoid YawPublisher::onTimer(const ros::TimerEvent&)[m[K’:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:37:25:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_tf_yaw_[m[K’ was not declared in this scope
+   37 |         double yaw_tf = [01;31m[Klast_tf_yaw_[m[K;
+      |                         [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:40:25:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf_buffer_[m[K’ was not declared in this scope
+   40 |             auto tfst = [01;31m[Ktf_buffer_[m[K.lookupTransform(global_frame_, base_link_frame_, ros::Time(0), ros::Duration(tf_timeout_sec_));
+      |                         [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:40:52:[m[K [01;31m[Kerror: [m[K‘[01m[Kglobal_frame_[m[K’ was not declared in this scope
+   40 |             auto tfst = tf_buffer_.lookupTransform([01;31m[Kglobal_frame_[m[K, base_link_frame_, ros::Time(0), ros::Duration(tf_timeout_sec_));
+      |                                                    [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:40:67:[m[K [01;31m[Kerror: [m[K‘[01m[Kbase_link_frame_[m[K’ was not declared in this scope
+   40 |             auto tfst = tf_buffer_.lookupTransform(global_frame_, [01;31m[Kbase_link_frame_[m[K, ros::Time(0), ros::Duration(tf_timeout_sec_));
+      |                                                                   [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:40:113:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf_timeout_sec_[m[K’ was not declared in this scope
+   40 |             auto tfst = tf_buffer_.lookupTransform(global_frame_, base_link_frame_, ros::Time(0), ros::Duration([01;31m[Ktf_timeout_sec_[m[K));
+      |                                                                                                                 [01;31m[K^~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/ros/noetic/include/ros/ros.h:40[m[K,
+                 from [01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:1[m[K:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:50:82:[m[K [01;31m[Kerror: [m[K‘[01m[Kglobal_frame_[m[K’ was not declared in this scope
+   50 |             ROS_WARN_THROTTLE(5.0, "yaw_publisher: TF lookup %s->%s failed: %s", [01;31m[Kglobal_frame_[m[K.c_str(), base_link_frame_.c_str(), ex.what());
+      |                                                                                  [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:351:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+  351 |     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+      |                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:466:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+  466 |       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/rosconsole/macros_generated.h:174:40:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_THROTTLE[m[K’
+  174 | #define ROS_WARN_THROTTLE(period, ...) [01;36m[KROS_LOG_THROTTLE[m[K(period, ::ros::console::levels::Warn, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+      |                                        [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:50:13:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_WARN_THROTTLE[m[K’
+   50 |             [01;36m[KROS_WARN_THROTTLE[m[K(5.0, "yaw_publisher: TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
+      |             [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:50:105:[m[K [01;31m[Kerror: [m[K‘[01m[Kbase_link_frame_[m[K’ was not declared in this scope
+   50 |             ROS_WARN_THROTTLE(5.0, "yaw_publisher: TF lookup %s->%s failed: %s", global_frame_.c_str(), [01;31m[Kbase_link_frame_[m[K.c_str(), ex.what());
+      |                                                                                                         [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:351:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+  351 |     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+      |                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:466:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+  466 |       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/rosconsole/macros_generated.h:174:40:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_THROTTLE[m[K’
+  174 | #define ROS_WARN_THROTTLE(period, ...) [01;36m[KROS_LOG_THROTTLE[m[K(period, ::ros::console::levels::Warn, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+      |                                        [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:50:13:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_WARN_THROTTLE[m[K’
+   50 |             [01;36m[KROS_WARN_THROTTLE[m[K(5.0, "yaw_publisher: TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
+      |             [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:58:17:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_tf_change_time_[m[K’ was not declared in this scope
+   58 |                 [01;31m[Klast_tf_change_time_[m[K = ros::Time::now();
+      |                 [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:62:51:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_tf_change_time_[m[K’ was not declared in this scope
+   62 |         const bool tf_stale = (ros::Time::now() - [01;31m[Klast_tf_change_time_[m[K).toSec() > stale_sec_;
+      |                                                   [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:62:83:[m[K [01;31m[Kerror: [m[K‘[01m[Kstale_sec_[m[K’ was not declared in this scope
+   62 |         const bool tf_stale = (ros::Time::now() - last_tf_change_time_).toSec() > [01;31m[Kstale_sec_[m[K;
+      |                                                                                   [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:65:13:[m[K [01;31m[Kerror: [m[K‘[01m[Ksource_[m[K’ was not declared in this scope
+   65 |         if ([01;31m[Ksource_[m[K == "tf")
+      |             [01;31m[K^~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:72:17:[m[K [01;31m[Kerror: [m[K‘[01m[Khave_odom_yaw_[m[K’ was not declared in this scope
+   72 |             if ([01;31m[Khave_odom_yaw_[m[K)
+      |                 [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:73:27:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_odom_[m[K’ was not declared in this scope
+   73 |                 yaw_out = [01;31m[Kyaw_odom_[m[K;
+      |                           [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:81:22:[m[K [01;31m[Kerror: [m[K‘[01m[Khave_odom_yaw_[m[K’ was not declared in this scope
+   81 |             else if ([01;31m[Khave_odom_yaw_[m[K)
+      |                      [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:83:27:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_odom_[m[K’ was not declared in this scope
+   83 |                 yaw_out = [01;31m[Kyaw_odom_[m[K;
+      |                           [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:90:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_pub_[m[K’ was not declared in this scope
+   90 |         [01;31m[Kyaw_pub_[m[K.publish(out);
+      |         [01;31m[K^~~~~~~~[m[K
+In file included from [01m[K/opt/ros/noetic/include/ros/ros.h:40[m[K,
+                 from [01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:1[m[K:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:93:27:[m[K [01;31m[Kerror: [m[K‘[01m[Ksource_[m[K’ was not declared in this scope
+   93 |                           [01;31m[Ksource_[m[K.c_str(), yaw_out, (int)tf_ok, (int)tf_stale, yaw_tf, (int)have_odom_yaw_, yaw_odom_);
+      |                           [01;31m[K^~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:351:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+  351 |     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+      |                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:466:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+  466 |       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/rosconsole/macros_generated.h:122:40:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_THROTTLE[m[K’
+  122 | #define ROS_INFO_THROTTLE(period, ...) [01;36m[KROS_LOG_THROTTLE[m[K(period, ::ros::console::levels::Info, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+      |                                        [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:92:9:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_INFO_THROTTLE[m[K’
+   92 |         [01;36m[KROS_INFO_THROTTLE[m[K(1.0, "yaw_publisher: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
+      |         [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:93:93:[m[K [01;31m[Kerror: [m[K‘[01m[Khave_odom_yaw_[m[K’ was not declared in this scope
+   93 |                           source_.c_str(), yaw_out, (int)tf_ok, (int)tf_stale, yaw_tf, (int)[01;31m[Khave_odom_yaw_[m[K, yaw_odom_);
+      |                                                                                             [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:351:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+  351 |     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+      |                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:466:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+  466 |       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/rosconsole/macros_generated.h:122:40:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_THROTTLE[m[K’
+  122 | #define ROS_INFO_THROTTLE(period, ...) [01;36m[KROS_LOG_THROTTLE[m[K(period, ::ros::console::levels::Info, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+      |                                        [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:92:9:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_INFO_THROTTLE[m[K’
+   92 |         [01;36m[KROS_INFO_THROTTLE[m[K(1.0, "yaw_publisher: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
+      |         [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:93:109:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_odom_[m[K’ was not declared in this scope
+   93 |                           source_.c_str(), yaw_out, (int)tf_ok, (int)tf_stale, yaw_tf, (int)have_odom_yaw_, [01;31m[Kyaw_odom_[m[K);
+      |                                                                                                             [01;31m[K^~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:351:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+  351 |     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+      |                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/ros/console.h:466:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+  466 |       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/rosconsole/macros_generated.h:122:40:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_THROTTLE[m[K’
+  122 | #define ROS_INFO_THROTTLE(period, ...) [01;36m[KROS_LOG_THROTTLE[m[K(period, ::ros::console::levels::Info, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+      |                                        [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:92:9:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_INFO_THROTTLE[m[K’
+   92 |         [01;36m[KROS_INFO_THROTTLE[m[K(1.0, "yaw_publisher: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
+      |         [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:96:5:[m[K [01;31m[Kerror: [m[Ka function-definition is not allowed here before ‘[01m[K{[m[K’ token
+   96 |     [01;31m[K{[m[K
+      |     [01;31m[K^[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:108:32:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Ktf2_ros::TransformListener::TransformListener()[m[K’
+  108 |     tf2_ros::TransformListener [01;31m[Ktf_listener_[m[K;
+      |                                [01;31m[K^~~~~~~~~~~~[m[K
+In file included from [01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:7[m[K:
+[01m[K/opt/ros/noetic/include/tf2_ros/transform_listener.h:55:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktf2_ros::TransformListener::TransformListener(tf2::BufferCore&, const ros::NodeHandle&, bool, ros::TransportHints)[m[K’
+   55 |   [01;36m[KTransformListener[m[K(tf2::BufferCore& buffer, const ros::NodeHandle& nh, bool spin_thread = true,
+      |   [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/tf2_ros/transform_listener.h:55:3:[m[K [01;36m[Knote: [m[K  candidate expects 4 arguments, 0 provided
+[01m[K/opt/ros/noetic/include/tf2_ros/transform_listener.h:53:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktf2_ros::TransformListener::TransformListener(tf2::BufferCore&, bool, ros::TransportHints)[m[K’
+   53 |   [01;36m[KTransformListener[m[K(tf2::BufferCore& buffer, bool spin_thread = true,
+      |   [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/noetic/include/tf2_ros/transform_listener.h:53:3:[m[K [01;36m[Knote: [m[K  candidate expects 3 arguments, 0 provided
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:[m[K At global scope:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/yaw_publisher.cpp:136:1:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id at end of input
+  136 | [01;31m[K}[m[K
+      | [01;31m[K^[m[K
+make[2]: *** [CMakeFiles/yaw_publisher.dir/build.make:63：CMakeFiles/yaw_publisher.dir/src/yaw_publisher.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:828：CMakeFiles/yaw_publisher.dir/all] 错误 2
+make[1]: *** 正在等待未完成的任务....
+[ 75%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key_feature[0m
+[ 75%] Built target sentry_control_key_feature
+make: *** [Makefile:141：all] 错误 2

@@ -7,16 +7,23 @@
   <!-- Include PID/controller setup -->
   <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
 
-  <!-- Forward kinematics node to compute odom from joint_states -->
-  <node pkg="sentry_chassis_controller" type="forward_kinematics" name="forward_kinematics" output="screen">
-    <param name="wheel_base" value="0.36"/>
-    <param name="wheel_track" value="0.36"/>
-    <param name="wheel_radius" value="0.05"/>
-    <!-- Keep default frames: odom/base_link; map fusion handled by TF if present -->
-  </node>
+  <!-- NOTE: forward_kinematics removed here to avoid conflicting odom->base_link TFs.
+       Odometry is already published by WheelPidController. -->
 
   <!-- Load teleop parameters into node namespace -->
   <rosparam file="$(find sentry_chassis_controller)/config/teleop_feature.yaml" ns="sentry_control_key_feature" command="load"/>
+
+  <!-- Yaw publisher (decouple yaw acquisition from teleop) -->
+  <node pkg="sentry_chassis_controller" type="yaw_publisher" name="yaw_publisher" output="screen">
+    <param name="global_frame" value="odom"/>
+    <param name="base_link_frame" value="base_link"/>
+    <param name="yaw_topic" value="/robot_yaw"/>
+    <param name="source" value="auto"/>
+    <param name="hz" value="50"/>
+    <param name="tf_timeout_sec" value="0.05"/>
+    <param name="stale_sec" value="1.0"/>
+    <param name="odom_topic" value="/odom"/>
+  </node>
 
   <!-- Keyboard teleop (feature variant): spinning-top default ON, quaternion->Euler yaw -->
   <node pkg="sentry_chassis_controller" type="sentry_control_key_feature" name="sentry_control_key_feature" output="screen"/>

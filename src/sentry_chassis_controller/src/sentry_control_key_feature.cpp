@@ -1,13 +1,14 @@
 /* ROS 相关头文件 */
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/TwistStamped.h>
+#include <nav_msgs/Odometry.h>
+#include <std_msgs/Float64.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
-#include <nav_msgs/Odometry.h>
-#include <geometry_msgs/TwistStamped.h>
 /* C++ 相关头文件 */
 #include <stdexcept>
 #include <cmath>
@@ -80,15 +81,34 @@ private:
     // 速度模式与参考坐标
     // velocity_mode_: "global" 表示按键为全局系意图（world frame），"chassis" 表示按键为底盘系（body frame）
     std::string velocity_mode_ = "global";
-    std::string global_frame_ = "map";       // 全局参考帧（global 模式下 TwistStamped 的 frame_id 及 TF 查询父帧）
+    std::string global_frame_ = "odom";         // 全局参考帧（global 模式下 TwistStamped 的 frame_id 及 TF 查询父帧）
     std::string base_link_frame_ = "base_link"; // 底盘帧名
+    std::string odom_topic_ = "/odom";          // 里程计话题（用于备用 yaw 来源）
+    std::string yaw_topic_ = "/robot_yaw";      // 由 yaw_publisher 发布的航向角（弧度）
 
-    // 使用一个buffer对象来寻找tf变换的对象来实现底盘到odom坐标系的转换
+    // yaw 来源选择：topic | tf | odom | auto（默认 topic；auto: topic>tf>odom）
+    std::string yaw_source_ = "topic";
+    double yaw_stale_sec_ = 2.0;   // 判定 tf 航向“停滞”的阈值
+    double tf_timeout_sec_ = 0.05; // TF 查询超时时间
+
+    // 使用一个buffer对象来寻找tf变换的对象来实现底盘到odom坐标系的转换（作为备用方案）
     std::unique_ptr<tf2_ros::Buffer> tfBuffer_;
     std::unique_ptr<tf2_ros::TransformListener> tfListener_;
 
     // 底盘的航向偏角
     double yaw_ = 0.0;
+    double yaw_tf_ = 0.0;
+    double yaw_odom_ = 0.0;
+    bool have_odom_yaw_ = false;
+    ros::Time last_yaw_change_tf_;
+    // 外部 yaw 订阅
+    double yaw_topic_val_ = 0.0;
+    bool have_yaw_topic_ = false;
+
+    // 订阅 odom 作为备用航向来源
+    ros::Subscriber odom_sub_;
+    // 订阅外部 yaw
+    ros::Subscriber yaw_sub_;
     bool field_centric_ = true;     // 当为 true 时，键盘输入表示世界坐标系下的方向，旋转不影响平移方向
     bool spinning_top_mode_ = true; // 小陀螺模式默认开启
 };
@@ -103,11 +123,24 @@ TeleopTurtle::TeleopTurtle()
     nhPrivate_.param("velocity_mode", velocity_mode_, velocity_mode_);
     nhPrivate_.param("global_frame", global_frame_, global_frame_);
     nhPrivate_.param("base_link_frame", base_link_frame_, base_link_frame_);
+    nhPrivate_.param("odom_topic", odom_topic_, odom_topic_);
+    nhPrivate_.param("yaw_topic", yaw_topic_, yaw_topic_);
+    nhPrivate_.param("yaw_source", yaw_source_, yaw_source_);
+    nhPrivate_.param("yaw_stale_sec", yaw_stale_sec_, yaw_stale_sec_);
+    nhPrivate_.param("tf_timeout_sec", tf_timeout_sec_, tf_timeout_sec_);
     twist_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
     twist_stamped_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(cmd_vel_stamped_topic_, 1);
-    // 监听baselink -> odom 变换
+    // 监听 baselink -> odom 变换（备用）
     tfBuffer_.reset(new tf2_ros::Buffer(ros::Duration(10)));
     tfListener_.reset(new tf2_ros::TransformListener(*tfBuffer_));
+    // 订阅 odom，作为 yaw 的备用来源
+    odom_sub_ = nh_.subscribe<nav_msgs::Odometry>(odom_topic_, 1, &TeleopTurtle::odomCb, this);
+    // 订阅外部 yaw
+    yaw_sub_ = nh_.subscribe<std_msgs::Float64>(yaw_topic_, 1, [this](const std_msgs::Float64::ConstPtr &msg)
+                                                {
+        yaw_topic_val_ = msg->data;
+        have_yaw_topic_ = true; });
+    last_yaw_change_tf_ = ros::Time::now();
 }
 
 void quit(int sig)
@@ -196,9 +229,10 @@ void TeleopTurtle::keyLoop()
         }
 
         // 每次循环重置本次按键请求（按下时生效，松开后不再保持）
-        double cur_vx_world = 0.0;    // 世界坐标系下的x轴方向的速度请求
-        double cur_vy_world = 0.0;    // 世界坐标系下的y轴方向的速度请求
-        double cur_omega = 0.0;       // 机体角速度请求（Q/E 直接控制角速度）
+        double cur_vx_world = 0.0; // 世界坐标系下的x轴方向的速度请求
+        double cur_vy_world = 0.0; // 世界坐标系下的y轴方向的速度请求
+        double cur_omega = 0.0;    // 机体角速度请求（Q/E 直接控制角速度）
+
         bool any_key_pressed = false; // 标记本次循环是否有按键输入
 
         static double translation_magnitude = 0.0; // 平移速度大小
@@ -266,40 +300,66 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        // 更新底盘航向角 yaw_
+        // 更新底盘航向角 yaw_（优先 topic；可按参数回落到 tf/odom）
+        double yaw_selected = yaw_;
+        bool tf_ok = false;
         if (tfBuffer_)
         {
             try
             {
-                // 通过 TF 查询 global_frame_ -> base_link 变换，以四元数转换为欧拉角提取 yaw
-                geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform(global_frame_, base_link_frame_, ros::Time(0), ros::Duration(0.05));
+                geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform(global_frame_, base_link_frame_, ros::Time(0), ros::Duration(tf_timeout_sec_));
                 const auto &qr = tfst.transform.rotation;
-                tf2::Quaternion Quat(qr.x, qr.y, qr.z, qr.w);
-                double roll, pitch, yaw;
-                tf2::Matrix3x3(Quat).getRPY(roll, pitch, yaw);
-                // 更新 yaw_
-                static double last_yaw = 0.0;
-                static ros::Time last_yaw_change = ros::Time::now();
-                yaw_ = yaw;
-                if (std::fabs(yaw_ - last_yaw) > 1e-3)
+                tf2::Quaternion q(qr.x, qr.y, qr.z, qr.w);
+                double roll, pitch, yaw_tmp;
+                tf2::Matrix3x3(q).getRPY(roll, pitch, yaw_tmp);
+                yaw_tf_ = yaw_tmp;
+                tf_ok = true;
+                if (std::fabs(yaw_tf_ - yaw_selected) > 1e-6)
                 {
-                    last_yaw_change = ros::Time::now();
-                    last_yaw = yaw_;
-                }
-                else
-                {
-                    if ((ros::Time::now() - last_yaw_change).toSec() > 3.0 && velocity_mode_ == "global")
-                    {
-                        ROS_WARN_THROTTLE(2.0, "Global mode active but yaw hasn't changed for >3s. If using global_frame='%s', ensure it's dynamic (avoid static map->base_link); consider setting global_frame to 'odom'.", global_frame_.c_str());
-                    }
+                    last_yaw_change_tf_ = ros::Time::now();
                 }
             }
             catch (const tf2::TransformException &ex)
             {
-                // 查找失败就保持之前的 yaw_ 不变
-                ROS_WARN_THROTTLE(5, "TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
+                ROS_WARN_THROTTLE(5.0, "TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
             }
         }
+
+        const bool tf_stale = (ros::Time::now() - last_yaw_change_tf_).toSec() > yaw_stale_sec_;
+        if (yaw_source_ == "topic")
+        {
+            if (have_yaw_topic_)
+                yaw_selected = yaw_topic_val_;
+            else
+                ROS_WARN_THROTTLE(2.0, "Yaw source 'topic' selected but no data on %s yet", yaw_topic_.c_str());
+        }
+        else if (yaw_source_ == "tf")
+        {
+            if (tf_ok)
+                yaw_selected = yaw_tf_;
+        }
+        else if (yaw_source_ == "odom")
+        {
+            if (have_odom_yaw_)
+                yaw_selected = yaw_odom_;
+        }
+        else // auto: topic > tf (not stale) > odom
+        {
+            if (have_yaw_topic_)
+            {
+                yaw_selected = yaw_topic_val_;
+            }
+            else if (tf_ok && !tf_stale)
+            {
+                yaw_selected = yaw_tf_;
+            }
+            else if (have_odom_yaw_)
+            {
+                yaw_selected = yaw_odom_;
+                ROS_WARN_THROTTLE(2.0, "Yaw source fallback to odom (topic missing, tf stale=%d ok=%d)", (int)tf_stale, (int)tf_ok);
+            }
+        }
+        yaw_ = yaw_selected;
 
         // 发布一个带时间戳的 TwistStamped，表示请求的速度（根据模式选择 frame_id）
         geometry_msgs::TwistStamped stamped;
@@ -333,11 +393,12 @@ void TeleopTurtle::keyLoop()
             world_vy = cur_vy_world;
             double cos_yaw = std::cos(yaw_);
             double sin_yaw = std::sin(yaw_);
-            body_vx =  cos_yaw * world_vx + sin_yaw * world_vy;   // R(-yaw) * [vx; vy]
+            body_vx = cos_yaw * world_vx + sin_yaw * world_vy; // R(-yaw) * [vx; vy]
             body_vy = -sin_yaw * world_vx + cos_yaw * world_vy;
             stamped.twist.linear.x = world_vx;
             stamped.twist.linear.y = world_vy;
-            ROS_INFO_THROTTLE(1.0, "mode=global frame=%s yaw=%.3f world=(%.2f,%.2f) -> body=(%.2f,%.2f)", global_frame_.c_str(), yaw_, world_vx, world_vy, body_vx, body_vy);
+            ROS_INFO_THROTTLE(1.0, "mode=global frame=%s yaw=%.3f (topic=%d tf=%.3f odom=%.3f src=%s) world=(%.2f,%.2f) -> body=(%.2f,%.2f)",
+                              global_frame_.c_str(), yaw_, (int)have_yaw_topic_, yaw_tf_, yaw_odom_, yaw_source_.c_str(), world_vx, world_vy, body_vx, body_vy);
         }
         else // chassis 模式：按键直接定义底盘系速度
         {
@@ -346,7 +407,7 @@ void TeleopTurtle::keyLoop()
             // 为了记录/上层需要，如需世界系可在此再做 R(yaw) 变换得到 world_vx/world_vy；此处直接发布 base_link 帧
             stamped.twist.linear.x = body_vx;
             stamped.twist.linear.y = body_vy;
-            ROS_INFO_THROTTLE(1.0, "mode=chassis body=(%.2f,%.2f) yaw=%.3f", body_vx, body_vy, yaw_);
+            ROS_INFO_THROTTLE(1.0, "mode=chassis body=(%.2f,%.2f) yaw=%.3f (topic=%d tf=%.3f odom=%.3f src=%s)", body_vx, body_vy, yaw_, (int)have_yaw_topic_, yaw_tf_, yaw_odom_, yaw_source_.c_str());
         }
         // 角速度（机体系）直接使用按键请求
         twist.angular.z = cur_omega;
@@ -371,4 +432,14 @@ void TeleopTurtle::keyLoop()
 
     term_guard.restore();
     return;
+}
+
+void TeleopTurtle::odomCb(const nav_msgs::Odometry::ConstPtr &msg)
+{
+    const auto &q = msg->pose.pose.orientation;
+    tf2::Quaternion quat(q.x, q.y, q.z, q.w);
+    double r, p, y;
+    tf2::Matrix3x3(quat).getRPY(r, p, y);
+    yaw_odom_ = y;
+    have_odom_yaw_ = true;
 }

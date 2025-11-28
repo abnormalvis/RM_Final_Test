@@ -3,40 +3,130 @@
 #include <std_msgs/Float64.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
 
 class YawPublisher
 {
 public:
     YawPublisher()
+        : nh_(), pnh_("~"), tf_buffer_(ros::Duration(10.0)), tf_listener_(tf_buffer_)
     {
-        ros::NodeHandle pnh("~");
-        pnh.param<std::string>("odom_topic", odom_topic_, "/odom");
-        pnh.param<std::string>("yaw_topic", yaw_topic_, "/yaw");
+        pnh_.param<std::string>("odom_topic", odom_topic_, "/odom");
+        pnh_.param<std::string>("yaw_topic", yaw_topic_, "/robot_yaw");
+        pnh_.param<std::string>("global_frame", global_frame_, "odom");
+        pnh_.param<std::string>("base_link_frame", base_link_frame_, "base_link");
+        pnh_.param<std::string>("source", source_, std::string("auto")); // tf | odom | auto
+        pnh_.param<double>("hz", hz_, 50.0);
+        pnh_.param<double>("tf_timeout_sec", tf_timeout_sec_, 0.05);
+        pnh_.param<double>("stale_sec", stale_sec_, 1.0);
 
         yaw_pub_ = nh_.advertise<std_msgs::Float64>(yaw_topic_, 10);
         odom_sub_ = nh_.subscribe(odom_topic_, 10, &YawPublisher::odomCB, this);
+        timer_ = nh_.createTimer(ros::Duration(1.0 / std::max(1.0, hz_)), &YawPublisher::onTimer, this);
 
-        ROS_INFO("YawPublisher: subscribing to %s, publishing %s", odom_topic_.c_str(), yaw_topic_.c_str());
+        ROS_INFO("YawPublisher: src=%s tf(%s->%s) odom=%s -> pub=%s @%.1fHz", source_.c_str(),
+                 global_frame_.c_str(), base_link_frame_.c_str(), odom_topic_.c_str(), yaw_topic_.c_str(), hz_);
     }
 
 private:
+    void onTimer(const ros::TimerEvent &)
+    {
+        // 1) Try TF
+        bool tf_ok = false;
+        double yaw_tf = last_tf_yaw_;
+        try
+        {
+            auto tfst = tf_buffer_.lookupTransform(global_frame_, base_link_frame_, ros::Time(0), ros::Duration(tf_timeout_sec_));
+            const auto &qr = tfst.transform.rotation;
+            tf2::Quaternion q(qr.x, qr.y, qr.z, qr.w);
+            double r, p, y;
+            tf2::Matrix3x3(q).getRPY(r, p, y);
+            yaw_tf = y;
+            tf_ok = true;
+        }
+        catch (const tf2::TransformException &ex)
+        {
+            ROS_WARN_THROTTLE(5.0, "yaw_publisher: TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
+        }
+
+        if (tf_ok)
+        {
+            if (std::fabs(yaw_tf - last_tf_yaw_) > 1e-6)
+            {
+                last_tf_yaw_ = yaw_tf;
+                last_tf_change_time_ = ros::Time::now();
+            }
+        }
+
+        const bool tf_stale = (ros::Time::now() - last_tf_change_time_).toSec() > stale_sec_;
+
+        double yaw_out = last_tf_yaw_;
+        if (source_ == "tf")
+        {
+            if (tf_ok)
+                yaw_out = yaw_tf;
+        }
+        else if (source_ == "odom")
+        {
+            if (have_odom_yaw_)
+                yaw_out = yaw_odom_;
+        }
+        else
+        { // auto
+            if (tf_ok && !tf_stale)
+            {
+                yaw_out = yaw_tf;
+            }
+            else if (have_odom_yaw_)
+            {
+                yaw_out = yaw_odom_;
+                ROS_WARN_THROTTLE(2.0, "yaw_publisher: fallback to odom yaw (tf stale=%d ok=%d)", (int)tf_stale, (int)tf_ok);
+            }
+        }
+
+        std_msgs::Float64 out;
+        out.data = yaw_out;
+        yaw_pub_.publish(out);
+        
+        ROS_INFO_THROTTLE(1.0, "yaw_publisher: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
+                          source_.c_str(), yaw_out, (int)tf_ok, (int)tf_stale, yaw_tf, (int)have_odom_yaw_, yaw_odom_);
+
+    }
+
     void odomCB(const nav_msgs::Odometry::ConstPtr &msg)
     {
         const auto &q = msg->pose.pose.orientation;
         tf2::Quaternion quat(q.x, q.y, q.z, q.w);
-        double roll, pitch, yaw;
-        tf2::Matrix3x3(quat).getRPY(roll, pitch, yaw);
-
-        std_msgs::Float64 out;
-        out.data = yaw;
-        yaw_pub_.publish(out);
+        double r, p, y;
+        tf2::Matrix3x3(quat).getRPY(r, p, y);
+        yaw_odom_ = y;
+        have_odom_yaw_ = true;
     }
 
     ros::NodeHandle nh_;
+    ros::NodeHandle pnh_;
+    tf2_ros::Buffer tf_buffer_;
+    tf2_ros::TransformListener tf_listener_;
+    ros::Timer timer_;
+
     ros::Subscriber odom_sub_;
     ros::Publisher yaw_pub_;
+
     std::string odom_topic_;
     std::string yaw_topic_;
+    std::string global_frame_;
+    std::string base_link_frame_;
+    std::string source_;
+    double hz_ = 50.0;
+    double tf_timeout_sec_ = 0.05;
+    double stale_sec_ = 1.0;
+
+    double last_tf_yaw_ = 0.0;
+    ros::Time last_tf_change_time_ = ros::Time(0);
+
+    double yaw_odom_ = 0.0;
+    bool have_odom_yaw_ = false;
 };
 
 int main(int argc, char **argv)

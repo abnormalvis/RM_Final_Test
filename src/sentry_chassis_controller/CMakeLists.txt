@@ -152,6 +152,11 @@ add_executable(gazebo_odom_bridge src/gazebo_odom_bridge.cpp)
 add_dependencies(gazebo_odom_bridge ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(gazebo_odom_bridge ${catkin_LIBRARIES})
 
+## Yaw publisher (decouples yaw acquisition via TF/odom)
+add_executable(yaw_publisher src/yaw_publisher.cpp)
+add_dependencies(yaw_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(yaw_publisher ${catkin_LIBRARIES})
+
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/forward_kinematics_node.cpp")
   add_executable(forward_kinematics_node src/forward_kinematics_node.cpp)
   add_dependencies(forward_kinematics_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -277,6 +282,11 @@ if(TARGET sentry_control_key_optimized)
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
 endif()
+
+## Install yaw_publisher executable
+install(TARGETS yaw_publisher
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 #############
 ## Testing ##
