@@ -27,13 +27,5 @@
     <param name="default_omega" value="1.0"/>
     <param name="hz" value="20"/>
   </node>
-
-  <!-- Standalone chassis_controller is intentionally not used in feature launch -->
-
-  <!-- Optional: rosbag recording disabled by default -->
-  <!--
-  <node pkg="rosbag" type="record" name="rosbag_record" output="screen" launch-prefix="/bin/bash -lc">
-    <args>mkdir -p $(arg bag_dir) && rosbag record -O $(arg bag_dir)/odom $(arg bag_topic)</args>
-  </node>
   -->
 </launch>

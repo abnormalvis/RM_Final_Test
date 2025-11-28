@@ -1,5 +1,4 @@
 <launch>
-  <!-- 基于 sentry_gazebo/gazebo_rmuc.launch 的参数与结构调整 -->
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>

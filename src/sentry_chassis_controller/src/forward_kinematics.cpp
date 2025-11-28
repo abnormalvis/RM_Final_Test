@@ -54,26 +54,35 @@ private:
             dt = 1e-3;
 
         // Debug log: print all joint names in the message
-        if (msg->name.size() > 0) {
+        if (msg->name.size() > 0)
+        {
             ROS_INFO("=== Joint States Message (dt=%.3f) ===", dt);
             ROS_INFO("Joint names in message (%lu):", msg->name.size());
-            for (size_t i = 0; i < msg->name.size(); ++i) {
+            for (size_t i = 0; i < msg->name.size(); ++i)
+            {
                 std::string vel_str = "none";
                 std::string pos_str = "none";
-                if (i < msg->velocity.size()) vel_str = std::to_string(msg->velocity[i]);
-                if (i < msg->position.size()) pos_str = std::to_string(msg->position[i]);
+                if (i < msg->velocity.size())
+                    vel_str = std::to_string(msg->velocity[i]);
+                if (i < msg->position.size())
+                    pos_str = std::to_string(msg->position[i]);
 
                 // Check if this is one of our expected wheel joints
                 bool is_expected_wheel = false;
-                for (int j = 0; j < 4; ++j) {
-                    if (msg->name[i] == wheel_joint_names_[j]) {
+                for (int j = 0; j < 4; ++j)
+                {
+                    if (msg->name[i] == wheel_joint_names_[j])
+                    {
                         is_expected_wheel = true;
                         break;
                     }
                 }
-                if (is_expected_wheel) {
+                if (is_expected_wheel)
+                {
                     ROS_INFO("  [%lu] <DCB> %s: pos=%s, vel=%s", i, msg->name[i].c_str(), pos_str.c_str(), vel_str.c_str());
-                } else {
+                }
+                else
+                {
                     ROS_INFO("  [%lu] %s: pos=%s, vel=%s", i, msg->name[i].c_str(), pos_str.c_str(), vel_str.c_str());
                 }
             }
@@ -90,14 +99,16 @@ private:
         int found_wheels = 0;
         for (int i = 0; i < 4; ++i)
         {
-            if (idx.find(wheel_joint_names_[i]) != idx.end()) {
+            if (idx.find(wheel_joint_names_[i]) != idx.end())
+            {
                 ++found_wheels;
                 ROS_INFO_THROTTLE(5.0, "Found wheel joint: %s at index %lu", wheel_joint_names_[i].c_str(), idx[wheel_joint_names_[i]]);
             }
         }
 
         ROS_INFO_THROTTLE(5.0, "Expected joints:");
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i)
+        {
             ROS_INFO_THROTTLE(5.0, "  %s", wheel_joint_names_[i].c_str());
         }
 
@@ -179,7 +190,8 @@ private:
                     use_velocity = true;
                 }
                 // POSITION-BASED VELOCITY ESTIMATION (PRIMARY FOR YOUR ROBOT)
-                if (j < msg->position.size()) {
+                if (j < msg->position.size())
+                {
                     double cur_pos = msg->position[j];
                     auto it = prev_wheel_pos_.find(wheel_joint_names_[i]);
                     if (it != prev_wheel_pos_.end() && !prev_wheel_pos_.empty() && dt > 0.0 && dt < 1.0)
@@ -193,10 +205,11 @@ private:
                             delta += 2.0 * M_PI;
 
                         // Always use position-based estimation (your robot has no velocity data)
-                        if (!use_velocity) {
+                        if (!use_velocity)
+                        {
                             wheel_vel = delta / dt;
                             ROS_INFO_THROTTLE(5.0, "Position-based velocity for %s: delta=%f, dt=%f => vel=%f rad/s",
-                                             wheel_joint_names_[i].c_str(), delta, dt, wheel_vel);
+                                              wheel_joint_names_[i].c_str(), delta, dt, wheel_vel);
                         }
                     }
                     prev_wheel_pos_[wheel_joint_names_[i]] = cur_pos;
@@ -223,7 +236,7 @@ private:
             b(i) = v_along;
 
             ROS_INFO_THROTTLE(5.0, "Wheel %d: vel=%.3f rad/s, v_along=%.3f m/s, pivot=%.3f rad", i, wheel_vel, v_along, pivot_pos);
-            ROS_INFO_THROTTLE(5.0, "  A row %d: [%f, %f, %f], b=%f", i, A(i,0), A(i,1), A(i,2), b(i));
+            ROS_INFO_THROTTLE(5.0, "  A row %d: [%f, %f, %f], b=%f", i, A(i, 0), A(i, 1), A(i, 2), b(i));
         }
 
         // least squares solution for [vx vy wz]

@@ -28,3 +28,28 @@
 11. 正在努力实现按下按键wsad时底盘才会，qe按下后底盘旋转，两种运动可以独立进行并进行速度指令融合的效果，但是遇到了很多问题。
 
 12. 回退到了安全的版本重新开发，准备在控制器中加入功率控制和重新写里程计发布的功能，以及重新修改键盘控制节点 `sentry_control_key_feature.cpp` 。
+
+13. 再 `wheel_pid_controller.cpp` 添加了底盘功率控制，并通过终端INFO日志输出来查看是否有作用。
+
+### 动态调参与参数路径说明（11月28日更新）
+
+现在支持 rqt_reconfigure 动态调参。需要注意两套参数键路径：
+
+- 动态参数（扁平键，供 rqt_reconfigure 使用）：
+	- 例如 `/wheel_pid_controller/wheel_fl_p`、`/wheel_pid_controller/pivot_fr_i_clamp` 等。
+	- 这些键直接驱动控制器内的 PID，在运行时可随时调整。
+
+- YAML 分层参数（启动时加载的默认值）：
+	- 例如 `/wheel_pid_controller/wheels/wheel_fl/p`、`/wheel_pid_controller/wheels/pivot_rr/d`。
+	- 这是配置文件 `config/wheel_pid_params.yaml` 中的层级结构。
+
+为方便在运行期用 `rosparam get` 查询旧的分层键，我们在动态回调中做了“镜像回写”：当你用 rqt_reconfigure 修改了 PID 值后，会同步写回到对应的 `wheels/<name>/{p,i,d,i_clamp}` 参数路径上（仅限参数服务器中的当前会话，文件不会自动修改）。
+
+持久化方法：
+
+- 导出动态参数：
+	- `rosrun dynamic_reconfigure dynparam dump /wheel_pid_controller /tmp/wheel_pid_runtime.yaml`
+- 或导出整个命名空间：
+	- `rosparam dump /tmp/wheel_pid_namespace.yaml /wheel_pid_controller`
+
+提示：`power_limit` 与 `power/*`（effort_coeff、velocity_coeff、power_offset）位于控制器命名空间的顶层，而不是 `wheels/` 下。
