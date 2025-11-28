@@ -105,7 +105,7 @@ namespace sentry_chassis_controller
         // Integrated odometry publisher
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);
         controller_nh.param<std::string>("base_link_frame", base_link_frame_, base_link_frame_);
-        odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom", 10);
+        odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom_controller", 10);
         last_odom_time_ = ros::Time(0);
 
         ROS_INFO("WheelPidController initialized with enhanced state feedback!");
@@ -407,46 +407,113 @@ namespace sentry_chassis_controller
 
     void WheelPidController::odom_update(const ros::Time &time, const ros::Duration &period)
     {
-        // 各轮子实际的速度
+        // 读取各轮子实际的速度与舵角
         double lf_wheel_vel = front_left_wheel_joint_.getVelocity();
         double rf_wheel_vel = front_right_wheel_joint_.getVelocity();
         double lb_wheel_vel = back_left_wheel_joint_.getVelocity();
         double rb_wheel_vel = back_right_wheel_joint_.getVelocity();
 
-        // 计算4个轮子的和速度
-        double vx = (lf_wheel_vel + rf_wheel_vel + lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / 4.0;
+        double lf_pivot_pos = front_left_pivot_joint_.getPosition();
+        double rf_pivot_pos = front_right_pivot_joint_.getPosition();
+        double lb_pivot_pos = back_left_pivot_joint_.getPosition();
+        double rb_pivot_pos = back_right_pivot_joint_.getPosition();
 
-        double vy = (-lf_wheel_vel + rf_wheel_vel + lb_wheel_vel - rb_wheel_vel) * wheel_radius_ / 4.0;
+        // 舵轮前向运动学：构造 4×3 最小二乘问题 A*[vx; vy; wz] = b
+        // 每行对应一个轮子沿其舵向的线速度
+        double wheel_vels[4] = {lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel};
+        double pivot_angles[4] = {lf_pivot_pos, rf_pivot_pos, lb_pivot_pos, rb_pivot_pos};
+        
+        // 轮子相对 base_link 的位置 (x向前, y向左)
+        // FL, FR, RL, RR
+        double rx[4] = {wheel_base_ / 2.0, wheel_base_ / 2.0, -wheel_base_ / 2.0, -wheel_base_ / 2.0};
+        double ry[4] = {wheel_track_ / 2.0, -wheel_track_ / 2.0, wheel_track_ / 2.0, -wheel_track_ / 2.0};
 
-        double wz = (-lf_wheel_vel + rf_wheel_vel - lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / 4 * (rx_ + ry_);
+        // 组装 A (4x3) 和 b (4x1)
+        double A[4][3];
+        double b[4];
+        for (int i = 0; i < 4; ++i)
+        {
+            double theta = pivot_angles[i];
+            double cos_t = std::cos(theta);
+            double sin_t = std::sin(theta);
+            double v_along = wheel_vels[i] * wheel_radius_;
+
+            A[i][0] = cos_t;
+            A[i][1] = sin_t;
+            A[i][2] = -ry[i] * cos_t + rx[i] * sin_t;
+            b[i] = v_along;
+        }
+
+        // 最小二乘解 (A^T A) sol = A^T b
+        // 计算 A^T A (3x3) 和 A^T b (3x1)
+        double ATA[3][3] = {{0}};
+        double ATb[3] = {0};
+        for (int i = 0; i < 4; ++i)
+        {
+            for (int j = 0; j < 3; ++j)
+            {
+                ATb[j] += A[i][j] * b[i];
+                for (int k = 0; k < 3; ++k)
+                {
+                    ATA[j][k] += A[i][j] * A[i][k];
+                }
+            }
+        }
+
+        // 求解 3x3 线性系统 ATA * sol = ATb (使用 Cramer's rule 或简单高斯消元)
+        // 这里用简化的 3x3 逆矩阵方法
+        double det = ATA[0][0] * (ATA[1][1] * ATA[2][2] - ATA[1][2] * ATA[2][1]) -
+                     ATA[0][1] * (ATA[1][0] * ATA[2][2] - ATA[1][2] * ATA[2][0]) +
+                     ATA[0][2] * (ATA[1][0] * ATA[2][1] - ATA[1][1] * ATA[2][0]);
+
+        double vx = 0.0, vy = 0.0, wz = 0.0;
+        if (std::abs(det) > 1e-9)
+        {
+            // 计算逆矩阵并求解
+            double inv[3][3];
+            inv[0][0] = (ATA[1][1] * ATA[2][2] - ATA[1][2] * ATA[2][1]) / det;
+            inv[0][1] = (ATA[0][2] * ATA[2][1] - ATA[0][1] * ATA[2][2]) / det;
+            inv[0][2] = (ATA[0][1] * ATA[1][2] - ATA[0][2] * ATA[1][1]) / det;
+            inv[1][0] = (ATA[1][2] * ATA[2][0] - ATA[1][0] * ATA[2][2]) / det;
+            inv[1][1] = (ATA[0][0] * ATA[2][2] - ATA[0][2] * ATA[2][0]) / det;
+            inv[1][2] = (ATA[0][2] * ATA[1][0] - ATA[0][0] * ATA[1][2]) / det;
+            inv[2][0] = (ATA[1][0] * ATA[2][1] - ATA[1][1] * ATA[2][0]) / det;
+            inv[2][1] = (ATA[0][1] * ATA[2][0] - ATA[0][0] * ATA[2][1]) / det;
+            inv[2][2] = (ATA[0][0] * ATA[1][1] - ATA[0][1] * ATA[1][0]) / det;
+
+            vx = inv[0][0] * ATb[0] + inv[0][1] * ATb[1] + inv[0][2] * ATb[2];
+            vy = inv[1][0] * ATb[0] + inv[1][1] * ATb[1] + inv[1][2] * ATb[2];
+            wz = inv[2][0] * ATb[0] + inv[2][1] * ATb[1] + inv[2][2] * ATb[2];
+        }
+        else
+        {
+            ROS_WARN_THROTTLE(1.0, "FK matrix singular, using zero velocity");
+        }
 
         // 需要使用到的时间变量
         ros::Time now = time;
         double dt = period.toSec();
 
-        // 正运动学计算
-        double dx = (vx * std::cos(odom_yaw_) - vy * std::sin(odom_yaw_)) * dt;
-        double dy = (vx * std::sin(odom_yaw_) + vy * std::cos(odom_yaw_)) * dt;
-        double dth = wz * dt;
+        // 将机体系速度旋转到世界系并积分
+        double cos_y = std::cos(odom_yaw_);
+        double sin_y = std::sin(odom_yaw_);
+        double world_vx = vx * cos_y - vy * sin_y;
+        double world_vy = vx * sin_y + vy * cos_y;
 
-        // 里程计累加
-        odom_x_ += dx;
-        odom_y_ += dy;
-        odom_yaw_ += dth;
+        odom_x_ += world_vx * dt;
+        odom_y_ += world_vy * dt;
+        odom_yaw_ += wz * dt;
 
         // 创建坐标转换,发布tf
         geometry_msgs::TransformStamped t;
-        // 设置头部信息
         t.header.stamp = now;
         t.header.frame_id = odom_frame_;
-        // 设置子坐标系信息
         t.child_frame_id = base_link_frame_;
-        // 设置子级坐标系相对父极坐标系的偏移量
         t.transform.translation.x = odom_x_;
         t.transform.translation.y = odom_y_;
         t.transform.translation.z = 0.0;
 
-        // 设置四元数， 把欧拉角转为四元数
+        // 设置四元数，把欧拉角转为四元数
         tf2::Quaternion qtn;
         qtn.setRPY(0.0, 0.0, odom_yaw_);
         t.transform.rotation.x = qtn.getX();
@@ -465,8 +532,14 @@ namespace sentry_chassis_controller
         odom.pose.pose.position.x = odom_x_;
         odom.pose.pose.position.y = odom_y_;
         odom.pose.pose.position.z = 0.0;
-        tf::createQuaternionFromYaw(odom_yaw_);
+        
+        // 修正：正确赋值四元数到 odom 的姿态（与 TF 一致）
+        odom.pose.pose.orientation.x = qtn.getX();
+        odom.pose.pose.orientation.y = qtn.getY();
+        odom.pose.pose.orientation.z = qtn.getZ();
+        odom.pose.pose.orientation.w = qtn.getW();
 
+        // twist 保持机体系速度
         odom.twist.twist.linear.x = vx;
         odom.twist.twist.linear.y = vy;
         odom.twist.twist.angular.z = wz;

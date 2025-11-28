@@ -8,6 +8,7 @@ base_link_frame: base_link     # robot base frame id
 # Yaw acquisition
 yaw_source: topic              # topic | tf | odom | auto (default topic to decouple from teleop)
 yaw_topic: /robot_yaw          # published by yaw_publisher
+odom_topic: /odom_controller   # controller's odom (not gazebo's ground truth)
 
 # Topics
 cmd_vel_topic: /cmd_vel

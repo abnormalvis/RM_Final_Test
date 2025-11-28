@@ -1,6 +1,6 @@
 <launch>
   <!-- Launch args -->
-  <arg name="bag_topic" default="/odom"/>
+  <arg name="bag_topic" default="/odom_controller"/>
   <arg name="bag_dir" default="/home/idris/final_ws/src/sentry_chassis_controller/bags"/>
   <arg name="inline_resolver" default="true"/>
 
@@ -19,7 +19,7 @@
     <param name="hz" value="50"/>
     <param name="tf_timeout_sec" value="0.05"/>
     <param name="stale_sec" value="1.0"/>
-    <param name="odom_topic" value="/odom"/>
+    <param name="odom_topic" value="/odom_controller"/>
   </node>
 
   <!-- Keyboard teleop (feature variant): spinning-top default ON, quaternion->Euler yaw -->
