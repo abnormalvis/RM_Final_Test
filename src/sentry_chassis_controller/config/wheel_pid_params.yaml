@@ -1,4 +1,9 @@
 wheel_pid_controller:
+  # 说明：
+  # - rqt_reconfigure 使用一组扁平的动态参数键（如 wheel_fl_p、pivot_fr_i_clamp）。
+  # - 本 YAML 使用分层键（wheels/wheel_fl/p 等）作为启动默认值。
+  # - 运行时我们会把动态参数“镜像回写”到对应的分层键上，便于 rosparam get 旧路径看到最新值；
+  #   但这不会自动写回文件。如需持久化，请在运行后使用 rosparam/dynparam dump 导出。
   # Controller type so the controller_spawner can load it from the
   # parameter server if needed. Matches plugin XML/class name.
   type: "sentry_chassis_controller/WheelPidController"
@@ -95,3 +100,13 @@ wheel_pid_controller:
       i_clamp: 0.0
       output_min: -5.0
       output_max: 5.0
+
+  # 底盘功率限制（与控制器同级参数，而非 wheels 内部）
+  power_limit: 100.0
+  power:
+    effort_coeff: 12.0
+    velocity_coeff: 0.0048
+    power_offset: 0.0
+
+  # 调试：发布功率限制调试信息（/power_debug）
+  power_debug: true
