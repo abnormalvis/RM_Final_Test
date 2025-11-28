@@ -1,0 +1,31 @@
+[33mWARNING: package 'gazebo_msgs' is deprecated (This package has been deprecated as of January 2025 with Gazebo classic 11 reaching[0m
+      end-of-life. Users are highly encouraged to migrate to the new Gazebo
+      using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration))
+[31m[1mCMake Error[0m at /home/idris/final_ws/src/sentry_chassis_controller/CMakeLists.txt:181 (add_executable):
+  Cannot find source file:
+
+    src/dual_mode_chassis_controller.cpp
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+  .hpp .hxx .in .txx
+
+
+[31m[1mCMake Error[0m at /home/idris/final_ws/src/sentry_chassis_controller/CMakeLists.txt:155 (add_executable):
+  Cannot find source file:
+
+    src/forward_kinematics_node.cpp
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+  .hpp .hxx .in .txx
+
+
+[31m[1mCMake Error[0m at /home/idris/final_ws/src/sentry_chassis_controller/CMakeLists.txt:181 (add_executable):
+  No SOURCES given to target: dual_mode_chassis_controller
+
+
+[31m[1mCMake Error[0m at /home/idris/final_ws/src/sentry_chassis_controller/CMakeLists.txt:155 (add_executable):
+  No SOURCES given to target: forward_kinematics_node
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
+make: *** [Makefile:1838：cmake_check_build_system] 错误 1

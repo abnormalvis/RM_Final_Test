@@ -1,0 +1,11 @@
+make[2]: *** 没有规则可制作目标“/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_optimized.cpp”，由“CMakeFiles/sentry_control_key_optimized.dir/src/sentry_control_key_optimized.cpp.o” 需求。 停止。
+make[1]: *** [CMakeFiles/Makefile2:416：CMakeFiles/sentry_control_key_optimized.dir/all] 错误 2
+make[1]: *** 正在等待未完成的任务....
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_feature.cpp:243:14:[m[K [01;35m[Kwarning: [m[Kmulti-character character constant [[01;35m[K-Wmultichar[m[K]
+  243 |         case [01;35m[K'Quat'[m[K:
+      |              [01;35m[K^~~~~~[m[K
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_feature.cpp:[m[K In member function ‘[01m[Kvoid TeleopTurtle::keyLoop()[m[K’:
+[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_feature.cpp:243:9:[m[K [01;35m[Kwarning: [m[Kcase label value exceeds maximum value for type
+  243 |         [01;35m[Kcase[m[K 'Quat':
+      |         [01;35m[K^~~~[m[K
+make: *** [Makefile:141：all] 错误 2

@@ -1,3 +1,4 @@
+Not searching for unused variables given on the command line.
 [36m--[0m Using CATKIN_DEVEL_PREFIX: /home/idris/final_ws/devel/.private/sentry_chassis_controller
 [36m--[0m Using CMAKE_PREFIX_PATH: /home/idris/final_ws/devel;/opt/ros/noetic
 [36m--[0m This workspace overlays: /home/idris/final_ws/devel;/opt/ros/noetic
@@ -19,7 +20,6 @@
 [33mWARNING: package 'gazebo_msgs' is deprecated (This package has been deprecated as of January 2025 with Gazebo classic 11 reaching[0m
       end-of-life. Users are highly encouraged to migrate to the new Gazebo
       using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration))
-[36m--[0m sentry_control_key_optimized.cpp not found; skipping optimized keyboard teleop target
 [36m--[0m Configuring done
 [36m--[0m Generating done
 [36m--[0m Build files have been written to: /home/idris/final_ws/build/sentry_chassis_controller

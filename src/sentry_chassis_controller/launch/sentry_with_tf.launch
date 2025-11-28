@@ -42,8 +42,8 @@
     <!-- 当没有其它 /joint_states 发布者时，启动 joint_state_publisher 发布默认 joint_states -->
     <node if="$(arg use_joint_state_publisher)" pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen"/>
 
-    <!-- 静态 TF：发布 /map -> /base_link（默认零偏移），周期 1000 ms -->
-    <node pkg="tf" type="static_transform_publisher" name="map2base" args="0 0 0 0 0 0 /map /base_link 1000"/>
+    <!-- 使用 odom 作为全局参考帧：不再发布 map->base_link 的静态 TF。
+      若需要 map 作为 RViz Fixed Frame，请确保存在 map->odom（可为恒等）和控制器发布的 odom->base_link。 -->
 
     <!-- 可选打开 RViz -->
     <group if="$(arg is_open_rviz)">

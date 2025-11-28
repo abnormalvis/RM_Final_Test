@@ -77,6 +77,12 @@ private:
     std::string cmd_vel_topic_;
     std::string cmd_vel_stamped_topic_;
 
+    // 速度模式与参考坐标
+    // velocity_mode_: "global" 表示按键为全局系意图（world frame），"chassis" 表示按键为底盘系（body frame）
+    std::string velocity_mode_ = "global";
+    std::string global_frame_ = "map";       // 全局参考帧（global 模式下 TwistStamped 的 frame_id 及 TF 查询父帧）
+    std::string base_link_frame_ = "base_link"; // 底盘帧名
+
     // 使用一个buffer对象来寻找tf变换的对象来实现底盘到odom坐标系的转换
     std::unique_ptr<tf2_ros::Buffer> tfBuffer_;
     std::unique_ptr<tf2_ros::TransformListener> tfListener_;
@@ -94,6 +100,9 @@ TeleopTurtle::TeleopTurtle()
     nhPrivate_.param("cmd_vel_topic", cmd_vel_topic_, std::string("/cmd_vel"));
     nhPrivate_.param("cmd_vel_stamped_topic", cmd_vel_stamped_topic_, std::string("/cmd_vel_stamped"));
     nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
+    nhPrivate_.param("velocity_mode", velocity_mode_, velocity_mode_);
+    nhPrivate_.param("global_frame", global_frame_, global_frame_);
+    nhPrivate_.param("base_link_frame", base_link_frame_, base_link_frame_);
     twist_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
     twist_stamped_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(cmd_vel_stamped_topic_, 1);
     // 监听baselink -> odom 变换
@@ -124,7 +133,7 @@ int main(int argc, char **argv)
 
 void TeleopTurtle::keyLoop()
 {
-    puts("Reading from keyboard (WASD to move, Quat/E rotate, Shift+WASD run, c stop, f toggle field-centric, Ctrl-C quit) [Spinning-top mode: DEFAULT ON]");
+    puts("Reading from keyboard (WASD to move, Q/E rotate, Shift+WASD run, c stop, Ctrl-C quit) [velocity_mode: global|chassis]");
     term_guard.setup();
 
     // 速度参数
@@ -231,7 +240,7 @@ void TeleopTurtle::keyLoop()
             cur_vy_world = -linear_speed;
             any_key_pressed = true;
             break; // right strafe
-        case 'Quat':
+        case 'q':
             // Quat/E 直接作为角速度命令（按下时有效）
             cur_omega = omega_speed;
             any_key_pressed = true;
@@ -262,26 +271,40 @@ void TeleopTurtle::keyLoop()
         {
             try
             {
-                // 通过 TF 查询 odom -> base_link 变换，以四元数转换为欧拉角提取 yaw
-                geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform("odom", "base_link", ros::Time(0), ros::Duration(0.05));
+                // 通过 TF 查询 global_frame_ -> base_link 变换，以四元数转换为欧拉角提取 yaw
+                geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform(global_frame_, base_link_frame_, ros::Time(0), ros::Duration(0.05));
                 const auto &qr = tfst.transform.rotation;
                 tf2::Quaternion Quat(qr.x, qr.y, qr.z, qr.w);
                 double roll, pitch, yaw;
                 tf2::Matrix3x3(Quat).getRPY(roll, pitch, yaw);
                 // 更新 yaw_
+                static double last_yaw = 0.0;
+                static ros::Time last_yaw_change = ros::Time::now();
                 yaw_ = yaw;
+                if (std::fabs(yaw_ - last_yaw) > 1e-3)
+                {
+                    last_yaw_change = ros::Time::now();
+                    last_yaw = yaw_;
+                }
+                else
+                {
+                    if ((ros::Time::now() - last_yaw_change).toSec() > 3.0 && velocity_mode_ == "global")
+                    {
+                        ROS_WARN_THROTTLE(2.0, "Global mode active but yaw hasn't changed for >3s. If using global_frame='%s', ensure it's dynamic (avoid static map->base_link); consider setting global_frame to 'odom'.", global_frame_.c_str());
+                    }
+                }
             }
             catch (const tf2::TransformException &ex)
             {
                 // 查找失败就保持之前的 yaw_ 不变
-                ROS_WARN_THROTTLE(5, "TF lookup odom->base_link failed: %s", ex.what());
+                ROS_WARN_THROTTLE(5, "TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
             }
         }
 
-        // 发布一个带时间戳的 TwistStamped，表示请求的世界坐标系速度（header.frame_id = "map")
+        // 发布一个带时间戳的 TwistStamped，表示请求的速度（根据模式选择 frame_id）
         geometry_msgs::TwistStamped stamped;
         stamped.header.stamp = ros::Time::now();
-        stamped.header.frame_id = "map";
+        stamped.header.frame_id = (velocity_mode_ == "global") ? global_frame_ : base_link_frame_;
 
         // 将本次按键请求包装为世界坐标系下的速度（仅按下按键时 non-zero）
         // 小陀螺模式默认开启：当按下WASD产生非零平移时，更新锁定的平移向量；未产生新的平移键时保持之前锁定的方向与大小
@@ -300,27 +323,44 @@ void TeleopTurtle::keyLoop()
         //     }
         // }
 
-        // 整合本次按键请求给到世界坐标系下的速度
-        stamped.twist.linear.x = cur_vx_world;
-        stamped.twist.linear.y = cur_vy_world;
+        // 根据模式组装 body/world 速度
+        double body_vx = 0.0, body_vy = 0.0;
+        double world_vx = 0.0, world_vy = 0.0;
+        if (velocity_mode_ == "global")
+        {
+            // 按键定义为全局系意图（world），将其转换到 body 发布到 /cmd_vel
+            world_vx = cur_vx_world;
+            world_vy = cur_vy_world;
+            double cos_yaw = std::cos(yaw_);
+            double sin_yaw = std::sin(yaw_);
+            body_vx =  cos_yaw * world_vx + sin_yaw * world_vy;   // R(-yaw) * [vx; vy]
+            body_vy = -sin_yaw * world_vx + cos_yaw * world_vy;
+            stamped.twist.linear.x = world_vx;
+            stamped.twist.linear.y = world_vy;
+            ROS_INFO_THROTTLE(1.0, "mode=global frame=%s yaw=%.3f world=(%.2f,%.2f) -> body=(%.2f,%.2f)", global_frame_.c_str(), yaw_, world_vx, world_vy, body_vx, body_vy);
+        }
+        else // chassis 模式：按键直接定义底盘系速度
+        {
+            body_vx = cur_vx_world; // 在 chassis 模式下，W/S 映射到底盘 x，A/D 映射到底盘 y
+            body_vy = cur_vy_world;
+            // 为了记录/上层需要，如需世界系可在此再做 R(yaw) 变换得到 world_vx/world_vy；此处直接发布 base_link 帧
+            stamped.twist.linear.x = body_vx;
+            stamped.twist.linear.y = body_vy;
+            ROS_INFO_THROTTLE(1.0, "mode=chassis body=(%.2f,%.2f) yaw=%.3f", body_vx, body_vy, yaw_);
+        }
+        // 角速度（机体系）直接使用按键请求
+        twist.angular.z = cur_omega;
         stamped.twist.angular.z = cur_omega;
 
-        // 旋转矩阵 R(-yaw) 的计算（将 world -> body）
-        // R(-yaw) = [ cos(yaw)  sin(yaw)
-        //             -sin(yaw)  cos(yaw) ]
-        double cos_yaw = cos(yaw_);
-        double sin_yaw = sin(yaw_);
-        double chassis_vx = cos_yaw * cur_vx_world + sin_yaw * cur_vy_world;
-        double chassis_vy = -sin_yaw * cur_vx_world + cos_yaw * cur_vy_world;
-        twist.linear.x = chassis_vx;
-        twist.linear.y = chassis_vy;
-        twist.angular.z = stamped.twist.angular.z;
+        // 写入 /cmd_vel（body frame）
+        twist.linear.x = body_vx;
+        twist.linear.y = body_vy;
 
         // 仅当本次按键请求非零（或用户允许空闲零发布）时发送
         bool has_motion = (std::abs(twist.linear.x) > 1e-9) || (std::abs(twist.linear.y) > 1e-9) || (std::abs(twist.angular.z) > 1e-9);
         if (any_key_pressed || publish_zero_when_idle_)
         {
-            // 发布带时间戳的世界意图（方便上层/记录）
+            // 发布带时间戳的速度意图（global 模式为 global_frame_，chassis 模式为 base_link）
             twist_stamped_pub_.publish(stamped);
             // 如果有运动或配置允许空闲零发布，发布到 /cmd_vel
             if (has_motion || publish_zero_when_idle_)

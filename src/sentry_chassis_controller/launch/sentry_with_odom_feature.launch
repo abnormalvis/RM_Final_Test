@@ -15,17 +15,9 @@
     <!-- Keep default frames: odom/base_link; map fusion handled by TF if present -->
   </node>
 
+  <!-- Load teleop parameters into node namespace -->
+  <rosparam file="$(find sentry_chassis_controller)/config/teleop_feature.yaml" ns="sentry_control_key_feature" command="load"/>
+
   <!-- Keyboard teleop (feature variant): spinning-top default ON, quaternion->Euler yaw -->
-  <node pkg="sentry_chassis_controller" type="sentry_control_key_feature" name="sentry_control_key_feature" output="screen">
-    <!-- Topics -->
-    <param name="cmd_vel_topic" value="/cmd_vel"/>
-    <param name="cmd_vel_stamped_topic" value="/cmd_vel_stamped"/>
-    <!-- Behavior params -->
-    <param name="publish_zero_when_idle" value="false"/>
-    <param name="walk_vel" value="0.5"/>
-    <param name="run_vel" value="1.0"/>
-    <param name="default_omega" value="1.0"/>
-    <param name="hz" value="20"/>
-  </node>
-  -->
+  <node pkg="sentry_chassis_controller" type="sentry_control_key_feature" name="sentry_control_key_feature" output="screen"/>
 </launch>

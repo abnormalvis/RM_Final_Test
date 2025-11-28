@@ -1,0 +1,17 @@
+# Teleop feature node parameters
+# Loaded into namespace: /sentry_control_key_feature
+
+velocity_mode: global          # global | chassis
+global_frame: odom             # global/world frame id (prefer odom unless you have a proper map->odom chain)
+base_link_frame: base_link     # robot base frame id
+
+# Topics
+cmd_vel_topic: /cmd_vel
+cmd_vel_stamped_topic: /cmd_vel_stamped
+
+# Behavior
+publish_zero_when_idle: false
+walk_vel: 0.5
+run_vel: 1.0
+default_omega: 1.0
+hz: 20
