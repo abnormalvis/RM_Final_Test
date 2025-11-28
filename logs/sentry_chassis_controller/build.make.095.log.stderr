@@ -1,7 +1,0 @@
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_feature.cpp:234:14:[m[K [01;35m[Kwarning: [m[Kmulti-character character constant [[01;35m[K-Wmultichar[m[K]
-  234 |         case [01;35m[K'Quat'[m[K:
-      |              [01;35m[K^~~~~~[m[K
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_feature.cpp:[m[K In member function ‘[01m[Kvoid TeleopTurtle::keyLoop()[m[K’:
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/sentry_control_key_feature.cpp:234:9:[m[K [01;35m[Kwarning: [m[Kcase label value exceeds maximum value for type
-  234 |         [01;35m[Kcase[m[K 'Quat':
-      |         [01;35m[K^~~~[m[K

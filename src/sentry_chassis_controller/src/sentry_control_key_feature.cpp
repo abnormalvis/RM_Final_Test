@@ -81,12 +81,12 @@ private:
     // 速度模式与参考坐标
     // velocity_mode_: "global" 表示按键为全局系意图（world frame），"chassis" 表示按键为底盘系（body frame）
     std::string velocity_mode_ = "global";
-    std::string global_frame_ = "odom";         // 全局参考帧（global 模式下 TwistStamped 的 frame_id 及 TF 查询父帧）
-    std::string base_link_frame_ = "base_link"; // 底盘帧名
-    std::string odom_topic_ = "/odom";          // 里程计话题（用于备用 yaw 来源）
-    std::string yaw_topic_ = "/robot_yaw";      // 由 yaw_publisher 发布的航向角（弧度）
+    std::string global_frame_ = "odom";         // 全局参考坐标系
+    std::string base_link_frame_ = "base_link"; // 底盘坐标系
+    std::string odom_topic_ = "/odom";          // 里程计话题
+    std::string yaw_topic_ = "/robot_yaw";      // 由 yaw_publisher 发布的航向角
 
-    // yaw 来源选择：topic | tf | odom | auto（默认 topic；auto: topic>tf>odom）
+    // 偏航角的来源
     std::string yaw_source_ = "topic";
     double yaw_stale_sec_ = 2.0;   // 判定 tf 航向“停滞”的阈值
     double tf_timeout_sec_ = 0.05; // TF 查询超时时间
@@ -365,23 +365,6 @@ void TeleopTurtle::keyLoop()
         geometry_msgs::TwistStamped stamped;
         stamped.header.stamp = ros::Time::now();
         stamped.header.frame_id = (velocity_mode_ == "global") ? global_frame_ : base_link_frame_;
-
-        // 将本次按键请求包装为世界坐标系下的速度（仅按下按键时 non-zero）
-        // 小陀螺模式默认开启：当按下WASD产生非零平移时，更新锁定的平移向量；未产生新的平移键时保持之前锁定的方向与大小
-        // if (spinning_top_mode_)
-        // {
-        //     if (std::fabs(cur_vx_world) > 1e-9 || std::fabs(cur_vy_world) > 1e-9)
-        //     {
-        //         translation_magnitude = std::hypot(cur_vx_world, cur_vy_world);
-        //         translation_angle = std::atan2(cur_vy_world, cur_vx_world);
-        //         translation_active = (translation_magnitude > 0.0);
-        //     }
-        //     if (translation_active)
-        //     {
-        //         cur_vx_world = translation_magnitude * std::cos(translation_angle);
-        //         cur_vy_world = translation_magnitude * std::sin(translation_angle);
-        //     }
-        // }
 
         // 根据模式组装 body/world 速度
         double body_vx = 0.0, body_vy = 0.0;

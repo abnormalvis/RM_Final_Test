@@ -1,8 +1,0 @@
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/forward_kinematics.cpp:11:10:[m[K [01;31m[Kfatal error: [m[Kmath: 没有那个文件或目录
-   11 | #include [01;31m[K<math>[m[K
-      |          [01;31m[K^~~~~~[m[K
-compilation terminated.
-make[2]: *** [CMakeFiles/forward_kinematics.dir/build.make:63：CMakeFiles/forward_kinematics.dir/src/forward_kinematics.cpp.o] 错误 1
-make[1]: *** [CMakeFiles/Makefile2:410：CMakeFiles/forward_kinematics.dir/all] 错误 2
-make[1]: *** 正在等待未完成的任务....
-make: *** [Makefile:141：all] 错误 2

@@ -7,9 +7,6 @@
   <!-- Include PID/controller setup -->
   <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
 
-  <!-- NOTE: forward_kinematics removed here to avoid conflicting odom->base_link TFs.
-       Odometry is already published by WheelPidController. -->
-
   <!-- Load teleop parameters into node namespace -->
   <rosparam file="$(find sentry_chassis_controller)/config/teleop_feature.yaml" ns="sentry_control_key_feature" command="load"/>
 

@@ -1,5 +1,0 @@
-rm_control/rm_gazebo
-/home/idris/final_ws/devel/.private/rm_gazebo/lib/librm_robot_hw_sim.so /home/idris/final_ws/devel/lib/librm_robot_hw_sim.so
-/home/idris/final_ws/devel/.private/rm_gazebo/lib/pkgconfig/rm_gazebo.pc /home/idris/final_ws/devel/lib/pkgconfig/rm_gazebo.pc
-/home/idris/final_ws/devel/.private/rm_gazebo/share/rm_gazebo/cmake/rm_gazeboConfig-version.cmake /home/idris/final_ws/devel/share/rm_gazebo/cmake/rm_gazeboConfig-version.cmake
-/home/idris/final_ws/devel/.private/rm_gazebo/share/rm_gazebo/cmake/rm_gazeboConfig.cmake /home/idris/final_ws/devel/share/rm_gazebo/cmake/rm_gazeboConfig.cmake

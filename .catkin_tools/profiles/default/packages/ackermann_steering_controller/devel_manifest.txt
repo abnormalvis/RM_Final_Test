@@ -1,6 +1,0 @@
-ros_controllers/ackermann_steering_controller
-/home/idris/final_ws/devel/.private/ackermann_steering_controller/lib/libackermann_steering_controller.so /home/idris/final_ws/devel/lib/libackermann_steering_controller.so
-/home/idris/final_ws/devel/.private/ackermann_steering_controller/lib/ackermann_steering_controller/ackermann_steering_controller_ackermann_steering_bot /home/idris/final_ws/devel/lib/ackermann_steering_controller/ackermann_steering_controller_ackermann_steering_bot
-/home/idris/final_ws/devel/.private/ackermann_steering_controller/lib/pkgconfig/ackermann_steering_controller.pc /home/idris/final_ws/devel/lib/pkgconfig/ackermann_steering_controller.pc
-/home/idris/final_ws/devel/.private/ackermann_steering_controller/share/ackermann_steering_controller/cmake/ackermann_steering_controllerConfig-version.cmake /home/idris/final_ws/devel/share/ackermann_steering_controller/cmake/ackermann_steering_controllerConfig-version.cmake
-/home/idris/final_ws/devel/.private/ackermann_steering_controller/share/ackermann_steering_controller/cmake/ackermann_steering_controllerConfig.cmake /home/idris/final_ws/devel/share/ackermann_steering_controller/cmake/ackermann_steering_controllerConfig.cmake

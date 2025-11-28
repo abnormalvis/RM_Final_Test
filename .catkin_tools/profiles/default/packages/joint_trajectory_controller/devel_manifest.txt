@@ -1,7 +1,0 @@
-ros_controllers/joint_trajectory_controller
-/home/idris/final_ws/devel/.private/joint_trajectory_controller/lib/libjoint_trajectory_controller.so /home/idris/final_ws/devel/lib/libjoint_trajectory_controller.so
-/home/idris/final_ws/devel/.private/joint_trajectory_controller/lib/joint_trajectory_controller/rrbot /home/idris/final_ws/devel/lib/joint_trajectory_controller/rrbot
-/home/idris/final_ws/devel/.private/joint_trajectory_controller/lib/joint_trajectory_controller/rrbot_wrapping /home/idris/final_ws/devel/lib/joint_trajectory_controller/rrbot_wrapping
-/home/idris/final_ws/devel/.private/joint_trajectory_controller/lib/pkgconfig/joint_trajectory_controller.pc /home/idris/final_ws/devel/lib/pkgconfig/joint_trajectory_controller.pc
-/home/idris/final_ws/devel/.private/joint_trajectory_controller/share/joint_trajectory_controller/cmake/joint_trajectory_controllerConfig.cmake /home/idris/final_ws/devel/share/joint_trajectory_controller/cmake/joint_trajectory_controllerConfig.cmake
-/home/idris/final_ws/devel/.private/joint_trajectory_controller/share/joint_trajectory_controller/cmake/joint_trajectory_controllerConfig-version.cmake /home/idris/final_ws/devel/share/joint_trajectory_controller/cmake/joint_trajectory_controllerConfig-version.cmake

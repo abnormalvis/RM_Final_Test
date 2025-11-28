@@ -1,5 +1,0 @@
-ros_controllers/gripper_action_controller
-/home/idris/final_ws/devel/.private/gripper_action_controller/lib/libgripper_action_controller.so /home/idris/final_ws/devel/lib/libgripper_action_controller.so
-/home/idris/final_ws/devel/.private/gripper_action_controller/lib/pkgconfig/gripper_action_controller.pc /home/idris/final_ws/devel/lib/pkgconfig/gripper_action_controller.pc
-/home/idris/final_ws/devel/.private/gripper_action_controller/share/gripper_action_controller/cmake/gripper_action_controllerConfig.cmake /home/idris/final_ws/devel/share/gripper_action_controller/cmake/gripper_action_controllerConfig.cmake
-/home/idris/final_ws/devel/.private/gripper_action_controller/share/gripper_action_controller/cmake/gripper_action_controllerConfig-version.cmake /home/idris/final_ws/devel/share/gripper_action_controller/cmake/gripper_action_controllerConfig-version.cmake

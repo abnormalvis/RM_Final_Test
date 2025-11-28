@@ -1,7 +1,0 @@
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/dual_mode_chassis_controller.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/dual_mode_chassis_controller.cpp:235:5:[m[K [01;35m[Kwarning: [m[Kexception of type ‘[01m[Kros::Exception[m[K’ will be caught
-  235 |     [01;35m[Kcatch[m[K (ros::Exception &e)
-      |     [01;35m[K^~~~~[m[K
-[01m[K/home/idris/final_ws/src/sentry_chassis_controller/src/dual_mode_chassis_controller.cpp:230:5:[m[K [01;35m[Kwarning: [m[K   by earlier handler for ‘[01m[Kstd::exception[m[K’
-  230 |     [01;35m[Kcatch[m[K (const std::exception &e)
-      |     [01;35m[K^~~~~[m[K

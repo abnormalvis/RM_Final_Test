@@ -1,4 +1,20 @@
-# Ignore cloned vendor/task description/controller directories
+# Ignore build and generated directories
+reference/
+logs/
+.catkin_tools/
+
+# Common ROS/catkin build outputs (defensive)
+build/
+devel/
+logs/
+
+# IDE and OS junk
+.vscode/
+*.swp
+*.swo
+*.log
+.DS_Store
+Thumbs.db# Ignore cloned vendor/task description/controller directories
 /src/simple_chassis_controller/
 /src/rm_description_for_task/
 /src/rm_controllers/

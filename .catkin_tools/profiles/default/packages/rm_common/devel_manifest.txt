@@ -1,6 +1,0 @@
-rm_control/rm_common
-/home/idris/final_ws/devel/.private/rm_common/lib/librm_common.so /home/idris/final_ws/devel/lib/librm_common.so
-/home/idris/final_ws/devel/.private/rm_common/lib/rm_common/test_kalman /home/idris/final_ws/devel/lib/rm_common/test_kalman
-/home/idris/final_ws/devel/.private/rm_common/lib/pkgconfig/rm_common.pc /home/idris/final_ws/devel/lib/pkgconfig/rm_common.pc
-/home/idris/final_ws/devel/.private/rm_common/share/rm_common/cmake/rm_commonConfig-version.cmake /home/idris/final_ws/devel/share/rm_common/cmake/rm_commonConfig-version.cmake
-/home/idris/final_ws/devel/.private/rm_common/share/rm_common/cmake/rm_commonConfig.cmake /home/idris/final_ws/devel/share/rm_common/cmake/rm_commonConfig.cmake

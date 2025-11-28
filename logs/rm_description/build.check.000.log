@@ -1,1 +1,0 @@
-/usr/bin/cmake -S/home/idris/final_ws/src/rm_description_for_task -B/home/idris/final_ws/build/rm_description --check-build-system CMakeFiles/Makefile.cmake 0

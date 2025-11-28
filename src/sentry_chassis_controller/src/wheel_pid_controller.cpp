@@ -407,86 +407,75 @@ namespace sentry_chassis_controller
 
     void WheelPidController::odom_update(const ros::Time &time, const ros::Duration &period)
     {
-        // Read current wheel velocities to compute chassis velocities
+        // 各轮子实际的速度
         double lf_wheel_vel = front_left_wheel_joint_.getVelocity();
         double rf_wheel_vel = front_right_wheel_joint_.getVelocity();
         double lb_wheel_vel = back_left_wheel_joint_.getVelocity();
         double rb_wheel_vel = back_right_wheel_joint_.getVelocity();
 
-        // Compute chassis velocities from wheel angular velocities (mecanum-like)
+        // 计算4个轮子的和速度
         double vx = (lf_wheel_vel + rf_wheel_vel + lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / 4.0;
+
         double vy = (-lf_wheel_vel + rf_wheel_vel + lb_wheel_vel - rb_wheel_vel) * wheel_radius_ / 4.0;
-        double wz = (-lf_wheel_vel + rf_wheel_vel - lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / (4.0 * (rx_ + ry_));
 
-        // Integrate odom in world (odom frame)
+        double wz = (-lf_wheel_vel + rf_wheel_vel - lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / 4 * (rx_ + ry_);
+
+        // 需要使用到的时间变量
         ros::Time now = time;
-        if (last_odom_time_.isZero())
-            last_odom_time_ = now;
-        double dt = (now - last_odom_time_).toSec();
-        if (dt < 0.0)
-            dt = 0.0;
+        double dt = period.toSec();
 
+        // 正运动学计算
         double dx = (vx * std::cos(odom_yaw_) - vy * std::sin(odom_yaw_)) * dt;
         double dy = (vx * std::sin(odom_yaw_) + vy * std::cos(odom_yaw_)) * dt;
         double dth = wz * dt;
+
+        // 里程计累加
         odom_x_ += dx;
         odom_y_ += dy;
         odom_yaw_ += dth;
 
-        // Publish TF and Odometry
+        // 创建坐标转换,发布tf
         geometry_msgs::TransformStamped t;
+        // 设置头部信息
         t.header.stamp = now;
         t.header.frame_id = odom_frame_;
+        // 设置子坐标系信息
         t.child_frame_id = base_link_frame_;
+        // 设置子级坐标系相对父极坐标系的偏移量
         t.transform.translation.x = odom_x_;
         t.transform.translation.y = odom_y_;
         t.transform.translation.z = 0.0;
+
+        // 设置四元数， 把欧拉角转为四元数
         tf2::Quaternion qtn;
         qtn.setRPY(0.0, 0.0, odom_yaw_);
-        t.transform.rotation.x = qtn.x();
-        t.transform.rotation.y = qtn.y();
-        t.transform.rotation.z = qtn.z();
-        t.transform.rotation.w = qtn.w();
+        t.transform.rotation.x = qtn.getX();
+        t.transform.rotation.y = qtn.getY();
+        t.transform.rotation.z = qtn.getZ();
+        t.transform.rotation.w = qtn.getW();
+
         tf_broadcaster_.sendTransform(t);
 
+        // 发布里程计消息
         nav_msgs::Odometry odom;
         odom.header.stamp = now;
         odom.header.frame_id = odom_frame_;
         odom.child_frame_id = base_link_frame_;
+
         odom.pose.pose.position.x = odom_x_;
         odom.pose.pose.position.y = odom_y_;
         odom.pose.pose.position.z = 0.0;
-        odom.pose.pose.orientation.x = qtn.x();
-        odom.pose.pose.orientation.y = qtn.y();
-        odom.pose.pose.orientation.z = qtn.z();
-        odom.pose.pose.orientation.w = qtn.w();
+        tf::createQuaternionFromYaw(odom_yaw_);
+
         odom.twist.twist.linear.x = vx;
         odom.twist.twist.linear.y = vy;
         odom.twist.twist.angular.z = wz;
 
-        for (int i = 0; i < 36; ++i)
-        {
-            odom.pose.covariance[i] = 0.0;
-            odom.twist.covariance[i] = 0.0;
-        }
-        odom.pose.covariance[0] = 1e-3;
-        odom.pose.covariance[7] = 1e-3;
-        odom.pose.covariance[14] = 1e9;
-        odom.pose.covariance[21] = 1e9;
-        odom.pose.covariance[28] = 1e9;
-        odom.pose.covariance[35] = 1e-2;
-        odom.twist.covariance[0] = 1e-3;
-        odom.twist.covariance[7] = 1e-3;
-        odom.twist.covariance[14] = 1e9;
-        odom.twist.covariance[21] = 1e9;
-        odom.twist.covariance[28] = 1e9;
-        odom.twist.covariance[35] = 1e-2;
-
+        // 发布里程计消息
         odom_pub_.publish(odom);
-        last_odom_time_ = now;
     }
 
-    // Export as plugin so controller_manager / pluginlib can load it by class name
+    // 注册插件
     PLUGINLIB_EXPORT_CLASS(sentry_chassis_controller::WheelPidController, controller_interface::ControllerBase)
 
-} // namespace sentry_chassis_controller
+}
