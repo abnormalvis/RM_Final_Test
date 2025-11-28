@@ -13,7 +13,7 @@ public:
         : nh_(), pnh_("~"), tf_buffer_(ros::Duration(10.0)), tf_listener_(tf_buffer_)
     {
         pnh_.param<std::string>("odom_topic", odom_topic_, "/odom");
-        pnh_.param<std::string>("yaw_topic", yaw_topic_, "/robot_yaw");
+        // 不再对外发布 yaw，仅用于监视
         pnh_.param<std::string>("global_frame", global_frame_, "odom");
         pnh_.param<std::string>("base_link_frame", base_link_frame_, "base_link");
         pnh_.param<std::string>("source", source_, std::string("auto")); // tf | odom | auto
@@ -21,12 +21,11 @@ public:
         pnh_.param<double>("tf_timeout_sec", tf_timeout_sec_, 0.05);
         pnh_.param<double>("stale_sec", stale_sec_, 1.0);
 
-        yaw_pub_ = nh_.advertise<std_msgs::Float64>(yaw_topic_, 10);
         odom_sub_ = nh_.subscribe(odom_topic_, 10, &YawPublisher::odomCB, this);
         timer_ = nh_.createTimer(ros::Duration(1.0 / std::max(1.0, hz_)), &YawPublisher::onTimer, this);
 
-        ROS_INFO("YawPublisher: src=%s tf(%s->%s) odom=%s -> pub=%s @%.1fHz", source_.c_str(),
-                 global_frame_.c_str(), base_link_frame_.c_str(), odom_topic_.c_str(), yaw_topic_.c_str(), hz_);
+        ROS_INFO("YawMonitor: src=%s tf(%s->%s) odom=%s @%.1fHz (monitor-only)", source_.c_str(),
+                 global_frame_.c_str(), base_link_frame_.c_str(), odom_topic_.c_str(), hz_);
     }
 
 private:
@@ -85,13 +84,9 @@ private:
             }
         }
 
-        std_msgs::Float64 out;
-        out.data = yaw_out;
-        yaw_pub_.publish(out);
-        
-        ROS_INFO_THROTTLE(1.0, "yaw_publisher: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
+        // 监视与日志输出
+        ROS_INFO_THROTTLE(1.0, "yaw_monitor: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
                           source_.c_str(), yaw_out, (int)tf_ok, (int)tf_stale, yaw_tf, (int)have_odom_yaw_, yaw_odom_);
-
     }
 
     void odomCB(const nav_msgs::Odometry::ConstPtr &msg)
@@ -111,10 +106,7 @@ private:
     ros::Timer timer_;
 
     ros::Subscriber odom_sub_;
-    ros::Publisher yaw_pub_;
-
     std::string odom_topic_;
-    std::string yaw_topic_;
     std::string global_frame_;
     std::string base_link_frame_;
     std::string source_;
