@@ -1,0 +1,39 @@
+<launch>
+  <!-- Launch args -->
+  <arg name="bag_topic" default="/odom"/>
+  <arg name="bag_dir" default="/home/idris/final_ws/src/sentry_chassis_controller/bags"/>
+  <arg name="inline_resolver" default="true"/>
+
+  <!-- Include PID/controller setup -->
+  <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
+
+  <!-- Forward kinematics node to compute odom from joint_states -->
+  <node pkg="sentry_chassis_controller" type="forward_kinematics" name="forward_kinematics" output="screen">
+    <param name="wheel_base" value="0.36"/>
+    <param name="wheel_track" value="0.36"/>
+    <param name="wheel_radius" value="0.05"/>
+    <!-- Keep default frames: odom/base_link; map fusion handled by TF if present -->
+  </node>
+
+  <!-- Keyboard teleop (feature variant): spinning-top default ON, quaternion->Euler yaw -->
+  <node pkg="sentry_chassis_controller" type="sentry_control_key_feature" name="sentry_control_key_feature" output="screen">
+    <!-- Topics -->
+    <param name="cmd_vel_topic" value="/cmd_vel"/>
+    <param name="cmd_vel_stamped_topic" value="/cmd_vel_stamped"/>
+    <!-- Behavior params -->
+    <param name="publish_zero_when_idle" value="false"/>
+    <param name="walk_vel" value="0.5"/>
+    <param name="run_vel" value="1.0"/>
+    <param name="default_omega" value="1.0"/>
+    <param name="hz" value="20"/>
+  </node>
+
+  <!-- Standalone chassis_controller is intentionally not used in feature launch -->
+
+  <!-- Optional: rosbag recording disabled by default -->
+  <!--
+  <node pkg="rosbag" type="record" name="rosbag_record" output="screen" launch-prefix="/bin/bash -lc">
+    <args>mkdir -p $(arg bag_dir) && rosbag record -O $(arg bag_dir)/odom $(arg bag_topic)</args>
+  </node>
+  -->
+</launch>

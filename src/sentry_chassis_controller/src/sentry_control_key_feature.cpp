@@ -4,6 +4,8 @@
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/TwistStamped.h>
 /* C++ 相关头文件 */
@@ -122,7 +124,7 @@ int main(int argc, char **argv)
 
 void TeleopTurtle::keyLoop()
 {
-    puts("Reading from keyboard (WASD to move, Q/E rotate, Shift+WASD run, c stop, f toggle field-centric, Ctrl-C quit) [Spinning-top mode: DEFAULT ON]");
+    puts("Reading from keyboard (WASD to move, Quat/E rotate, Shift+WASD run, c stop, f toggle field-centric, Ctrl-C quit) [Spinning-top mode: DEFAULT ON]");
     term_guard.setup();
 
     // 速度参数
@@ -229,8 +231,8 @@ void TeleopTurtle::keyLoop()
             cur_vy_world = -linear_speed;
             any_key_pressed = true;
             break; // right strafe
-        case 'q':
-            // Q/E 直接作为角速度命令（按下时有效）
+        case 'Quat':
+            // Quat/E 直接作为角速度命令（按下时有效）
             cur_omega = omega_speed;
             any_key_pressed = true;
             break; // turn left
@@ -246,9 +248,6 @@ void TeleopTurtle::keyLoop()
             any_key_pressed = true;
             break; // stop
         case 'f':
-            // 切换 field-centric 模式
-            field_centric_ = !field_centric_;
-            ROS_INFO("Field-centric mode: %s", field_centric_ ? "ON" : "OFF");
             break;
         // 删除小陀螺模式切换键 't'，模式始终开启
         case '\x03': // ctrl-c
@@ -263,14 +262,14 @@ void TeleopTurtle::keyLoop()
         {
             try
             {
-                // 尝试通过 TF 查询 odom -> base_link 变换以获取航向角
+                // 通过 TF 查询 odom -> base_link 变换，以四元数转换为欧拉角提取 yaw
                 geometry_msgs::TransformStamped tfst = tfBuffer_->lookupTransform("odom", "base_link", ros::Time(0), ros::Duration(0.05));
-                const auto &q = tfst.transform.rotation;
-                double qw = q.w;
-                double qx = q.x;
-                double qy = q.y;
-                double qz = q.z;
-                yaw_ = std::atan2(2.0 * (qw * qz + qx * qy), 1.0 - 2.0 * (qy * qy + qz * qz));
+                const auto &qr = tfst.transform.rotation;
+                tf2::Quaternion Quat(qr.x, qr.y, qr.z, qr.w);
+                double roll, pitch, yaw;
+                tf2::Matrix3x3(Quat).getRPY(roll, pitch, yaw);
+                // 更新 yaw_
+                yaw_ = yaw;
             }
             catch (const tf2::TransformException &ex)
             {
@@ -279,56 +278,42 @@ void TeleopTurtle::keyLoop()
             }
         }
 
-        // 发布一个带时间戳的 TwistStamped，表示请求的世界坐标系速度（header.frame_id = "odom")
+        // 发布一个带时间戳的 TwistStamped，表示请求的世界坐标系速度（header.frame_id = "map")
         geometry_msgs::TwistStamped stamped;
         stamped.header.stamp = ros::Time::now();
-        stamped.header.frame_id = "odom";
+        stamped.header.frame_id = "map";
 
         // 将本次按键请求包装为世界坐标系下的速度（仅按下按键时 non-zero）
         // 小陀螺模式默认开启：当按下WASD产生非零平移时，更新锁定的平移向量；未产生新的平移键时保持之前锁定的方向与大小
-        if (spinning_top_mode_)
-        {
-            if (std::fabs(cur_vx_world) > 1e-9 || std::fabs(cur_vy_world) > 1e-9)
-            {
-                translation_magnitude = std::hypot(cur_vx_world, cur_vy_world);
-                translation_angle = std::atan2(cur_vy_world, cur_vx_world);
-                translation_active = (translation_magnitude > 0.0);
-            }
-            if (translation_active)
-            {
-                cur_vx_world = translation_magnitude * std::cos(translation_angle);
-                cur_vy_world = translation_magnitude * std::sin(translation_angle);
-            }
-        }
+        // if (spinning_top_mode_)
+        // {
+        //     if (std::fabs(cur_vx_world) > 1e-9 || std::fabs(cur_vy_world) > 1e-9)
+        //     {
+        //         translation_magnitude = std::hypot(cur_vx_world, cur_vy_world);
+        //         translation_angle = std::atan2(cur_vy_world, cur_vx_world);
+        //         translation_active = (translation_magnitude > 0.0);
+        //     }
+        //     if (translation_active)
+        //     {
+        //         cur_vx_world = translation_magnitude * std::cos(translation_angle);
+        //         cur_vy_world = translation_magnitude * std::sin(translation_angle);
+        //     }
+        // }
 
+        // 整合本次按键请求给到世界坐标系下的速度
         stamped.twist.linear.x = cur_vx_world;
         stamped.twist.linear.y = cur_vy_world;
         stamped.twist.angular.z = cur_omega;
 
-        // 发布带时间戳的世界坐标系请求速度
-        twist_stamped_pub_.publish(stamped);
-
-        // 根据 field_centric_ 将世界速度转换到机体速度并发布到 /cmd_vel（明确使用 2x2 旋转矩阵）
-        double v_world_x = stamped.twist.linear.x;
-        double v_world_y = stamped.twist.linear.y;
         // 旋转矩阵 R(-yaw) 的计算（将 world -> body）
         // R(-yaw) = [ cos(yaw)  sin(yaw)
         //             -sin(yaw)  cos(yaw) ]
-        if (field_centric_)
-        {
-            double c = cos(yaw_);
-            double s = sin(yaw_);
-            double vbx = c * v_world_x + s * v_world_y;
-            double vby = -s * v_world_x + c * v_world_y;
-            twist.linear.x = vbx;
-            twist.linear.y = vby;
-        }
-        else
-        {
-            twist.linear.x = v_world_x;
-            twist.linear.y = v_world_y;
-        }
-        // 角速度直接由 Q/E 键控制（按下时有效）
+        double cos_yaw = cos(yaw_);
+        double sin_yaw = sin(yaw_);
+        double chassis_vx = cos_yaw * cur_vx_world + sin_yaw * cur_vy_world;
+        double chassis_vy = -sin_yaw * cur_vx_world + cos_yaw * cur_vy_world;
+        twist.linear.x = chassis_vx;
+        twist.linear.y = chassis_vy;
         twist.angular.z = stamped.twist.angular.z;
 
         // 仅当本次按键请求非零（或用户允许空闲零发布）时发送
