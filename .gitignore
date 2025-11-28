@@ -11,7 +11,7 @@
 /home/idris/final_ws/src/sentry_chassis_controller/log/*.log
 /home/idris/final_ws/reference/ZiDXie/hero_chassis_controller/
 /home/idris/final_ws/reference/CQin-Cat/hero_chassis_controller/
-/home/idris/final_ws/src/sentry_chassis_controller/*.bag
+/home/idris/final_ws/src/sentry_chassis_controller/*/*.bag
 # Local IDE files
 .idea/
 /devel/
