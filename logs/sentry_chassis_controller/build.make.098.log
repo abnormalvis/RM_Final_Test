@@ -1,13 +1,13 @@
-[  0%] Built target dynamic_reconfigure_generate_messages_lisp
 [  0%] Built target tf2_msgs_generate_messages_nodejs
+[  0%] Built target dynamic_reconfigure_generate_messages_lisp
 [  0%] Built target tf2_msgs_generate_messages_lisp
 [  0%] Built target actionlib_generate_messages_py
 [  0%] Built target actionlib_generate_messages_nodejs
 [  0%] Built target actionlib_generate_messages_cpp
-[  0%] Built target std_srvs_generate_messages_lisp
 [  0%] Built target std_srvs_generate_messages_nodejs
-[  0%] Built target gazebo_msgs_generate_messages_py
+[  0%] Built target std_srvs_generate_messages_lisp
 [  0%] Built target std_srvs_generate_messages_eus
+[  0%] Built target gazebo_msgs_generate_messages_py
 [  0%] Built target gazebo_msgs_generate_messages_nodejs
 [  0%] Built target gazebo_msgs_generate_messages_cpp
 [  0%] Built target nav_msgs_generate_messages_py
@@ -20,20 +20,20 @@
 [  0%] Built target gazebo_msgs_generate_messages_lisp
 [  0%] Built target std_msgs_generate_messages_py
 [  0%] Built target dynamic_reconfigure_generate_messages_nodejs
-[  0%] Built target rosgraph_msgs_generate_messages_nodejs
 [  0%] Built target std_msgs_generate_messages_cpp
-[  0%] Built target actionlib_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
 [  0%] Built target actionlib_msgs_generate_messages_py
-[  0%] Built target std_srvs_generate_messages_cpp
+[  0%] Built target actionlib_generate_messages_lisp
 [  0%] Built target std_msgs_generate_messages_lisp
-[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target std_srvs_generate_messages_cpp
 [  0%] Built target rosgraph_msgs_generate_messages_lisp
-[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_py
 [  0%] Built target control_toolbox_gencfg
-[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_cpp
 [  0%] Built target roscpp_generate_messages_eus
-[  0%] Built target control_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_nodejs
 [  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target control_msgs_generate_messages_py
 [  0%] Built target tf2_msgs_generate_messages_eus
 [  0%] Built target sensor_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_py
@@ -50,53 +50,41 @@
 [  0%] Built target roscpp_generate_messages_lisp
 [  0%] Built target control_msgs_generate_messages_cpp
 [  0%] Built target control_toolbox_generate_messages_nodejs
-[  0%] Built target control_msgs_generate_messages_eus
 [  0%] Built target roscpp_generate_messages_py
-[  0%] Built target control_toolbox_generate_messages_cpp
+[  0%] Built target control_msgs_generate_messages_eus
 [  0%] Built target trajectory_msgs_generate_messages_eus
-[  0%] Built target dynamic_reconfigure_generate_messages_py
+[  0%] Built target control_toolbox_generate_messages_cpp
 [  0%] Built target trajectory_msgs_generate_messages_nodejs
+[  0%] Built target dynamic_reconfigure_generate_messages_py
 [  0%] Built target control_msgs_generate_messages_nodejs
 [  0%] Built target actionlib_msgs_generate_messages_eus
 [  0%] Built target actionlib_msgs_generate_messages_cpp
 [  0%] Built target nav_msgs_generate_messages_eus
-[  5%] Built target sentry_chassis_controller_gencfg
 [  5%] Built target std_msgs_generate_messages_eus
+[  5%] Built target sentry_chassis_controller_gencfg
 [  5%] Built target actionlib_msgs_generate_messages_lisp
 [  5%] Built target actionlib_msgs_generate_messages_nodejs
-[  5%] Built target control_toolbox_generate_messages_py
 [  5%] Built target trajectory_msgs_generate_messages_cpp
-[  5%] Built target actionlib_generate_messages_eus
+[  5%] Built target control_toolbox_generate_messages_py
 [  5%] Built target trajectory_msgs_generate_messages_lisp
+[  5%] Built target actionlib_generate_messages_eus
 [  5%] Built target rosgraph_msgs_generate_messages_cpp
 [  5%] Built target trajectory_msgs_generate_messages_py
 [  5%] Built target dynamic_reconfigure_generate_messages_cpp
 [  5%] Built target gazebo_msgs_generate_messages_eus
-[  5%] Built target dynamic_reconfigure_generate_messages_eus
 [  5%] Built target geometry_msgs_generate_messages_nodejs
+[  5%] Built target dynamic_reconfigure_generate_messages_eus
 [  5%] Built target dynamic_reconfigure_gencfg
 [  5%] Built target tf2_msgs_generate_messages_cpp
-[35m[1mScanning dependencies of target sentry_control_key_optimized[0m
-[35m[1mScanning dependencies of target sentry_control_key[0m
-[ 11%] [32mBuilding CXX object CMakeFiles/sentry_control_key_optimized.dir/src/sentry_control_key_optimized.cpp.o[0m
-[ 16%] [32mBuilding CXX object CMakeFiles/sentry_control_key.dir/src/sentry_control_key.cpp.o[0m
-[ 22%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key[0m
-[ 22%] Built target sentry_control_key
-[35m[1mScanning dependencies of target forward_kinematics[0m
-[ 27%] [32mBuilding CXX object CMakeFiles/forward_kinematics.dir/src/forward_kinematics.cpp.o[0m
-[ 33%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key_optimized[0m
-[ 33%] Built target sentry_control_key_optimized
-[ 38%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/gazebo_odom_bridge[0m
-[ 44%] Built target gazebo_odom_bridge
-[ 50%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/ik_test_publisher[0m
-[ 55%] Built target ik_test_publisher
+[ 25%] Built target sentry_control_key_optimized
+[ 25%] Built target sentry_control_key_feature
+[ 35%] Built target sentry_control_key
+[ 45%] Built target forward_kinematics
+[ 55%] Built target gazebo_odom_bridge
+[ 65%] Built target ik_test_publisher
 [35m[1mScanning dependencies of target sentry_chassis_controller[0m
-[ 61%] [32mBuilding CXX object CMakeFiles/sentry_chassis_controller.dir/src/wheel_pid_controller.cpp.o[0m
-[ 66%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics[0m
-[ 66%] Built target forward_kinematics
-[ 72%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/dual_mode_chassis_controller[0m
-[ 77%] Built target dual_mode_chassis_controller
-[ 83%] [32m[1mLinking CXX executable /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics_node[0m
-[ 88%] Built target forward_kinematics_node
-[ 94%] [32m[1mLinking CXX shared library /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/libsentry_chassis_controller.so[0m
+[ 75%] Built target dual_mode_chassis_controller
+[ 80%] [32mBuilding CXX object CMakeFiles/sentry_chassis_controller.dir/src/wheel_pid_controller.cpp.o[0m
+[ 90%] Built target forward_kinematics_node
+[ 95%] [32m[1mLinking CXX shared library /home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/libsentry_chassis_controller.so[0m
 [100%] Built target sentry_chassis_controller

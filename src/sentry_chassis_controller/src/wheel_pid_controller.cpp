@@ -34,6 +34,15 @@ namespace sentry_chassis_controller
         controller_nh.param("wheel_track", wheel_track_, 0.36);
         controller_nh.param("wheel_base", wheel_base_, 0.36);
         controller_nh.param("wheel_radius", wheel_radius_, 0.05);
+        rx_ = wheel_track_ / 2.0;
+        ry_ = wheel_base_ / 2.0;
+
+        // read power limiting parameters (optional)
+        controller_nh.param("power_limit", power_limit_, 0.0);
+        controller_nh.param("power/velocity_coeff", velocity_coeff_, 0.0);
+        controller_nh.param("power/effort_coeff", effort_coeff_, 0.0);
+        controller_nh.param("power/power_offset", power_offset_, 0.0);
+        power_limit_enabled_ = (effort_coeff_ != 0.0 || velocity_coeff_ != 0.0);
 
         // initialize PIDs with parameters (if present) or defaults
         double def_p, def_i, def_d, def_i_clamp, def_antwindup;
@@ -85,6 +94,12 @@ namespace sentry_chassis_controller
         // NEW: Publisher for actual joint states to enable forward kinematics
         joint_states_pub_ = root_nh.advertise<sensor_msgs::JointState>("joint_states", 1);
         last_state_pub_ = ros::Time(0);
+
+        // Integrated odometry publisher
+        controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);
+        controller_nh.param<std::string>("base_link_frame", base_link_frame_, base_link_frame_);
+        odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom", 10);
+        last_odom_time_ = ros::Time(0);
 
         ROS_INFO("WheelPidController initialized with enhanced state feedback!");
         return true;
@@ -279,6 +294,28 @@ namespace sentry_chassis_controller
         double cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
         double cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
 
+        // Apply power limiting similar to hero_chassis_controller
+        if (power_limit_enabled_)
+        {
+            auto sq = [](double x)
+            { return x * x; };
+            double a = sq(cmd0) + sq(cmd1) + sq(cmd2) + sq(cmd3);
+            double b = std::abs(cmd0 * lf_wheel_vel) + std::abs(cmd1 * rf_wheel_vel) +
+                       std::abs(cmd2 * lb_wheel_vel) + std::abs(cmd3 * rb_wheel_vel);
+            double c = sq(lf_wheel_vel) + sq(rf_wheel_vel) + sq(lb_wheel_vel) + sq(rb_wheel_vel);
+            a *= effort_coeff_;
+            c = c * velocity_coeff_ - power_offset_ - power_limit_;
+            double disc = sq(b) - 4.0 * a * c;
+            double zoom_coeff = (disc > 0.0 && a != 0.0) ? ((-b + std::sqrt(disc)) / (2.0 * a)) : 1.0;
+            if (zoom_coeff < 1.0)
+            {
+                cmd0 *= zoom_coeff;
+                cmd1 *= zoom_coeff;
+                cmd2 *= zoom_coeff;
+                cmd3 *= zoom_coeff;
+            }
+        }
+
         front_left_wheel_joint_.setCommand(cmd0);
         front_right_wheel_joint_.setCommand(cmd1);
         back_left_wheel_joint_.setCommand(cmd2);
@@ -294,6 +331,90 @@ namespace sentry_chassis_controller
         front_right_pivot_joint_.setCommand(p1);
         back_left_pivot_joint_.setCommand(p2);
         back_right_pivot_joint_.setCommand(p3);
+
+        // Encapsulated odometry update and publish
+        odom_update(time, period);
+    }
+
+    void WheelPidController::odom_update(const ros::Time &time, const ros::Duration &period)
+    {
+        // Read current wheel velocities to compute chassis velocities
+        double lf_wheel_vel = front_left_wheel_joint_.getVelocity();
+        double rf_wheel_vel = front_right_wheel_joint_.getVelocity();
+        double lb_wheel_vel = back_left_wheel_joint_.getVelocity();
+        double rb_wheel_vel = back_right_wheel_joint_.getVelocity();
+
+        // Compute chassis velocities from wheel angular velocities (mecanum-like)
+        double vx = (lf_wheel_vel + rf_wheel_vel + lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / 4.0;
+        double vy = (-lf_wheel_vel + rf_wheel_vel + lb_wheel_vel - rb_wheel_vel) * wheel_radius_ / 4.0;
+        double wz = (-lf_wheel_vel + rf_wheel_vel - lb_wheel_vel + rb_wheel_vel) * wheel_radius_ / (4.0 * (rx_ + ry_));
+
+        // Integrate odom in world (odom frame)
+        ros::Time now = time;
+        if (last_odom_time_.isZero())
+            last_odom_time_ = now;
+        double dt = (now - last_odom_time_).toSec();
+        if (dt < 0.0)
+            dt = 0.0;
+
+        double dx = (vx * std::cos(odom_yaw_) - vy * std::sin(odom_yaw_)) * dt;
+        double dy = (vx * std::sin(odom_yaw_) + vy * std::cos(odom_yaw_)) * dt;
+        double dth = wz * dt;
+        odom_x_ += dx;
+        odom_y_ += dy;
+        odom_yaw_ += dth;
+
+        // Publish TF and Odometry
+        geometry_msgs::TransformStamped t;
+        t.header.stamp = now;
+        t.header.frame_id = odom_frame_;
+        t.child_frame_id = base_link_frame_;
+        t.transform.translation.x = odom_x_;
+        t.transform.translation.y = odom_y_;
+        t.transform.translation.z = 0.0;
+        tf2::Quaternion qtn;
+        qtn.setRPY(0.0, 0.0, odom_yaw_);
+        t.transform.rotation.x = qtn.x();
+        t.transform.rotation.y = qtn.y();
+        t.transform.rotation.z = qtn.z();
+        t.transform.rotation.w = qtn.w();
+        tf_broadcaster_.sendTransform(t);
+
+        nav_msgs::Odometry odom;
+        odom.header.stamp = now;
+        odom.header.frame_id = odom_frame_;
+        odom.child_frame_id = base_link_frame_;
+        odom.pose.pose.position.x = odom_x_;
+        odom.pose.pose.position.y = odom_y_;
+        odom.pose.pose.position.z = 0.0;
+        odom.pose.pose.orientation.x = qtn.x();
+        odom.pose.pose.orientation.y = qtn.y();
+        odom.pose.pose.orientation.z = qtn.z();
+        odom.pose.pose.orientation.w = qtn.w();
+        odom.twist.twist.linear.x = vx;
+        odom.twist.twist.linear.y = vy;
+        odom.twist.twist.angular.z = wz;
+
+        for (int i = 0; i < 36; ++i)
+        {
+            odom.pose.covariance[i] = 0.0;
+            odom.twist.covariance[i] = 0.0;
+        }
+        odom.pose.covariance[0] = 1e-3;
+        odom.pose.covariance[7] = 1e-3;
+        odom.pose.covariance[14] = 1e9;
+        odom.pose.covariance[21] = 1e9;
+        odom.pose.covariance[28] = 1e9;
+        odom.pose.covariance[35] = 1e-2;
+        odom.twist.covariance[0] = 1e-3;
+        odom.twist.covariance[7] = 1e-3;
+        odom.twist.covariance[14] = 1e9;
+        odom.twist.covariance[21] = 1e9;
+        odom.twist.covariance[28] = 1e9;
+        odom.twist.covariance[35] = 1e-2;
+
+        odom_pub_.publish(odom);
+        last_odom_time_ = now;
     }
 
     // Export as plugin so controller_manager / pluginlib can load it by class name

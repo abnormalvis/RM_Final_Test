@@ -3,7 +3,7 @@ Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentr
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics_node, /home/idris/final_ws/devel/lib/sentry_chassis_controller/forward_kinematics_node)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key_optimized, /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key_optimized)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/ik_test_publisher, /home/idris/final_ws/devel/lib/sentry_chassis_controller/ik_test_publisher)
-Symlinking /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key_feature
+Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key_feature, /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key_feature)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/gazebo_odom_bridge, /home/idris/final_ws/devel/lib/sentry_chassis_controller/gazebo_odom_bridge)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/forward_kinematics, /home/idris/final_ws/devel/lib/sentry_chassis_controller/forward_kinematics)
 Linked: (/home/idris/final_ws/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/sentry_control_key, /home/idris/final_ws/devel/lib/sentry_chassis_controller/sentry_control_key)
