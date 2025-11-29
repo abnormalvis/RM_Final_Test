@@ -27,14 +27,14 @@ wheel_pid_controller:
   # Default PID for pivot (steering) and wheel (drive). These act as
   # fallbacks if a per-wheel entry is not provided.
   pivot:
-    p: 1.0
+    p: 2.0
     i: 0.0
     d: 0.0
     i_clamp: 0.0
     antiwindup: 0.0
   wheel:
-    p: 2.0
-    i: 0.1
+    p: 4.0
+    i: 0.2
     d: 0.0
     i_clamp: 0.0
     antiwindup: 0.0
@@ -54,68 +54,84 @@ wheel_pid_controller:
   # fallback to the `wheel` or `pivot` defaults above.
   wheels:
     wheel_fl:
-      p: 2.0
-      i: 0.1
+      p: 4.0
+      i: 0.2
       d: 0.0
-      i_clamp: 0.5
-      output_min: -10.0
-      output_max: 10.0
+      i_clamp: 1.0
+      output_min: -20.0
+      output_max: 20.0
     wheel_fr:
-      p: 2.0
-      i: 0.1
+      p: 4.0
+      i: 0.2
       d: 0.0
-      i_clamp: 0.5
-      output_min: -10.0
-      output_max: 10.0
+      i_clamp: 1.0
+      output_min: -20.0
+      output_max: 20.0
     wheel_rl:
-      p: 2.0
-      i: 0.1
+      p: 4.0
+      i: 0.2
       d: 0.0
-      i_clamp: 0.5
-      output_min: -10.0
-      output_max: 10.0
+      i_clamp: 1.0
+      output_min: -20.0
+      output_max: 20.0
     wheel_rr:
-      p: 2.0
-      i: 0.1
+      p: 4.0
+      i: 0.2
       d: 0.0
-      i_clamp: 0.5
+      i_clamp: 1.0
+      output_min: -20.0
+      output_max: 20.0
+    pivot_fl:
+      p: 2.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.0
       output_min: -10.0
       output_max: 10.0
-    pivot_fl:
-      p: 1.0
-      i: 0.0
-      d: 0.0
-      i_clamp: 0.0
-      output_min: -5.0
-      output_max: 5.0
     pivot_fr:
-      p: 1.0
+      p: 2.0
       i: 0.0
       d: 0.0
       i_clamp: 0.0
-      output_min: -5.0
-      output_max: 5.0
+      output_min: -10.0
+      output_max: 10.0
     pivot_rl:
-      p: 1.0
+      p: 2.0
       i: 0.0
       d: 0.0
       i_clamp: 0.0
-      output_min: -5.0
-      output_max: 5.0
+      output_min: -10.0
+      output_max: 10.0
     pivot_rr:
-      p: 1.0
+      p: 2.0
       i: 0.0
       d: 0.0
       i_clamp: 0.0
-      output_min: -5.0
-      output_max: 5.0
+      output_min: -10.0
+      output_max: 10.0
 
   # 底盘功率限制（与控制器同级参数，而非 wheels 内部）
-  power_limit: 100.0
+  # 增大功率上限以支持爬坡（原值 100.0，增大到 300.0）
+  power_limit: 300.0
   power:
-    effort_coeff: 12.0
+    # 降低 effort_coeff 以减少对力矩的限制（原值 12.0，降到 6.0）
+    effort_coeff: 6.0
     velocity_coeff: 0.0048
     power_offset: 0.0
 
   # 调试：发布功率限制调试信息（/power_debug）
   power_debug: true
+
+  # ========== 底盘自锁功能参数 ==========
+  # 自锁功能：当无速度命令时，主动锁定轮子位置以防止滑动/抖动
+  # 适用场景：斜坡停车、静止抖动抑制、防止里程计漂移
+  self_lock:
+    # 启用/禁用自锁功能（true=启用，false=禁用）
+    enabled: true
+    # 空闲超时阈值（秒）：超过此时间未收到 cmd_vel 命令后进入自锁状态
+    # 建议值：0.3~1.0秒，太短会导致频繁切换，太长会导致响应延迟
+    idle_timeout: 0.5
+    # 里程计速度死区（m/s 和 rad/s）：小于此阈值的速度视为零
+    # 用于消除静止时传感器噪声导致的里程计漂移
+    # 建议值：0.005~0.02，根据实际噪声水平调整
+    velocity_deadband: 0.01

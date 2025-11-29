@@ -121,6 +121,19 @@ namespace sentry_chassis_controller
         last_effort_pub_ = ros::Time(0);
         controller_nh.param("power_debug", power_debug_enabled_, false); // 是否启用功率调试发布
 
+        // 底盘自锁功能参数
+        controller_nh.param("self_lock/enabled", self_lock_enabled_, true);           // 自锁功能开关
+        controller_nh.param("self_lock/idle_timeout", idle_timeout_, 0.5);            // 空闲超时（秒）
+        controller_nh.param("self_lock/velocity_deadband", odom_velocity_deadband_, 0.01); // 里程计速度死区
+        last_cmd_time_ = ros::Time::now();  // 初始化命令时间戳
+        is_locked_ = false;                 // 初始状态：未锁定
+        for (int i = 0; i < 4; ++i)
+        {
+            locked_pivot_pos_[i] = 0.0;     // 初始锁定舵角为0
+        }
+        ROS_INFO("底盘自锁功能：%s，空闲超时=%.2fs，速度死区=%.3f",
+                 self_lock_enabled_ ? "启用" : "禁用", idle_timeout_, odom_velocity_deadband_);
+
         // 里程计发布集成，支持不同速度模式下的里程计计算
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);                // 里程计坐标系
         controller_nh.param<std::string>("base_link_frame", base_link_frame_, base_link_frame_); // 底盘
@@ -198,6 +211,9 @@ namespace sentry_chassis_controller
      */
     void WheelPidController::cmdVelCallback(const geometry_msgs::TwistConstPtr &msg)
     {
+        // 更新命令时间戳（用于自锁功能的空闲检测）
+        last_cmd_time_ = ros::Time::now();
+        
         // 通过逆向运动学计算每个轮子的期望舵角和轮子的期望角速度
         double vx = msg->linear.x;
         double vy = msg->linear.y;
@@ -434,6 +450,53 @@ namespace sentry_chassis_controller
             last_state_pub_ = time;
         }
 
+        // ==================== 底盘自锁逻辑 ====================
+        // 当超时未收到速度命令时，锁定底盘位置以防止滑动/抖动
+        if (self_lock_enabled_)
+        {
+            double idle_duration = (time - last_cmd_time_).toSec();
+            
+            if (idle_duration > idle_timeout_)
+            {
+                // 进入自锁状态
+                if (!is_locked_)
+                {
+                    // 首次进入自锁：记录当前舵角位置
+                    try
+                    {
+                        locked_pivot_pos_[0] = front_left_pivot_joint_.getPosition();
+                        locked_pivot_pos_[1] = front_right_pivot_joint_.getPosition();
+                        locked_pivot_pos_[2] = back_left_pivot_joint_.getPosition();
+                        locked_pivot_pos_[3] = back_right_pivot_joint_.getPosition();
+                    }
+                    catch (...)
+                    {
+                        // 读取失败时保持上次值
+                    }
+                    is_locked_ = true;
+                    ROS_INFO_THROTTLE(2.0, "底盘自锁已激活：舵角锁定 [%.2f, %.2f, %.2f, %.2f] rad",
+                                      locked_pivot_pos_[0], locked_pivot_pos_[1],
+                                      locked_pivot_pos_[2], locked_pivot_pos_[3]);
+                }
+                
+                // 自锁状态下：轮速目标为0，舵角保持锁定位置
+                for (int i = 0; i < 4; ++i)
+                {
+                    wheel_cmd_[i] = 0.0;           // 轮子停转
+                    pivot_cmd_[i] = locked_pivot_pos_[i];  // 舵角保持锁定
+                }
+            }
+            else
+            {
+                // 有命令输入，解除自锁
+                if (is_locked_)
+                {
+                    is_locked_ = false;
+                    ROS_INFO_THROTTLE(2.0, "底盘自锁已解除");
+                }
+            }
+        }
+
         // 计算轮子速度误差并应用 PID -> 力矩命令
         /* Set the PID error and compute the PID command with nonuniform time step size. The derivative error is computed from the change in the error and the timestep dt.
          */
@@ -662,6 +725,22 @@ namespace sentry_chassis_controller
             // 矩阵奇异（可能原因：四轮舵角共线、传感器故障、初始化阶段等）
             // 发出警告并使用零速度作为回退（避免发布错误的里程计）
             ROS_WARN_THROTTLE(1.0, "前向运动学矩阵奇异，使用零速度");
+        }
+
+        // ==================== 步骤 4.5: 速度死区滤波（消除静止抖动导致的里程计漂移） ====================
+        // 当计算出的速度小于死区阈值时，视为噪声并强制归零
+        // 这可以有效消除底盘静止时由于传感器噪声或微小抖动导致的里程计漂移
+        if (std::abs(vx) < odom_velocity_deadband_)
+        {
+            vx = 0.0;
+        }
+        if (std::abs(vy) < odom_velocity_deadband_)
+        {
+            vy = 0.0;
+        }
+        if (std::abs(wz) < odom_velocity_deadband_)
+        {
+            wz = 0.0;
         }
 
         // ==================== 步骤 5: 坐标变换（机体系 → 世界系）与位姿积分 ====================
