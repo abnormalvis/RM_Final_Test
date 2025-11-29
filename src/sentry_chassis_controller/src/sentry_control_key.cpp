@@ -253,7 +253,7 @@ void TeleopTurtle::keyLoop()
         case 'f':
             // 切换 field-centric 模式
             field_centric_ = !field_centric_;
-            ROS_INFO("Field-centric mode: %s", field_centric_ ? "ON" : "OFF");
+            ROS_INFO("场地坐标模式: %s", field_centric_ ? "开启" : "关闭");
             break;
         case 't':
             // 切换小陀螺模式
@@ -266,7 +266,7 @@ void TeleopTurtle::keyLoop()
                 translation_magnitude = std::hypot(cur_vx, cur_vy);
                 translation_angle = std::atan2(cur_vy, cur_vx);
                 translation_active = (translation_magnitude > 0);
-                ROS_INFO("Spinning-top mode: ON (translation locked at %.2f m/s, %.2f deg)",
+                ROS_INFO("小陀螺模式: 已开启 (平移速度锁定 %.2f m/s, 角度 %.2f 度)",
                          translation_magnitude, translation_angle * 180.0 / M_PI);
             }
             else
@@ -275,7 +275,7 @@ void TeleopTurtle::keyLoop()
                 cur_lin_world = translation_magnitude * std::cos(translation_angle);
                 cur_lat_world = translation_magnitude * std::sin(translation_angle);
                 translation_active = false;
-                ROS_INFO("Spinning-top mode: OFF");
+                ROS_INFO("小陀螺模式: 已关闭");
             }
             break;
         case '\x03': // ctrl-c
@@ -303,7 +303,7 @@ void TeleopTurtle::keyLoop()
             catch (const tf2::TransformException &ex)
             {
                 // 查找失败就保持之前的 yaw_ 不变
-                ROS_WARN_THROTTLE(5, "TF lookup odom->base_link failed: %s", ex.what());
+                ROS_WARN_THROTTLE(5, "TF 查询 odom->base_link 失败：%s", ex.what());
             }
         }
 

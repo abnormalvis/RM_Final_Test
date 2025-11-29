@@ -70,13 +70,13 @@ int main(int argc, char **argv)
     double wheel_track = 0.36;
     double wheel_radius = 0.05; // example
     auto res = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base, wheel_track, wheel_radius);
-    std::cout << "Inverse kinematics result:\n";
-    const char *names[4] = {"FL", "FR", "RL", "RR"};
+    std::cout << "逆运动学 结果:\n";
+    const char *names[4] = {"前左(FL)", "前右(FR)", "后左(RL)", "后右(RR)"};
     for (int i = 0; i < 4; ++i)
     {
-        std::cout << names[i] << ": steer(rad)=" << res.steer_angle[i]
-                  << ", wheel_omega(rad/s)=" << res.wheel_angular_vel[i]
-                  << ", wheel_v(m/s)=" << res.wheel_linear_vel[i] << "\n";
+        std::cout << names[i] << ": 舵角(rad)=" << res.steer_angle[i]
+                  << ", 轮子角速度(rad/s)=" << res.wheel_angular_vel[i]
+                  << ", 轮子线速度(m/s)=" << res.wheel_linear_vel[i] << "\n";
     }
     return 0;
 }
