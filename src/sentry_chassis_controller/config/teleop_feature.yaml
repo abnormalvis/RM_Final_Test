@@ -1,7 +1,7 @@
 # Teleop feature node parameters
 # Loaded into namespace: /sentry_control_key_feature
 
-velocity_mode: global          # global | chassis
+velocity_mode: chassis          # global | chassis (改为chassis模式，避免反馈环路)
 global_frame: odom             # global/world frame id (prefer odom unless you have a proper map->odom chain)
 base_link_frame: base_link     # robot base frame id
 

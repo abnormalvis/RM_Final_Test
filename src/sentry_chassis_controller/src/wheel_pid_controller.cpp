@@ -418,11 +418,16 @@ namespace sentry_chassis_controller
         double lb_pivot_pos = back_left_pivot_joint_.getPosition();
         double rb_pivot_pos = back_right_pivot_joint_.getPosition();
 
+        // 调试：输出原始传感器数据（改为INFO级别以便观察）
+        ROS_INFO_THROTTLE(1.0, "Raw sensors: wheel_vels[FL=%.3f, FR=%.3f, RL=%.3f, RR=%.3f] rad/s, pivots[FL=%.3f, FR=%.3f, RL=%.3f, RR=%.3f] rad",
+                           lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel,
+                           lf_pivot_pos, rf_pivot_pos, lb_pivot_pos, rb_pivot_pos);
+
         // 舵轮前向运动学：构造 4×3 最小二乘问题 A*[vx; vy; wz] = b
         // 每行对应一个轮子沿其舵向的线速度
         double wheel_vels[4] = {lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel};
         double pivot_angles[4] = {lf_pivot_pos, rf_pivot_pos, lb_pivot_pos, rb_pivot_pos};
-        
+
         // 轮子相对 base_link 的位置 (x向前, y向左)
         // FL, FR, RL, RR
         double rx[4] = {wheel_base_ / 2.0, wheel_base_ / 2.0, -wheel_base_ / 2.0, -wheel_base_ / 2.0};
@@ -440,8 +445,17 @@ namespace sentry_chassis_controller
 
             A[i][0] = cos_t;
             A[i][1] = sin_t;
-            A[i][2] = -ry[i] * cos_t + rx[i] * sin_t;
+            A[i][2] = rx[i] * sin_t - ry[i] * cos_t; // wz系数：rx*sin(θ) - ry*cos(θ)
             b[i] = v_along;
+        }
+
+        // 调试：输出FK输入数据
+        const char* wheel_names[4] = {"FL", "FR", "RL", "RR"};
+        ROS_INFO_THROTTLE(2.0, "FK inputs:");
+        for (int i = 0; i < 4; ++i)
+        {
+            ROS_INFO_THROTTLE(2.0, "  %s: rx=%.3f ry=%.3f theta=%.2f° wheel_vel=%.3f rad/s -> v_along=%.4f m/s",
+                             wheel_names[i], rx[i], ry[i], pivot_angles[i]*180/M_PI, wheel_vels[i], b[i]);
         }
 
         // 最小二乘解 (A^T A) sol = A^T b
@@ -484,6 +498,16 @@ namespace sentry_chassis_controller
             vx = inv[0][0] * ATb[0] + inv[0][1] * ATb[1] + inv[0][2] * ATb[2];
             vy = inv[1][0] * ATb[0] + inv[1][1] * ATb[1] + inv[1][2] * ATb[2];
             wz = inv[2][0] * ATb[0] + inv[2][1] * ATb[1] + inv[2][2] * ATb[2];
+
+            // 死区处理：消除传感器噪声导致的虚假速度
+            const double vel_deadzone = 0.001;   // 1mm/s
+            const double omega_deadzone = 0.001; // 0.001 rad/s
+            if (std::abs(vx) < vel_deadzone)
+                vx = 0.0;
+            if (std::abs(vy) < vel_deadzone)
+                vy = 0.0;
+            if (std::abs(wz) < omega_deadzone)
+                wz = 0.0;
         }
         else
         {
@@ -500,9 +524,20 @@ namespace sentry_chassis_controller
         double world_vx = vx * cos_y - vy * sin_y;
         double world_vy = vx * sin_y + vy * cos_y;
 
+        // 调试：检查旋转矩阵是否正确
+        ROS_DEBUG_THROTTLE(2.0, "Rotation: yaw=%.2f° cos=%.4f sin=%.4f | body(vx=%.4f,vy=%.4f) -> world(vx=%.4f,vy=%.4f)",
+                           odom_yaw_ * 180 / M_PI, cos_y, sin_y, vx, vy, world_vx, world_vy);
+
         odom_x_ += world_vx * dt;
         odom_y_ += world_vy * dt;
         odom_yaw_ += wz * dt;
+
+        // 调试输出：检查 FK 计算的速度和里程计位姿
+        ROS_INFO_THROTTLE(1.0, "FK: body(vx=%.4f, vy=%.4f, wz=%.4f) world(vx=%.4f, vy=%.4f) | odom(x=%.3f, y=%.3f, yaw=%.2f°) | wheels[%.3f,%.3f,%.3f,%.3f] pivots[%.1f,%.1f,%.1f,%.1f]deg",
+                          vx, vy, wz, world_vx, world_vy,
+                          odom_x_, odom_y_, odom_yaw_ * 180 / M_PI,
+                          wheel_vels[0], wheel_vels[1], wheel_vels[2], wheel_vels[3],
+                          pivot_angles[0] * 180 / M_PI, pivot_angles[1] * 180 / M_PI, pivot_angles[2] * 180 / M_PI, pivot_angles[3] * 180 / M_PI);
 
         // 创建坐标转换,发布tf
         geometry_msgs::TransformStamped t;
@@ -532,7 +567,7 @@ namespace sentry_chassis_controller
         odom.pose.pose.position.x = odom_x_;
         odom.pose.pose.position.y = odom_y_;
         odom.pose.pose.position.z = 0.0;
-        
+
         // 修正：正确赋值四元数到 odom 的姿态（与 TF 一致）
         odom.pose.pose.orientation.x = qtn.getX();
         odom.pose.pose.orientation.y = qtn.getY();
