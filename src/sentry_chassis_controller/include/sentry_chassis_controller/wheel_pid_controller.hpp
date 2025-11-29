@@ -147,6 +147,17 @@ namespace sentry_chassis_controller
     double odom_yaw_{0.0};    // 航向角（弧度）
     ros::Time last_odom_time_;
 
+    // ==================== 底盘自锁功能参数 ====================
+    // 自锁功能：当无速度命令时，主动锁定轮子位置以防止滑动/抖动
+    bool self_lock_enabled_{true};         // 自锁功能开关（默认启用）
+    double idle_timeout_{0.5};             // 空闲超时阈值（秒），超时后进入自锁
+    ros::Time last_cmd_time_;              // 上次接收速度命令的时间戳
+    double locked_pivot_pos_[4]{};         // 自锁时记录的舵角位置（保持当前朝向）
+    bool is_locked_{false};                // 当前是否处于自锁状态
+    
+    // 里程计速度死区（消除静止时抖动导致的漂移）
+    double odom_velocity_deadband_{0.01};  // 速度死区阈值（m/s 和 rad/s）
+
     // ==================== 速度模式（坐标系选择） ====================
     // "local" (base_link): cmd_vel 中的速度在底盘坐标系下解释
     // "global" (odom): cmd_vel 中的速度在世界坐标系下解释（需 TF 变换）
