@@ -1,25 +1,5 @@
-[33m[WARN] [1764389994.565852378]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.[0m
-Gazebo multi-robot simulator, version 11.15.1
-Copyright (C) 2012 Open Source Robotics Foundation.
-Released under the Apache 2 License.
-http://gazebosim.org
-
-[1;33m
-#     # ####### ####### ###  #####  #######
-##    # #     #    #     #  #     # #
-# #   # #     #    #     #  #       #
-#  #  # #     #    #     #  #       #####
-#   # # #     #    #     #  #       #
-#    ## #     #    #     #  #     # #
-#     # #######    #    ###  #####  #######
-
-This version of Gazebo, now called Gazebo classic, reaches end-of-life
-in January 2025. Users are highly encouraged to migrate to the new Gazebo
-using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
-
-
-[0m[1;33m[Wrn] [GuiIface.cc:194] [0m[1;33mg/gui-plugin is really loading a SystemPlugin. [0m[1;33mTo load a GUI plugin please use --gui-client-plugin 
-[0mTraceback (most recent call last):
+[33m[WARN] [1764391685.831250638]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.[0m
+Traceback (most recent call last):
   File "/opt/ros/noetic/lib/rqt_reconfigure/rqt_reconfigure", line 5, in <module>
     from rqt_reconfigure.__main__ import main
   File "/opt/ros/noetic/lib/python3/dist-packages/rqt_reconfigure/__main__.py", line 36, in <module>
@@ -123,10 +103,6 @@ Traceback (most recent call last):
     module = builtins.__import__(name)
 ModuleNotFoundError: No module named 'PySide2'
 
-/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Unique name to prepend to the goal id. This will
-/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Set the name to prepend to the goal id. This will
 Gazebo multi-robot simulator, version 11.15.1
 Copyright (C) 2012 Open Source Robotics Foundation.
 Released under the Apache 2 License.
@@ -146,295 +122,154 @@ in January 2025. Users are highly encouraged to migrate to the new Gazebo
 using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
 
 
-[0m/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
+[0m[1;33m[Wrn] [GuiIface.cc:194] [0m[1;33mg/gui-plugin is really loading a SystemPlugin. [0m[1;33mTo load a GUI plugin please use --gui-client-plugin 
+[0mGazebo multi-robot simulator, version 11.15.1
+Copyright (C) 2012 Open Source Robotics Foundation.
+Released under the Apache 2 License.
+http://gazebosim.org
+
+[1;33m
+#     # ####### ####### ###  #####  #######
+##    # #     #    #     #  #     # #
+# #   # #     #    #     #  #       #
+#  #  # #     #    #     #  #       #####
+#   # # #     #    #     #  #       #
+#    ## #     #    #     #  #     # #
+#     # #######    #    ###  #####  #######
+
+This version of Gazebo, now called Gazebo classic, reaches end-of-life
+in January 2025. Users are highly encouraged to migrate to the new Gazebo
+using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
+
+
+[0m/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
+  * \param name Unique name to prepend to the goal id. This will
+/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
+  * \param name Set the name to prepend to the goal id. This will
+/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
   numpy.dot(M, v) for shape (4, \*) "point of arrays", respectively
 /opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:869: SyntaxWarning: invalid escape sequence '\*'
   v0 and v1 are shape (3, \*) or (4, \*) arrays of at least 3 vectors.
-[INFO] [1764389995.646400, 0.000000]: Loading model XML from ros parameter robot_description
-[INFO] [1764389995.652167, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
-[INFO] [1764389996.856922, 0.056000]: Calling service /gazebo/spawn_urdf_model
-[INFO] [1764389997.049245, 0.161000]: Spawn status: SpawnModel: Successfully spawned entity
-[INFO] [1764389997.050463, 0.161000]: Unpausing physics
-[0m[INFO] [1764389995.528572349]: Finished loading Gazebo ROS API Plugin.[0m
-[0m[INFO] [1764389995.529638915]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[INFO] [1764391686.971799, 0.000000]: Loading model XML from ros parameter robot_description
+[INFO] [1764391686.978989, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
+[INFO] [1764391688.185879, 0.039000]: Calling service /gazebo/spawn_urdf_model
+[INFO] [1764391688.370196, 0.132000]: Spawn status: SpawnModel: Successfully spawned entity
+[INFO] [1764391688.371785, 0.132000]: Unpausing physics
+[33m[WARN] [1764391690.600494554, 2.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[0m[INFO] [1764391686.812619364]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[INFO] [1764391686.814176401]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
 [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m10.39.4.91[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading world file [[0m[1;32m/usr/share/gazebo-11/worlds/empty.world[0m[1;32m][0m[1;32m
-[0m[1;32m[0m[0m[INFO] [1764389996.797876147, 0.001000000]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
-[0m[INFO] [1764389996.822898323, 0.024000000]: Physics dynamic reconfigure ready.[0m
-[0m[INFO] [1764389997.075555121, 0.161000000]: Loading gazebo_ros_control plugin[0m
-[0m[INFO] [1764389997.075707017, 0.161000000]: Starting gazebo_ros_control plugin in namespace: /[0m
-[0m[INFO] [1764389997.078164871, 0.161000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.[0m
-[0m[INFO] [1764389997.199693925, 0.161000000]: Loaded gazebo_ros_control.[0m
-[0m[INFO] [1764389997.412363376, 0.374000000]: WheelPidController: init pivot 'pivot_fl' p=10.000 i=0.300 d=1.000 i_clamp=1.000[0m
-[0m[INFO] [1764389997.415028818, 0.377000000]: WheelPidController: init pivot 'pivot_fr' p=10.000 i=0.300 d=1.000 i_clamp=1.000[0m
-[0m[INFO] [1764389997.417586227, 0.380000000]: WheelPidController: init pivot 'pivot_rl' p=10.000 i=0.300 d=1.000 i_clamp=1.000[0m
-[0m[INFO] [1764389997.420358237, 0.383000000]: WheelPidController: init pivot 'pivot_rr' p=10.000 i=0.300 d=1.000 i_clamp=1.000[0m
-[0m[INFO] [1764389997.422450686, 0.385000000]: WheelPidController: init wheel 'wheel_fl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764389997.425508844, 0.388000000]: WheelPidController: init wheel 'wheel_fr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764389997.427382582, 0.390000000]: WheelPidController: init wheel 'wheel_rl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764389997.430604636, 0.393000000]: WheelPidController: init wheel 'wheel_rr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764389997.472350575, 0.434000000]: WheelPidController: dynamic_reconfigure updated PID gains and mirrored to wheels/* parameters[0m
-[0m[INFO] [1764389997.490661043, 0.453000000]: WheelPidController initialized with enhanced state feedback![0m
-[0m[INFO] [1764389997.538525304, 0.501000000]: Power limit active: zoom=0.652 (a=221.275, b=9.220, c=-99.978)[0m
-[0m[INFO] [1764389998.038555035, 1.000000000]: Raw sensors: wheel_vels[FL=2.056, FR=-0.016, RL=-0.009, RR=-0.018] rad/s, pivots[FL=0.001, FR=-0.000, RL=0.001, RR=0.000] rad[0m
-[0m[INFO] [1764389998.038659125, 1.000000000]: FK: body(vx=0.0693, vy=-91.7779, wz=-0.3412) world(vx=0.0085, vy=-91.7780) | odom(x=0.006, y=1.254, yaw=-0.06??) | wheels[2.056,-0.016,-0.009,-0.018] pivots[0.0,-0.0,0.1,0.0]deg[0m
-[0m[INFO] [1764389998.039577877, 1.001000000]: Joint States: LF:-0.00802024/v:-2.14192 RF:-0.00807092/v:-0.028802 LB:-0.00795227/v:-0.00057727 RB:-0.00807006/v:-0.022918[0m
-[0m[INFO] [1764389998.039613948, 1.001000000]: Power limit active: zoom=0.653 (a=220.281, b=9.178, c=-99.978)[0m
-[0m[INFO] [1764389998.609673641, 1.501000000]: Power limit active: zoom=0.649 (a=223.280, b=9.303, c=-99.978)[0m
-[0m[INFO] [1764389999.189387254, 2.001000000]: Raw sensors: wheel_vels[FL=-1.976, FR=0.104, RL=0.084, RR=0.121] rad/s, pivots[FL=0.001, FR=-0.000, RL=0.002, RR=-0.000] rad[0m
-[0m[INFO] [1764389999.189472596, 2.001000000]: FK inputs:[0m
-[0m[INFO] [1764389999.189525520, 2.001000000]:   FL: rx=0.180 ry=0.180 theta=0.06?? wheel_vel=-1.976 rad/s -> v_along=-0.0988 m/s[0m
-[0m[INFO] [1764389999.189587053, 2.001000000]: FK: body(vx=-0.0747, vy=89.9079, wz=0.6227) world(vx=2.0133, vy=89.8854) | odom(x=-0.011, y=-2.949, yaw=-1.30??) | wheels[-1.976,0.104,0.084,0.121] pivots[0.1,-0.0[33m[WARN] [1764390001.312992849, 3.723000000]: No odom yaw yet; defaulting yaw to 0[0m
-[33m[WARN] [1764390001.415065309, 3.783000000]: All joint positions zero! Using synthetic backup values[0m
-,0.1,-0.0]deg[0m
-[0m[INFO] [1764389999.190250987, 2.002000000]: Joint States: LF:-0.0219893/v:2.24503 RF:-0.0221416/v:-0.00107117 LB:-0.0221317/v:0.00121533 RB:-0.0221468/v:0.02717[0m
-[0m[INFO] [1764389999.190301332, 2.002000000]: Power limit active: zoom=0.622 (a=241.963, b=10.082, c=-99.976)[0m
-[0m[INFO] [1764389999.781327057, 2.503000000]: Power limit active: zoom=0.692 (a=197.166, b=8.215, c=-99.980)[0m
-[0m[INFO] [1764390000.380543354, 3.002000000]: Raw sensors: wheel_vels[FL=1.939, FR=-0.001, RL=0.013, RR=-0.000] rad/s, pivots[FL=0.001, FR=-0.001, RL=0.003, RR=-0.001] rad[0m
-[0m[INFO] [1764390000.380916031, 3.002000000]: FK: body(vx=0.0713, vy=-56.6805, wz=-0.6027) world(vx=-2.7210, vy=-56.6152) | odom(x=-0.105, y=-6.403, yaw=-2.86??) | wheels[1.939,-0.001,0.013,-0.000] pivots[0.1,-0.0,0.2,-0.0]deg[0m
-[0m[INFO] [1764390000.382641626, 3.003000000]: Joint States: LF:-0.0362772/v:-2.1067 RF:-0.0361838/v:-0.0150568 LB:-0.0362661/v:-2.92036e-06 RB:-0.0361812/v:-0.000558284[0m
-[0m[INFO] [1764390000.382814543, 3.003000000]: Power limit active: zoom=0.665 (a=213.045, b=8.877, c=-99.979)[0m
-[0m[INFO] [1764390000.953209300, 3.504000000]: Power limit active: zoom=0.684 (a=201.705, b=8.404, c=-99.980)[0m
-[0m[INFO] [1764390001.736380718, 4.002000000]: Raw sensors: wheel_vels[FL=8.949, FR=8.923, RL=9.136, RR=9.104] rad/s, pivots[FL=0.012, FR=0.008, RL=0.015, RR=0.011] rad[0m
-[0m[INFO] [1764390001.736422042, 4.002000000]: FK inputs:[0m
-[0m[INFO] [1764390001.736453914, 4.002000000]:   FL: rx=0.180 ry=0.180 theta=0.69?? wheel_vel=8.949 rad/s -> v_along=0.4475 m/s[0m
-[0m[INFO] [1764390001.736492446, 4.002000000]: FK: body(vx=0.4154, vy=3.1254, wz=0.0277) world(vx=0.5987, vy=3.0955) | odom(x=-0.014, y=-7.175, yaw=-3.37??) | wheels[8.949,8.923,9.136,9.104] pivots[0.7,0.5,0.8,0.6]deg[0m
-[0m[INFO] [1764390001.738323010, 4.003000000]: Joint States: LF:0.212369/v:8.96579 RF:0.213039/v:8.96006 LB:0.212276/v:9.11052 RB:0.213029/v:9.09841[0m
-[0m[INFO] [1764390001.738356481, 4.004000000]: Power limit active: zoom=0.562 (a=185.533, b=70.820, c=-98.433)[0m
-[0m[INFO] [1764390002.333436482, 4.503000000]: Power limit active: zoom=0.546 (a=196.585, b=72.720, c=-98.434)[0m
-[0m[INFO] [1764390002.927698097, 5.002000000]: Raw sensors: wheel_vels[FL=9.527, FR=9.678, RL=8.549, RR=8.658] rad/s, pivots[FL=0.043, FR=0.031, RL=0.048, RR=0.049] rad[0m
-[0m[INFO] [1764390002.928107593, 5.002000000]: FK: body(vx=0.6024, vy=-3.4305, wz=-0.0368) world(vx=0.4177, vy=-3.4579) | odom(x=0.453, y=-6.786, yaw=-3.07??) | wheels[9.527,9.678,8.549,8.658] pivots[2.5,1.8,2.8,2.8]deg[0m
-[0m[INFO] [1764390002.933306271, 5.004000000]: Joint States: LF:1.17943/v:9.23255 RF:1.17519/v:9.31342 LB:1.17939/v:8.77907 RB:1.17484/v:8.82901[0m
-[0m[INFO] [1764390002.933404790, 5.004000000]: Power limit active: zoom=0.531 (a=211.223, b=73.449, c=-98.430)[0m
-[0m[INFO] [1764390003.552772467, 5.504000000]: Power limit active: zoom=0.826 (a=86.362, b=47.590, c=-98.285)[0m
-[0m[INFO] [1764390004.101614213, 6.002000000]: Raw sensors: wheel_vels[FL=9.372, FR=9.454, RL=9.173, RR=9.189] rad/s, pivots[FL=0.071, FR=0.044, RL=0.077, RR=0.085] rad[0m
-[0m[INFO] [1764390004.101674673, 6.002000000]: FK inputs:[0m
-[0m[INFO] [1764390004.101704020, 6.002000000]:   FL: rx=0.180 ry=0.180 theta=4.09?? wheel_vel=9.372 rad/s -> v_along=0.4686 m/s[0m
-[0m[INFO] [1764390004.101744040, 6.002000000]: FK: body(vx=0.4880, vy=-0.3169, wz=-0.0016) world(vx=0.4715, vy=-0.3409) | odom(x=0.907, y=-6.712, yaw=-2.86??) | wheels[9.372,9.454,9.173,9.189] pivots[4.1,2.5,4.4,4.9]deg[0m
-[0m[INFO] [1764390004.113520048, 6.011000000]: Power limit active: zoom=0.502 (a=233.263, b=78.879, c=-98.441)[0m
-[0m[INFO] [1764390004.692912847, 6.511000000]: Power limit active: zoom=0.598 (a=171.610, b=61.718, c=-98.343)[0m
-[0m[INFO] [1764390005.237832433, 7.002000000]: Raw sensors: wheel_vels[FL=8.804, FR=8.924, RL=9.034, RR=8.977] rad/s, pivots[FL=0.095, FR=0.059, RL=0.106, RR=0.124] rad[0m
-[0m[INFO] [1764390005.238073311, 7.002000000]: FK: body(vx=0.4382, vy=0.1114, wz=0.0055) world(vx=0.4429, vy=0.0910) | odom(x=1.362, y=-6.688, yaw=-2.66??) | wheels[8.804,8.924,9.034,8.977] pivots[5.5,3.4,6.1,7.1]deg[0m
-[0m[INFO] [1764390005.242837925, 7.006000000]: Joint States: LF:3.11573/v:9.18644 RF:3.07296/v:9.28537 LB:3.11806/v:9.41767 RB:3.07501/v:9.40513[0m
-[0m[INFO] [1764390005.248944305, 7.011000000]: Power limit active: zoom=0.628 (a=147.147, b=64.114, c=-98.344)[0m
-[0m[INFO] [1764390005.813811114, 7.512000000]: Power limit active: zoom=0.621 (a=149.748, b=65.485, c=-98.343)[0m
-[0m[INFO] [1764390006.379976362, 8.003000000]: Raw sensors: wheel_vels[FL=9.133, FR=9.207, RL=9.228, RR=9.127] rad/s, pivots[FL=0.106, FR=0.069, RL=0.137, RR=0.167] rad[0m
-[0m[INFO] [1764390006.380021186, 8.003000000]: FK inputs:[0m
-[0m[INFO] [1764390006.380048802, 8.003000000]:   FL: rx=0.180 ry=0.180 theta=6.05?? wheel_vel=9.133 rad/s -> v_along=0.4566 m/s[0m
-[0m[INFO] [1764390006.380079509, 8.003000000]: FK: body(vx=0.4586, vy=0.0309, wz=-0.0014) world(vx=0.4595, vy=0.0104) | odom(x=1.821, y=-6.659, yaw=-2.56??) | wheels[9.133,9.207,9.228,9.127] pivots[6.0,4.0,7.9,9.6]deg[0m
-[0m[INFO] [1764390006.386075826, 8.007000000]: Joint States: LF:4.08161/v:9.36447 RF:3.99076/v:9.22898 LB:4.08658/v:9.37526 RB:3.99828/v:9.0542[0m
-[0m[INFO] [1764390006.392557288, 8.013000000]: Power limit active: zoom=0.626 (a=147.709, b=64.784, c=-98.331)[0m
-[0m[INFO] [1764390006.951301581, 8.513000000]: Power limit active: zoom=0.410 (a=352.282, b=95.787, c=-98.493)[0m
-[0m[INFO] [1764390007.500655685, 9.002000000]: Raw sensors: wheel_vels[FL=9.437, FR=9.494, RL=9.337, RR=9.201] rad/s, pivots[FL=0.113, FR=0.074, RL=0.168, RR=0.189] rad[0m
-[0m[INFO] [1764390007.501721160, 9.003000000]: FK: body(vx=0.4633, vy=0.0708, wz=0.0035) world(vx=0.4660, vy=0.0503) | odom(x=2.279, y=-6.616, yaw=-2.53??) | wheels[9.320,9.377,9.391,9.362] pivots[6.5,4.2,9.6,10.8]deg[0m
-[0m[INFO] [1764390007.509386307, 9.008000000]: Joint States: LF:5.05369/v:9.27951 RF:4.89735/v:9.36709 LB:5.06353/v:9.38094 RB:4.91667/v:9.30102[0m
-[0m[INFO] [1764390007.513849106, 9.013000000]: Power limit active: zoom=0.433 (a=315.011, b=91.308, c=-98.460)[0m
-[0m[INFO] [1764390008.084996536, 9.512000000]: Power limit active: zoom=0.649 (a=135.982, b=63.162, c=-98.300)[0m
-[0m[INFO] [1764390008.666665105, 10.002000000]: Raw sensors: wheel_vels[FL=8.647, FR=8.794, RL=8.979, RR=8.856] rad/s, pivots[FL=0.120, FR=0.075, RL=0.199, RR=0.231] rad[0m
-[0m[INFO] [1764390008.667667004, 10.003000000]: FK inputs:[0m
-[0m[INFO] [1764390008.667715682, 10.003000000]:   FL: rx=0.180 ry=0.180 theta=6.88?? wheel_vel=9.472 rad/s -> v_along=0.4736 m/s[0m
-[0m[INFO] [1764390008.667782658, 10.003000000]: FK: body(vx=0.4794, vy=-0.0141, wz=-0.0047) world(vx=0.4783, vy=-0.0344) | odom(x=2.736, y=-6.561, yaw=-2.43??) | wheels[9.472,9.535,9.386,9.243] pivots[6.9,4.3,11.4,13.2]deg[0m
-[0m[INFO] [1764390008.676309428, 10.010000000]: Joint States: LF:6.02734/v:9.28544 RF:5.77567/v:9.37833 LB:6.04671/v:9.41314 RB:5.81088/v:9.32373[0m
-[0m[INFO] [1764390008.679875418, 10.013000000]: Power limit active: zoom=0.518 (a=216.371, b=77.934, c=-98.379)[0m
-[0m[INFO] [1764390009.245130597, 10.513000000]: Power limit active: zoom=0.517 (a=216.987, b=78.023, c=-98.379)[0m
-[0m[INFO] [1764390009.839846773, 11.002000000]: Raw sensors: wheel_vels[FL=9.261, FR=9.329, RL=9.351, RR=9.252] rad/s, pivots[FL=0.124, FR=0.072, RL=0.231, RR=0.273] rad[0m
-[0m[INFO] [1764390009.842162561, 11.003000000]: FK: body(vx=0.4561, vy=0.0837, wz=0.0030) world(vx=0.4591, vy=0.0656) | odom(x=3.194, y=-6.496, yaw=-2.26??) | wheels[9.176,9.271,9.320,9.208] pivots[7.1,4.1,13.2,15.6]deg[0m
-[0m[INFO] [1764390009.851318234, 11.011000000]: Joint States: LF:7.00558/v:9.17561 RF:6.62995/v:9.25585 LB:7.04058/v:9.24643 RB:6.68801/v:9.18611[0m
-[0m[INFO] [1764390009.853334964, 11.013000000]: Power limit active: zoom=0.606 (a=156.434, b=67.438, c=-98.322)[0m
-[0m[INFO] [1764390010.439230472, 11.513000000]: Power limit active: zoom=0.570 (a=177.959, b=70.902, c=-98.341)[0m
-[0m[INFO] [1764390011.007705644, 12.002000000]: Raw sensors: wheel_vels[FL=8.785, FR=8.845, RL=9.089, RR=8.963] rad/s, pivots[FL=0.135, FR=0.067, RL=0.262, RR=0.311] rad[0m
-[0m[INFO] [1764390011.010066357, 12.003000000]: FK inputs:[0m
-[0m[INFO] [1764390011.010403039, 12.003000000]:   FL: rx=0.180 ry=0.180 theta=7.71?? wheel_vel=8.779 rad/s -> v_along=0.4390 m/s[0m
-[0m[INFO] [1764390011.010633262, 12.003000000]: FK: body(vx=0.4339, vy=0.1191, wz=0.0099) world(vx=0.4378, vy=0.1039) | odom(x=3.650, y=-6.421, yaw=-2.00??) | wheels[8.779,8.914,9.057,8.963] pivots[7.7,3.8,15.0,17.8]deg[0m
-[0m[INFO] [1764390011.020318247, 12.012000000]: Joint States: LF:7.97965/v:9.32766 RF:7.45409/v:9.41764 LB:8.03736/v:9.39691 RB:7.54331/v:9.33373[0m
-[0m[INFO] [1764390011.020408138, 12.012000000]: Power limit active: zoom=0.620 (a=149.321, b=66.022, c=-98.315)[0m
-[0m[INFO] [1764390011.724355025, 12.514000000]: Power limit active: zoom=0.446 (a=294.907, b=89.203, c=-98.440)[0m
-[0m[INFO] [1764390012.298754037, 13.002000000]: Raw sensors: wheel_vels[FL=9.314, FR=9.341, RL=9.449, RR=9.356] rad/s, pivots[FL=0.153, FR=0.063, RL=0.292, RR=0.337] rad[0m
-[0m[INFO] [1764390012.300770780, 13.004000000]: FK: body(vx=0.4550, vy=0.1053, wz=0.0042) world(vx=0.4578, vy=0.0926) | odom(x=4.105, y=-6.337, yaw=-1.59??) | wheels[9.234,9.268,9.366,9.265] pivots[8.8,3.6,16.7,19.3]deg[0m
-[0m[INFO] [1764390012.311628299, 13.013000000]: Joint States: LF:8.93657/v:9.40132 RF:8.24686/v:9.60449 LB:9.02361/v:9.22152 RB:8.37347/v:9.30297[0m
-[0m[INFO] [1764390012.311681507, 13.013000000]: Power limit active: zoom=0.624 (a=148.396, b=64.946, c=-98.309)[0m
-[0m[INFO] [1764390012.909770955, 13.514000000]: Power limit active: zoom=0.609 (a=155.052, b=67.189, c=-98.321)[0m
-[0m[INFO] [1764390013.484375668, 14.002000000]: Raw sensors: wheel_vels[FL=9.116, FR=9.096, RL=9.387, RR=9.284] rad/s, pivots[FL=0.178, FR=0.063, RL=0.320, RR=0.354] rad[0m
-[0m[INFO] [1764390013.485318214, 14.003000000]: FK inputs:[0m
-[0m[INFO] [1764390013.485355687, 14.003000000]:   FL: rx=0.180 ry=0.180 theta=10.18?? wheel_vel=9.257 rad/s -> v_along=0.4629 m/s[0m
-[0m[INFO] [1764390013.485405410, 14.003000000]: FK: body(vx=0.4603, vy=0.0871, wz=0.0218) world(vx=0.4616, vy=0.0798) | odom(x=4.556, y=-6.242, yaw=-0.90??) | wheels[9.257,9.406,9.231,9.267] pivots[10.2,3.6,18.3,20.3]deg[0m
-[0m[INFO] [1764390013.498039442, 14.014000000]: Joint States: LF:9.87661/v:8.55939 RF:9.04003/v:8.64942 LB:9.99544/v:8.85593 RB:9.2056/v:8.80301[0m
-[0m[INFO] [1764390013.498204502, 14.014000000]: Power limit active: zoom=0.363 (a=453.948, b=106.797, c=-98.541)[0m
-[0m[INFO] [1764390014.080999155, 14.515000000]: Power limit active: zoom=0.569 (a=178.610, b=71.069, c=-98.342)[0m
-[0m[INFO] [1764390014.652683581, 15.002000000]: Raw sensors: wheel_vels[FL=8.838, FR=8.987, RL=8.937, RR=9.035] rad/s, pivots[FL=0.214, FR=0.066, RL=0.343, RR=0.369] rad[0m
-[0m[INFO] [1764390014.652749804, 15.003000000]: FK: body(vx=0.4341, vy=0.1240, wz=0.0318) world(vx=0.4340, vy=0.1246) | odom(x=5.004, y=-6.133, yaw=0.09??) | wheels[8.838,8.987,8.937,9.035] pivots[12.3,3.8,19.7,21.1]deg[0m
-[0m[INFO] [1764390014.666891286, 15.015000000]: Joint States: LF:10.7907/v:9.23176 RF:9.83068/v:9.33652 LB:10.9415/v:9.21457 RB:10.0337/v:9.26847[0m
-[0m[INFO] [1764390014.666935653, 15.015000000]: Power limit active: zoom=0.555 (a=187.524, b=73.134, c=-98.353)[0m
-[0m[INFO] [1764390015.238566426, 15.516000000]: Power limit active: zoom=0.561 (a=183.269, b=72.448, c=-98.349)[0m
-[0m[INFO] [1764390015.798238407, 16.003000000]: Raw sensors: wheel_vels[FL=9.274, FR=9.332, RL=9.312, RR=9.352] rad/s, pivots[FL=0.253, FR=0.070, RL=0.348, RR=0.381] rad[0m
-[0m[INFO] [1764390015.798345529, 16.003000000]: FK inputs:[0m
-[0m[INFO] [1764390015.798380835, 16.003000000]:   FL: rx=0.180 ry=0.180 theta=14.49?? wheel_vel=9.274 rad/s -> v_along=0.4637 m/s[0m
-[0m[INFO] [1764390015.798438564, 16.003000000]: FK: body(vx=0.4544, vy=0.1186, wz=0.0201) world(vx=0.4516, vy=0.1291) | odom(x=5.447, y=-6.010, yaw=1.32??) | wheels[9.274,9.332,9.312,9.352] pivots[14.5,4.0,19.9,21.8]deg[0m
-[0m[INFO] [1764390015.811762683, 16.015000000]: Power limit active: zoom=0.549 (a=192.369, b=73.444, c=-98.355)[0m
-[0m[INFO] [1764390015.814173776, 16.016000000]: Joint States: LF:11.6983/v:9.14815 RF:10.6397/v:9.1109 LB:11.8801/v:9.35461 RB:10.8764/v:9.31834[0m
-[0m[INFO] [1764390016.398282646, 16.516000000]: Power limit active: zoom=0.588 (a=166.562, b=69.288, c=-98.332)[0m
-[0m[INFO] [1764390016.961505540, 17.003000000]: Raw sensors: wheel_vels[FL=9.143, FR=9.185, RL=9.224, RR=9.232] rad/s, pivots[FL=0.289, FR=0.076, RL=0.350, RR=0.384] rad[0m
-[0m[INFO] [1764390016.961955423, 17.003000000]: FK: body(vx=0.4475, vy=0.1202, wz=0.0151) world(vx=0.4416, vy=0.1402) | odom(x=5.888, y=-5.877, yaw=2.57??) | wheels[9.143,9.185,9.224,9.232] pivots[16.5,4.4,20.1,22.0]deg[0m
-[0m[INFO] [1764390016.977730909, 17.016000000]: Power limit active: zoom=0.586 (a=167.712, b=69.610, c=-98.334)[0m
-[0m[INFO] [1764390016.979521102, 17.017000000]: Joint States: LF:12.5702/v:9.25068 RF:11.4378/v:9.32134 LB:12.7761/v:9.27569 RB:11.7024/v:9.30565[0m
-[0m[INFO] [1764390017.621805454, 17.516000000]: Power limit active: zoom=0.459 (a=277.619, b=87.004, c=-98.428)[0m
-[0m[INFO] [1764390018.197286955, 18.003000000]: Raw sensors: wheel_vels[FL=9.280, FR=9.511, RL=9.109, RR=9.227] rad/s, pivots[FL=0.312, FR=0.083, RL=0.353, RR=0.381] rad[0m
-[0m[INFO] [1764390018.197346516, 18.003000000]: FK inputs:[0m
-[0m[INFO] [1764390018.197419994, 18.003000000]:   FL: rx=0.180 ry=0.180 theta=17.89?? wheel_vel=9.280 rad/s -> v_along=0.4640 m/s[0m
-[0m[INFO] [1764390018.197504841, 18.003000000]: FK: body(vx=0.4670, vy=0.0687, wz=0.0240) world(vx=0.4618, vy=0.0977) | odom(x=6.327, y=-5.739, yaw=3.58??) | wheels[9.280,9.511,9.109,9.227] pivots[17.9,4.8,20.2,21.8]deg[0m
-[0m[INFO] [1764390018.214147594, 18.017000000]: Power limit active: zoom=0.343 (a=512.750, b=112.111, c=-98.572)[0m
-[0m[INFO] [1764390018.215215573, 18.018000000]: Joint States: LF:13.4307/v:8.46577 RF:12.2414/v:8.6029 LB:13.6547/v:8.74283 RB:12.5292/v:8.77433[0m
-[0m[INFO] [1764390018.849185379, 18.516000000]: Power limit active: zoom=0.456 (a=282.314, b=87.307, c=-98.430)[0m
-[0m[INFO] [1764390019.400155141, 19.003000000]: Raw sensors: wheel_vels[FL=8.607, FR=8.792, RL=8.782, RR=8.874] rad/s, pivots[FL=0.321, FR=0.090, RL=0.358, RR=0.377] rad[0m
-[0m[INFO] [1764390019.400318557, 19.003000000]: FK: body(vx=0.4235, vy=0.1246, wz=0.0280) world(vx=0.4128, vy=0.1564) | odom(x=6.764, y=-5.596, yaw=4.36??) | wheels[8.607,8.792,8.782,8.874] pivots[18.4,5.1,20.5,21.6]deg[0m
-[0m[INFO] [1764390019.415149980, 19.017000000]: Power limit active: zoom=0.461 (a=275.387, b=86.624, c=-98.426)[0m
-[0m[INFO] [1764390019.417245924, 19.019000000]: Joint States: LF:14.2994/v:8.87825 RF:13.0602/v:8.95505 LB:14.5374/v:9.0233 RB:13.368/v:9.0039[0m
-[0m[INFO] [1764390019.989169865, 19.517000000]: Power limit active: zoom=0.541 (a=198.026, b=74.901, c=-98.362)[0m
-[0m[INFO] [1764390020.550522514, 20.003000000]: Raw sensors: wheel_vels[FL=9.012, FR=9.090, RL=9.151, RR=9.146] rad/s, pivots[FL=0.327, FR=0.096, RL=0.360, RR=0.374] rad[0m
-[0m[INFO] [1764390020.550616532, 20.003000000]: FK inputs:[0m
-[0m[INFO] [1764390020.550652574, 20.003000000]:   FL: rx=0.180 ry=0.180 theta=18.76?? wheel_vel=9.012 rad/s -> v_along=0.4506 m/s[0m
-[0m[INFO] [1764390020.550698259, 20.003000000]: FK: body(vx=0.4425, vy=0.1188, wz=0.0095) world(vx=0.4304, vy=0.1572) | odom(x=7.200, y=-5.448, yaw=5.04??) | wheels[9.012,9.090,9.151,9.146] pivots[18.8,5.5,20.6,21.4]deg[0m
-[0m[INFO] [1764390020.567505212, 20.018000000]: Power limit active: zoom=0.670 (a=127.285, b=61.447, c=-98.290)[0m
-[0m[INFO] [1764390020.569514341, 20.020000000]: Joint States: LF:15.1816/v:9.33301 RF:13.8981/v:9.3745 LB:15.4322/v:9.33075 RB:14.2246/v:9.33338[0m
-[0m[INFO] [1764390021.142807987, 20.517000000]: Power limit active: zoom=0.672 (a=127.721, b=60.459, c=-98.286)[0m
-[0m[INFO] [1764390021.702730846, 21.003000000]: Raw sensors: wheel_vels[FL=8.795, FR=8.862, RL=8.953, RR=8.933] rad/s, pivots[FL=0.332, FR=0.102, RL=0.361, RR=0.373] rad[0m
-[0m[INFO] [1764390021.702842505, 21.003000000]: FK: body(vx=0.4312, vy=0.1185, wz=0.0068) world(vx=0.4174, vy=0.1604) | odom(x=7.634, y=-5.295, yaw=5.66??) | wheels[8.795,8.862,8.953,8.933] pivots[19.0,5.9,20.7,21.4]deg[0m
-[0m[INFO] [1764390021.719786835, 21.018000000]: Power limit active: zoom=0.500 (a=232.436, b=80.418, c=-98.392)[0m
-[0m[INFO] [1764390021.722790717, 21.021000000]: Joint States: LF:16.0697/v:8.90681 RF:14.7494/v:8.95545 LB:16.3306/v:9.07626 RB:15.092/v:9.05438[0m
-[0m[INFO] [1764390022.310757683, 21.518000000]: Power limit active: zoom=0.446 (a=295.324, b=89.302, c=-98.441)[0m
-[0m[INFO] [1764390022.890993256, 22.004000000]: Raw sensors: wheel_vels[FL=9.424, FR=9.574, RL=9.406, RR=9.452] rad/s, pivots[FL=0.336, FR=0.108, RL=0.360, RR=0.372] rad[0m
-[0m[INFO] [1764390022.891075710, 22.004000000]: FK inputs:[0m
-[0m[INFO] [1764390022.891107699, 22.004000000]:   FL: rx=0.180 ry=0.180 theta=19.23?? wheel_vel=9.424 rad/s -> v_along=0.4712 m/s[0m
-[0m[INFO] [1764390022.891144727, 22.004000000]: FK: body(vx=0.4687, vy=0.0949, wz=0.0116) world(vx=0.4557, vy=0.1452) | odom(x=8.067, y=-5.137, yaw=6.24??) | wheels[9.424,9.574,9.406,9.452] pivots[19.2,6.2,20.6,21.3]deg[0m
-[0m[INFO] [1764390022.906942236, 22.018000000]: Power limit active: zoom=0.410 (a=352.872, b=95.319, c=-98.476)[0m
-[0m[INFO] [1764390022.911607400, 22.022000000]: Joint States: LF:16.9557/v:9.39768 RF:15.6024/v:9.52927 LB:17.2259/v:9.38887 RB:15.9598/v:9.42887[0m
-[0m[INFO] [1764390023.498123294, 22.518000000]: Power limit active: zoom=0.410 (a=352.800, b=95.319, c=-98.476)[0m
-[0m[INFO] [1764390024.071356458, 23.004000000]: Raw sensors: wheel_vels[FL=9.423, FR=9.577, RL=9.409, RR=9.454] rad/s, pivots[FL=0.341, FR=0.115, RL=0.361, RR=0.372] rad[0m
-[0m[INFO] [1764390024.071431764, 23.004000000]: FK: body(vx=0.4688, vy=0.0948, wz=0.0108) world(vx=0.4544, vy=0.1493) | odom(x=8.498, y=-4.973, yaw=6.75??) | wheels[9.423,9.577,9.409,9.454] pivots[19.5,6.6,20.7,21.3]deg[0m
-[0m[INFO] [1764390024.086267143, 23.018000000]: Power limit active: zoom=0.410 (a=352.412, b=95.284, c=-98.475)[0m
-[0m[INFO] [1764390024.091464894, 23.023000000]: Joint States: LF:17.8525/v:9.46509 RF:16.4712/v:9.43163 LB:18.1308/v:9.50382 RB:16.8419/v:9.46054[0m
-[0m[INFO] [1764390024.663023615, 23.518000000]: Power limit active: zoom=0.411 (a=351.886, b=95.231, c=-98.475)[0m
-[0m[INFO] [1764390025.224052975, 24.004000000]: Raw sensors: wheel_vels[FL=9.424, FR=9.580, RL=9.410, RR=9.455] rad/s, pivots[FL=0.343, FR=0.121, RL=0.362, RR=0.371] rad[0m
-[0m[INFO] [1764390025.224121205, 24.004000000]: FK inputs:[0m
-[0m[INFO] [1764390025.224157665, 24.004000000]:   FL: rx=0.180 ry=0.180 theta=19.63?? wheel_vel=9.424 rad/s -> v_along=0.4712 m/s[0m
-[0m[INFO] [1764390025.224249000, 24.004000000]: FK: body(vx=0.4688, vy=0.0951, wz=0.0102) world(vx=0.4532, vy=0.1531) | odom(x=8.928, y=-4.806, yaw=7.20??) | wheels[9.424,9.580,9.410,9.455] pivots[19.6,6.9,20.7,21.2]deg[0m
-[0m[INFO] [1764390025.238676277, 24.017000000]: Power limit active: zoom=0.369 (a=438.802, b=105.578, c=-98.533)[0m
-[0m[INFO] [1764390025.247135306, 24.024000000]: Joint States: LF:18.7506/v:9.42427 RF:17.3428/v:9.58005 LB:19.0361/v:9.41023 RB:17.7262/v:9.45501[0m
-[0m[INFO] [1764390025.831192107, 24.518000000]: Power limit active: zoom=0.411 (a=350.734, b=95.107, c=-98.474)[0m
-[0m[INFO] [1764390026.398019857, 25.004000000]: Raw sensors: wheel_vels[FL=9.425, FR=9.582, RL=9.411, RR=9.457] rad/s, pivots[FL=0.344, FR=0.127, RL=0.362, RR=0.370] rad[0m
-[0m[INFO] [1764390026.398150450, 25.004000000]: FK: body(vx=0.4686, vy=0.0957, wz=0.0101) world(vx=0.4518, vy=0.1569) | odom(x=9.356, y=-4.635, yaw=7.61??) | wheels[9.425,9.582,9.411,9.457] pivots[19.7,7.3,20.8,21.2]deg[0m
-[0m[INFO] [1764390026.415212256, 25.018000000]: Power limit active: zoom=0.412 (a=350.195, b=95.047, c=-98.474)[0m
-[0m[INFO] [1764390026.424408235, 25.024000000]: Joint States: LF:19.6501/v:9.45285 RF:18.2171/v:9.38026 LB:19.9423/v:9.50094 RB:18.6127/v:9.43307[0m
-[0m[INFO] [1764390027.010313784, 25.517000000]: Power limit active: zoom=0.412 (a=349.670, b=94.[0m[INFO] [1764389994.689599733]: YawMonitor: src=auto tf(odom->base_link) odom=/odom_controller @50.0Hz (monitor-only)[0m
-[0m[INFO] [1764389998.041774003, 1.003000000]: yaw_monitor: src=auto yaw=-0.001 (tf_ok=1 tf_stale=0 yaw_tf=-0.001 have_odom=1 yaw_odom=-0.001)[0m
-[0m[INFO] [1764389999.214805206, 2.022000000]: yaw_monitor: src=auto yaw=-0.024 (tf_ok=1 tf_stale=0 yaw_tf=-0.024 have_odom=1 yaw_odom=-0.023)[0m
-[0m[INFO] [1764390000.408186726, 3.024000000]: yaw_monitor: src=auto yaw=-0.051 (tf_ok=1 tf_stale=0 yaw_tf=-0.051 have_odom=1 yaw_odom=-0.051)[0m
-[0m[INFO] [1764390001.782068101, 4.042000000]: yaw_monitor: src=auto yaw=-0.059 (tf_ok=1 tf_stale=0 yaw_tf=-0.059 have_odom=1 yaw_odom=-0.059)[0m
-[0m[INFO] [1764390002.988610071, 5.042000000]: yaw_monitor: src=auto yaw=-0.053 (tf_ok=1 tf_stale=0 yaw_tf=-0.053 have_odom=1 yaw_odom=-0.053)[0m
-[0m[INFO] [1764390004.153986617, 6.042000000]: yaw_monitor: src=auto yaw=-0.050 (tf_ok=1 tf_stale=0 yaw_tf=-0.050 have_odom=1 yaw_odom=-0.050)[0m
-[0m[INFO] [1764390005.286842101, 7.042000000]: yaw_monitor: src=auto yaw=-0.046 (tf_ok=1 tf_stale=0 yaw_tf=-0.046 have_odom=1 yaw_odom=-0.046)[0m
-[0m[INFO] [1764390006.426584545, 8.042000000]: yaw_monitor: src=auto yaw=-0.045 (tf_ok=1 tf_stale=0 yaw_tf=-0.045 have_odom=1 yaw_odom=-0.045)[0m
-[0m[INFO] [1764390007.547480755, 9.042000000]: yaw_monitor: src=auto yaw=-0.044 (tf_ok=1 tf_stale=0 yaw_tf=-0.044 have_odom=1 yaw_odom=-0.044)[0m
-[0m[INFO] [1764390008.716269551, 10.042000000]: yaw_monitor: src=auto yaw=-0.042 (tf_ok=1 tf_stale=0 yaw_tf=-0.042 have_odom=1 yaw_odom=-0.042)[0m
-[0m[INFO] [1764390009.887361364, 11.042000000]: yaw_monitor: src=auto yaw=-0.039 (tf_ok=1 tf_stale=0 yaw_tf=-0.039 have_odom=1 yaw_odom=-0.039)[0m
-[0m[INFO] [1764390011.054535941, 12.042000000]: yaw_monitor: src=auto yaw=-0.035 (tf_ok=1 tf_stale=0 yaw_tf=-0.035 have_odom=1 yaw_odom=-0.035)[0m
-[0m[INFO] [1764390012.345771267, 13.042000000]: yaw_monitor: src=auto yaw=-0.027 (tf_ok=1 tf_stale=0 yaw_tf=-0.027 have_odom=1 yaw_odom=-0.027)[0m
-[0m[INFO] [1764390013.530886659, 14.042000000]: yaw_monitor: src=auto yaw=-0.015 (tf_ok=1 tf_stale=0 yaw_tf=-0.015 have_odom=1 yaw_odom=-0.015)[0m
-[0m[INFO] [1764390014.699637244, 15.043000000]: yaw_monitor: src=auto yaw=0.002 (tf_ok=1 tf_stale=0 yaw_tf=0.002 have_odom=1 yaw_odom=0.002)[0m
-[0m[INFO] [1764390015.867436630, 16.062000000]: yaw_monitor: src=auto yaw=0.024 (tf_ok=1 tf_stale=0 yaw_tf=0.024 have_odom=1 yaw_odom=0.024)[0m
-[0m[INFO] [1764390017.032024801, 17.062000000]: yaw_monitor: src=auto yaw=0.046 (tf_ok=1 tf_stale=0 yaw_tf=0.046 have_odom=1 yaw_odom=0.046)[0m
-[0m[INFO] [1764390018.269354792, 18.062000000]: yaw_monitor: src=auto yaw=0.063 (tf_ok=1 tf_stale=0 yaw_tf=0.063 have_odom=1 yaw_odom=0.063)[0m
-[0m[INFO] [1764390019.466709322, 19.062000000]: yaw_monitor: src=auto yaw=0.077 (tf_ok=1 tf_stale=0 yaw_tf=0.077 have_odom=1 yaw_odom=0.077)[0m
-[0m[INFO] [1764390020.617339851, 20.062000000]: yaw_monitor: src=auto yaw=0.089 (tf_ok=1 tf_stale=0 yaw_tf=0.089 have_odom=1 yaw_odom=0.088)[0m
-[0m[INFO] [1764390021.771061552, 21.062000000]: yaw_monitor: src=auto yaw=0.099 (tf_ok=1 tf_stale=0 yaw_tf=0.099 have_odom=1 yaw_odom=0.099)[0m
-[0m[INFO] [1764390022.962234586, 22.062000000]: yaw_monitor: src=auto yaw=0.109 (tf_ok=1 tf_stale=0 yaw_tf=0.109 have_odom=1 yaw_odom=0.109)[0m
-[0m[INFO] [1764390024.135409801, 23.063000000]: yaw_monitor: src=auto yaw=0.118 (tf_ok=1 tf_stale=0 yaw_tf=0.118 have_odom=1 yaw_odom=0.118)[0m
-[0m[INFO] [1764390025.304479838, 24.062000000]: yaw_monitor: src=auto yaw=0.126 (tf_ok=1 tf_stale=0 yaw_tf=0.126 have_odom=1 yaw_odom=0.126)[0m
-[0m[INFO] [1764390026.469715165, 25.063000000]: yaw_monitor: src=auto yaw=0.133 (tf_ok=1 tf_stale=0 yaw_tf=0.133 have_odom=1 yaw_odom=0.133)[0m
-[0m[INFO] [1764390027.680547844, 26.082000000]: yaw_monitor: src=auto yaw=0.140 (tf_ok=1 tf_stale=0 yaw_tf=0.140 have_odom=1 yaw_odom=0.140)[0m
-[0m[INFO] [1764390028.870235008, 27.082000000]: yaw_monitor: src=auto yaw=0.147 (tf_ok=1 tf_stale=0 yaw_tf=0.147 have_odom=1 yaw_odom=0.147)989, c=-98.474)[0m
-[0m[INFO] [1764390027.590136029, 26.005000000]: Raw sensors: wheel_vels[FL=9.455, FR=9.380, RL=9.503, RR=9.434] rad/s, pivots[FL=0.345, FR=0.133, RL=0.362, RR=0.370] rad[0m
-[0m[INFO] [1764390027.590185269, 26.005000000]: FK inputs:[0m
-[0m[INFO] [1764390027.590215026, 26.005000000]:   FL: rx=0.180 ry=0.180 theta=19.78?? wheel_vel=9.455 rad/s -> v_along=0.4728 m/s[0m
-[0m[INFO] [1764390027.590246470, 26.005000000]: FK: body(vx=0.4579, vy=0.1250, wz=-0.0077) world(vx=0.4360, vy=0.1876) | odom(x=9.782, y=-4.460, yaw=8.02??) | wheels[9.455,9.380,9.503,9.434] pivots[19.8,7.6,20.8,21.2]deg[0m
-[0m[INFO] [1764390027.603950428, 26.018000000]: Power limit active: zoom=0.412 (a=349.134, b=94.930, c=-98.473)[0m
-[0m[INFO] [1764390027.616174940, 26.026000000]: Joint States: LF:20.5506/v:9.34947 RF:19.0946/v:9.54272 LB:20.8491/v:9.3225 RB:19.5014/v:9.38413[0m
-[0m[INFO] [1764390028.196110059, 26.517000000]: Power limit active: zoom=0.413 (a=348.600, b=94.871, c=-98.473)[0m
-[0m[INFO] [1764390028.770883716, 27.007000000]: Raw sensors: wheel_vels[FL=9.156, FR=9.339, RL=9.172, RR=9.245] rad/s, pivots[FL=0.346, FR=0.138, RL=0.363, RR=0.370] rad[0m
-[0m[INFO] [1764390028.771514580, 27.007000000]: FK: body(vx=0.4541, vy=0.1015, wz=0.0149) world(vx=0.4344, vy=0.1669) | odom(x=10.208, y=-4.280, yaw=8.41??) | wheels[9.156,9.339,9.172,9.245] pivots[19.8,7.9,20.8,21.2]deg[0m
-[0m[INFO] [1764390028.782103873, 27.018000000]: Power limit active: zoom=0.413 (a=348.065, b=94.812, c=-98.473)[0m
-[0m[INFO] [1764390028.794171461, 27.027000000]: Joint States: LF:21.4518/v:9.11861 RF:19.9733/v:9.17668 LB:21.7564/v:9.28714 RB:20.3915/v:9.33321[0m
-[0m[INFO] [1764390029.505662185, 27.518000000]: Power limit active: zoom=0.413 (a=347.539, b=94.755, c=-98.472)[0m
-[0m[INFO] [1764390030.202171813, 28.005000000]: FK inputs:[0m
-[0m[INFO] [1764390030.202292508, 28.005000000]:   FL: rx=0.180 ry=0.180 theta=19.90?? wheel_vel=9.351 rad/s -> v_along=0.4676 m/s[0m
-[0m[INFO] [1764390030.204267077, 28.007000000]: Raw sensors: wheel_vels[FL=9.158, FR=9.345, RL=9.173, RR=9.246] rad/s, pivots[FL=0.347, FR=0.143, RL=0.363, RR=0.370] rad[0m
-[0m[INFO] [1764390030.204363543, 28.008000000]: FK: body(vx=0.4542, vy=0.1016, wz=0.0149) world(vx=0.4333, vy=0.1699) | odom(x=10.631, y=-4.097, yaw=8.80??) | wheels[9.158,9.345,9.173,9.246] pivots[19.9,8.2,20.8,21.2]deg[0m
-[0m[INFO] [1764390030.217689838, 28.018000000]: Power limit active: zoom=0.413 (a=347.165, b=94.714, c=-98.472)[0m
-[0m[INFO] [1764390030.232832244, 28.027000000]: Joint States: LF:22.3549/v:9.1594 RF:20.855/v:9.34723 LB:22.6653/v:9.17359 RB:21.284/v:9.24799[0m
-[0m[INFO] [1764390030.973422407, 28.518000000]: Power limit active: zoom=0.414 (a=346.518, b=94.643, c=-98.472)[0m
-[0m[INFO] [1764390031.564408674, 29.007000000]: Raw sensors: wheel_vels[FL=9.099, FR=9.180, RL=9.177, RR=9.177] rad/s, pivots[FL=0.347, FR=0.147, RL=0.363, RR=0.370] rad[0m
-[0m[INFO] [1764390031.565461608, 29.008000000]: FK: body(vx=0.4435, vy=0.1165, wz=0.0043) world(vx=0.4193, vy=0.1856) | odom(x=11.052, y=-3.910, yaw=9.16??) | wheels[9.060,9.139,9.142,9.139] pivots[19.9,8.4,20.8,21.2]deg[0m
-[0m[INFO] [1764390031.578236063, 29.018000000]: Power limit active: zoom=0.776 (a=94.460, b=53.389, c=-98.249)[0m
-[0m[INFO] [1764390031.591811663, 29.029000000]: Joint States: LF:23.2566/v:8.84795 RF:21.7357/v:8.91858 LB:23.5724/v:9.00558 RB:22.1753/v:8.98628[0m
-[0m[INFO] [1764390032.302949882, 29.518000000]: Power limit active: zoom=0.504 (a=228.837, b=79.943, c=-98.389)[0m
-[0m[INFO] [1764390032.964963341, 30.005000000]: FK inputs:[0m
-[0m[INFO] [1764390032.965456718, 30.005000000]:   FL: rx=0.180 ry=0.180 theta=19.89?? wheel_vel=9.400 rad/s -> v_along=0.4700 m/s[0m
-[0m[INFO] [1764390032.967945512, 30.007000000]: Raw sensors: wheel_vels[FL=9.030, FR=9.273, RL=9.095, RR=9.225] rad/s, pivots[FL=0.347, FR=0.150, RL=0.363, RR=0.370] rad[0m
-[0m[INFO] [1764390032.968975010, 30.008000000]: FK: body(vx=0.4399, vy=0.1324, wz=0.0118) world(vx=0.4118, vy=0.2035) | odom(x=11.471, y=-3.719, yaw=9.54??) | wheels[9.061,9.151,9.167,9.207] pivots[19.9,8.6,20.8,21.2]deg[0m
-[0m[INFO] [1764390032.984522182, 30.021000000]: Power limit active: zoom=0.667 (a=128.471, b=61.577, c=-98.291)[0m
-[0m[INFO] [1764390032.994849264, 30.028000000]: Joint States: LF:24.1507/v:8.92719 RF:22.608/v:8.91933 LB:24.4722/v:9.15557 RB:23.0582/v:9.1036[0m
-[0m[INFO] [1764390033.635864481, 30.521000000]: Power limit active: zoom=0.786 (a=91.879, b=52.884, c=-98.246)[0m
-[0m[INFO] [1764390034.233471428, 31.007000000]: Raw sensors: wheel_vels[FL=9.371, FR=9.346, RL=9.406, RR=9.377] rad/s, pivots[FL=0.348, FR=0.153, RL=0.363, RR=0.370] rad[0m
-[0m[INFO] [1764390034.234543367, 31.008000000]: FK: body(vx=0.4643, vy=0.1050, wz=0.0090) world(vx=0.4392, vy=0.1835) | odom(x=11.888, y=-3.524, yaw=9.93??) | wheels[9.406,9.536,9.396,9.440] pivots[20.0,8.8,20.8,21.2]deg[0m
-[0m[INFO] [1764390034.250546674, 31.021000000]: Power limit active: zoom=0.423 (a=328.620, b=93.501, c=-98.464)[0m
-[0m[INFO] [1764390034.263817019, 31.031000000]: Joint States: LF:25.0513/v:9.46787 RF:23.4884/v:9.51499 LB:25.3785/v:9.50148 RB:23.9487/v:9.49027[0m
-[0m[INFO] [1764390034.862416307, 31.521000000]: Power limit active: zoom=0.426 (a=324.375, b=92.930, c=-98.461)[0m
-[0m[INFO] [1764390035.469313189, 32.006000000]: FK inputs:[0m
-[0m[INFO] [1764390035.469412260, 32.006000000]:   FL: rx=0.180 ry=0.180 theta=20.01?? wheel_vel=9.031 rad/s -> v_along=0.4515 m/s[0m
-[0m[INFO] [1764390035.472366993, 32.009000000]: Raw sensors: wheel_vels[FL=9.426, FR=9.514, RL=9.368, RR=9.377] rad/s, pivots[FL=0.349, FR=0.156, RL=0.363, RR=0.370] rad[0m
-[0m[INFO] [1764390035.472575750, 32.009000000]: FK: body(vx=0.4664, vy=0.0943, wz=0.0018) world(vx=0.4420, vy=0.1762) | odom(x=12.304, y=-3.326, yaw=10.29??) | wheels[9.426,9.514,9.368,9.377] pivots[20.0,8.9,20.8,21.2]deg[0m
-[0m[INFO] [1764390035.489899420, 32.021000000]: Power limit active: zoom=0.427 (a=323.055, b=92.806, c=-98.461)[0m
-[0m[INFO] [1764390035.502611335, 32.032000000]: Joint States: LF:25.9507/v:9.38096 RF:24.3688/v:9.40991 LB:26.2832/v:9.4726 RB:24.8387/v:9.47071[0m
-[0m[INFO] [1764390036.107132078, 32.521000000]: Power limit active: zoom=0.427 (a=323.533, b=92.826, c=-98.461)[0m
-[0m[INFO] [1764390036.701903901, 33.009000000]: Raw sensors: wheel_vels[FL=9.429, FR=9.517, RL=9.371, RR=9.379] rad/s, pivots[FL=0.350, FR=0.160, RL=0.364, RR=0.370] rad[0m
-[0m[INFO] [1764390036.701985505, 33.009000000]: FK: body(vx=0.4665, vy=0.0944, wz=0.0015) world(vx=0.4411, vy=0.1787) | odom(x=12.719, y=-3.126, yaw=10.62??) | wheels[9.429,9.517,9.371,9.379] pivots[20.1,9.2,20.9,21.2]deg[0m
-[0m[INFO] [1764390036.718415966, 33.021000000]: Power limit active: zoom=0.428 (a=321.594, b=92.627, c=-98.460)[0m
-[0m[INFO] [1764390036.732495258, 33.032000000]: Joint States: LF:26.8507/v:9.40377 RF:25.2514/v:9.49504 LB:27.1881/v:9.34167 RB:25.7299/v:9.34118[0m
-[0m[INFO] [1764390037.339207317, 33.521000000]: Power limit active: zoom=0.427 (a=322.738, b=92.729, c=-98.460)[0m
-[0m[INFO] [1764390037.946687924, 34.006000000]: FK inputs:[0m
-[0m[INFO] [1764390037.946786233, 34.006000000]:   FL: rx=0.180 ry=0.180 theta=20.11?? wheel_vel=9.032 rad/s -> v_along=0.4516 m/s[0m
-[0m[INFO] [1764390037.949758126, 34.009000000]: Raw sensors: wheel_vels[FL=9.432, FR=9.520, RL=9.374, RR=9.381] rad/s, pivots[FL=0.351, FR=0.164, RL=0.365, RR=0.370] rad[0m
-[0m[INFO] [1764390037.949877316, 34.009000000]: FK: body(vx=0.4666, vy=0.0945, wz=0.0012) world(vx=0.4403, vy=0.1812) | odom(x=13.132, y=-2.923, yaw=10.92??) | wheels[9.432,9.520,9.374,9.381] pivots[20.1,9.4,20.9,21.2]deg[0m
-[0m[INFO] [1764390037.964970039, 34.021000000]: Power limit active: zoom=0.429 (a=320.092, b=92.443, c=-98.459)[0m
-[0m[INFO] [1764390037.982051256, 34.034000000]: Joint States: LF:27.7531/v:9.28351 RF:26.1355/v:9.31041 LB:28.0953/v:9.38707 RB:26.6237/v:9.37949[0m
-[0m[INFO] [1764390038.574285141, 34.521000000]: Power limit active: zoom=0.445 (a=296.503, b=89.481, c=-98.442)[0m
-[0m[INFO] [1764390039.138732395, 35.009000000]: Raw sensors: wheel_vels[FL=9.018, FR=9.197, RL=9.094, RR=9.181] rad/s, pivots[FL=0.351, FR=0.167, RL=0.365, RR=0.370] rad[0m
-[0m[INFO] [1764390039.139554088, 35.009000000]: FK: body(vx=0.4416, vy=0.1228, wz=0.0181) world(vx=0.4091, vy=0.2066) | odom(x=13.543, y=-2.716, yaw=11.25??) | wheels[9.018,9.197,9.094,9.181] pivots[20.1,9.5,20.9,21.2]deg[0m
-[0m[INFO] [1764390039.152599490, 35.021000000]: Power limit active: zoom=0.664 (a=129.945, b=61.873, c=-98.293)[0m
-[0m[INFO] [1764390039.170771404, 35.035000000]: Joint States: LF:28.6554/v:8.71518 RF:27.0208/v:8.8005 LB:29.0023/v:8.86177 RB:27.5177/v:8.84585[0m
-[0m[INFO] [1764390039.766163252, 35.520000000]: Power limit active: zoom=0.495 (a=237.900, b=81.311, c=-98.397)[0m
-[0m[INFO] [1764390040.404893837, 36.006000000]: FK inputs:[0m
-[0m[INFO] [1764390040.405356174, 36.006000000]:   FL: rx=0.180 ry=0.180 theta=20.12?? wheel_vel=9.019 rad/s -> v_along=0.4510 m/s[0m
-[0m[INFO] [1764390040.408063973, 36.009000000]: Raw sensors: wheel_vels[FL=8.570, FR=8.811, RL=8.788, RR=8.915] rad/s, pivots[FL=0.351, FR=0.168, RL=0.364, RR=0.370] rad[0m
-[0m[INFO] [1764390040.408190947, 36.009000000]: FK: body(vx=0.4150, vy=0.1477, wz=0.0291) world(vx=0.3769, vy=0.2280) | odom(x=13.952, y=-2.506, yaw=11.59??) | wheels[8.570,8.811,8.788,8.915] pivots[20.1,9.6,20.9,21.2]deg[0m
-[0m[INFO] [1764390040.422523333, 36.021000000]: Power limit active: zoom=0.526 (a=210.574, b=76.298, c=-98.370)[0m
-[0m[INFO] [1764390040.439316285, 36.036000000]: Joint States: LF:29.5564/v:9.39968 RF:27.9039/v:9.52387 LB:29.9082/v:9.40882 RB:28.4097/v:9.44112[0m
-[0m[INFO] [1764390041.007981936, 36.521000000]: Power limit active: zoom=0.542 (a=197.265, b=74.639, c=-98.361)[0m
-[0m[INFO] [1764390041.594035221, 37.009000000]: Raw sensors: wheel_vels[FL=8.830, FR=8.888, RL=8.987, RR=8.956] rad/s, pivots[FL=0.353, FR=0.168, RL=0.365, RR=0.370] rad[0m
-[0m[INFO] [1764390041.594134370, 37.009000000]: FK: body(vx=0.4278, vy=0.1309, wz=0.0014) world(vx=0.3915, vy=0.2166) | odom(x=14.361, y=-2.293, yaw=11.94??) | wheels[8.830,8.888,8.987,8.956] pivots[20.2,9.6,20.9,21.2]deg[0m
-[0m[INFO] [1764390041.609764239, 37.020000000]: Power limit active: zoom=0.651 (a=135.709, b=62.768, c=-98.298)[0m
-[0m[INFO] [1764390041.631056466, 37.037000000]: Joint States: LF:30.4617/v:9.50986 RF:28.7944/v:9.44908 LB:30.8178/v:9.53797 RB:29.3078/v:9.47608[0m
-[0m[INFO] [1764390042.244678851, 37.520000000]: Power limit active: zoom=0.651 (a=135.661, b=62.755, c=-98.298)[0m
-[0m[INFO] [1764390042.827455199, 38.006000000]: FK inputs:[0m
-[0m[INFO] [1764390042.827542866, 38.006000000]:   FL: rx=0.180 ry=0.180 theta=20.26?? wheel_vel=8.962 rad/s -> v_along=0.4481 m/s[0m
-[0m[INFO] [1764390042.830597367, 38.009000000]: Raw sensors: wheel_vels[FL=8.831, FR=8.888, RL=8.987, RR=8.957] rad/s, pivots[FL=0.354, FR=0.169, RL=0.366, RR=0.370] rad[0m
-[0m[INFO] [1764390042.830856543, 38.009000000]: FK: body(vx=0.4279, vy=0.1310, wz=0.0013) world(vx=0.3902, vy=0.2189) | odom(x=14.769, y=-2.078, yaw=12.28??) | wheels[8.831,8.888,8.987,8.957] pivots[20.3,9.7,20.9,21.2]deg[0m
-[0m[INFO] [1764390042.844672281, 38.021000000]: Power limit active: zoom=0.542 (a=197.144, b=74.617, c=-98.361)[0m
-[0m[INFO] [1764390042.864991231, 38.038000000]: Joint States: LF:31.3668/v:9.43026 RF:29.6849/v:9.61594 LB:31.7272/v:9.42573 RB:30.2058/v:9.49345[0m
-[0m[INFO] [1764390043.500437113, 38.521000000]: Power limit active: zoom=0.542 (a=197.085, b=74.606, c=-98.361)[0m
-[0m[INFO] [1764390044.158080239, 39.010000000]: Raw sensors: wheel_vels[FL=8.760, FR=8.823, RL=8.913, RR=8.883] rad/s, pivots[FL=0.354, FR=0.169, RL=0.366, RR=0.370] rad[0m
-[0m[INFO] [1764390044.158185194, 39.010000000]: FK: body(vx=0.4252, vy=0.1277, wz=0.0011) world(vx=0.3871, vy=0.2174) | odom(x=15.176, y=-1.861, yaw=12.61??) | wheels[8.760,8.823,8.913,8.883] pivots[20.3,9.7,21.0,21.2]deg[0m
-[0m[INFO] [1764390044.170920810, 39.021000000]: Power limit active: zoom=0.542 (a=197.022, b=74.594, c=-98.361)[0m
-[0m[INFO] [1764390044.190241409, 39.039000000]: Joint States: LF:32.2717/v:9.5006 RF:30.5759/v:9.37611 LB:32.6362/v:9.53456 RB:31.1039/v:9.4
+[0m[1;32m[0m[0m[INFO] [1764391688.125307261]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[INFO] [1764391688.156237874, 0.013000000]: Physics dynamic reconfigure ready.[0m
+[0m[INFO] [1764391688.397619650, 0.132000000]: Loading gazebo_ros_control plugin[0m
+[0m[INFO] [1764391688.397734169, 0.132000000]: Starting gazebo_ros_control plugin in namespace: /[0m
+[0m[INFO] [1764391688.399270884, 0.132000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.[0m
+[0m[INFO] [1764391688.522378796, 0.132000000]: Loaded gazebo_ros_control.[0m
+[0m[INFO] [1764391688.866006469, 0.475000000]: WheelPidController: init pivot 'pivot_fl' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
+[0m[INFO] [1764391688.868964252, 0.477000000]: WheelPidController: init pivot 'pivot_fr' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
+[0m[INFO] [1764391688.875021783, 0.483000000]: WheelPidController: init pivot 'pivot_rl' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
+[0m[INFO] [1764391688.878624557, 0.487000000]: WheelPidController: init pivot 'pivot_rr' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
+[0m[INFO] [1764391688.882624774, 0.491000000]: WheelPidController: init wheel 'wheel_fl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764391688.886204482, 0.494000000]: WheelPidController: init wheel 'wheel_fr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764391688.888398323, 0.497000000]: WheelPidController: init wheel 'wheel_rl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764391688.891333198, 0.500000000]: WheelPidController: init wheel 'wheel_rr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764391688.970651770, 0.572000000]: WheelPidController: dynamic_reconfigure updated PID gains and mirrored to wheels/* parameters[0m
+[0m[INFO] [1764391689.001988451, 0.603000000]: WheelPidController initialized with enhanced state feedback![0m
+[0m[INFO] [1764391689.402877556, 1.001000000]: Joint States: LF:0.00970223/v:-5.40445e-05 RF:0.00976816/v:-0.000379147 LB:0.00971198/v:-3.23806e-05 RB:0.00972043/v:2.4174e-05[0m
+[0m[INFO] [1764391689.402958830, 1.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.001, FR=-0.000, RL=0.001, RR=-0.001] rad[0m
+[0m[INFO] [1764391689.403073201, 1.001000000]: FK: body(vx=0.0000, vy=-0.0529, wz=0.0000) world(vx=0.0000, vy=-0.0529) | odom(x=0.000, y=-0.026, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.0,-0.0,0.0,-0.0]deg[0m
+[0m[INFO] [1764391690.595504314, 2.000000000]: FK inputs:[0m
+[0m[INFO] [1764391690.595640668, 2.000000000]:   FL: rx=0.180 ry=0.180 theta=0.05?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391690.596772814, 2.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.001, FR=-0.000, RL=-0.001, RR=-0.001] rad[0m
+[0m[INFO] [1764391690.596885421, 2.001000000]: FK: body(vx=0.0000, vy=-0.0074, wz=0.0000) world(vx=0.0000, vy=-0.0074) | odom(x=0.000, y=-0.035, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.1,-0.0,-0.0,-0.1]deg[0m
+[0m[INFO] [1764391690.597609364, 2.001000000]: Joint States: LF:0.0292506/v:-5.76407e-05 RF:0.0293109/v:-0.000410877 LB:0.029278/v:-3.09826e-05 RB:0.0293218/v:2.88683e-05[0m
+[0m[INFO] [1764391691.777859916, 3.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.001, FR=-0.000, RL=-0.001, [33m[WARN] [1764391692.894552738, 4.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391695.188302225, 6.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391697.679606113, 8.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+RR=-0.002] rad[0m
+[0m[INFO] [1764391691.777967755, 3.001000000]: FK: body(vx=0.0000, vy=-0.0068, wz=0.0000) world(vx=0.0000, vy=-0.0068) | odom(x=0.000, y=-0.043, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.1,-0.0,-0.0,-0.1]deg[0m
+[0m[INFO] [1764391691.779748424, 3.003000000]: Joint States: LF:0.0487663/v:-6.17103e-05 RF:0.0488613/v:-0.000450622 LB:0.048812/v:-3.03768e-05 RB:0.048905/v:3.32531e-05[0m
+[0m[INFO] [1764391692.888422993, 4.000000000]: FK inputs:[0m
+[0m[INFO] [1764391692.888485494, 4.000000000]:   FL: rx=0.180 ry=0.180 theta=0.09?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391692.889455376, 4.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.002, FR=-0.001, RL=-0.001, RR=-0.003] rad[0m
+[0m[INFO] [1764391692.889565363, 4.001000000]: FK: body(vx=0.0000, vy=-0.0059, wz=0.0000) world(vx=0.0000, vy=-0.0059) | odom(x=0.000, y=-0.049, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.1,-0.0,-0.0,-0.2]deg[0m
+[0m[INFO] [1764391692.893518998, 4.004000000]: Joint States: LF:0.0682456/v:-6.60224e-05 RF:0.0683931/v:-0.000492626 LB:0.0683101/v:-2.97344e-05 RB:0.0684664/v:3.74081e-05[0m
+[0m[INFO] [1764391694.025725076, 5.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.002, FR=-0.001, RL=-0.001, RR=-0.004] rad[0m
+[0m[INFO] [1764391694.026169645, 5.001000000]: FK: body(vx=0.0000, vy=-0.0052, wz=0.0000) world(vx=0.0000, vy=-0.0052) | odom(x=0.000, y=-0.054, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.1,-0.0,-0.1,-0.2]deg[0m
+[0m[INFO] [1764391694.032065786, 5.005000000]: Joint States: LF:0.0876847/v:-7.06526e-05 RF:0.0879001/v:-0.000537838 LB:0.0877684/v:-2.90746e-05 RB:0.0880023/v:4.11719e-05[0m
+[0m[INFO] [1764391695.184174545, 6.000000000]: FK inputs:[0m
+[0m[INFO] [1764391695.184268279, 6.000000000]:   FL: rx=0.180 ry=0.180 theta=0.13?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391695.185004659, 6.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.002, FR=-0.001, RL=-0.001, RR=-0.005] rad[0m
+[0m[INFO] [1764391695.185206579, 6.001000000]: FK: body(vx=0.0000, vy=-0.0047, wz=0.0000) world(vx=0.0000, vy=-0.0047) | odom(x=0.000, y=-0.059, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.1,-0.0,-0.1,-0.3]deg[0m
+[0m[INFO] [1764391695.190120661, 6.006000000]: Joint States: LF:0.107078/v:-7.56799e-05 RF:0.107377/v:-0.000587118 LB:0.107182/v:-2.84119e-05 RB:0.107508/v:4.43845e-05[0m
+[0m[INFO] [1764391696.320517795, 7.002000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.003, FR=-0.001, RL=-0.001, RR=-0.006] rad[0m
+[0m[INFO] [1764391696.320571520, 7.002000000]: FK: body(vx=0.0000, vy=-0.0043, wz=0.0000) world(vx=0.0000, vy=-0.0043) | odom(x=0.000, y=-0.064, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.4]deg[0m
+[0m[INFO] [1764391696.326589139, 7.007000000]: Joint States: LF:0.126419/v:-8.11886e-05 RF:0.126816/v:-0.000641325 LB:0.126543/v:-2.77597e-05 RB:0.126976/v:4.68809e-05[0m
+[0m[INFO] [1764391697.676117869, 8.001000000]: FK inputs:[0m
+[0m[INFO] [1764391697.676217358, 8.001000000]:   FL: rx=0.180 ry=0.180 theta=0.18?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391697.677993541, 8.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.003, FR=-0.001, RL=-0.002, RR=-0.007] rad[0m
+[0m[INFO] [1764391697.678075467, 8.003000000]: FK: body(vx=0.0000, vy=-0.0041, wz=0.0000) world(vx=0.0000, vy=-0.0041) | odom(x=0.000, y=-0.068, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.4]deg[0m
+[0m[INFO] [1764391697.682607348, 8.008000000]: Joint States: LF:0.145699/v:-8.72702e-05 RF:0.146209/v:-0.000701352 LB:0.145844/v:-2.71323e-05 RB:0.146398/v:4.84901e-05[0m
+[0m[INFO] [1764391698.817864771, 9.002000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.004, FR=-0.001, RL=-0.002, [33m[WARN] [1764391699.947889960, 10.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391702.281861633, 12.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391704.628515618, 14.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391705.474476338, 14.746000000]: No odom yaw yet; defaulting yaw to 0[0m
+RR=-0.008] rad[0m
+[0m[INFO] [1764391698.819687747, 9.003000000]: FK: body(vx=0.0000, vy=-0.0039, wz=0.0000) world(vx=0.0000, vy=-0.0039) | odom(x=0.000, y=-0.072, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.5]deg[0m
+[0m[INFO] [1764391698.827297552, 9.009000000]: Joint States: LF:0.164907/v:-9.40238e-05 RF:0.165546/v:-0.000768135 LB:0.165074/v:-2.6546e-05 RB:0.165766/v:4.90345e-05[0m
+[0m[INFO] [1764391699.943153553, 10.000000000]: FK inputs:[0m
+[0m[INFO] [1764391699.944872797, 10.001000000]:   FL: rx=0.180 ry=0.180 theta=0.23?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391699.945577010, 10.002000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.004, FR=-0.001, RL=-0.002, RR=-0.009] rad[0m
+[0m[INFO] [1764391699.946601223, 10.003000000]: FK: body(vx=0.0000, vy=-0.0038, wz=0.0000) world(vx=0.0000, vy=-0.0038) | odom(x=0.000, y=-0.076, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.5]deg[0m
+[0m[INFO] [1764391699.953856492, 10.010000000]: Joint States: LF:0.184033/v:-0.000101557 RF:0.184817/v:-0.000842662 LB:0.184222/v:-2.60206e-05 RB:0.185066/v:4.83303e-05[0m
+[0m[INFO] [1764391701.069467205, 11.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.004, FR=-0.001, RL=-0.002, RR=-0.010] rad[0m
+[0m[INFO] [1764391701.069597424, 11.003000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.080, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.1,-0.6]deg[0m
+[0m[INFO] [1764391701.078726780, 11.011000000]: Joint States: LF:0.203061/v:-0.000109991 RF:0.204006/v:-0.000926081 LB:0.203274/v:-2.55816e-05 RB:0.204286/v:4.61959e-05[0m
+[0m[INFO] [1764391702.273769821, 12.001000000]: FK inputs:[0m
+[0m[INFO] [1764391702.273991655, 12.001000000]:   FL: rx=0.180 ry=0.180 theta=0.29?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391702.280276383, 12.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.005, FR=-0.002, RL=-0.002, RR=-0.011] rad[0m
+[0m[INFO] [1764391702.281432823, 12.004000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.083, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.1,-0.7]deg[0m
+[0m[INFO] [1764391702.289166115, 12.011000000]: Joint States: LF:0.221977/v:-0.000119456 RF:0.223098/v:-0.00101964 LB:0.222214/v:-2.52605e-05 RB:0.223409/v:4.24458e-05[0m
+[0m[INFO] [1764391703.479804959, 13.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.006, FR=-0.002, RL=-0.003, RR=-0.013] rad[0m
+[0m[INFO] [1764391703.480293432, 13.003000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.087, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.2,-0.7]deg[0m
+[0m[INFO] [1764391703.490872950, 13.013000000]: Joint States: LF:0.240763/v:-0.00013009 RF:0.242076/v:-0.00112435 LB:0.241025/v:-2.50868e-05 RB:0.242418/v:3.68657e-05[0m
+[0m[INFO] [1764391704.624617600, 14.001000000]: FK inputs:[0m
+[0m[INFO] [1764391704.624658264, 14.002000000]:   FL: rx=0.180 ry=0.180 theta=0.35?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
+[0m[INFO] [1764391704.627284781, 14.004000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.006, FR=-0.002, RL=-0.003, RR=-0.014] rad[0m
+[0m[INFO] [1764391704.627655883, 14.004000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.091, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.2,-0.8]deg[0m
+[0m[INFO] [1764391704.640638096, 14.014000000]: Joint States: LF:0.259398/v:-0.000142045 RF:0.26092/v:-0.00124145 LB:0.259686/v:-2.50998e-05 RB:0.261294/v:2.92527e-05[0m
+[0m[INFO] [1764391705.483533870, 14.754000000]: Power limit active: zoom=0.072 (a=19203.906, b=0.031, c=-100.000)[0m
+[0m[INFO] [1764391705.771674115, 15.[33m[WARN] [1764391706.752666668, 15.764000000]: FK matrix singular, using zero velocity[0m
+rviz: /build/ogre-1.9-kiU5_5/ogre-1.9-1.9.0+dfsg1/OgreMain/src/OgreNode.cpp:385：virtual void Ogre::Node::setOrientation(const Ogre::Quaternion&): 假设 ‘!q.isNaN() && "Invalid orientation supplied as parameter"’ 失败。
+[33m[WARN] [1764391707.817839690, 16.765000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391707.839221813, 16.784000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391708.939597424, 17.765000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391709.997437118, 18.765000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391710.015969998, 18.784000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+004000000]: Raw sensors: wheel_vels[FL=9.981, FR=9.945, RL=9.978, RR=10.030] rad/s, pivots[FL=0.009, FR=-0.004, RL=-0.002, RR=-0.017] rad[0m
+[0m[INFO] [1764391705.771746602, 15.004000000]: FK: body(vx=0.4986, vy=-0.1810, wz=-0.0060) world(vx=0.5013, vy=-0.1731) | odom(x=0.111, y=0.258, yaw=0.90??) | wheels[9.981,9.945,9.978,10.030] pivots[0.5,-0.2,-0.1,-1.0]deg[0m
+[0m[INFO] [1764391705.783909313, 15.015000000]: Joint States: LF:2.48574/v:9.97772 RF:2.50905/v:9.94201 LB:2.48604/v:9.97407 RB:2.50929/v:10.0317[0m
+[0m[INFO] [1764391706.727183071, 15.741000000]: Power limit active: zoom=0.783 (a=101.396, b=45.669, c=-97.948)[0m
+[0m[INFO] [1764391707.015771567, 16.002000000]: FK inputs:[0m
+[0m[INFO] [1764391707.016291149, 16.002000000]:   FL: rx=0.180 ry=0.180 theta=-360.00?? wheel_vel=-nan rad/s -> v_along=-nan m/s[0m
+[0m[INFO] [1764391707.019296053, 16.005000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
+[0m[INFO] [1764391707.019442181, 16.005000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=41821625334900448442499969812253980893584714785200188374258044306598428250519724544854744154788331520.00??) | wheels[-nan,-nan,-nan,-nan] pivots[-360.0,-360.0,-360.0,360.0]deg[0m
+[0m[INFO] [1764391707.030799999, 16.016000000]: Joint States: LF:12.5664/v:-nan RF:12.5664/v:-nan LB:6.28319/v:-nan RB:12.5664/v:-nan[0m
+[0m[INFO] [1764391708.077455754, 17.006000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
+[0m[INFO] [1764391708.077559906, 17.006000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=41821625334900448442499969812253980893584714785200188374258044306598428250519724544854744154788331520.00??) | wheels[-nan,-nan,-nan,-nan] pivots[-360.0,-360.0,-360.0,360.0]deg[0m
+[0m[INFO] [1764391708.089182009, 17.017000000]: Joint States: LF:12.5664/v:-nan RF:12.5664/v:-nan LB:6.28319/v:-nan RB:12.5664/v:-nan[0m
+[0m[INFO] [1764391709.193175328, 18.002000000]: FK inputs:[0m
+[0m[INFO] [1764391709.193370923, 18.002000000]:   FL: rx=0.180 ry=0.180 theta=-360.00?? wheel_vel=-nan rad/s -> v_along=-nan m/s[0m
+[0m[INFO] [1764391709.196845238, 18.006000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
+[0m[INFO] [1764391709.196954591, 18.006000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=41821625334900448442499969812253980893584714785200188374258044306598428250519724544854744154788331520.00??) | wheels[-nan,-nan,-nan,-nan] pivots[-360.0,-360.0,-360.0,360.0]deg[0m
+[0m[INFO] [1764391709.209045262, 18.018000000]: Joint States: LF:12.5664/v:-nan RF:12.5664/v:-nan LB:6.28319/v:-nan RB:12.5664/v:-nan[0m
+[0m[INFO] [1764391710.250146991, 19.007000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
+[0m[INFO] [1764391710.250261188, 19.007000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=418216253349004484424[33m[WARN] [1764391711.032142591, 19.765000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391712.066631334, 20.766000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391712.087400641, 20.785000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764391713.095219438, 21.765000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391714.149294450, 22.765000000]: FK matrix singular, using zero velocity[0m
+[33m[WARN] [1764391714.192737882, 22.804000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m

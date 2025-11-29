@@ -168,10 +168,38 @@ namespace sentry_chassis_controller
         auto ik = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base_, wheel_track_, wheel_radius_);
 
         // ik.wheel_angular_vel is in rad/s, pivot angles in radians
+        // 添加舵角软件限位和速度限制，防止Gazebo数值爆炸
+        const double MAX_PIVOT_ANGLE = 1.396;  // ±80° (比硬件限制90°小一点)
+        const double MAX_PIVOT_VELOCITY = 5.0; // 最大舵角速度5 rad/s
+
         for (int i = 0; i < 4; ++i)
         {
             wheel_cmd_[i] = ik.wheel_angular_vel[i];
-            pivot_cmd_[i] = ik.steer_angle[i];
+
+            // 限制舵角在±80°以内
+            double desired_pivot = ik.steer_angle[i];
+            if (desired_pivot > MAX_PIVOT_ANGLE)
+            {
+                desired_pivot = MAX_PIVOT_ANGLE;
+                ROS_WARN_THROTTLE(1.0, "Pivot %d clamped to +80°", i);
+            }
+            else if (desired_pivot < -MAX_PIVOT_ANGLE)
+            {
+                desired_pivot = -MAX_PIVOT_ANGLE;
+                ROS_WARN_THROTTLE(1.0, "Pivot %d clamped to -80°", i);
+            }
+
+            // 限制舵角变化速度（简单的速率限制）
+            double pivot_delta = desired_pivot - pivot_cmd_[i];
+            const double dt = 0.001; // 假设1kHz更新率
+            double max_delta = MAX_PIVOT_VELOCITY * dt;
+            if (std::abs(pivot_delta) > max_delta)
+            {
+                pivot_delta = (pivot_delta > 0) ? max_delta : -max_delta;
+                desired_pivot = pivot_cmd_[i] + pivot_delta;
+            }
+
+            pivot_cmd_[i] = desired_pivot;
         }
 
         // publish desired commands for inspection
@@ -420,8 +448,8 @@ namespace sentry_chassis_controller
 
         // 调试：输出原始传感器数据（改为INFO级别以便观察）
         ROS_INFO_THROTTLE(1.0, "Raw sensors: wheel_vels[FL=%.3f, FR=%.3f, RL=%.3f, RR=%.3f] rad/s, pivots[FL=%.3f, FR=%.3f, RL=%.3f, RR=%.3f] rad",
-                           lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel,
-                           lf_pivot_pos, rf_pivot_pos, lb_pivot_pos, rb_pivot_pos);
+                          lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel,
+                          lf_pivot_pos, rf_pivot_pos, lb_pivot_pos, rb_pivot_pos);
 
         // 舵轮前向运动学：构造 4×3 最小二乘问题 A*[vx; vy; wz] = b
         // 每行对应一个轮子沿其舵向的线速度
@@ -450,12 +478,12 @@ namespace sentry_chassis_controller
         }
 
         // 调试：输出FK输入数据
-        const char* wheel_names[4] = {"FL", "FR", "RL", "RR"};
+        const char *wheel_names[4] = {"FL", "FR", "RL", "RR"};
         ROS_INFO_THROTTLE(2.0, "FK inputs:");
         for (int i = 0; i < 4; ++i)
         {
             ROS_INFO_THROTTLE(2.0, "  %s: rx=%.3f ry=%.3f theta=%.2f° wheel_vel=%.3f rad/s -> v_along=%.4f m/s",
-                             wheel_names[i], rx[i], ry[i], pivot_angles[i]*180/M_PI, wheel_vels[i], b[i]);
+                              wheel_names[i], rx[i], ry[i], pivot_angles[i] * 180 / M_PI, wheel_vels[i], b[i]);
         }
 
         // 最小二乘解 (A^T A) sol = A^T b

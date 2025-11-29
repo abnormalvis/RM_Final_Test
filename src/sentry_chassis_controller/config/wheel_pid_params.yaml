@@ -19,10 +19,10 @@ wheel_pid_controller:
   # Default PID for pivot (steering) and wheel (drive). These act as
   # fallbacks if a per-wheel entry is not provided.
   pivot:
-    p: 10.0      # 降低P增益以减少振荡（从20.0改为10.0）
-    i: 0.3       # 降低积分增益
-    d: 1.0       # 增加微分增益以提高阻尼（从0.5改为1.0）
-    i_clamp: 1.0
+    p: 2.0       # 超保守P增益，配合软件限位
+    i: 0.01      # 极低I防止积分饱和
+    d: 3.0       # 高D提供强阻尼
+    i_clamp: 0.2 # 严格限制积分项
     antiwindup: 0.0
   wheel:
     p: 2.0
@@ -74,33 +74,33 @@ wheel_pid_controller:
       output_min: -10.0
       output_max: 10.0
     pivot_fl:
-      p: 10.0    # 降低P以减少振荡
-      i: 0.3
-      d: 1.0     # 增加D阻尼
-      i_clamp: 1.0
-      output_min: -5.0
-      output_max: 5.0
+      p: 2.0       # 超保守P配合软件限位
+      i: 0.01      # 极低I防止积分饱和
+      d: 3.0       # 高D提供强阻尼
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
     pivot_fr:
-      p: 10.0
-      i: 0.3
-      d: 1.0
-      i_clamp: 1.0
-      output_min: -5.0
-      output_max: 5.0
+      p: 2.0
+      i: 0.01
+      d: 3.0
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
     pivot_rl:
-      p: 10.0
-      i: 0.3
-      d: 1.0
-      i_clamp: 1.0
-      output_min: -5.0
-      output_max: 5.0
+      p: 2.0
+      i: 0.01
+      d: 3.0
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
     pivot_rr:
-      p: 10.0
-      i: 0.3
-      d: 1.0
-      i_clamp: 1.0
-      output_min: -5.0
-      output_max: 5.0
+      p: 2.0
+      i: 0.01
+      d: 3.0
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
 
   # 底盘功率限制（与控制器同级参数，而非 wheels 内部）
   power_limit: 100.0
