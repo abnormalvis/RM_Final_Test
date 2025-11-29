@@ -2,7 +2,7 @@ wheel_pid_controller:
   # 说明：
   # - rqt_reconfigure 使用一组扁平的动态参数键（如 wheel_fl_p、pivot_fr_i_clamp）。
   # - 本 YAML 使用分层键（wheels/wheel_fl/p 等）作为启动默认值。
-  # - 运行时我们会把动态参数“镜像回写”到对应的分层键上，便于 rosparam get 旧路径看到最新值；
+  # - 运行时我们会把动态参数"镜像回写"到对应的分层键上，便于 rosparam get 旧路径看到最新值；
   #   但这不会自动写回文件。如需持久化，请在运行后使用 rosparam/dynparam dump 导出。
   # Controller type so the controller_spawner can load it from the
   # parameter server if needed. Matches plugin XML/class name.
@@ -11,6 +11,14 @@ wheel_pid_controller:
   cmd_vel_topic: "/cmd_vel"
   # Do not synthesize fake joint movement by default
   synthetic_fallback: false
+  
+  # 速度模式: "local" or "global"
+  #speed_mode: "local"
+  speed_mode: "global"
+  # Frame IDs for odometry and TF
+  odom_frame: "odom"
+  base_link_frame: "base_link"
+  
   # Physical defaults (can be overridden per-wheel below)
   wheel_track: 0.36
   wheel_base: 0.36
