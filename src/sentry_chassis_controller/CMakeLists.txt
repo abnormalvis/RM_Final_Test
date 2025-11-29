@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   nav_msgs
   gazebo_msgs
+  tf
   tf2_ros
   dynamic_reconfigure
 )
@@ -115,7 +116,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS roscpp roslint sensor_msgs controller_interface hardware_interface pluginlib control_toolbox geometry_msgs nav_msgs gazebo_msgs tf2_ros
+  CATKIN_DEPENDS roscpp roslint sensor_msgs controller_interface hardware_interface pluginlib control_toolbox geometry_msgs nav_msgs gazebo_msgs tf tf2_ros
 )
 
 ###########

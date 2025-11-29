@@ -1,4 +1,4 @@
-[33m[WARN] [1764391685.831250638]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.[0m
+[33m[WARN] [1764402292.723258384]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.[0m
 Traceback (most recent call last):
   File "/opt/ros/noetic/lib/rqt_reconfigure/rqt_reconfigure", line 5, in <module>
     from rqt_reconfigure.__main__ import main
@@ -123,7 +123,15 @@ using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_mig
 
 
 [0m[1;33m[Wrn] [GuiIface.cc:194] [0m[1;33mg/gui-plugin is really loading a SystemPlugin. [0m[1;33mTo load a GUI plugin please use --gui-client-plugin 
-[0mGazebo multi-robot simulator, version 11.15.1
+[0m/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
+  * \param name Unique name to prepend to the goal id. This will
+/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
+  * \param name Set the name to prepend to the goal id. This will
+/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
+  numpy.dot(M, v) for shape (4, \*) "point of arrays", respectively
+/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:869: SyntaxWarning: invalid escape sequence '\*'
+  v0 and v1 are shape (3, \*) or (4, \*) arrays of at least 3 vectors.
+Gazebo multi-robot simulator, version 11.15.1
 Copyright (C) 2012 Open Source Robotics Foundation.
 Released under the Apache 2 License.
 http://gazebosim.org
@@ -142,134 +150,199 @@ in January 2025. Users are highly encouraged to migrate to the new Gazebo
 using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
 
 
-[0m/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Unique name to prepend to the goal id. This will
-/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Set the name to prepend to the goal id. This will
-/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
-  numpy.dot(M, v) for shape (4, \*) "point of arrays", respectively
-/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:869: SyntaxWarning: invalid escape sequence '\*'
-  v0 and v1 are shape (3, \*) or (4, \*) arrays of at least 3 vectors.
-[INFO] [1764391686.971799, 0.000000]: Loading model XML from ros parameter robot_description
-[INFO] [1764391686.978989, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
-[INFO] [1764391688.185879, 0.039000]: Calling service /gazebo/spawn_urdf_model
-[INFO] [1764391688.370196, 0.132000]: Spawn status: SpawnModel: Successfully spawned entity
-[INFO] [1764391688.371785, 0.132000]: Unpausing physics
-[33m[WARN] [1764391690.600494554, 2.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[0m[INFO] [1764391686.812619364]: Finished loading Gazebo ROS API Plugin.[0m
-[0m[INFO] [1764391686.814176401]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[0m[INFO] [1764402293.806433, 0.000000]: Loading model XML from ros parameter robot_description
+[INFO] [1764402293.812377, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
+[INFO] [1764402295.017810, 0.116000]: Calling service /gazebo/spawn_urdf_model
+[INFO] [1764402295.139814, 0.151000]: Spawn status: SpawnModel: Successfully spawned entity
+[INFO] [1764402295.141527, 0.151000]: Unpausing physics
+[33m[WARN] [1764402295.291289450, 0.151000000]: No imu specified[0m
+[33m[WARN] [1764402297.279150534, 2.001000000]: All joint positions zero! Using synthetic backup values[0m
+[33m[WARN] [1764402299.703953149, 4.000000000]: All joint positions zero! Using synthetic backup values[0m
+[33m[WARN] [1764402301.543765243, 5.581000000]: No odom yaw yet; defaulting yaw to 0[0m
+[0m[INFO] [1764402293.774018055]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[INFO] [1764402293.774973482]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
 [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m10.39.4.91[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading world file [[0m[1;32m/usr/share/gazebo-11/worlds/empty.world[0m[1;32m][0m[1;32m
-[0m[1;32m[0m[0m[INFO] [1764391688.125307261]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
-[0m[INFO] [1764391688.156237874, 0.013000000]: Physics dynamic reconfigure ready.[0m
-[0m[INFO] [1764391688.397619650, 0.132000000]: Loading gazebo_ros_control plugin[0m
-[0m[INFO] [1764391688.397734169, 0.132000000]: Starting gazebo_ros_control plugin in namespace: /[0m
-[0m[INFO] [1764391688.399270884, 0.132000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.[0m
-[0m[INFO] [1764391688.522378796, 0.132000000]: Loaded gazebo_ros_control.[0m
-[0m[INFO] [1764391688.866006469, 0.475000000]: WheelPidController: init pivot 'pivot_fl' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
-[0m[INFO] [1764391688.868964252, 0.477000000]: WheelPidController: init pivot 'pivot_fr' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
-[0m[INFO] [1764391688.875021783, 0.483000000]: WheelPidController: init pivot 'pivot_rl' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
-[0m[INFO] [1764391688.878624557, 0.487000000]: WheelPidController: init pivot 'pivot_rr' p=3.000 i=0.020 d=2.500 i_clamp=0.300[0m
-[0m[INFO] [1764391688.882624774, 0.491000000]: WheelPidController: init wheel 'wheel_fl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764391688.886204482, 0.494000000]: WheelPidController: init wheel 'wheel_fr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764391688.888398323, 0.497000000]: WheelPidController: init wheel 'wheel_rl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764391688.891333198, 0.500000000]: WheelPidController: init wheel 'wheel_rr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
-[0m[INFO] [1764391688.970651770, 0.572000000]: WheelPidController: dynamic_reconfigure updated PID gains and mirrored to wheels/* parameters[0m
-[0m[INFO] [1764391689.001988451, 0.603000000]: WheelPidController initialized with enhanced state feedback![0m
-[0m[INFO] [1764391689.402877556, 1.001000000]: Joint States: LF:0.00970223/v:-5.40445e-05 RF:0.00976816/v:-0.000379147 LB:0.00971198/v:-3.23806e-05 RB:0.00972043/v:2.4174e-05[0m
-[0m[INFO] [1764391689.402958830, 1.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.001, FR=-0.000, RL=0.001, RR=-0.001] rad[0m
-[0m[INFO] [1764391689.403073201, 1.001000000]: FK: body(vx=0.0000, vy=-0.0529, wz=0.0000) world(vx=0.0000, vy=-0.0529) | odom(x=0.000, y=-0.026, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.0,-0.0,0.0,-0.0]deg[0m
-[0m[INFO] [1764391690.595504314, 2.000000000]: FK inputs:[0m
-[0m[INFO] [1764391690.595640668, 2.000000000]:   FL: rx=0.180 ry=0.180 theta=0.05?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391690.596772814, 2.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.001, FR=-0.000, RL=-0.001, RR=-0.001] rad[0m
-[0m[INFO] [1764391690.596885421, 2.001000000]: FK: body(vx=0.0000, vy=-0.0074, wz=0.0000) world(vx=0.0000, vy=-0.0074) | odom(x=0.000, y=-0.035, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.1,-0.0,-0.0,-0.1]deg[0m
-[0m[INFO] [1764391690.597609364, 2.001000000]: Joint States: LF:0.0292506/v:-5.76407e-05 RF:0.0293109/v:-0.000410877 LB:0.029278/v:-3.09826e-05 RB:0.0293218/v:2.88683e-05[0m
-[0m[INFO] [1764391691.777859916, 3.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.001, FR=-0.000, RL=-0.001, [33m[WARN] [1764391692.894552738, 4.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391695.188302225, 6.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391697.679606113, 8.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-RR=-0.002] rad[0m
-[0m[INFO] [1764391691.777967755, 3.001000000]: FK: body(vx=0.0000, vy=-0.0068, wz=0.0000) world(vx=0.0000, vy=-0.0068) | odom(x=0.000, y=-0.043, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.1,-0.0,-0.0,-0.1]deg[0m
-[0m[INFO] [1764391691.779748424, 3.003000000]: Joint States: LF:0.0487663/v:-6.17103e-05 RF:0.0488613/v:-0.000450622 LB:0.048812/v:-3.03768e-05 RB:0.048905/v:3.32531e-05[0m
-[0m[INFO] [1764391692.888422993, 4.000000000]: FK inputs:[0m
-[0m[INFO] [1764391692.888485494, 4.000000000]:   FL: rx=0.180 ry=0.180 theta=0.09?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391692.889455376, 4.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.000, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.002, FR=-0.001, RL=-0.001, RR=-0.003] rad[0m
-[0m[INFO] [1764391692.889565363, 4.001000000]: FK: body(vx=0.0000, vy=-0.0059, wz=0.0000) world(vx=0.0000, vy=-0.0059) | odom(x=0.000, y=-0.049, yaw=0.00??) | wheels[-0.000,-0.000,-0.000,0.000] pivots[0.1,-0.0,-0.0,-0.2]deg[0m
-[0m[INFO] [1764391692.893518998, 4.004000000]: Joint States: LF:0.0682456/v:-6.60224e-05 RF:0.0683931/v:-0.000492626 LB:0.0683101/v:-2.97344e-05 RB:0.0684664/v:3.74081e-05[0m
-[0m[INFO] [1764391694.025725076, 5.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.002, FR=-0.001, RL=-0.001, RR=-0.004] rad[0m
-[0m[INFO] [1764391694.026169645, 5.001000000]: FK: body(vx=0.0000, vy=-0.0052, wz=0.0000) world(vx=0.0000, vy=-0.0052) | odom(x=0.000, y=-0.054, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.1,-0.0,-0.1,-0.2]deg[0m
-[0m[INFO] [1764391694.032065786, 5.005000000]: Joint States: LF:0.0876847/v:-7.06526e-05 RF:0.0879001/v:-0.000537838 LB:0.0877684/v:-2.90746e-05 RB:0.0880023/v:4.11719e-05[0m
-[0m[INFO] [1764391695.184174545, 6.000000000]: FK inputs:[0m
-[0m[INFO] [1764391695.184268279, 6.000000000]:   FL: rx=0.180 ry=0.180 theta=0.13?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391695.185004659, 6.001000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.002, FR=-0.001, RL=-0.001, RR=-0.005] rad[0m
-[0m[INFO] [1764391695.185206579, 6.001000000]: FK: body(vx=0.0000, vy=-0.0047, wz=0.0000) world(vx=0.0000, vy=-0.0047) | odom(x=0.000, y=-0.059, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.1,-0.0,-0.1,-0.3]deg[0m
-[0m[INFO] [1764391695.190120661, 6.006000000]: Joint States: LF:0.107078/v:-7.56799e-05 RF:0.107377/v:-0.000587118 LB:0.107182/v:-2.84119e-05 RB:0.107508/v:4.43845e-05[0m
-[0m[INFO] [1764391696.320517795, 7.002000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.003, FR=-0.001, RL=-0.001, RR=-0.006] rad[0m
-[0m[INFO] [1764391696.320571520, 7.002000000]: FK: body(vx=0.0000, vy=-0.0043, wz=0.0000) world(vx=0.0000, vy=-0.0043) | odom(x=0.000, y=-0.064, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.4]deg[0m
-[0m[INFO] [1764391696.326589139, 7.007000000]: Joint States: LF:0.126419/v:-8.11886e-05 RF:0.126816/v:-0.000641325 LB:0.126543/v:-2.77597e-05 RB:0.126976/v:4.68809e-05[0m
-[0m[INFO] [1764391697.676117869, 8.001000000]: FK inputs:[0m
-[0m[INFO] [1764391697.676217358, 8.001000000]:   FL: rx=0.180 ry=0.180 theta=0.18?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391697.677993541, 8.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.003, FR=-0.001, RL=-0.002, RR=-0.007] rad[0m
-[0m[INFO] [1764391697.678075467, 8.003000000]: FK: body(vx=0.0000, vy=-0.0041, wz=0.0000) world(vx=0.0000, vy=-0.0041) | odom(x=0.000, y=-0.068, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.4]deg[0m
-[0m[INFO] [1764391697.682607348, 8.008000000]: Joint States: LF:0.145699/v:-8.72702e-05 RF:0.146209/v:-0.000701352 LB:0.145844/v:-2.71323e-05 RB:0.146398/v:4.84901e-05[0m
-[0m[INFO] [1764391698.817864771, 9.002000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.004, FR=-0.001, RL=-0.002, [33m[WARN] [1764391699.947889960, 10.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391702.281861633, 12.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391704.628515618, 14.004000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391705.474476338, 14.746000000]: No odom yaw yet; defaulting yaw to 0[0m
-RR=-0.008] rad[0m
-[0m[INFO] [1764391698.819687747, 9.003000000]: FK: body(vx=0.0000, vy=-0.0039, wz=0.0000) world(vx=0.0000, vy=-0.0039) | odom(x=0.000, y=-0.072, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.5]deg[0m
-[0m[INFO] [1764391698.827297552, 9.009000000]: Joint States: LF:0.164907/v:-9.40238e-05 RF:0.165546/v:-0.000768135 LB:0.165074/v:-2.6546e-05 RB:0.165766/v:4.90345e-05[0m
-[0m[INFO] [1764391699.943153553, 10.000000000]: FK inputs:[0m
-[0m[INFO] [1764391699.944872797, 10.001000000]:   FL: rx=0.180 ry=0.180 theta=0.23?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391699.945577010, 10.002000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.004, FR=-0.001, RL=-0.002, RR=-0.009] rad[0m
-[0m[INFO] [1764391699.946601223, 10.003000000]: FK: body(vx=0.0000, vy=-0.0038, wz=0.0000) world(vx=0.0000, vy=-0.0038) | odom(x=0.000, y=-0.076, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.2,-0.1,-0.1,-0.5]deg[0m
-[0m[INFO] [1764391699.953856492, 10.010000000]: Joint States: LF:0.184033/v:-0.000101557 RF:0.184817/v:-0.000842662 LB:0.184222/v:-2.60206e-05 RB:0.185066/v:4.83303e-05[0m
-[0m[INFO] [1764391701.069467205, 11.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.004, FR=-0.001, RL=-0.002, RR=-0.010] rad[0m
-[0m[INFO] [1764391701.069597424, 11.003000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.080, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.1,-0.6]deg[0m
-[0m[INFO] [1764391701.078726780, 11.011000000]: Joint States: LF:0.203061/v:-0.000109991 RF:0.204006/v:-0.000926081 LB:0.203274/v:-2.55816e-05 RB:0.204286/v:4.61959e-05[0m
-[0m[INFO] [1764391702.273769821, 12.001000000]: FK inputs:[0m
-[0m[INFO] [1764391702.273991655, 12.001000000]:   FL: rx=0.180 ry=0.180 theta=0.29?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391702.280276383, 12.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.005, FR=-0.002, RL=-0.002, RR=-0.011] rad[0m
-[0m[INFO] [1764391702.281432823, 12.004000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.083, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.1,-0.7]deg[0m
-[0m[INFO] [1764391702.289166115, 12.011000000]: Joint States: LF:0.221977/v:-0.000119456 RF:0.223098/v:-0.00101964 LB:0.222214/v:-2.52605e-05 RB:0.223409/v:4.24458e-05[0m
-[0m[INFO] [1764391703.479804959, 13.003000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.006, FR=-0.002, RL=-0.003, RR=-0.013] rad[0m
-[0m[INFO] [1764391703.480293432, 13.003000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.087, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.2,-0.7]deg[0m
-[0m[INFO] [1764391703.490872950, 13.013000000]: Joint States: LF:0.240763/v:-0.00013009 RF:0.242076/v:-0.00112435 LB:0.241025/v:-2.50868e-05 RB:0.242418/v:3.68657e-05[0m
-[0m[INFO] [1764391704.624617600, 14.001000000]: FK inputs:[0m
-[0m[INFO] [1764391704.624658264, 14.002000000]:   FL: rx=0.180 ry=0.180 theta=0.35?? wheel_vel=-0.000 rad/s -> v_along=-0.0000 m/s[0m
-[0m[INFO] [1764391704.627284781, 14.004000000]: Raw sensors: wheel_vels[FL=-0.000, FR=-0.001, RL=-0.000, RR=0.000] rad/s, pivots[FL=0.006, FR=-0.002, RL=-0.003, RR=-0.014] rad[0m
-[0m[INFO] [1764391704.627655883, 14.004000000]: FK: body(vx=0.0000, vy=-0.0037, wz=0.0000) world(vx=0.0000, vy=-0.0037) | odom(x=0.000, y=-0.091, yaw=0.00??) | wheels[-0.000,-0.001,-0.000,0.000] pivots[0.3,-0.1,-0.2,-0.8]deg[0m
-[0m[INFO] [1764391704.640638096, 14.014000000]: Joint States: LF:0.259398/v:-0.000142045 RF:0.26092/v:-0.00124145 LB:0.259686/v:-2.50998e-05 RB:0.261294/v:2.92527e-05[0m
-[0m[INFO] [1764391705.483533870, 14.754000000]: Power limit active: zoom=0.072 (a=19203.906, b=0.031, c=-100.000)[0m
-[0m[INFO] [1764391705.771674115, 15.[33m[WARN] [1764391706.752666668, 15.764000000]: FK matrix singular, using zero velocity[0m
-rviz: /build/ogre-1.9-kiU5_5/ogre-1.9-1.9.0+dfsg1/OgreMain/src/OgreNode.cpp:385：virtual void Ogre::Node::setOrientation(const Ogre::Quaternion&): 假设 ‘!q.isNaN() && "Invalid orientation supplied as parameter"’ 失败。
-[33m[WARN] [1764391707.817839690, 16.765000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391707.839221813, 16.784000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391708.939597424, 17.765000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391709.997437118, 18.765000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391710.015969998, 18.784000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-004000000]: Raw sensors: wheel_vels[FL=9.981, FR=9.945, RL=9.978, RR=10.030] rad/s, pivots[FL=0.009, FR=-0.004, RL=-0.002, RR=-0.017] rad[0m
-[0m[INFO] [1764391705.771746602, 15.004000000]: FK: body(vx=0.4986, vy=-0.1810, wz=-0.0060) world(vx=0.5013, vy=-0.1731) | odom(x=0.111, y=0.258, yaw=0.90??) | wheels[9.981,9.945,9.978,10.030] pivots[0.5,-0.2,-0.1,-1.0]deg[0m
-[0m[INFO] [1764391705.783909313, 15.015000000]: Joint States: LF:2.48574/v:9.97772 RF:2.50905/v:9.94201 LB:2.48604/v:9.97407 RB:2.50929/v:10.0317[0m
-[0m[INFO] [1764391706.727183071, 15.741000000]: Power limit active: zoom=0.783 (a=101.396, b=45.669, c=-97.948)[0m
-[0m[INFO] [1764391707.015771567, 16.002000000]: FK inputs:[0m
-[0m[INFO] [1764391707.016291149, 16.002000000]:   FL: rx=0.180 ry=0.180 theta=-360.00?? wheel_vel=-nan rad/s -> v_along=-nan m/s[0m
-[0m[INFO] [1764391707.019296053, 16.005000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
-[0m[INFO] [1764391707.019442181, 16.005000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=41821625334900448442499969812253980893584714785200188374258044306598428250519724544854744154788331520.00??) | wheels[-nan,-nan,-nan,-nan] pivots[-360.0,-360.0,-360.0,360.0]deg[0m
-[0m[INFO] [1764391707.030799999, 16.016000000]: Joint States: LF:12.5664/v:-nan RF:12.5664/v:-nan LB:6.28319/v:-nan RB:12.5664/v:-nan[0m
-[0m[INFO] [1764391708.077455754, 17.006000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
-[0m[INFO] [1764391708.077559906, 17.006000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=41821625334900448442499969812253980893584714785200188374258044306598428250519724544854744154788331520.00??) | wheels[-nan,-nan,-nan,-nan] pivots[-360.0,-360.0,-360.0,360.0]deg[0m
-[0m[INFO] [1764391708.089182009, 17.017000000]: Joint States: LF:12.5664/v:-nan RF:12.5664/v:-nan LB:6.28319/v:-nan RB:12.5664/v:-nan[0m
-[0m[INFO] [1764391709.193175328, 18.002000000]: FK inputs:[0m
-[0m[INFO] [1764391709.193370923, 18.002000000]:   FL: rx=0.180 ry=0.180 theta=-360.00?? wheel_vel=-nan rad/s -> v_along=-nan m/s[0m
-[0m[INFO] [1764391709.196845238, 18.006000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
-[0m[INFO] [1764391709.196954591, 18.006000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=41821625334900448442499969812253980893584714785200188374258044306598428250519724544854744154788331520.00??) | wheels[-nan,-nan,-nan,-nan] pivots[-360.0,-360.0,-360.0,360.0]deg[0m
-[0m[INFO] [1764391709.209045262, 18.018000000]: Joint States: LF:12.5664/v:-nan RF:12.5664/v:-nan LB:6.28319/v:-nan RB:12.5664/v:-nan[0m
-[0m[INFO] [1764391710.250146991, 19.007000000]: Raw sensors: wheel_vels[FL=-nan, FR=-nan, RL=-nan, RR=-nan] rad/s, pivots[FL=-6.283, FR=-6.283, RL=-6.283, RR=6.283] rad[0m
-[0m[INFO] [1764391710.250261188, 19.007000000]: FK: body(vx=0.0000, vy=0.0000, wz=0.0000) world(vx=0.0000, vy=-0.0000) | odom(x=-476207485995842360068775460282826848997279581519337844542606459318541155455351829259853698300903424.000, y=-174930762005698059458708975273028320494630478463791148622538698176887126597661326693768792991858688.000, yaw=418216253349004484424[33m[WARN] [1764391711.032142591, 19.765000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391712.066631334, 20.766000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391712.087400641, 20.785000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
-[33m[WARN] [1764391713.095219438, 21.765000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391714.149294450, 22.765000000]: FK matrix singular, using zero velocity[0m
-[33m[WARN] [1764391714.192737882, 22.804000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[0m[1;32m[0m[0m[INFO] [1764402294.880954511]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[INFO] [1764402294.908420686, 0.011000000]: Physics dynamic reconfigure ready.[0m
+[0m[INFO] [1764402295.178151026, 0.151000000]: Loading gazebo_ros_control plugin[0m
+[0m[INFO] [1764402295.178244295, 0.151000000]: Starting gazebo_ros_control plugin in namespace: /[0m
+[0m[INFO] [1764402295.179468831, 0.151000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.[0m
+[0m[INFO] [1764402295.298041057, 0.151000000]: Loaded gazebo_ros_control.[0m
+[0m[INFO] [1764402295.454318031, 0.307000000]: WheelPidController: init pivot 'pivot_fl' p=1.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764402295.456661758, 0.310000000]: WheelPidController: init pivot 'pivot_fr' p=1.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764402295.458782277, 0.312000000]: WheelPidController: init pivot 'pivot_rl' p=1.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764402295.462951877, 0.316000000]: WheelPidController: init pivot 'pivot_rr' p=1.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764402295.465347810, 0.318000000]: WheelPidController: init wheel 'wheel_fl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764402295.467313891, 0.320000000]: WheelPidController: init wheel 'wheel_fr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764402295.469481267, 0.323000000]: WheelPidController: init wheel 'wheel_rl' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764402295.471645451, 0.325000000]: WheelPidController: init wheel 'wheel_rr' p=2.000 i=0.100 d=0.000 i_clamp=0.500[0m
+[0m[INFO] [1764402295.514479076, 0.367000000]: WheelPidController: dynamic_reconfigure updated PID gains and mirrored to wheels/* parameters[0m
+[0m[INFO] [1764402295.535483545, 0.388000000]: WheelPidController initialized with enhanced state feedback![0m
+[0m[INFO] [1764402295.535506434, 0.389000000]: Speed mode: global (local=base_link, global=odom)[0m
+[0m[INFO] [1764402296.149323073, 1.001000000]: Joint States: LF:0.000600202/v:-4.30193e-05 RF:0.000692139/v:-0.000783298 LB:0.000606594/v:-3.47368e-05 RB:0.000651386/v:5.5926e-05[0m
+[0m[INFO] [1764402297.280298367, 2.002000000]: Joint States: LF:0.000614502/v:-1.00809e-05 RF:0.000708567/v:-0.000800214 LB:0.000620928/v:-1.2154e-05 RB:0.000706625/v:4.11068e-06[0m
+[0m[INFO] [1764402298.512297913, 3.003000000]: Joint States: LF:0.000643456/v:-5.98402e-06 RF:0.000720336/v:-0.000823113 LB:0.000646861/v:-8.82398e-06 RB:0.000735584/v:-8.56295e-06[0m
+[0m[INFO] [1764402299.708017158, 4.003000000]: Joint States: LF:0.000674355/v:-6.10048e-06 RF:0.000729941/v:-0.000846556 LB:0.00067433/v:-9.35727e-06 RB:0.000756874/v:-1.4475e-05[0m
+[0m[INFO] [1764402300.887547854, 5.005000000]: Joint States: LF:0.000705127/v:-7.11661e-06 RF:0.000737673/v:-0.000870118 LB:0.000701307/v:-1.0823e-05 RB:0.000773653/v:-1.9416e-05[0m
+[0m[INFO] [1764402301.572780243, 5.604000000]: Power limit active: zoom=0.072 (a=19203.047, b=0.019, c=-100.000)[0m
+[0m[INFO] [1764402302.049981046, 6.005000000]: Joint States: LF:3.78441/v:9.99602 RF:3.84638/v:9.98277 LB:3.61567/v:9.99598 RB:3.61241/v:9.98285[0m
+[0m[INFO] [1764402303.218854021, 7.007000000]: Joint States: LF:13.8038/v:9.99765 RF:13.8523/v:9.98189 LB:13.635/v:9.99763 RB:13.6183/v:9.98254[0m
+[0m[INFO] [1764402304.455349593, 8.008000000]: Joint States: LF:23.8245/v:10.0003 RF:23.8[33m[WARN] [1764402319.817781561, 20.865000000]: No odom yaw yet; defaulting yaw to 0[0m
+[33m[WARN] [1764402324.095254505, 24.386000000]: No odom yaw yet; defaulting yaw to 0[0m
+[0m[INFO] [1764402292.831820873]: YawMonitor: src=auto tf(odom->base_link) odom=/odom_controller @50.0Hz (monitor-only)[0m
+[0m[INFO] [1764402296.150703556, 1.002000000]: yaw_monitor: src=auto yaw=-0.000 (tf_ok=1 tf_stale=0 yaw_tf=-0.000 have_odom=1 yaw_odom=-0.000)[0m
+[0m[INFO] [1764402297.281050167, 2.002000000]: yaw_monitor: src=auto yaw=-0.000 (tf_ok=1 tf_stale=0 yaw_tf=-0.000 have_odom=1 yaw_odom=-0.000)[0m
+[0m[INFO] [1764402298.512359476, 3.002000000]: yaw_monitor: src=auto yaw=-0.000 (tf_ok=1 tf_stale=0 yaw_tf=-0.000 have_odom=1 yaw_odom=-0.000)[0m
+[0m[INFO] [1764402299.707790331, 4.003000000]: yaw_monitor: src=auto yaw=-0.000 (tf_ok=1 tf_stale=0 yaw_tf=-0.000 have_odom=1 yaw_odom=-0.000)[0m
+[0m[INFO] [1764402300.908332159, 5.022000000]: yaw_monitor: src=auto yaw=-0.000 (tf_ok=1 tf_stale=0 yaw_tf=-0.000 have_odom=1 yaw_odom=-0.000)[0m
+[0m[INFO] [1764402302.067837203, 6.023000000]: yaw_monitor: src=auto yaw=-0.009 (tf_ok=1 tf_stale=0 yaw_tf=-0.009 have_odom=1 yaw_odom=-0.009)[0m
+[0m[INFO] [1764402303.262900301, 7.043000000]: yaw_monitor: src=auto yaw=-0.011 (tf_ok=1 tf_stale=0 yaw_tf=-0.011 have_odom=1 yaw_odom=-0.011)[0m
+[0m[INFO] [1764402304.520247987, 8.062000000]: yaw_monitor: src=auto yaw=-0.014 (tf_ok=1 tf_stale=0 yaw_tf=-0.014 have_odom=1 yaw_odom=-0.014)[0m
+[0m[INFO] [1764402305.700946868, 9.062000000]: yaw_monitor: src=auto yaw=-0.017 (tf_ok=1 tf_stale=0 yaw_tf=-0.017 have_odom=1 yaw_odom=-0.017)[0m
+[0m[INFO] [1764402306.920858120, 10.062000000]: yaw_monitor: src=auto yaw=-0.020 (tf_ok=1 tf_stale=0 yaw_tf=-0.020 have_odom=1 yaw_odom=-0.020)[0m
+[0m[INFO] [1764402308.105443934, 11.062000000]: yaw_monitor: src=auto yaw=-0.023 (tf_ok=1 tf_stale=0 yaw_tf=-0.023 have_odom=1 yaw_odom=-0.023)[0m
+[0m[INFO] [1764402309.279146255, 12.062000000]: yaw_monitor: src=auto yaw=-0.028 (tf_ok=1 tf_stale=0 yaw_tf=-0.028 have_odom=1 yaw_odom=-0.028)[0m
+[0m[INFO] [1764402310.468924792, 13.062000000]: yaw_monitor: src=auto yaw=-0.032 (tf_ok=1 tf_stale=0 yaw_tf=-0.032 have_odom=1 yaw_odom=-0.032)[0m
+[0m[INFO] [1764402311.641015049, 14.062000000]: yaw_monitor: src=auto yaw=-0.037 (tf_ok=1 tf_stale=0 yaw_tf=-0.037 have_odom=1 yaw_odom=-0.037)[0m
+[0m[INFO] [1764402312.776690555, 15.062000000]: yaw_monitor: src=auto yaw=-0.042 (tf_ok=1 tf_stale=0 yaw_tf=-0.042 have_odom=1 yaw_odom=-0.042)[0m
+[0m[INFO] [1764402313.926137632, 16.062000000]: yaw_monitor: src=auto yaw=-0.048 (tf_ok=1 tf_stale=0 yaw_tf=-0.048 have_odom=1 yaw_odom=-0.048)[0m
+[0m[INFO] [1764402315.092601775, 17.062000000]: yaw_monitor: src=auto yaw=-0.054 (tf_ok=1 tf_stale=0 yaw_tf=-0.054 have_odom=1 yaw_odom=-0.054)[0m
+[0m[INFO] [1764402316.296281560, 18.064000000]: yaw_monitor: src=auto yaw=-0.062 (tf_ok=1 tf_stale=0 yaw_tf=-0.062 have_odom=1 yaw_odom=-0.062)[0m
+[0m[INFO] [1764402317.590745222, 19.083000000]: yaw_monitor: src=auto yaw=-0.072 (tf_ok=1 tf_stale=0 yaw_tf=-0.072 have_odom=1 yaw_odom=-0.071)[0m
+[0m[INFO] [1764402318.863137801, 20.082000000]: yaw_monitor: src=auto yaw=-0.082 (tf_ok=1 tf_stale=0 yaw_tf=-0.082 have_odom=1 yaw_odom=-0.082)[0m
+[0m[INFO] [1764402320.082171807, 21.082000000]: yaw_monitor: src=auto yaw=0.072 (tf_ok=1 tf_stale=0 yaw_tf=0.072 have_odom=1 yaw_odom=0.071)[0m
+[0m[INFO] [1764402321.296410830, 22.082000000]: yaw_monitor: src=auto yaw=0.488 (tf_ok=1 tf_stale=0 yaw_tf=0.488 have_odom=1 yaw_odom=0.492)[0m
+[0m[INFO] [1764402322.527432763, 23.082000000]: yaw_monitor: src=auto yaw=-0.501 (tf_ok=1 tf_stale=0 yaw_tf=-0.501 have_odom=1 yaw_odom=-0.492)[0m
+[0m[INFO] [1764402323.735433201, 24.082000000]: yaw_monitor: src=auto yaw=-1.488 (tf_ok=1 tf_stale=0 yaw_tf=-1.488 have_odom=1 yaw_odom=-1.479)[0m
+[0m[INFO] [1764402324.935385882, 25.083000000]: yaw_monitor: src=auto yaw=-1.902 (tf_ok=1 tf_stale=0 yaw_tf=-1.902 have_odom=1 yaw_odom=-1.903)[0m
+[0m[INFO] [1764402326.145781274, 26.102000000]: yaw_monitor: src=auto yaw=-1.840 (tf_ok=1 tf_stale=0 yaw_tf=-1.840 have_odom=1 yaw_odom=-1.840)[0m
+[0m[INFO] [1764402327.462883608, 27.103000000]: yaw_monitor: src=auto yaw=-1.788 (tf_ok=1 tf_stale=0 yaw_tf=-1.566/v:9.97966 LB:23.6557/v:10.0002 RB:23.6228/v:9.98148[0m
+[0m[INFO] [1764402305.635493483, 9.009000000]: Joint States: LF:33.8428/v:10.0018 RF:33.8565/v:9.97835 LB:33.674/v:10.0018 RB:33.6228/v:9.98177[0m
+[0m[INFO] [1764402306.859633751, 10.010000000]: Joint States: LF:43.8617/v:10.0033 RF:43.8558/v:9.97739 LB:43.6929/v:10.0033 RB:43.6221/v:9.98172[0m
+[0m[INFO] [1764402308.046055474, 11.011000000]: Joint States: LF:53.8852/v:10.0054 RF:53.8575/v:9.97571 LB:53.7164/v:10.0055 RB:53.624/v:9.98085[0m
+[0m[INFO] [1764402309.218404673, 12.012000000]: Joint States: LF:63.9093/v:10.0074 RF:63.8569/v:9.97301 LB:63.7405/v:10.0074 RB:63.6236/v:9.98107[0m
+[0m[INFO] [1764402310.411986052, 13.013000000]: Joint States: LF:73.9318/v:10.0092 RF:73.8533/v:9.97126 LB:73.763/v:10.0093 RB:73.6202/v:9.98088[0m
+[0m[INFO] [1764402311.582693637, 14.014000000]: Joint States: LF:83.9568/v:10.0112 RF:83.8501/v:9.96898 LB:83.788/v:10.0113 RB:83.6172/v:9.98075[0m
+[0m[INFO] [1764402312.722290983, 15.015000000]: Joint States: LF:93.9832/v:10.0131 RF:93.8463/v:9.96675 LB:93.8145/v:10.0132 RB:93.6135/v:9.98062[0m
+[0m[INFO] [1764402313.870459960, 16.016000000]: Joint States: LF:104.01/v:10.0133 RF:103.841/v:9.97068 LB:103.841/v:10.0137 RB:103.608/v:9.97708[0m
+[0m[INFO] [1764402315.035352329, 17.017000000]: Joint States: LF:114.039/v:10.0202 RF:113.837/v:9.96555 LB:113.871/v:10.0199 RB:113.604/v:9.96851[0m
+[0m[INFO] [1764402316.235090693, 18.018000000]: Joint States: LF:124.073/v:10.0236 RF:123.833/v:9.96197 LB:123.905/v:10.0229 RB:123.6/v:9.96495[0m
+[0m[INFO] [1764402317.509336100, 19.019000000]: Joint States: LF:134.111/v:10.0279 RF:133.827/v:9.95743 LB:133.942/v:10.0266 RB:133.595/v:9.96034[0m
+[0m[INFO] [1764402318.764377849, 20.019000000]: Joint States: LF:144.154/v:10.0342 RF:143.817/v:9.95101 LB:143.985/v:10.0313 RB:143.585/v:9.95412[0m
+[0m[INFO] [1764402319.837290922, 20.881000000]: Power limit active: zoom=0.110 (a=4575.317, b=390.239, c=-98.083)[0m
+[0m[INFO] [1764402320.006110846, 21.021000000]: Joint States: LF:153.536/v:5.16646 RF:153.151/v:4.92903 LB:153.299/v:3.19444 RB:152.909/v:4.59675[0m
+[0m[INFO] [1764402320.443314501, 21.383000000]: Power limit active: zoom=0.686 (a=164.620, b=31.987, c=-99.416)[0m
+[0m[INFO] [1764402321.052632054, 21.884000000]: Power limit active: zoom=0.655 (a=201.220, b=20.353, c=-99.615)[0m
+[0m[INFO] [1764402321.225266575, 22.022000000]: Joint States: LF:157.349/v:4.95445 RF:158.227/v:4.9593 LB:158.392/v:5.06807 RB:156.818/v:5.06491[0m
+[0m[INFO] [1764402322.455253117, 23.023000000]: Joint States: LF:162.242/v:4.8581 RF:163.223/v:4.99254 LB:163.41/v:5.00119 RB:161.888/v:5.05549[0m
+[0m[INFO] [1764402323.661475684, 24.024000000]: Joint States: LF:167.088/v:4.89931 RF:168.141/v:5.63078 LB:168.394/v:4.91974 RB:166.912/v:4.9257[0m
+[0m[INFO] [1764402324.121626064, 24.408000000]: Power limit active: zoom=0.124 (a=4864.981, b=201.588, c=-99.519)[0m
+[0m[INFO] [1764402324.860955773, 25.025000000]: Joint States: LF:174.825/v:9.94451 RF:175.974/v:10.308 LB:176.132/v:9.69563 RB:174.733/v:9.80344[0m
+[0m[INFO] [1764402325.458357290, 25.534000000]: Power limit active: zoom=0.971 (a=61.818, b=40.989, c=-98.063)[0m
+[0m[INFO] [1764402326.054278669, 26.026000000]: Joint States: LF:184.903/v:11.3905 RF:185.928/v:9.99192 LB:185.778/v:9.71444 RB:184.481/v:10.0045[0m
+[0m[INFO] [1764402326.062597709, 26.034000000]: Power limit active: zoom=0.811 (a=99.492, b=40.022, c=-97.956)[0m
+[0m[INFO] [1764402326.746768686, 26.534000000]: Power limit active: zoom=0.893 (a=78.109, b=39.940, c=-98.003)[0m
+[0m[INFO] [1764402327.370633399, 27.027000000]: Joint States: LF:195.334/v:11.0761 RF:196.101/v:10.0444 LB:195.599/v:9.76648 RB:194.214/v:9.68422[0m
+[0m[INFO] [1764402327.379616512, 27.033000000]: Power limit active: zoom=0.951 (a=66.394, b=40.108, c=-98.149)[0m
+[0m[INFO] [1764402327.979545240, 27.533000000]: Power limit active: zoom=0.935 (a=71.523, b=38.016, c=-98.005)[0m
+[0m[INFO] [1764402328.575375544, 28.028000000]: Joint States: LF:205.657/v:9.1842 RF:206.219/v:9.90195 LB:205.553/v:9.79777 RB:[33m[WARN] [1764402329.593788476, 28.855000000]: No odom yaw yet; defaulting yaw to 0[0m
+[33m[WARN] [1764402343.998717055, 40.264000000]: No odom yaw yet; defaulting yaw to 0[0m
+204.168/v:9.80104[0m
+[0m[INFO] [1764402328.584615239, 28.035000000]: Power limit active: zoom=0.861 (a=85.092, b=40.530, c=-97.985)[0m
+[0m[INFO] [1764402329.190067056, 28.534000000]: Power limit active: zoom=0.857 (a=88.975, b=38.123, c=-97.961)[0m
+[0m[INFO] [1764402329.808942132, 29.029000000]: Joint States: LF:216.115/v:11.5216 RF:216.344/v:10.0728 LB:215.573/v:9.9365 RB:214.221/v:10.0401[0m
+[0m[INFO] [1764402329.816358346, 29.035000000]: Power limit active: zoom=0.739 (a=121.182, b=43.048, c=-97.917)[0m
+[0m[INFO] [1764402330.428617952, 29.535000000]: Power limit active: zoom=0.815 (a=92.253, b=45.362, c=-98.266)[0m
+[0m[INFO] [1764402331.021366635, 30.030000000]: Joint States: LF:225.381/v:9.88001 RF:226.16/v:10.3765 LB:224.815/v:10.14 RB:224.263/v:10.2202[0m
+[0m[INFO] [1764402332.249240702, 31.031000000]: Joint States: LF:235.29/v:9.88102 RF:236.211/v:9.50813 LB:234.837/v:9.79136 RB:234.459/v:10.1268[0m
+[0m[INFO] [1764402333.477286873, 32.032000000]: Joint States: LF:245.215/v:9.96171 RF:246.276/v:10.4324 LB:244.907/v:10.3314 RB:244.593/v:10.1499[0m
+[0m[INFO] [1764402334.696152527, 33.033000000]: Joint States: LF:255.196/v:9.98142 RF:256.293/v:9.60756 LB:254.971/v:9.65561 RB:254.729/v:10.1144[0m
+[0m[INFO] [1764402335.966136854, 34.034000000]: Joint States: LF:265.209/v:10.0287 RF:266.286/v:10.2306 LB:265.042/v:10.4367 RB:264.856/v:10.1346[0m
+[0m[INFO] [1764402337.283715600, 35.033000000]: Joint States: LF:275.24/v:10.0247 RF:276.266/v:9.64392 LB:275.12/v:9.55188 RB:274.972/v:10.0968[0m
+[0m[INFO] [1764402338.566970022, 36.036000000]: Joint States: LF:285.313/v:10.1019 RF:286.226/v:10.0599 LB:285.16/v:10.1516 RB:285.109/v:10.1643[0m
+[0m[INFO] [1764402339.852422444, 37.037000000]: Joint States: LF:295.442/v:10.1456 RF:296.18/v:9.8024 LB:295.169/v:9.88554 RB:295.289/v:10.1948[0m
+[0m[INFO] [1764402341.146199507, 38.038000000]: Joint States: LF:305.592/v:10.144 RF:306.167/v:9.88421 LB:305.207/v:9.89591 RB:305.482/v:10.1855[0m
+[0m[INFO] [1764402342.447059562, 39.039000000]: Joint States: LF:315.738/v:10.1375 RF:316.16/v:9.81816 LB:315.252/v:9.8969 RB:315.664/v:10.1739[0m
+[0m[INFO] [1764402343.713609744, 40.040000000]: Joint States: LF:325.878/v:10.1326 RF:326.155/v:9.9294 LB:325.306/v:9.90484 RB:325.835/v:10.1648[0m
+[0m[INFO] [1764402344.045100280, 40.298000000]: Power limit active: zoom=0.594 (a=156.808, b=71.559, c=-97.923)[0m
+[0m[INFO] [1764402344.664075593, 40.798000000]: Power limit active: zoom=0.802 (a=104.500, b=38.536, c=-98.164)[0m
+[0m[INFO] [1764402344.973304606, 41.041000000]: Joint States: LF:335.569/v:9.84858 RF:335.712/v:11.3236 LB:335.062/v:8.83184 RB:335.713/v:10.2268[0m
+[0m[INFO] [1764402345.287833388, 41.298000000]: Power limit active: zoom=0.114 (a=6777.164, b=100.083, c=-99.201)[0m
+[0m[INFO] [1764402345.927601332, 41.821000000]: Power limit active: zoom=0.806 (a=105.142, b=37.162, c=-98.210)[0m
+[0m[INFO] [1764402346.201972428, 42.042000000]: Joint States: LF:344.505/v:10.896 RF:345.357/v:9.95455 LB:344.519/v:10.1967 RB:345.401/v:10.6703[0m
+[0m[INFO] [1764402347.449914602, 43.043000000]: Joint States: LF:354.549/v:10.0479 RF:355.378/v:10.0669 LB:354.707/v:10.1664 RB:355.416/v:10.0036[0m
+[0m[INFO] [1764402348.724093590, 44.043000000]: Joint States: LF:364.567/v:10.011 RF:365.47/v:10.1063 LB:364.863/v:10.1452 RB:365.384/v:10.0034[0m
+[0m[INFO] [1764402349.962640578, 45.045000000]: Joint States: LF:374.605/v:9.8874 RF:375.571/v:10.0975 LB:374.99/v:10.1106 RB:375.373/v:9.97368[0m
+[0m[INFO] [1764402351.210583151, 46.046000000]: Joint States: LF:384.639/v:10.1947 RF:385.679/v:10.1134 LB:385.105/v:10.1173 RB:385.375/v:9.98791[0m
+[0m[INFO] [1764402352.463483118, 47.047000000]: Joint States: LF:394.668/v:9.87221 RF:395.778/v:10.0729 LB:395.199/v:10.0727 RB:395.383/v:9.8386[0m
+[0m[INFO] [1764402353.703482934, 48.048000000]: Joint States: LF:404.695/v:10.2047 RF:405.864/v:10.0952 LB:405.283/v:10.0956 RB:405.392/v:10.1966[0m
+[0m[INFO] [1764402354.933676258, 49.049000000]: Joint States: LF:414.72/v:9.86586 RF:415.945/v:10.0641 LB:415.366/v:10.0688 RB:415.399/v:9[33m[WARN] [1764402355.801347288, 49.726000000]: No odom yaw yet; defaulting yaw to 0[0m
+[33m[WARN] [1764402362.183835831, 54.854000000]: No odom yaw yet; defaulting yaw to 0[0m
+788 have_odom=1 yaw_odom=-1.788)[0m
+[0m[INFO] [1764402328.693897033, 28.122000000]: yaw_monitor: src=auto yaw=-1.727 (tf_ok=1 tf_stale=0 yaw_tf=-1.727 have_odom=1 yaw_odom=-1.728)[0m
+[0m[INFO] [1764402329.919856405, 29.122000000]: yaw_monitor: src=auto yaw=-1.710 (tf_ok=1 tf_stale=0 yaw_tf=-1.710 have_odom=1 yaw_odom=-1.710)[0m
+[0m[INFO] [1764402331.132297827, 30.122000000]: yaw_monitor: src=auto yaw=-1.636 (tf_ok=1 tf_stale=0 yaw_tf=-1.636 have_odom=1 yaw_odom=-1.637)[0m
+[0m[INFO] [1764402332.360482937, 31.122000000]: yaw_monitor: src=auto yaw=-1.614 (tf_ok=1 tf_stale=0 yaw_tf=-1.614 have_odom=1 yaw_odom=-1.615)[0m
+[0m[INFO] [1764402333.582888142, 32.122000000]: yaw_monitor: src=auto yaw=-1.599 (tf_ok=1 tf_stale=0 yaw_tf=-1.599 have_odom=1 yaw_odom=-1.599)[0m
+[0m[INFO] [1764402334.810633173, 33.122000000]: yaw_monitor: src=auto yaw=-1.584 (tf_ok=1 tf_stale=0 yaw_tf=-1.584 have_odom=1 yaw_odom=-1.584)[0m
+[0m[INFO] [1764402336.079672171, 34.122000000]: yaw_monitor: src=auto yaw=-1.568 (tf_ok=1 tf_stale=0 yaw_tf=-1.568 have_odom=1 yaw_odom=-1.569)[0m
+[0m[INFO] [1764402337.398343209, 35.122000000]: yaw_monitor: src=auto yaw=-1.553 (tf_ok=1 tf_stale=0 yaw_tf=-1.553 have_odom=1 yaw_odom=-1.553)[0m
+[0m[INFO] [1764402338.681939954, 36.122000000]: yaw_monitor: src=auto yaw=-1.541 (tf_ok=1 tf_stale=0 yaw_tf=-1.541 have_odom=1 yaw_odom=-1.541)[0m
+[0m[INFO] [1764402339.974641673, 37.123000000]: yaw_monitor: src=auto yaw=-1.533 (tf_ok=1 tf_stale=0 yaw_tf=-1.533 have_odom=1 yaw_odom=-1.533)[0m
+[0m[INFO] [1764402341.280915204, 38.142000000]: yaw_monitor: src=auto yaw=-1.526 (tf_ok=1 tf_stale=0 yaw_tf=-1.526 have_odom=1 yaw_odom=-1.526)[0m
+[0m[INFO] [1764402342.580019050, 39.142000000]: yaw_monitor: src=auto yaw=-1.519 (tf_ok=1 tf_stale=0 yaw_tf=-1.519 have_odom=1 yaw_odom=-1.519)[0m
+[0m[INFO] [1764402343.839834424, 40.142000000]: yaw_monitor: src=auto yaw=-1.514 (tf_ok=1 tf_stale=0 yaw_tf=-1.514 have_odom=1 yaw_odom=-1.514)[0m
+[0m[INFO] [1764402345.096179646, 41.143000000]: yaw_monitor: src=auto yaw=-1.511 (tf_ok=1 tf_stale=0 yaw_tf=-1.511 have_odom=1 yaw_odom=-1.511)[0m
+[0m[INFO] [1764402346.353772296, 42.162000000]: yaw_monitor: src=auto yaw=-1.504 (tf_ok=1 tf_stale=0 yaw_tf=-1.504 have_odom=1 yaw_odom=-1.504)[0m
+[0m[INFO] [1764402347.600165291, 43.162000000]: yaw_monitor: src=auto yaw=-1.517 (tf_ok=1 tf_stale=0 yaw_tf=-1.517 have_odom=1 yaw_odom=-1.517)[0m
+[0m[INFO] [1764402348.876431777, 44.162000000]: yaw_monitor: src=auto yaw=-1.523 (tf_ok=1 tf_stale=0 yaw_tf=-1.523 have_odom=1 yaw_odom=-1.523)[0m
+[0m[INFO] [1764402350.111739108, 45.163000000]: yaw_monitor: src=auto yaw=-1.530 (tf_ok=1 tf_stale=0 yaw_tf=-1.530 have_odom=1 yaw_odom=-1.530)[0m
+[0m[INFO] [1764402351.378571340, 46.183000000]: yaw_monitor: src=auto yaw=-1.535 (tf_ok=1 tf_stale=0 yaw_tf=-1.535 have_odom=1 yaw_odom=-1.535)[0m
+[0m[INFO] [1764402352.664216269, 47.202000000]: yaw_monitor: src=auto yaw=-1.537 (tf_ok=1 tf_stale=0 yaw_tf=-1.537 have_odom=1 yaw_odom=-1.537)[0m
+[0m[INFO] [1764402353.893454717, 48.202000000]: yaw_monitor: src=auto yaw=-1.538 (tf_ok=1 tf_stale=0 yaw_tf=-1.538 have_odom=1 yaw_odom=-1.538)[0m
+[0m[INFO] [1764402355.131236674, 49.203000000]: yaw_monitor: src=auto yaw=-1.539 (tf_ok=1 tf_stale=0 yaw_tf=-1.539 have_odom=1 yaw_odom=-1.539)[0m
+[0m[INFO] [1764402356.406310548, 50.222000000]: yaw_monitor: src=auto yaw=-1.532 (tf_ok=1 tf_stale=0 yaw_tf=-1.532 have_odom=1 yaw_odom=-1.532)[0m
+[0m[INFO] [1764402357.634702743, 51.222000000]: yaw_monitor: src=auto yaw=-1.536 (tf_ok=1 tf_stale=0 yaw_tf=-1.536 have_odom=1 yaw_odom=-1.536)[0m
+[0m[INFO] [1764402358.885331765, 52.222000000]: yaw_monitor: src=auto yaw=-1.516 (tf_ok=1 tf_stale=0 yaw_tf=-1.516 have_odom=1 yaw_odom=-1.516)[0m
+[0m[INFO] [1764402360.155967633, 53.222000000]: yaw_monitor: src=auto yaw=-1.544 (tf_ok=1 tf_stale=0 yaw_tf=-1.544 have_odom=1 yaw_odom=-1.543)[0m
+[0m[INFO] [1764402361.393283371, 54.222000000]: yaw_monitor: src=auto yaw=-1.618 (tf_ok=1 tf_stale=0 yaw_tf=-1.618 have_odom=1 yaw_odom=-1.618)[0m
+[0m[INFO] [1764402362.647550030, 55[33m[WARN] [1764402366.671382199, 58.478000000]: No odom yaw yet; defaulting yaw to 0[0m
+[33m[WARN] [1764402369.520659087, 60.781000000]: No odom yaw yet; defaulting yaw to 0[0m
+.8322[0m
+[0m[INFO] [1764402355.829280099, 49.747000000]: Power limit active: zoom=0.813 (a=88.944, b=48.494, c=-98.120)[0m
+[0m[INFO] [1764402356.199318083, 50.049000000]: Joint States: LF:424.361/v:9.90692 RF:425.72/v:9.9406 LB:425.27/v:8.7309 RB:425.212/v:10.0786[0m
+[0m[INFO] [1764402356.432993257, 50.247000000]: Power limit active: zoom=0.818 (a=95.913, b=41.245, c=-97.909)[0m
+[0m[INFO] [1764402357.050916311, 50.748000000]: Power limit active: zoom=0.699 (a=146.924, b=37.797, c=-98.238)[0m
+[0m[INFO] [1764402357.422720481, 51.051000000]: Joint States: LF:434.195/v:9.99272 RF:435.611/v:9.91054 LB:435.656/v:11.3787 RB:435.218/v:10.1626[0m
+[0m[INFO] [1764402357.664349225, 51.248000000]: Power limit active: zoom=0.802 (a=92.280, b=48.448, c=-98.283)[0m
+[0m[INFO] [1764402358.282130198, 51.749000000]: Power limit active: zoom=0.808 (a=98.302, b=41.999, c=-98.051)[0m
+[0m[INFO] [1764402358.653376502, 52.052000000]: Joint States: LF:444.117/v:10.0644 RF:445.554/v:9.69876 LB:445.934/v:9.28994 RB:445.216/v:10.7559[0m
+[0m[INFO] [1764402358.918497907, 52.248000000]: Power limit active: zoom=0.940 (a=71.647, b=37.007, c=-98.027)[0m
+[0m[INFO] [1764402359.550364040, 52.750000000]: Power limit active: zoom=0.741 (a=116.161, b=46.338, c=-98.144)[0m
+[0m[INFO] [1764402359.943615006, 53.053000000]: Joint States: LF:454.189/v:10.0948 RF:455.607/v:10.3065 LB:455.878/v:10.9407 RB:455.175/v:9.35649[0m
+[0m[INFO] [1764402360.187864619, 53.250000000]: Power limit active: zoom=0.708 (a=132.992, b=44.481, c=-98.128)[0m
+[0m[INFO] [1764402360.808780275, 53.750000000]: Power limit active: zoom=0.643 (a=171.517, b=42.405, c=-98.212)[0m
+[0m[INFO] [1764402361.181128619, 54.054000000]: Joint States: LF:464.198/v:9.99355 RF:465.638/v:10.0645 LB:465.71/v:8.25005 RB:465.203/v:9.95947[0m
+[0m[INFO] [1764402361.430632400, 54.250000000]: Power limit active: zoom=0.655 (a=171.439, b=37.837, c=-98.240)[0m
+[0m[INFO] [1764402362.047767798, 54.750000000]: Power limit active: zoom=0.682 (a=158.488, b=35.955, c=-98.230)[0m
+[0m[INFO] [1764402362.437342097, 55.055000000]: Joint States: LF:473.197/v:5.36724 RF:474.751/v:4.56983 LB:474.882/v:5.55211 RB:474.391/v:5.00372[0m
+[0m[INFO] [1764402362.680787702, 55.250000000]: Power limit active: zoom=0.772 (a=139.279, b=21.631, c=-99.592)[0m
+[0m[INFO] [1764402363.299977500, 55.750000000]: Power limit active: zoom=0.945 (a=88.549, b=21.624, c=-99.570)[0m
+[0m[INFO] [1764402363.670755413, 56.056000000]: Joint States: LF:478.294/v:5.12828 RF:479.255/v:4.89215 LB:479.504/v:5.11426 RB:479.507/v:3.8267[0m
+[0m[INFO] [1764402363.908151530, 56.250000000]: Power limit active: zoom=0.677 (a=164.667, b=35.236, c=-99.448)[0m
+[0m[INFO] [1764402364.521148217, 56.752000000]: Power limit active: zoom=0.942 (a=62.716, b=44.780, c=-97.897)[0m
+[0m[INFO] [1764402365.137147020, 57.251000000]: Power limit active: zoom=0.887 (a=83.372, b=36.453, c=-97.921)[0m
+[0m[INFO] [1764402365.762813487, 57.752000000]: Power limit active: zoom=0.975 (a=69.695, b=32.520, c=-97.931)[0m
+[0m[INFO] [1764402366.145946994, 58.057000000]: Joint States: LF:494.961/v:11.1907 RF:494.807/v:10.0185 LB:495.361/v:10.2039 RB:496.047/v:9.98923[0m
+[0m[INFO] [1764402366.708454020, 58.508000000]: Power limit active: zoom=0.782 (a=96.609, b=49.727, c=-97.886)[0m
+[0m[INFO] [1764402367.333052760, 59.007000000]: Power limit active: zoom=0.882 (a=80.861, b=39.742, c=-97.928)[0m
+[0m[INFO] [1764402367.399551998, 59.059000000]: Joint States: LF:504.811/v:10.2243 RF:504.479/v:10.1977 LB:505.34/v:9.75871 RB:505.742/v:11.3563[0m
+[0m[INFO] [1764402367.960132960, 59.509000000]: Power limit active: zoom=0.869 (a=83.318, b=40.315, c=-97.921)[0m
+[0m[INFO] [1764402368.574448837, 60.010000000]: Power limit active: zoom=0.692 (a=156.271, b=35.448, c=-99.484)[0m
+[0m[INFO] [1764402368.634173291, 60.059000000]: Joint States: LF:512.837/v:4.80854 RF:512.161/v:6.66523 LB:512.92/v:5.90803 RB:513.296/v:4.69946[0m
+[0m[INFO] [1764402369.186204154, 60.511000000]: Power limit active: zoom=0.570 (a=197.672, b=59.429, c=-98.093)[0m
+[0m[INFO] [1764402369[33m[WARN] [1764402373.339659058, 63.862000000]: No odom yaw yet; defaulting yaw to 0[0m
+[33m[WARN] [1764402377.608331569, 67.281000000]: No odom yaw yet; defaulting yaw to 0[0m

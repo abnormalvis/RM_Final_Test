@@ -88,6 +88,10 @@ namespace sentry_chassis_controller
     double odom_yaw_{0.0};
     ros::Time last_odom_time_;
 
+    // Speed mode (velocity coordinate frame selection)
+    std::string speed_mode_{"local"};  // "local" (base_link) or "global" (odom)
+    // Note: tf::TransformListener is created locally in cmdVelCallback to avoid static initialization issues
+
     // dynamic_reconfigure server
     typedef sentry_chassis_controller::WheelPidConfig Config;
     std::shared_ptr<dynamic_reconfigure::Server<Config>> dyn_server_;

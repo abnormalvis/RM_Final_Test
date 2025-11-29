@@ -105,10 +105,12 @@ namespace sentry_chassis_controller
         // Integrated odometry publisher
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);
         controller_nh.param<std::string>("base_link_frame", base_link_frame_, base_link_frame_);
+        controller_nh.param<std::string>("speed_mode", speed_mode_, speed_mode_);
         odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom_controller", 10);
         last_odom_time_ = ros::Time(0);
 
         ROS_INFO("WheelPidController initialized with enhanced state feedback!");
+        ROS_INFO("Speed mode: %s (local=base_link, global=odom)", speed_mode_.c_str());
         return true;
     }
 
@@ -164,6 +166,41 @@ namespace sentry_chassis_controller
         double vx = msg->linear.x;
         double vy = msg->linear.y;
         double wz = msg->angular.z;
+
+        // Speed mode transformation (similar to hero_chassis_controller)
+        if (speed_mode_ == "global")
+        {
+            // Transform velocity from global (odom) frame to local (base_link) frame
+            // Note: Create tf_listener locally (like hero) to avoid static initialization issues
+            try
+            {
+                tf::TransformListener tf_listener;  // Local instance
+                geometry_msgs::Vector3Stamped vel_global, vel_local;
+                vel_global.header.frame_id = odom_frame_;
+                vel_global.vector.x = vx;
+                vel_global.vector.y = vy;
+                vel_global.vector.z = 0.0;
+
+                // Wait for transform and convert (with timeout protection)
+                tf_listener.waitForTransform(base_link_frame_, odom_frame_, ros::Time(), ros::Duration(0.1));
+                tf_listener.transformVector(base_link_frame_, vel_global, vel_local);
+
+                // Use transformed velocity
+                vx = vel_local.vector.x;
+                vy = vel_local.vector.y;
+
+                ROS_DEBUG_THROTTLE(1.0, "Global mode: odom_vel(%.2f,%.2f) -> base_vel(%.2f,%.2f)", 
+                                  msg->linear.x, msg->linear.y, vx, vy);
+            }
+            catch (tf::TransformException &ex)
+            {
+                ROS_WARN_THROTTLE(2.0, "TF transform error in global mode: %s", ex.what());
+                // Fallback: use command as-is (assume local frame)
+                vx = msg->linear.x;
+                vy = msg->linear.y;
+            }
+        }
+        // else: speed_mode_ == "local", use velocity as-is (already in base_link frame)
 
         auto ik = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base_, wheel_track_, wheel_radius_);
 
@@ -230,7 +267,6 @@ namespace sentry_chassis_controller
 
         try
         {
-            // Critical: Extract actual wheel positions/velocities from hardware
             lf_wheel_pos = front_left_wheel_joint_.getPosition();
             rf_wheel_pos = front_right_wheel_joint_.getPosition();
             lb_wheel_pos = back_left_wheel_joint_.getPosition();
@@ -241,7 +277,7 @@ namespace sentry_chassis_controller
             lb_wheel_vel = back_left_wheel_joint_.getVelocity();
             rb_wheel_vel = back_right_wheel_joint_.getVelocity();
 
-            // Debug log occasional readings to monitor state
+
             static ros::Time last_log = ros::Time(0);
             if (time.toSec() - last_log.toSec() > 1.0) // Log every second
             {
@@ -422,7 +458,7 @@ namespace sentry_chassis_controller
         // 每行对应一个轮子沿其舵向的线速度
         double wheel_vels[4] = {lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel};
         double pivot_angles[4] = {lf_pivot_pos, rf_pivot_pos, lb_pivot_pos, rb_pivot_pos};
-        
+
         // 轮子相对 base_link 的位置 (x向前, y向左)
         // FL, FR, RL, RR
         double rx[4] = {wheel_base_ / 2.0, wheel_base_ / 2.0, -wheel_base_ / 2.0, -wheel_base_ / 2.0};
@@ -532,7 +568,7 @@ namespace sentry_chassis_controller
         odom.pose.pose.position.x = odom_x_;
         odom.pose.pose.position.y = odom_y_;
         odom.pose.pose.position.z = 0.0;
-        
+
         // 修正：正确赋值四元数到 odom 的姿态（与 TF 一致）
         odom.pose.pose.orientation.x = qtn.getX();
         odom.pose.pose.orientation.y = qtn.getY();
