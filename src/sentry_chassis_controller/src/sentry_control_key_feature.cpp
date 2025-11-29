@@ -174,7 +174,17 @@ void TeleopTurtle::keyLoop()
     ufd.fd = 0;          // stdin
     ufd.events = POLLIN; // 数据可读事件标志位
 
+    // 按键状态（支持多按键同时按下）
+    bool key_w = false, key_s = false, key_a = false, key_d = false;
+    bool key_q = false, key_e = false;
+    bool shifted = false;
+
     ros::Rate rate(hz);
+    
+    // 按键状态持续时间跟踪（用于自动清零）
+    ros::Time last_key_time = ros::Time::now();
+    double key_timeout = 0.5; // 0.5秒无新按键则清零所有状态
+    
     while (ros::ok())
     {
         int num = poll(&ufd, 1, 1000 / hz);
@@ -186,6 +196,15 @@ void TeleopTurtle::keyLoop()
 
         if (num == 0)
         {
+            // 超时：检查按键是否需要清零
+            ros::Time now = ros::Time::now();
+            if ((now - last_key_time).toSec() > key_timeout)
+            {
+                // 超过 0.5 秒没有新按键，清零所有按键状态
+                key_w = key_s = key_a = key_d = false;
+                key_q = key_e = false;
+            }
+            
             // 当前速度可能发布超时：发布当前速度（可能为零）
             if (publish_zero_when_idle_)
             {
@@ -209,76 +228,108 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        // 每次循环重置本次按键请求（按下时生效，松开后不再保持）
-        double cur_vx_world = 0.0; // 世界坐标系下的x轴方向的速度请求
-        double cur_vy_world = 0.0; // 世界坐标系下的y轴方向的速度请求
-        double cur_omega = 0.0;    // 机体角速度请求（Q/E 直接控制角速度）
-
         bool any_key_pressed = false; // 标记本次循环是否有按键输入
 
-        static double translation_magnitude = 0.0; // 平移速度大小
-        static double translation_angle = 0.0;     // 平移方向角（相对于底盘初始方向）
-        static bool translation_active = false;    // 是否处于平移状态
-
-        // 处理shift加速
-        bool shifted = false;
+        // 处理 Shift 加速
         if (c >= 'A' && c <= 'Z')
+        {
             shifted = true;
+            any_key_pressed = true;
+        }
+        else if (c >= 'a' && c <= 'z')
+        {
+            shifted = false;
+        }
 
         // 处理大小写字母统一映射
         char lower = c;
-        if (shifted)
+        if (c >= 'A' && c <= 'Z')
             lower = c - 'A' + 'a';
 
-        double linear_speed = shifted ? run_vel : walk_vel;
-        double omega_speed = default_omega;
-
+        // 更新按键状态（按下时设置为 true）
         switch (lower)
         {
         case 'w':
-            cur_vx_world = linear_speed;
-            cur_vy_world = 0.0;
+            key_w = true;
+            key_s = false; // 互斥：前后
             any_key_pressed = true;
+            last_key_time = ros::Time::now(); // 更新按键时间戳
             break;
         case 's':
-            cur_vx_world = -linear_speed;
-            cur_vy_world = 0.0;
+            key_s = true;
+            key_w = false; // 互斥：前后
             any_key_pressed = true;
+            last_key_time = ros::Time::now();
             break;
         case 'a':
-            cur_vx_world = 0.0;
-            cur_vy_world = linear_speed;
+            key_a = true;
+            key_d = false; // 互斥：左右
             any_key_pressed = true;
+            last_key_time = ros::Time::now();
             break;
         case 'd':
-            cur_vx_world = 0.0;
-            cur_vy_world = -linear_speed;
+            key_d = true;
+            key_a = false; // 互斥：左右
             any_key_pressed = true;
-            break; // right strafe
-        case 'q':
-            // Quat/E 直接作为角速度命令（按下时有效）
-            cur_omega = omega_speed;
-            any_key_pressed = true;
-            break; // turn left
-        case 'e':
-            cur_omega = -omega_speed;
-            any_key_pressed = true;
-            break; // turn right
-        case 'c':
-            // 立即停止运动
-            cur_vx_world = 0.0;
-            cur_vy_world = 0.0;
-            cur_omega = 0.0;
-            any_key_pressed = true;
-            break; // stop
-        case 'f':
+            last_key_time = ros::Time::now();
             break;
-        // 删除小陀螺模式切换键 't'，模式始终开启
-        case '\x03': // ctrl-c
+        case 'q':
+            key_q = true;
+            key_e = false; // 互斥：左转右转
+            any_key_pressed = true;
+            last_key_time = ros::Time::now();
+            break;
+        case 'e':
+            key_e = true;
+            key_q = false; // 互斥：左转右转
+            any_key_pressed = true;
+            last_key_time = ros::Time::now();
+            break;
+        case 'c':
+            // 立即停止所有运动
+            key_w = key_s = key_a = key_d = false;
+            key_q = key_e = false;
+            any_key_pressed = true;
+            last_key_time = ros::Time::now();
+            break;
+        case '\x03': // Ctrl-C
             quit(0);
             break;
         default:
             break;
+        }
+
+        // 根据当前按键状态累积速度（支持同时平移+旋转）
+        double linear_speed = shifted ? run_vel : walk_vel;
+        double omega_speed = default_omega;
+
+        double cur_vx_world = 0.0;
+        double cur_vy_world = 0.0;
+        double cur_omega = 0.0;
+
+        // 平移速度累加（WASD 可以组合，例如 W+A = 斜向移动）
+        if (key_w)
+            cur_vx_world += linear_speed;
+        if (key_s)
+            cur_vx_world -= linear_speed;
+        if (key_a)
+            cur_vy_world += linear_speed;
+        if (key_d)
+            cur_vy_world -= linear_speed;
+
+        // 旋转速度（Q/E 独立于平移）
+        if (key_q)
+            cur_omega += omega_speed;
+        if (key_e)
+            cur_omega -= omega_speed;
+
+        // 归一化斜向速度（防止 W+A 时速度变成 √2 倍）
+        double speed_magnitude = std::sqrt(cur_vx_world * cur_vx_world + cur_vy_world * cur_vy_world);
+        if (speed_magnitude > linear_speed * 1.01) // 允许小误差
+        {
+            double scale = linear_speed / speed_magnitude;
+            cur_vx_world *= scale;
+            cur_vy_world *= scale;
         }
 
         // 更新底盘航向角 yaw_：仅使用里程计提供的航向
