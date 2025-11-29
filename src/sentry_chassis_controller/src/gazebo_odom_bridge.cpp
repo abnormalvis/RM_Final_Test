@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 
     ros::Subscriber sub = nh.subscribe<gazebo_msgs::ModelStates>("/gazebo/model_states", 10, cb);
 
-    ROS_INFO("gazebo_odom_bridge started for model '%s' publishing /odom and TF %s -> %s", model_name.c_str(), odom_frame.c_str(), base_link_frame.c_str());
+    ROS_INFO("gazebo_odom_bridge 已启动，模型 '%s'，发布 /odom 和 TF %s -> %s", model_name.c_str(), odom_frame.c_str(), base_link_frame.c_str());
 
     ros::spin();
     return 0;

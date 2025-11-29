@@ -12,7 +12,7 @@ int main(int argc, char** argv)
   double vy = 0.0;
   double wz = 0.3;
 
-  ROS_INFO("ik_test_publisher started: publishing cmd_vel at 1Hz");
+  ROS_INFO("ik_test_publisher 已启动：以 1Hz 发布 /cmd_vel 测试命令");
   while (ros::ok()) {
     geometry_msgs::Twist t;
     t.linear.x = vx;

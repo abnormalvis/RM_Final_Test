@@ -56,8 +56,8 @@ private:
         // Debug log: print all joint names in the message
         if (msg->name.size() > 0)
         {
-            ROS_INFO("=== Joint States Message (dt=%.3f) ===", dt);
-            ROS_INFO("Joint names in message (%lu):", msg->name.size());
+            ROS_INFO("=== 关节状态消息 (dt=%.3f) ===", dt);
+            ROS_INFO("消息中的关节数量 (%lu)：", msg->name.size());
             for (size_t i = 0; i < msg->name.size(); ++i)
             {
                 std::string vel_str = "none";
@@ -79,15 +79,15 @@ private:
                 }
                 if (is_expected_wheel)
                 {
-                    ROS_INFO("  [%lu] <DCB> %s: pos=%s, vel=%s", i, msg->name[i].c_str(), pos_str.c_str(), vel_str.c_str());
+                    ROS_INFO("  [%lu] <DCB> %s: 位置=%s, 速度=%s", i, msg->name[i].c_str(), pos_str.c_str(), vel_str.c_str());
                 }
                 else
                 {
-                    ROS_INFO("  [%lu] %s: pos=%s, vel=%s", i, msg->name[i].c_str(), pos_str.c_str(), vel_str.c_str());
+                    ROS_INFO("  [%lu] %s: 位置=%s, 速度=%s", i, msg->name[i].c_str(), pos_str.c_str(), vel_str.c_str());
                 }
             }
-            ROS_INFO("Velocity size: %lu, Position size: %lu", msg->velocity.size(), msg->position.size());
-            ROS_INFO("=== End Joint States Message ===");
+            ROS_INFO("速度数组长度: %lu, 位置数组长度: %lu", msg->velocity.size(), msg->position.size());
+            ROS_INFO("=== 关节状态消息 结束 ===");
         }
 
         // build map name->index
@@ -99,14 +99,14 @@ private:
         int found_wheels = 0;
         for (int i = 0; i < 4; ++i)
         {
-            if (idx.find(wheel_joint_names_[i]) != idx.end())
-            {
-                ++found_wheels;
-                ROS_INFO_THROTTLE(5.0, "Found wheel joint: %s at index %lu", wheel_joint_names_[i].c_str(), idx[wheel_joint_names_[i]]);
-            }
+                if (idx.find(wheel_joint_names_[i]) != idx.end())
+                {
+                    ++found_wheels;
+                    ROS_INFO_THROTTLE(5.0, "找到车轮关节: %s, 索引 %lu", wheel_joint_names_[i].c_str(), idx[wheel_joint_names_[i]]);
+                }
         }
 
-        ROS_INFO_THROTTLE(5.0, "Expected joints:");
+        ROS_INFO_THROTTLE(5.0, "期望的关节列表：");
         for (int i = 0; i < 4; ++i)
         {
             ROS_INFO_THROTTLE(5.0, "  %s", wheel_joint_names_[i].c_str());
@@ -114,7 +114,7 @@ private:
 
         if (found_wheels == 0)
         {
-            ROS_WARN_THROTTLE(5.0, "forward_kinematics: no wheel joints found in /joint_states (names: %lu). Publishing cached odom/tf to keep TF alive.", msg->name.size());
+            ROS_WARN_THROTTLE(5.0, "forward_kinematics: 在 /joint_states 中未找到车轮关节 (数量: %lu)。发布缓存的 odom/tf 以保持 TF 可用。", msg->name.size());
             // Publish cached odom and TF so the transform remains available for other nodes (teleop, etc.).
             nav_msgs::Odometry odom;
             odom.header.stamp = now;
@@ -168,7 +168,7 @@ private:
             return;
         }
 
-        ROS_INFO_THROTTLE(5.0, "Found %d wheel joints out of 4", found_wheels);
+    ROS_INFO_THROTTLE(5.0, "检测到 %d 个车轮关节 (总计 4 个)", found_wheels);
 
         // read per-wheel linear velocities and steer angles
         Eigen::VectorXd b(4);
