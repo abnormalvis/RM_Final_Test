@@ -124,15 +124,24 @@ namespace sentry_chassis_controller
         // 底盘自锁功能参数
         controller_nh.param("self_lock/enabled", self_lock_enabled_, true);           // 自锁功能开关
         controller_nh.param("self_lock/idle_timeout", idle_timeout_, 0.5);            // 空闲超时（秒）
-        controller_nh.param("self_lock/velocity_deadband", odom_velocity_deadband_, 0.01); // 里程计速度死区
+        controller_nh.param("self_lock/velocity_deadband", odom_velocity_deadband_, 0.05); // 里程计速度死区（增大）
+        
+        // 位置锁定模式参数
+        controller_nh.param("self_lock/lock_position", lock_pos_enabled_, true);      // 位置锁定模式开关
+        controller_nh.param("self_lock/lock_pos_p", lock_pos_p_, 8.0);                // 位置锁定 P 增益
+        controller_nh.param("self_lock/lock_pos_i", lock_pos_i_, 0.0);                // 位置锁定 I 增益
+        controller_nh.param("self_lock/lock_pos_d", lock_pos_d_, 1.0);                // 位置锁定 D 增益
+        
         last_cmd_time_ = ros::Time::now();  // 初始化命令时间戳
         is_locked_ = false;                 // 初始状态：未锁定
         for (int i = 0; i < 4; ++i)
         {
             locked_pivot_pos_[i] = 0.0;     // 初始锁定舵角为0
+            locked_wheel_pos_[i] = 0.0;     // 初始锁定轮子位置为0
         }
-        ROS_INFO("底盘自锁功能：%s，空闲超时=%.2fs，速度死区=%.3f",
-                 self_lock_enabled_ ? "启用" : "禁用", idle_timeout_, odom_velocity_deadband_);
+        ROS_INFO("底盘自锁功能：%s，空闲超时=%.2fs，速度死区=%.3f，位置锁定=%s P=%.1f D=%.2f",
+                 self_lock_enabled_ ? "启用" : "禁用", idle_timeout_, odom_velocity_deadband_,
+                 lock_pos_enabled_ ? "启用" : "禁用", lock_pos_p_, lock_pos_d_);
 
         // 里程计发布集成，支持不同速度模式下的里程计计算
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);                // 里程计坐标系
@@ -461,29 +470,87 @@ namespace sentry_chassis_controller
                 // 进入自锁状态
                 if (!is_locked_)
                 {
-                    // 首次进入自锁：记录当前舵角位置
+                    // 首次进入自锁：记录当前舵角和轮子位置
                     try
                     {
                         locked_pivot_pos_[0] = front_left_pivot_joint_.getPosition();
                         locked_pivot_pos_[1] = front_right_pivot_joint_.getPosition();
                         locked_pivot_pos_[2] = back_left_pivot_joint_.getPosition();
                         locked_pivot_pos_[3] = back_right_pivot_joint_.getPosition();
+                        
+                        // 记录轮子位置用于位置锁定
+                        if (lock_pos_enabled_)
+                        {
+                            locked_wheel_pos_[0] = lf_wheel_pos;
+                            locked_wheel_pos_[1] = rf_wheel_pos;
+                            locked_wheel_pos_[2] = lb_wheel_pos;
+                            locked_wheel_pos_[3] = rb_wheel_pos;
+                        }
                     }
                     catch (...)
                     {
                         // 读取失败时保持上次值
                     }
                     is_locked_ = true;
-                    ROS_INFO_THROTTLE(2.0, "底盘自锁已激活：舵角锁定 [%.2f, %.2f, %.2f, %.2f] rad",
-                                      locked_pivot_pos_[0], locked_pivot_pos_[1],
-                                      locked_pivot_pos_[2], locked_pivot_pos_[3]);
+                    if (lock_pos_enabled_)
+                    {
+                        ROS_INFO_THROTTLE(2.0, "底盘自锁已激活(位置锁定)：轮位置 [%.2f, %.2f, %.2f, %.2f] rad, 舵角 [%.2f, %.2f, %.2f, %.2f] rad",
+                                          locked_wheel_pos_[0], locked_wheel_pos_[1],
+                                          locked_wheel_pos_[2], locked_wheel_pos_[3],
+                                          locked_pivot_pos_[0], locked_pivot_pos_[1],
+                                          locked_pivot_pos_[2], locked_pivot_pos_[3]);
+                    }
+                    else
+                    {
+                        ROS_INFO_THROTTLE(2.0, "底盘自锁已激活(速度锁定)：舵角锁定 [%.2f, %.2f, %.2f, %.2f] rad",
+                                          locked_pivot_pos_[0], locked_pivot_pos_[1],
+                                          locked_pivot_pos_[2], locked_pivot_pos_[3]);
+                    }
                 }
                 
-                // 自锁状态下：轮速目标为0，舵角保持锁定位置
+                // 自锁状态下：舵角保持锁定位置
                 for (int i = 0; i < 4; ++i)
                 {
-                    wheel_cmd_[i] = 0.0;           // 轮子停转
                     pivot_cmd_[i] = locked_pivot_pos_[i];  // 舵角保持锁定
+                }
+                
+                // 轮子控制：位置锁定模式 vs 速度锁定模式
+                if (lock_pos_enabled_)
+                {
+                    // ========== 位置锁定模式 ==========
+                    // 使用位置 PD 控制器直接计算力矩，绕过速度 PID
+                    // 这样可以在斜坡上抵抗重力而不产生震荡
+                    double wheel_pos[4] = {lf_wheel_pos, rf_wheel_pos, lb_wheel_pos, rb_wheel_pos};
+                    double wheel_vel[4] = {lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel};
+                    
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        // 位置误差：目标位置 - 当前位置
+                        double pos_error = locked_wheel_pos_[i] - wheel_pos[i];
+                        
+                        // PD 控制：P 项响应位置误差，D 项阻尼振荡
+                        // 力矩 = Kp * 位置误差 - Kd * 当前速度
+                        double lock_torque = lock_pos_p_ * pos_error - lock_pos_d_ * wheel_vel[i];
+                        
+                        // 限制力矩防止过大
+                        const double max_lock_torque = 30.0;  // 最大锁定力矩 (Nm)
+                        lock_torque = std::max(-max_lock_torque, std::min(max_lock_torque, lock_torque));
+                        
+                        // 设置为特殊标记值，在后面直接使用此力矩
+                        wheel_cmd_[i] = lock_torque * 1000.0;  // 乘以1000作为标记
+                    }
+                    
+                    // 标记使用位置锁定力矩（将在后面检测并直接应用）
+                    // 注意：这里 wheel_cmd_ 已经是力矩值（乘以了1000作为标记）
+                }
+                else
+                {
+                    // ========== 速度锁定模式（原方案）==========
+                    // 将目标速度设为 0，由速度 PID 控制
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        wheel_cmd_[i] = 0.0;  // 轮子停转目标速度
+                    }
                 }
             }
             else
@@ -500,10 +567,33 @@ namespace sentry_chassis_controller
         // 计算轮子速度误差并应用 PID -> 力矩命令
         /* Set the PID error and compute the PID command with nonuniform time step size. The derivative error is computed from the change in the error and the timestep dt.
          */
-        double cmd0 = pid_lf_wheel_.computeCommand(wheel_cmd_[0] - lf_wheel_vel, period);
-        double cmd1 = pid_rf_wheel_.computeCommand(wheel_cmd_[1] - rf_wheel_vel, period);
-        double cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
-        double cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
+        double cmd0, cmd1, cmd2, cmd3;
+        
+        // 位置锁定模式下直接使用预计算的力矩，绕过速度 PID
+        if (is_locked_ && lock_pos_enabled_)
+        {
+            // wheel_cmd_ 中存储的是位置锁定力矩（乘以1000作为标记）
+            cmd0 = wheel_cmd_[0] / 1000.0;
+            cmd1 = wheel_cmd_[1] / 1000.0;
+            cmd2 = wheel_cmd_[2] / 1000.0;
+            cmd3 = wheel_cmd_[3] / 1000.0;
+            
+            // 重置 PID 积分器，防止解锁时产生跳变
+            pid_lf_wheel_.reset();
+            pid_rf_wheel_.reset();
+            pid_lb_wheel_.reset();
+            pid_rb_wheel_.reset();
+            
+            ROS_DEBUG_THROTTLE(1.0, "位置锁定力矩: [%.2f, %.2f, %.2f, %.2f] Nm", cmd0, cmd1, cmd2, cmd3);
+        }
+        else
+        {
+            // 正常模式：使用速度 PID 控制
+            cmd0 = pid_lf_wheel_.computeCommand(wheel_cmd_[0] - lf_wheel_vel, period);
+            cmd1 = pid_rf_wheel_.computeCommand(wheel_cmd_[1] - rf_wheel_vel, period);
+            cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
+            cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
+        }
 
         // 应用功率限制
         double scaling_factor_used = 1.0; // 缩放系数
