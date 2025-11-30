@@ -152,11 +152,18 @@ namespace sentry_chassis_controller
     bool self_lock_enabled_{true};         // 自锁功能开关（默认启用）
     double idle_timeout_{0.5};             // 空闲超时阈值（秒），超时后进入自锁
     ros::Time last_cmd_time_;              // 上次接收速度命令的时间戳
-    double locked_pivot_pos_[4]{};         // 自锁时记录的舵角位置（保持当前朝向）
+    double locked_pivot_pos_[4]{};         // 自锁时记录的舵角位置
+    double locked_wheel_pos_[4]{};         // 自锁时记录的轮子位置（用于位置锁定）
     bool is_locked_{false};                // 当前是否处于自锁状态
     
+    // 位置锁定模式开关和参数
+    bool lock_pos_enabled_{true};          // 启用位置锁定模式（true=位置锁定，false=速度锁定）
+    double lock_pos_p_{8.0};               // 位置锁定 P 增益
+    double lock_pos_i_{0.0};               // 位置锁定 I 增益（通常为 0）
+    double lock_pos_d_{1.0};               // 位置锁定 D 增益（阻尼）
+    
     // 里程计速度死区（消除静止时抖动导致的漂移）
-    double odom_velocity_deadband_{0.01};  // 速度死区阈值（m/s 和 rad/s）
+    double odom_velocity_deadband_{0.05};  // 速度死区阈值（m/s 和 rad/s），增大以过滤震荡
 
     // ==================== 速度模式（坐标系选择） ====================
     // "local" (base_link): cmd_vel 中的速度在底盘坐标系下解释
