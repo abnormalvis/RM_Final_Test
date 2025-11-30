@@ -54,5 +54,6 @@
 
 提示：`power_limit` 与 `power/*`（effort_coeff、velocity_coeff、power_offset）位于控制器命名空间的顶层，而不是 `wheels/` 下。
 
-14.  完成了底盘控制器中 `wheel_pid_controller.cpp` 全局速度模式的实现，并成功运行，并测试了小陀螺的功能，实现的方式其实是在 `global` 速度模式下把 `sentry_control_key.cpp` 中速度指令的控制方式修改为允许角速度和线速度同时叠加到底盘的运动中。
+14.  完成了底盘控制器 `wheel_pid_controller.cpp` 全局速度模式的实现，并成功运行，并测试了小陀螺的功能，实现的方式其实是在 `global` 速度模式下把 `sentry_control_key.cpp` 中速度指令的控制方式修改为允许角速度和线速度同时叠加到底盘的运动中。
 
+15. 完成了底盘控制器 `wheel_pid_controller.cpp` 自锁防止溜坡功能的实现，并进行了测试。。
