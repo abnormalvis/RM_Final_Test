@@ -141,7 +141,7 @@ wheel_pid_controller:
     #   优点：在斜坡上可以有效抵抗重力，不会产生震荡
     # 禁用位置锁定（false）：使用速度锁定（目标速度=0，由速度 PID 控制）
     #   缺点：在斜坡上会因重力导致轮子转动，PID 反复纠正产生震荡
-    lock_position: true
+    lock_position: false
     
     # 位置锁定 PD 参数（仅在 lock_position=true 时生效）
     # P 增益：位置误差的响应强度，越大锁定越紧但可能震荡
@@ -149,3 +149,15 @@ wheel_pid_controller:
     lock_pos_p: 8.0    # 位置锁定 P 增益（建议值：5.0~15.0）
     lock_pos_i: 0.0    # 位置锁定 I 增益（建议值：0.0）
     lock_pos_d: 1.0    # 位置锁定 D 增益（建议值：0.5~2.0）
+    
+    # ========== 几何自锁模式（结构自锁）==========
+    # 原理：将4个舵轮转到底盘自转的切向方向（形成"X"字布局）
+    #       此时任意平移方向的外力都与轮子滚动方向垂直
+    #       轮子只能侧滑（滑动摩擦）而不能滚动（滚动摩擦）
+    #       滑动摩擦系数 >> 滚动摩擦系数，从而实现结构自锁
+    # 优点：依靠物理结构抵抗外力，无需持续输出力矩，节省能量
+    # 缺点：转向需要时间，切换响应略慢
+    # 注意：geo_lock_enabled 优先级高于 lock_position
+    geo_lock_enabled: true   # 几何自锁开关（true=启用，false=禁用）
+    geo_lock_wheel_brake: true # 几何自锁时是否同时锁定轮子（true=锁定，false=自由）
+    # 舵角会自动根据底盘尺寸计算：θ = atan2(wheel_base/2, -wheel_track/2) 等

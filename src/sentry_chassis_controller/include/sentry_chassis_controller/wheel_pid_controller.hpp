@@ -162,6 +162,14 @@ namespace sentry_chassis_controller
     double lock_pos_i_{0.0};               // 位置锁定 I 增益（通常为 0）
     double lock_pos_d_{1.0};               // 位置锁定 D 增益（阻尼）
     
+    // ==================== 几何自锁模式 ====================
+    // 几何自锁：将舵轮转到底盘自转切向方向，形成"X"字布局
+    // 原理：轮子滚动方向与任意平移方向垂直，外力只能推动轮子侧滑（滑动摩擦 > 滚动摩擦）
+    // 舵角计算：θ_i = atan2(rx_i, ry_i) 使轮子指向底盘中心切向
+    bool geo_lock_enabled_{false};         // 几何自锁模式开关（默认关闭，使用位置锁定）
+    double geo_lock_angles_[4]{};          // 几何自锁时的目标舵角（预计算）
+    bool geo_lock_wheel_brake_{true};      // 几何自锁时是否同时锁定轮子（true=锁定，false=自由滚动）
+    
     // 里程计速度死区（消除静止时抖动导致的漂移）
     double odom_velocity_deadband_{0.05};  // 速度死区阈值（m/s 和 rad/s），增大以过滤震荡
 
