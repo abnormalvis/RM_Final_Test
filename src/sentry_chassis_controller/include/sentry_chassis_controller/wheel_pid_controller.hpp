@@ -177,7 +177,10 @@ namespace sentry_chassis_controller
     // "local" (base_link): cmd_vel 中的速度在底盘坐标系下解释
     // "global" (odom): cmd_vel 中的速度在世界坐标系下解释（需 TF 变换）
     std::string speed_mode_{"local"};
-    // 注意：tf::TransformListener 在 cmdVelCallback 中本地创建以避免静态初始化问题
+    
+    // TF 监听器（作为成员变量，持续缓存 TF 数据）
+    // 注意：必须在 starting() 或更晚时初始化，不能在构造函数中
+    std::shared_ptr<tf::TransformListener> tf_listener_;
 
     // ==================== 动态重配置服务器 ====================
     typedef sentry_chassis_controller::WheelPidConfig Config;

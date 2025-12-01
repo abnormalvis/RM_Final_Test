@@ -24,7 +24,7 @@ public:
         odom_sub_ = nh_.subscribe(odom_topic_, 10, &YawPublisher::odomCB, this);
         timer_ = nh_.createTimer(ros::Duration(1.0 / std::max(1.0, hz_)), &YawPublisher::onTimer, this);
 
-    ROS_INFO("航向监视器已启动: 数据源=%s, TF(%s->%s), odom=%s, 频率=%.1fHz (仅监视)", source_.c_str(),
+    ROS_INFO("Yaw monitor started: source=%s, TF(%s->%s), odom=%s, rate=%.1fHz (monitor only)", source_.c_str(),
          global_frame_.c_str(), base_link_frame_.c_str(), odom_topic_.c_str(), hz_);
     }
 
@@ -46,7 +46,7 @@ private:
         }
         catch (const tf2::TransformException &ex)
         {
-            ROS_WARN_THROTTLE(5.0, "yaw_publisher: TF 查询 %s->%s 失败：%s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
+            ROS_WARN_THROTTLE(5.0, "yaw_publisher: TF lookup %s->%s failed: %s", global_frame_.c_str(), base_link_frame_.c_str(), ex.what());
         }
 
         if (tf_ok)
@@ -80,12 +80,12 @@ private:
             else if (have_odom_yaw_)
             {
                 yaw_out = yaw_odom_;
-                ROS_WARN_THROTTLE(2.0, "yaw_publisher: 回退到 odom 航向 (tf stale=%d ok=%d)", (int)tf_stale, (int)tf_ok);
+                ROS_WARN_THROTTLE(2.0, "yaw_publisher: fallback to odom yaw (tf stale=%d ok=%d)", (int)tf_stale, (int)tf_ok);
             }
         }
 
         // 监视与日志输出
-    ROS_INFO_THROTTLE(1.0, "航向监视: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
+    ROS_INFO_THROTTLE(1.0, "Yaw monitor: src=%s yaw=%.3f (tf_ok=%d tf_stale=%d yaw_tf=%.3f have_odom=%d yaw_odom=%.3f)",
               source_.c_str(), yaw_out, (int)tf_ok, (int)tf_stale, yaw_tf, (int)have_odom_yaw_, yaw_odom_);
     }
 

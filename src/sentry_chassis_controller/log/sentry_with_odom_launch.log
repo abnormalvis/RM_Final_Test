@@ -1,4 +1,4 @@
-[33m[WARN] [1764500536.641051161]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.[0m
+[33m[WARN] [1764592960.211663979]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.[0m
 Traceback (most recent call last):
   File "/opt/ros/noetic/lib/rqt_gui/rqt_gui", line 13, in <module>
     sys.exit(main.main())
@@ -123,11 +123,7 @@ using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_mig
 
 
 [0m[1;33m[Wrn] [GuiIface.cc:194] [0m[1;33mg/gui-plugin is really loading a SystemPlugin. [0m[1;33mTo load a GUI plugin please use --gui-client-plugin 
-[0m/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Unique name to prepend to the goal id. This will
-/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
-  * \param name Set the name to prepend to the goal id. This will
-Gazebo multi-robot simulator, version 11.15.1
+[0mGazebo multi-robot simulator, version 11.15.1
 Copyright (C) 2012 Open Source Robotics Foundation.
 Released under the Apache 2 License.
 http://gazebosim.org
@@ -146,698 +142,457 @@ in January 2025. Users are highly encouraged to migrate to the new Gazebo
 using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration/)
 
 
-[0m/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
+[0m/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:46: SyntaxWarning: invalid escape sequence '\p'
+  * \param name Unique name to prepend to the goal id. This will
+/opt/ros/noetic/lib/python3/dist-packages/actionlib/goal_id_generator.py:56: SyntaxWarning: invalid escape sequence '\p'
+  * \param name Set the name to prepend to the goal id. This will
+/opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:59: SyntaxWarning: invalid escape sequence '\*'
   numpy.dot(M, v) for shape (4, \*) "point of arrays", respectively
 /opt/ros/noetic/lib/python3/dist-packages/tf/transformations.py:869: SyntaxWarning: invalid escape sequence '\*'
   v0 and v1 are shape (3, \*) or (4, \*) arrays of at least 3 vectors.
-[0m[INFO] [1764500536.785499790]: ????????????????????????: ?????????=auto, TF(odom->base_link), odom=/odom_controller, ??????=50.0Hz (?????????)[0m
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher
+[0m[INFO] [1764592960.352369320]: Yaw monitor started: source=auto, TF(odom->base_link), odom=/odom_controller, rate=50.0Hz (monitor only)[0m
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_wheel (parent left_back_pivot) at time 318.106000 according to authority unknown_publisher
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_wheel (parent left_back_pivot) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_wheel (parent left_front_pivot) at time 318.106000 according to authority unknown_publisher
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_wheel (parent left_front_pivot) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_wheel (parent right_back_pivot) at time 318.106000 according to authority unknown_publisher
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_wheel (parent right_back_pivot) at time 318.160000 according to authority unknown_publisher
+         at line 277[33m[WARN] [1764592962.384993259]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher[0m
+ in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-[33m[WARN] [1764500538.510327997]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher[0m
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher
+Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_wheel (parent right_front_pivot) at time 318.160000 according to authority unknown_publisher
          at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-Warning: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_wheel (parent right_front_pivot) at time 318.106000 according to authority unknown_publisher
-         at line 277 in /tmp/binarydeb/ros-noetic-tf2-0.7.10/src/buffer_core.cpp
-[33m[WARN] [1764500538.510372260]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_wheel (parent left_back_pivot) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.510389810]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.510406767]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_wheel (parent left_front_pivot) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.510424956]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.510442045]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_wheel (parent right_back_pivot) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.510457888]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_pivot (parent base_link) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.510474580]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_wheel (parent right_front_pivot) at time 318.106000 according to authority unknown_publisher[0m
-[33m[WARN] [1764500538.695447387, 319.204000000]: yaw_publisher: TF ?????? odom->base_link ?????????"odom" passed to lookupTransform argument target_frame does not exist. [0m
-[INFO] [1764500537.785791, 0.000000]: Loading model XML from ros parameter robot_description
-[INFO] [1764500537.789712, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
-[INFO] [1764500538.694287, 319.192000]: Calling service /gazebo/spawn_urdf_model
-[INFO] [1764500538.911305, 319.984000]: Spawn status: SpawnModel: Successfully spawned entity
-[INFO] [1764500538.912432, 319.984000]: Unpausing physics
-[33m[WARN] [1764500539.062025509, 319.984000000]: No imu specified[0m
-[33m[WARN] [1764500539.767928656, 323.932000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[0m[INFO] [1764500537.698036934]: Finished loading Gazebo ROS API Plugin.[0m
-[0m[INFO] [1764500537.699722693]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[33m[WARN] [1764592962.385039760]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_back_wheel (parent left_back_pivot) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.385058004]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.385068534]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame left_front_wheel (parent left_front_pivot) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.385080528]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.385089324]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_back_wheel (parent right_back_pivot) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.385097839]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_pivot (parent base_link) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.385106050]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame right_front_wheel (parent right_front_pivot) at time 318.160000 according to authority unknown_publisher[0m
+[33m[WARN] [1764592962.569207987, 319.258000000]: yaw_publisher: TF lookup odom->base_link failed: "odom" passed to lookupTransform argument target_frame does not exist. [0m
+[INFO] [1764592961.340044, 0.000000]: Loading model XML from ros parameter robot_description
+[INFO] [1764592961.345975, 0.000000]: Waiting for service /gazebo/spawn_urdf_model
+[INFO] [1764592962.552409, 319.156000]: Calling service /gazebo/spawn_urdf_model
+[INFO] [1764592962.767498, 319.948000]: Spawn status: SpawnModel: Successfully spawned entity
+[INFO] [1764592962.768610, 319.948000]: Unpausing physics
+[33m[WARN] [1764592962.912079550, 319.948000000]: No imu specified[0m
+[33m[WARN] [1764592963.647779043, 324.274000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[0m[INFO] [1764592961.149719569]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[INFO] [1764592961.151264242]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
 [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m10.33.104.131[0m[1;32m
 [0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading world file [[0m[1;32m/home/idris/final_ws/src/sentry_chassis_controller/worlds/2023_v_4_1.world[0m[1;32m][0m[1;32m
-[0m[1;32m[0m[0m[INFO] [1764500538.457691117]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
-[0m[INFO] [1764500538.473546289, 317.902000000]: Physics dynamic reconfigure ready.[0m
-[0m[INFO] [1764500538.948261480, 319.984000000]: Loading gazebo_ros_control plugin[0m
-[0m[INFO] [1764500538.948365009, 319.984000000]: Starting gazebo_ros_control plugin in namespace: /[0m
-[0m[INFO] [1764500538.949342571, 319.984000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.[0m
-[0m[INFO] [1764500539.067988088, 319.984000000]: Loaded gazebo_ros_control.[0m
-[0m[INFO] [1764500539.350439746, 321.442000000]: WheelPidController: ??????????????? PID 'pivot_fl' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
-[0m[INFO] [1764500539.353440689, 321.460000000]: WheelPidController: ??????????????? PID 'pivot_fr' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
-[0m[INFO] [1764500539.355975404, 321.472000000]: WheelPidController: ??????????????? PID 'pivot_rl' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
-[0m[INFO] [1764500539.358976735, 321.490000000]: WheelPidController: ??????????????? PID 'pivot_rr' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
-[0m[INFO] [1764500539.361292827, 321.502000000]: WheelPidController: ????????????????????? PID 'wheel_fl' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
-[0m[INFO] [1764500539.364484782, 321.526000000]: WheelPidController: ????????????????????? PID 'wheel_fr' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
-[0m[INFO] [1764500539.367158469, 321.538000000]: WheelPidController: ????????????????????? PID 'wheel_rl' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
-[0m[INFO] [1764500539.369391300, 321.556000000]: WheelPidController: ????????????????????? PID 'wheel_rr' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
-[0m[INFO] [1764500539.422065453, 321.868000000]: WheelPidController: dynamic_reconfigure ????????? PID ????????????????????? wheels/* ??????[0m
-[0m[INFO] [1764500539.448616292, 322.030000000]: ??????????????????????????????FL=135.00?? FR=45.00?? RL=-135.00?? RR=-45.00??[0m
-[0m[INFO] [1764500539.448715236, 322.030000000]: ??????????????????????????????????????????=0.50s???????????????=0.050[0m
-[0m[INFO] [1764500539.448741403, 322.030000000]:   ????????????=?????? (P=8.0 D=1.00)???????????????=?????? (????????????=???)[0m
-[0m[INFO] [1764500539.450884738, 322.042000000]: WheelPidController ????????????????????????????????????[0m
-[0m[INFO] [1764500539.450908996, 322.042000000]: ???????????????global (local=base_link, global=odom)[0m
-[0m[INFO] [1764500539.459808374, 322.096000000]: ????????????????????? LF pos=0.267771 v=0.00672154 RF pos=-0.052619 v=0.00443725 LB pos=-0.469049 v=-0.000404524 RB pos=-0.17775 v=0.00493393[0m
-[0m[INFO] [1764500539.460795025, 322.102000000]: ?????????????????????: ????????????=0.708 (a=535.921, b=44.660, c=-299.893)[0m
-[0m[INFO] [1764500539.533742783, 322.534000000]: ?????????????????????(????????????)??????????????????????????? [135.0??, 45.0??, -135.0??, -45.0??]???????????????=???[0m
-[0m[INFO] [1764500539.795019155, 324.100000000]: ????????????????????? LF pos=0.579368 v=-0.00161105 RF pos=0.331295 v=0.00139066 LB pos=-0.443135 v=0.000745678 RB pos=-0.465549 v=0.00200156[0m
-[0m[INFO] [1764500539.962226503, 325.102000000]: ????????????????????? LF pos=0.576688 v=-0.00320758 RF pos=0.332858 v=0.00126436 LB pos=-0.442321 v=0.000812049 RB pos=-0.463556 v=0.0[33m[WARN] [1764500540.104246055, 325.948000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500540.442356551, 327.958000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500540.864893140, 329.968000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500541.319396037, 331.972000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500541.781509261, 333.988000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500542.269719816, 335.998000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500542.758732495, 338.008000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500543.239167682, 340.012000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500543.694745170, 342.016000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500544.152234239, 344.038000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500544.616893192, 346.048000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[0m[INFO] [1764500538.695527060, 319.204000000]: ????????????: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
-[0m[INFO] [1764500539.147236539, 320.230000000]: ????????????: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
-[0m[INFO] [1764500539.321171571, 321.268000000]: ????????????: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
-[0m[INFO] [1764500539.493837237, 322.294000000]: ????????????: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
-[0m[INFO] [1764500539.664035091, 323.308000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=0 yaw_tf=0.082 have_odom=0 yaw_odom=0.000)[0m
-[0m[INFO] [1764500539.830866056, 324.310000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500539.998479595, 325.318000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500540.168003589, 326.332000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500540.339313822, 327.352000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500540.528464006, 328.378000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500540.739571262, 329.404000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500540.963845783, 330.418000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500541.189060979, 331.432000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500541.423180355, 332.452000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500541.659332391, 333.454000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500541.888111030, 334.468000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500542.142443091, 335.470000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500542.388638179, 336.472000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500542.633978245, 337.492000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500542.885892643, 338.512000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500543.130614731, 339.532000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500543.360236211, 340.552000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500543.590115157, 341.572000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500543.826480900, 342.592000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500544.051024625, 343.618000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500544.288244678, 344.632000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500544.526083824, 345.652000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500544.759954323, 346.666000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale[33m[WARN] [1764500545.081913306, 348.052000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500545.537782076, 350.068000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-0190432[0m
-[0m[INFO] [1764500540.129628975, 326.104000000]: ????????????????????? LF pos=0.573516 v=-0.00338656 RF pos=0.334242 v=0.00123917 LB pos=-0.44134 v=0.0013328 RB pos=-0.461865 v=0.00142007[0m
-[0m[INFO] [1764500540.297439988, 327.106000000]: ????????????????????? LF pos=0.57222 v=-0.000280635 RF pos=0.334753 v=-0.00024205 LB pos=-0.44084 v=-0.000309835 RB pos=-0.46076 v=0.000683425[0m
-[0m[INFO] [1764500540.468537933, 328.108000000]: ????????????????????? LF pos=0.572114 v=-0.000151601 RF pos=0.334625 v=-0.000132985 LB pos=-0.440971 v=-5.69466e-05 RB pos=-0.460587 v=0.000815099[0m
-[0m[INFO] [1764500540.894615815, 330.112000000]: ????????????????????? LF pos=0.571914 v=-0.000125845 RF pos=0.334379 v=-0.000199317 LB pos=-0.441235 v=-0.000141652 RB pos=-0.460495 v=0.000180221[0m
-[0m[INFO] [1764500541.348315602, 332.116000000]: ????????????????????? LF pos=0.571704 v=-0.000129656 RF pos=0.334099 v=-0.000210801 LB pos=-0.441533 v=-0.000154518 RB pos=-0.460373 v=0.000197663[0m
-[0m[INFO] [1764500541.577866465, 333.112000000]: ????????????????????? LF pos=0.571598 v=-0.000128795 RF pos=0.333955 v=-0.000210196 LB pos=-0.441688 v=-0.000154316 RB pos=-0.460304 v=0.000198431[0m
-[0m[INFO] [1764500542.050141074, 335.122000000]: ????????????????????? LF pos=0.571389 v=-0.000120849 RF pos=0.333667 v=-0.000228939 LB pos=-0.441995 v=-0.000104777 RB pos=-0.460164 v=0.000156996[0m
-[0m[INFO] [1764500542.304076162, 336.124000000]: ????????????????????? LF pos=0.571286 v=-0.000116796 RF pos=0.333524 v=-0.000238858 LB pos=-0.442148 v=-7.96082e-05 RB pos=-0.460093 v=0.000134005[0m
-[0m[INFO] [1764500542.538584467, 337.126000000]: ????????????????????? LF pos=0.571184 v=-0.000112577 RF pos=0.333381 v=-0.000248178 LB pos=-0.442302 v=-5.49388e-05 RB pos=-0.460021 v=0.000111265[0m
-[0m[INFO] [1764500542.787070879, 338.128000000]: ????????????????????? LF pos=0.571083 v=-0.000108476 RF pos=0.333238 v=-0.000257737 LB pos=-0.442456 v=-3.07146e-05 RB pos=-0.459948 v=8.84376e-05[0m
-[0m[INFO] [1764500543.026431777, 339.130000000]: ????????????????????? LF pos=0.570983 v=-0.000104711 RF pos=0.333096 v=-0.000267878 LB pos=-0.44261 v=-7.1671e-06 RB pos=-0.459875 v=6.51379e-05[0m
-[0m[INFO] [1764500543.268450193, 340.132000000]: ????????????????????? LF pos=0.570884 v=-0.000101029 RF pos=0.332954 v=-0.000278083 LB pos=-0.442764 v=1.58866e-05 RB pos=-0.4598 v=4.17078e-05[0m
-[0m[INFO] [1764500543.488320549, 341.134000000]: ????????????????????? LF pos=0.570786 v=-7.96898e-05 RF pos=0.332812 v=-0.000291102 LB pos=-0.44292 v=6.50632e-05 RB pos=-0.459726 v=-1.26232e-05[0m
-[0m[INFO] [1764500543.720684488, 342.136000000]: ????????????????????? LF pos=0.570689 v=-5.49006e-05 RF pos=0.332671 v=-0.00030621 LB pos=-0.443077 v=0.000123004 RB pos=-0.45965 v=-7.49266e-05[0m
-[0m[INFO] [1764500543.945930857, 343.138000000]: ????????????????????? LF pos=0.570593 v=-2.75054e-05 RF pos=0.332529 v=-0.000321641 LB pos=-0.443234 v=0.000182999 RB pos=-0.459574 v=-0.000141522[0m
-[0m[INFO] [1764500544.175097877, 344.134000000]: ????????????????????? LF pos=0.570498 v=1.24915e-06 RF pos=0.332387 v=-0.000337478 LB pos=-0.443393 v=0.00024434 RB pos=-0.459496 v=-0.000210808[0m
-[0m[INFO] [1764500544.640928177, 346.144000000]: ????????????????????? LF pos=0.57031 v=5.89938e-05 RF pos=0.332103 v=-0.000368577 LB pos=-0.443712 v=0.000364219 RB pos=-0.459337 v=-0.00034843[0m
-[0m[INFO] [1764500544.871623321, 347.146000000]: ????????????????????? LF pos=0.570217 v=8.47959e-05 RF pos=0.331959 v=-0.000376163 LB pos=-0.443872 v=0.000400904 RB pos=-0.459256 v=-0.000394568[0m
-[0m[INFO] [1764500545.104390385, 348.148000000]: ????????????????????? LF pos=0.570124 v=0.00011087 RF pos=0.331814 v=-0.000383302 LB pos=-0.444035 v=0.000437758 RB pos=-0.459173 v=-0.000440816[0m
-[0m[INFO] [1764500545.555597827, 350.152000000]: ????????????????????? LF pos=0.569938 v=0.000163869 RF pos=0.331519 v=-0.000398117 LB pos=-0.444368 v=0.000512083 RB pos=-0.458999 v=-0.000534917[0m
-[0m[INFO] [1764500545.793294135, 351.154000000]: ????????????????????? LF pos=0.569847 v=0.0[33m[WARN] [1764500546.015735197, 352.084000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500546.523577304, 354.106000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500547.018741658, 356.128000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500547.516315383, 358.132000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500548.015103868, 360.148000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500548.556190858, 362.182000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500549.050107111, 364.186000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500549.532344646, 366.208000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500550.025497300, 368.212000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500550.499890265, 370.228000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500551.002271481, 372.232000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500551.512415824, 374.254000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500544.992037237, 347.668000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500545.219366587, 348.670000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500545.447324111, 349.672000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500545.687008879, 350.698000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500545.921971008, 351.712000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500546.171492568, 352.714000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500546.432033104, 353.728000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500546.682053808, 354.748000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500546.942226259, 355.774000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500547.178067971, 356.788000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500547.433578942, 357.790000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500547.692346629, 358.804000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500547.932251217, 359.812000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500548.179023928, 360.826000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500548.460306338, 361.828000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500548.723522333, 362.848000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500548.977387569, 363.868000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500549.213920366, 364.888000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500549.459248669, 365.908000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500549.715837691, 366.934000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500549.961428970, 367.966000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500550.199175618, 368.974000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500550.445049757, 369.988000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500550.702335350, 371.008000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500550.951120785, 372.028000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500551.221012720, 373.054000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500551.466236753, 374.068000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500551.707067289, 375.088000000]: ??00176958 RF pos=0.331368 v=-0.000404443 LB pos=-0.444537 v=0.000527235 RB pos=-0.45891 v=-0.000557231[0m
-[0m[INFO] [1764500546.031394487, 352.156000000]: ????????????????????? LF pos=0.569756 v=0.00018009 RF pos=0.331216 v=-0.000408802 LB pos=-0.444709 v=0.000527232 RB pos=-0.458818 v=-0.000562838[0m
-[0m[INFO] [1764500546.288071920, 353.158000000]: ????????????????????? LF pos=0.569666 v=0.000174867 RF pos=0.331068 v=-0.000411326 LB pos=-0.444886 v=0.000491303 RB pos=-0.458744 v=-0.00048263[0m
-[0m[INFO] [1764500546.535008167, 354.160000000]: ????????????????????? LF pos=0.569572 v=0.000247632 RF pos=0.330962 v=-0.000336691 LB pos=-0.445083 v=0.000661597 RB pos=-0.458728 v=-0.000669294[0m
-[0m[INFO] [1764500546.779504917, 355.162000000]: ????????????????????? LF pos=0.569571 v=0.000265985 RF pos=0.330966 v=-0.000430569 LB pos=-0.445056 v=0.000712309 RB pos=-0.458771 v=-0.000560046[0m
-[0m[INFO] [1764500547.025226987, 356.164000000]: ????????????????????? LF pos=0.569574 v=0.000273353 RF pos=0.330972 v=-0.000388758 LB pos=-0.445023 v=0.000716474 RB pos=-0.45881 v=-0.000546338[0m
-[0m[INFO] [1764500547.526968484, 358.162000000]: ????????????????????? LF pos=0.569578 v=0.00027267 RF pos=0.330982 v=-0.000388166 LB pos=-0.444956 v=0.00071563 RB pos=-0.458888 v=-0.00054665[0m
-[0m[INFO] [1764500547.781691683, 359.170000000]: ????????????????????? LF pos=0.56958 v=0.00026379 RF pos=0.330986 v=-0.0004308 LB pos=-0.444922 v=0.000709172 RB pos=-0.458927 v=-0.000561901[0m
-[0m[INFO] [1764500548.274698257, 361.168000000]: ????????????????????? LF pos=0.569584 v=0.000263773 RF pos=0.330997 v=-0.000430374 LB pos=-0.444855 v=0.000709159 RB pos=-0.459005 v=-0.000561569[0m
-[0m[INFO] [1764500548.552020255, 362.176000000]: ????????????????????? LF pos=0.569587 v=0.000272618 RF pos=0.331003 v=-0.000387486 LB pos=-0.444822 v=0.000715604 RB pos=-0.459043 v=-0.000546029[0m
-[0m[INFO] [1764500549.048435675, 364.180000000]: ????????????????????? LF pos=0.569591 v=0.000272584 RF pos=0.331013 v=-0.000387139 LB pos=-0.444755 v=0.000715593 RB pos=-0.459121 v=-0.000545795[0m
-[0m[INFO] [1764500549.285329385, 365.182000000]: ????????????????????? LF pos=0.569593 v=0.000263752 RF pos=0.331018 v=-0.000429514 LB pos=-0.444721 v=0.000709169 RB pos=-0.45916 v=-0.000561185[0m
-[0m[INFO] [1764500549.524216864, 366.184000000]: ????????????????????? LF pos=0.569595 v=0.000272564 RF pos=0.331024 v=-0.000386795 LB pos=-0.444688 v=0.00071561 RB pos=-0.459199 v=-0.000545787[0m
-[0m[INFO] [1764500549.782705408, 367.186000000]: ????????????????????? LF pos=0.569597 v=0.000263751 RF pos=0.331028 v=-0.000429083 LB pos=-0.444654 v=0.000709199 RB pos=-0.459238 v=-0.000561145[0m
-[0m[INFO] [1764500550.016826251, 368.188000000]: ????????????????????? LF pos=0.5696 v=0.000272545 RF pos=0.331034 v=-0.000386452 LB pos=-0.444621 v=0.000715628 RB pos=-0.459277 v=-0.000545778[0m
-[0m[INFO] [1764500550.252994034, 369.184000000]: ????????????????????? LF pos=0.569602 v=0.000263749 RF pos=0.331039 v=-0.000428652 LB pos=-0.444587 v=0.000709229 RB pos=-0.459315 v=-0.000561104[0m
-[0m[INFO] [1764500550.490686862, 370.192000000]: ????????????????????? LF pos=0.569604 v=0.000272525 RF pos=0.331045 v=-0.000386109 LB pos=-0.444554 v=0.000715645 RB pos=-0.459354 v=-0.00054577[0m
-[0m[INFO] [1764500550.752534897, 371.194000000]: ????????????????????? LF pos=0.569606 v=0.000263748 RF pos=0.331049 v=-0.000428222 LB pos=-0.444521 v=0.000709259 RB pos=-0.459393 v=-0.000561063[0m
-[0m[INFO] [1764500550.990830795, 372.196000000]: ????????????????????? LF pos=0.569608 v=0.000272506 RF pos=0.331055 v=-0.000385767 LB pos=-0.444487 v=0.000715663 RB pos=-0.459432 v=-0.000545762[0m
-[0m[INFO] [1764500551.253661986, 373.198000000]: ????????????????????? LF pos=0.56961 v=0.000263746 RF pos=0.33106 v=-0.000427793 LB pos=-0.444454 v=0.000709289 RB pos=-0.459471 v=-0.000561023[0m
-[0m[INFO] [1764500551.496932841, 374.200000000]: ????????????????????? LF pos=0.569612 v=0.000272486 RF pos=0.331066 v=-0.000385425 LB pos=-0.44442 v=0.00071568 RB pos=-0.45951 v=-0.000545754[0m
-[0m[INFO][33m[WARN] [1764500551.985576180, 376.264000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500552.488200674, 378.280000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500552.989139994, 380.290000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500553.500048443, 382.300000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500553.991321188, 384.310000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500554.525832823, 386.326000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500554.995245318, 388.330000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500555.476362311, 390.334000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500555.980837602, 392.350000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500556.496358619, 394.366000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500556.998652983, 396.376000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
- [1764500551.732425876, 375.202000000]: ????????????????????? LF pos=0.569615 v=0.000263745 RF pos=0.33107 v=-0.000427364 LB pos=-0.444387 v=0.000709319 RB pos=-0.459549 v=-0.000560982[0m
-[0m[INFO] [1764500551.969608199, 376.198000000]: ????????????????????? LF pos=0.569617 v=0.000272467 RF pos=0.331076 v=-0.000385085 LB pos=-0.444354 v=0.000715698 RB pos=-0.459587 v=-0.000545745[0m
-[0m[INFO] [1764500552.219340463, 377.200000000]: ????????????????????? LF pos=0.569619 v=0.000263743 RF pos=0.331081 v=-0.000426937 LB pos=-0.44432 v=0.000709349 RB pos=-0.459626 v=-0.000560941[0m
-[0m[INFO] [1764500552.469744361, 378.208000000]: ????????????????????? LF pos=0.569621 v=0.000272447 RF pos=0.331087 v=-0.000384744 LB pos=-0.444287 v=0.000715715 RB pos=-0.459665 v=-0.000545737[0m
-[0m[INFO] [1764500552.731351493, 379.210000000]: ????????????????????? LF pos=0.569623 v=0.000263712 RF pos=0.331091 v=-0.000426403 LB pos=-0.444254 v=0.000709161 RB pos=-0.459704 v=-0.000560766[0m
-[0m[INFO] [1764500552.970113067, 380.212000000]: ????????????????????? LF pos=0.569626 v=0.00027235 RF pos=0.331098 v=-0.000384113 LB pos=-0.44422 v=0.000715163 RB pos=-0.459743 v=-0.000545376[0m
-[0m[INFO] [1764500553.219972129, 381.214000000]: ????????????????????? LF pos=0.569628 v=0.000263614 RF pos=0.331102 v=-0.000425605 LB pos=-0.444187 v=0.000708486 RB pos=-0.459782 v=-0.000560285[0m
-[0m[INFO] [1764500553.725477551, 383.218000000]: ????????????????????? LF pos=0.569632 v=0.000263515 RF pos=0.331113 v=-0.000424809 LB pos=-0.44412 v=0.000707811 RB pos=-0.45986 v=-0.000559803[0m
-[0m[INFO] [1764500553.970586211, 384.220000000]: ????????????????????? LF pos=0.569634 v=0.000272118 RF pos=0.331119 v=-0.000382692 LB pos=-0.444087 v=0.000713789 RB pos=-0.459898 v=-0.000544477[0m
-[0m[INFO] [1764500554.220810521, 385.222000000]: ????????????????????? LF pos=0.569636 v=0.000263416 RF pos=0.331123 v=-0.000424013 LB pos=-0.444053 v=0.000707136 RB pos=-0.459937 v=-0.000559321[0m
-[0m[INFO] [1764500554.496048138, 386.224000000]: ????????????????????? LF pos=0.569639 v=0.000272056 RF pos=0.33113 v=-0.000382028 LB pos=-0.44402 v=0.000713022 RB pos=-0.459976 v=-0.00054543[0m
-[0m[INFO] [1764500554.746600593, 387.226000000]: ????????????????????? LF pos=0.569641 v=0.000263296 RF pos=0.331134 v=-0.000422551 LB pos=-0.443986 v=0.000707284 RB pos=-0.460014 v=-0.000565578[0m
-[0m[INFO] [1764500554.971032023, 388.228000000]: ????????????????????? LF pos=0.569643 v=0.000272199 RF pos=0.331141 v=-0.000381283 LB pos=-0.443953 v=0.000712295 RB pos=-0.460052 v=-0.00056892[0m
-[0m[INFO] [1764500555.202119921, 389.230000000]: ????????????????????? LF pos=0.569645 v=0.00026321 RF pos=0.331146 v=-0.000422056 LB pos=-0.443919 v=0.000706337 RB pos=-0.460091 v=-0.000587287[0m
-[0m[INFO] [1764500555.453112116, 390.232000000]: ????????????????????? LF pos=0.569648 v=0.000271974 RF pos=0.331153 v=-0.000382297 LB pos=-0.443885 v=0.000710047 RB pos=-0.460128 v=-0.000584688[0m
-[0m[INFO] [1764500555.951361653, 392.236000000]: ????????????????????? LF pos=0.569652 v=0.000272299 RF pos=0.331164 v=-0.000378286 LB pos=-0.443818 v=0.000709178 RB pos=-0.460204 v=-0.000610873[0m
-[0m[INFO] [1764500556.191557349, 393.238000000]: ????????????????????? LF pos=0.569655 v=0.000263039 RF pos=0.331169 v=-0.000423362 LB pos=-0.443785 v=0.000701392 RB pos=-0.460243 v=-0.000611937[0m
-[0m[INFO] [1764500556.456977486, 394.240000000]: ????????????????????? LF pos=0.569657 v=0.000272101 RF pos=0.331176 v=-0.000375808 LB pos=-0.443751 v=0.000714144 RB pos=-0.460282 v=-0.000652345[0m
-[0m[INFO] [1764500556.722881074, 395.236000000]: ????????????????????? LF pos=0.569659 v=0.000263146 RF pos=0.331181 v=-0.000420037 LB pos=-0.443717 v=0.000702377 RB pos=-0.460319 v=-0.00064756[0m
-[0m[INFO] [1764500556.966680048, 396.244000000]: ????????????????????? LF pos=0.569662 v=0.000271822 RF pos=0.331187 v=-0.000377698 LB pos=-0.443684 v=0.000710923 RB pos=-0.460357 v=-0.000665854[0m
-[0m[INFO] [1764500557.222496710, 397.240000000]: ????????????????????? LF pos=0.569664 v=0.000262962 RF pos=0.331192 [33m[WARN] [1764500557.513027005, 398.380000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500558.015080055, 400.384000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500558.520200223, 402.406000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-??????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500551.945777287, 376.102000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500552.197086824, 377.104000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500552.450847911, 378.124000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500552.716589806, 379.144000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500552.959280585, 380.158000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500553.208922778, 381.172000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500553.476528823, 382.204000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500553.728669540, 383.224000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500553.977865504, 384.250000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500554.230534671, 385.258000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500554.512065302, 386.272000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500554.763380433, 387.292000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500554.985660053, 388.294000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500555.219614766, 389.308000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500555.471781996, 390.310000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500555.725328300, 391.330000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500555.982181427, 392.350000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500556.227378164, 393.370000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500556.503499253, 394.390000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500556.763330217, 395.410000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500557.009415344, 396.418000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500557.275669546, 397.426000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500557.528704392, 398.440000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500557.795565558, 399.466000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500558.039066064, 400.480000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500558.285089952, 401.500000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500558.553286770, 402.520000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[33m[WARN] [1764500558.997232087, 404.416000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500559.485175211, 406.420000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500559.988152710, 408.436000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500560.481839053, 410.446000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500561.012921497, 412.456000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500561.522917142, 414.460000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500561.992544695, 416.476000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500562.492247920, 418.480000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-v=-0.000418839 LB pos=-0.44365 v=0.000703589 RB pos=-0.460395 v=-0.00067948[0m
-[0m[INFO] [1764500557.481194805, 398.248000000]: ????????????????????? LF pos=0.569666 v=0.00027169 RF pos=0.331199 v=-0.000377881 LB pos=-0.443616 v=0.000708676 RB pos=-0.460434 v=-0.000678658[0m
-[0m[INFO] [1764500557.739566884, 399.250000000]: ????????????????????? LF pos=0.569669 v=0.000262833 RF pos=0.331203 v=-0.000417787 LB pos=-0.443583 v=0.000703082 RB pos=-0.460473 v=-0.0006856[0m
-[0m[INFO] [1764500557.982320800, 400.252000000]: ????????????????????? LF pos=0.569671 v=0.000271642 RF pos=0.33121 v=-0.00037708 LB pos=-0.44355 v=0.000708034 RB pos=-0.460512 v=-0.000677742[0m
-[0m[INFO] [1764500558.224521658, 401.248000000]: ????????????????????? LF pos=0.569673 v=0.000262869 RF pos=0.331215 v=-0.000416726 LB pos=-0.443516 v=0.000702423 RB pos=-0.460551 v=-0.000684558[0m
-[0m[INFO] [1764500558.478663451, 402.256000000]: ????????????????????? LF pos=0.569675 v=0.000271635 RF pos=0.331221 v=-0.000376175 LB pos=-0.443483 v=0.000707382 RB pos=-0.46059 v=-0.000676775[0m
-[0m[INFO] [1764500558.721191468, 403.258000000]: ????????????????????? LF pos=0.569678 v=0.00026282 RF pos=0.331226 v=-0.000415817 LB pos=-0.44345 v=0.000701756 RB pos=-0.460629 v=-0.00068366[0m
-[0m[INFO] [1764500559.205980260, 405.262000000]: ????????????????????? LF pos=0.569682 v=0.000262721 RF pos=0.331237 v=-0.000415023 LB pos=-0.443383 v=0.000701078 RB pos=-0.460707 v=-0.000682854[0m
-[0m[INFO] [1764500559.447119926, 406.264000000]: ????????????????????? LF pos=0.569684 v=0.000271406 RF pos=0.331244 v=-0.000374727 LB pos=-0.443349 v=0.000706008 RB pos=-0.460746 v=-0.000675184[0m
-[0m[INFO] [1764500559.706316538, 407.266000000]: ????????????????????? LF pos=0.569687 v=0.000262622 RF pos=0.331248 v=-0.000414229 LB pos=-0.443316 v=0.0007004 RB pos=-0.460785 v=-0.000682047[0m
-[0m[INFO] [1764500560.191414948, 409.270000000]: ????????????????????? LF pos=0.569691 v=0.000262522 RF pos=0.33126 v=-0.000413436 LB pos=-0.44325 v=0.000699722 RB pos=-0.460863 v=-0.00068124[0m
-[0m[INFO] [1764500560.438675410, 410.272000000]: ????????????????????? LF pos=0.569693 v=0.000271171 RF pos=0.331266 v=-0.000373308 LB pos=-0.443216 v=0.000704631 RB pos=-0.460902 v=-0.000673601[0m
-[0m[INFO] [1764500560.703232998, 411.274000000]: ????????????????????? LF pos=0.569696 v=0.000262297 RF pos=0.331271 v=-0.000412628 LB pos=-0.443183 v=0.000698908 RB pos=-0.460941 v=-0.000680231[0m
-[0m[INFO] [1764500560.967616621, 412.276000000]: ????????????????????? LF pos=0.569698 v=0.000270752 RF pos=0.331278 v=-0.000372557 LB pos=-0.44315 v=0.000703617 RB pos=-0.46098 v=-0.000672332[0m
-[0m[INFO] [1764500561.213727789, 413.278000000]: ????????????????????? LF pos=0.5697 v=0.000261847 RF pos=0.331282 v=-0.000411784 LB pos=-0.443116 v=0.000697855 RB pos=-0.461019 v=-0.000678875[0m
-[0m[INFO] [1764500561.468842819, 414.274000000]: ????????????????????? LF pos=0.569702 v=0.000270283 RF pos=0.331289 v=-0.000371796 LB pos=-0.443083 v=0.000702553 RB pos=-0.461058 v=-0.000670991[0m
-[0m[INFO] [1764500561.716474536, 415.282000000]: ????????????????????? LF pos=0.569705 v=0.000261396 RF pos=0.331294 v=-0.000410941 LB pos=-0.44305 v=0.000696802 RB pos=-0.461097 v=-0.000677518[0m
-[0m[INFO] [1764500561.946266748, 416.284000000]: ????????????????????? LF pos=0.569707 v=0.000269815 RF pos=0.3313 v=-0.000371036 LB pos=-0.443016 v=0.00070149 RB pos=-0.461136 v=-0.00066965[0m
-[0m[INFO] [1764500562.199097314, 417.286000000]: ????????????????????? LF pos=0.569709 v=0.000260946 RF pos=0.331305 v=-0.000410098 LB pos=-0.442983 v=0.000695749 RB pos=-0.461175 v=-0.000676161[0m
-[0m[INFO] [1764500562.445314791, 418.282000000]: ????????????????????? LF pos=0.569712 v=0.000269263 RF pos=0.331312 v=-0.000370265 LB pos=-0.44295 v=0.000700515 RB pos=-0.461214 v=-0.00066576[0m
-[0m[INFO] [1764500562.686700543, 419.290000000]: ????????????????????? LF pos=0.569714 v=0.000260511 RF pos=0.331316 v=-0.000409743 LB pos=-0.442917 v=0.000694113 RB pos=-0.461254 v=-0.00066787[0m
-[0m[INFO] [1764500562.930240052, 420.29200[33m[WARN] [1764500562.979760936, 420.496000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500563.456899559, 422.500000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500563.971509703, 424.516000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500564.457994715, 426.520000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500564.948445622, 428.542000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500565.418208716, 430.546000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[INFO] [1764500558.791072573, 403.540000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500559.029873301, 404.560000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500559.278213191, 405.580000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500559.531481746, 406.600000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500559.793917106, 407.620000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500560.034786989, 408.640000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500560.285238332, 409.660000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500560.551227198, 410.680000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500560.825847356, 411.706000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500561.084428868, 412.720000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500561.333109818, 413.740000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500561.596998984, 414.766000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500561.831916477, 415.780000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500562.071484776, 416.782000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500562.328639967, 417.802000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500562.574079889, 418.816000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500562.822929792, 419.824000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500563.058683206, 420.826000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500563.300327344, 421.840000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500563.560802960, 422.860000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500563.810537225, 423.880000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500564.060618907, 424.900000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500564.310969271, 425.920000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500564.552942866, 426.940000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500564.809300398, 427.960000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500565.054723359, 428.986000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500565.287596207, 429.982000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500565.523606808, 431.002000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 y[33m[WARN] [1764500565.895666474, 432.556000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500566.383712811, 434.560000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500566.893116448, 436.576000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500567.387108938, 438.598000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500567.861836490, 440.614000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-0000]: ????????????????????? LF pos=0.569716 v=0.000268714 RF pos=0.331323 v=-0.000369593 LB pos=-0.442884 v=0.000699488 RB pos=-0.461294 v=-0.000645666[0m
-[0m[INFO] [1764500563.165459971, 421.288000000]: ????????????????????? LF pos=0.569718 v=0.000260087 RF pos=0.331327 v=-0.000408919 LB pos=-0.442851 v=0.000693084 RB pos=-0.461333 v=-0.000647982[0m
-[0m[INFO] [1764500563.405556416, 422.296000000]: ????????????????????? LF pos=0.56972 v=0.000268273 RF pos=0.331333 v=-0.000368853 LB pos=-0.442818 v=0.000698448 RB pos=-0.461373 v=-0.000625805[0m
-[0m[INFO] [1764500563.669424798, 423.298000000]: ????????????????????? LF pos=0.569722 v=0.000259666 RF pos=0.331338 v=-0.000408095 LB pos=-0.442785 v=0.000692039 RB pos=-0.461413 v=-0.000628093[0m
-[0m[INFO] [1764500563.914695827, 424.300000000]: ????????????????????? LF pos=0.569725 v=0.000267845 RF pos=0.331344 v=-0.000368109 LB pos=-0.442752 v=0.000697322 RB pos=-0.461452 v=-0.000605932[0m
-[0m[INFO] [1764500564.158650206, 425.302000000]: ????????????????????? LF pos=0.569727 v=0.000259264 RF pos=0.331349 v=-0.000407266 LB pos=-0.442719 v=0.000690865 RB pos=-0.461492 v=-0.000608187[0m
-[0m[INFO] [1764500564.406891698, 426.298000000]: ????????????????????? LF pos=0.569729 v=0.000267425 RF pos=0.331355 v=-0.000367363 LB pos=-0.442686 v=0.000696136 RB pos=-0.461532 v=-0.000586054[0m
-[0m[INFO] [1764500564.645969807, 427.306000000]: ????????????????????? LF pos=0.569731 v=0.000258861 RF pos=0.33136 v=-0.000406437 LB pos=-0.442653 v=0.000689691 RB pos=-0.461571 v=-0.000588283[0m
-[0m[INFO] [1764500564.889946996, 428.308000000]: ????????????????????? LF pos=0.569733 v=0.000267005 RF pos=0.331366 v=-0.000366618 LB pos=-0.44262 v=0.00069495 RB pos=-0.461611 v=-0.000566178[0m
-[0m[INFO] [1764500565.364717044, 430.312000000]: ????????????????????? LF pos=0.569738 v=0.000266584 RF pos=0.331377 v=-0.000365823 LB pos=-0.442554 v=0.000693828 RB pos=-0.46169 v=-0.000546389[0m
-[0m[INFO] [1764500565.595312573, 431.314000000]: ????????????????????? LF pos=0.56974 v=0.000258138 RF pos=0.331382 v=-0.000404642 LB pos=-0.442521 v=0.000687417 RB pos=-0.461729 v=-0.000556945[0m
-[0m[INFO] [1764500565.835132845, 432.316000000]: ????????????????????? LF pos=0.569742 v=0.000266191 RF pos=0.331389 v=-0.000364838 LB pos=-0.442488 v=0.000692855 RB pos=-0.461768 v=-0.000542914[0m
-[0m[INFO] [1764500566.074433506, 433.318000000]: ????????????????????? LF pos=0.569745 v=0.000257712 RF pos=0.331394 v=-0.000403795 LB pos=-0.442455 v=0.000686225 RB pos=-0.461807 v=-0.000555888[0m
-[0m[INFO] [1764500566.319030652, 434.320000000]: ????????????????????? LF pos=0.569747 v=0.000265745 RF pos=0.3314 v=-0.000364072 LB pos=-0.442422 v=0.000691644 RB pos=-0.461846 v=-0.000541886[0m
-[0m[INFO] [1764500566.597129147, 435.322000000]: ????????????????????? LF pos=0.569749 v=0.000257016 RF pos=0.331405 v=-0.000401961 LB pos=-0.442388 v=0.000682924 RB pos=-0.461885 v=-0.000552949[0m
-[0m[INFO] [1764500566.835918060, 436.324000000]: ????????????????????? LF pos=0.569752 v=0.000264755 RF pos=0.331411 v=-0.000361221 LB pos=-0.442355 v=0.000686157 RB pos=-0.461924 v=-0.000537009[0m
-[0m[INFO] [1764500567.074871797, 437.326000000]: ????????????????????? LF pos=0.569754 v=0.000256028 RF pos=0.331416 v=-0.000398902 LB pos=-0.442322 v=0.000677359 RB pos=-0.461963 v=-0.000547924[0m
-[0m[INFO] [1764500567.315432257, 438.328000000]: ????????????????????? LF pos=0.569756 v=0.000263751 RF pos=0.331423 v=-0.000358243 LB pos=-0.442289 v=0.000680582 RB pos=-0.462002 v=-0.000532013[0m
-[0m[INFO] [1764500567.793891884, 440.332000000]: ????????????????????? LF pos=0.569761 v=0.000262747 RF pos=0.331434 v=-0.000355266 LB pos=-0.442222 v=0.000675008 RB pos=-0.46208 v=-0.000527014[0m
-[0m[INFO] [1764500568.029653078, 441.334000000]: ????????????????????? LF pos=0.569763 v=0.000254054 RF pos=0.331439 v=-0.000392786 LB pos=-0.442189 v=0.000666235 RB pos=-0.462119 v=-0.000537871[0m
-[0m[INFO] [1764500568.279136372, 442.336000000]: ????????????????????? LF pos=0.569765 v=0.000261743 RF pos=0.331445 v=-0.00035229 LB pos=-0.442156[33m[WARN] [1764500568.360637545, 442.630000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500568.859755394, 444.634000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500569.355344791, 446.650000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500569.829183154, 448.672000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500570.267264141, 450.676000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500570.744789445, 452.698000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500571.212019852, 454.714000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500571.676716019, 456.730000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500572.135764782, 458.734000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-aw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500565.768330474, 432.016000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500566.008515948, 433.036000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500566.253364347, 434.050000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500566.528104624, 435.064000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500566.770581194, 436.066000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500567.018768006, 437.080000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500567.262368071, 438.106000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500567.514680932, 439.132000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500567.751526657, 440.146000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500567.988676087, 441.148000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500568.230992103, 442.150000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500568.506459522, 443.170000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500568.756338574, 444.172000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500568.988181030, 445.186000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500569.249819334, 446.200000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500569.483799469, 447.214000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500569.727217044, 448.222000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500569.955779798, 449.230000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500570.171005720, 450.232000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500570.410095010, 451.234000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500570.635471107, 452.236000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500570.866516192, 453.250000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500571.111681140, 454.252000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500571.340267520, 455.254000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500571.576092617, 456.256000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500571.803107804, 457.282000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500572.036580984, 458.296000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500572.255749621, 459.292000000]: ??????[33m[WARN] [1764500572.558700392, 460.750000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500573.005964090, 462.754000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
- v=0.000669435 RB pos=-0.462158 v=-0.000522015[0m
-[0m[INFO] [1764500568.552838184, 443.332000000]: ????????????????????? LF pos=0.569768 v=0.000253067 RF pos=0.33145 v=-0.000389729 LB pos=-0.442123 v=0.000660675 RB pos=-0.462197 v=-0.000532842[0m
-[0m[INFO] [1764500568.794278439, 444.340000000]: ????????????????????? LF pos=0.56977 v=0.000260739 RF pos=0.331457 v=-0.000349315 LB pos=-0.442089 v=0.000663865 RB pos=-0.462236 v=-0.000517014[0m
-[0m[INFO] [1764500569.024106527, 445.342000000]: ????????????????????? LF pos=0.569772 v=0.00025208 RF pos=0.331462 v=-0.000386674 LB pos=-0.442056 v=0.000655117 RB pos=-0.462275 v=-0.000527813[0m
-[0m[INFO] [1764500569.283680902, 446.344000000]: ????????????????????? LF pos=0.569774 v=0.000259736 RF pos=0.331468 v=-0.00034634 LB pos=-0.442023 v=0.000658296 RB pos=-0.462314 v=-0.000512012[0m
-[0m[INFO] [1764500569.516087274, 447.346000000]: ????????????????????? LF pos=0.569777 v=0.000251093 RF pos=0.331473 v=-0.000383619 LB pos=-0.44199 v=0.000649561 RB pos=-0.462353 v=-0.000522782[0m
-[0m[INFO] [1764500569.755308275, 448.348000000]: ????????????????????? LF pos=0.569779 v=0.000258732 RF pos=0.331479 v=-0.000343366 LB pos=-0.441957 v=0.000652728 RB pos=-0.462392 v=-0.000507008[0m
-[0m[INFO] [1764500569.979583305, 449.350000000]: ????????????????????? LF pos=0.569781 v=0.000249732 RF pos=0.331484 v=-0.000380517 LB pos=-0.441924 v=0.000643409 RB pos=-0.462431 v=-0.000517112[0m
-[0m[INFO] [1764500570.194632370, 450.352000000]: ????????????????????? LF pos=0.569784 v=0.000256448 RF pos=0.331491 v=-0.000340201 LB pos=-0.44189 v=0.000645157 RB pos=-0.46247 v=-0.000499921[0m
-[0m[INFO] [1764500570.435740601, 451.354000000]: ????????????????????? LF pos=0.569786 v=0.000246941 RF pos=0.331496 v=-0.000377177 LB pos=-0.441857 v=0.000635076 RB pos=-0.462509 v=-0.000509205[0m
-[0m[INFO] [1764500570.663396588, 452.356000000]: ????????????????????? LF pos=0.569789 v=0.00025364 RF pos=0.331502 v=-0.000336941 LB pos=-0.441824 v=0.000636811 RB pos=-0.462548 v=-0.000492041[0m
-[0m[INFO] [1764500570.891202021, 453.358000000]: ????????????????????? LF pos=0.569791 v=0.000244149 RF pos=0.331507 v=-0.000373837 LB pos=-0.441791 v=0.000626741 RB pos=-0.462588 v=-0.000501296[0m
-[0m[INFO] [1764500571.365577733, 455.362000000]: ????????????????????? LF pos=0.569796 v=0.00024141 RF pos=0.331519 v=-0.000370669 LB pos=-0.441724 v=0.000618222 RB pos=-0.462666 v=-0.000492546[0m
-[0m[INFO] [1764500571.596854835, 456.364000000]: ????????????????????? LF pos=0.569798 v=0.000248042 RF pos=0.331525 v=-0.000330361 LB pos=-0.441691 v=0.000620465 RB pos=-0.462705 v=-0.00047107[0m
-[0m[INFO] [1764500571.821430499, 457.366000000]: ????????????????????? LF pos=0.5698 v=0.000238664 RF pos=0.33153 v=-0.000367349 LB pos=-0.441658 v=0.000609992 RB pos=-0.462744 v=-0.000481747[0m
-[0m[INFO] [1764500572.051857543, 458.368000000]: ????????????????????? LF pos=0.569803 v=0.000245278 RF pos=0.331537 v=-0.000327121 LB pos=-0.441625 v=0.000612222 RB pos=-0.462784 v=-0.000460305[0m
-[0m[INFO] [1764500572.271187260, 459.370000000]: ????????????????????? LF pos=0.569805 v=0.000235916 RF pos=0.331541 v=-0.000364029 LB pos=-0.441592 v=0.000601762 RB pos=-0.462823 v=-0.000470947[0m
-[0m[INFO] [1764500572.476938744, 460.372000000]: ????????????????????? LF pos=0.569808 v=0.000242514 RF pos=0.331548 v=-0.000323882 LB pos=-0.441558 v=0.000603978 RB pos=-0.462862 v=-0.000449537[0m
-[0m[INFO] [1764500572.695318030, 461.374000000]: ????????????????????? LF pos=0.56981 v=0.000233168 RF pos=0.331553 v=-0.000360711 LB pos=-0.441525 v=0.00059353 RB pos=-0.462901 v=-0.000460144[0m
-[0m[INFO] [1764500572.920232308, 462.376000000]: ????????????????????? LF pos=0.569812 v=0.000239749 RF pos=0.33156 v=-0.000320623 LB pos=-0.441492 v=0.000595756 RB pos=-0.46294 v=-0.000438825[0m
-[0m[INFO] [1764500573.151077623, 463.378000000]: ????????????????????? LF pos=0.569815 v=0.000230412 RF pos=0.331564 v=-0.000357359 LB pos=-0.441459 v=0.000585248 RB pos=-0.462979 v=-0.000450962[0m
-[0m[INFO] [1764500573.379346797, 464.374000000]: ????????????[33m[WARN] [1764500573.469890554, 464.770000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500573.898117297, 466.774000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500574.317683074, 468.790000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500574.730397785, 470.794000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500575.142414063, 472.810000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500575.555293107, 474.814000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500575.962751813, 476.836000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500576.373037280, 478.852000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500576.791133043, 480.874000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500577.208883425, 482.896000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500577.624708370, 484.900000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500578.029530377, 486.910000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-??????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500572.460986867, 460.294000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500572.681528169, 461.320000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500572.908841254, 462.334000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500573.147898693, 463.354000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500573.379288775, 464.374000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500573.612766380, 465.400000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500573.824163817, 466.420000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500574.031856042, 467.434000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500574.237699545, 468.436000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500574.455595988, 469.450000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500574.656985156, 470.452000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500574.865817441, 471.454000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500575.070370993, 472.474000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500575.277606945, 473.476000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500575.488406886, 474.484000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500575.691398666, 475.492000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500575.894173109, 476.494000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500576.099908335, 477.514000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500576.311059939, 478.534000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500576.519991995, 479.554000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500576.731688691, 480.574000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500576.940664677, 481.594000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500577.149222171, 482.614000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500577.369534158, 483.634000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500577.575264011, 484.654000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500577.784228723, 485.674000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500577.986848912, 486.694000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INF????????? LF pos=0.569817 v=0.000236941 RF pos=0.331571 v=-0.000317323 LB pos=-0.441426 v=0.000587434 RB pos=-0.463018 v=-0.000430863[0m
-[0m[INFO] [1764500573.608487921, 465.382000000]: ????????????????????? LF pos=0.56982 v=0.000227609 RF pos=0.331576 v=-0.000354004 LB pos=-0.441393 v=0.00057689 RB pos=-0.463058 v=-0.000443324[0m
-[0m[INFO] [1764500573.817628331, 466.384000000]: ????????????????????? LF pos=0.569822 v=0.00023412 RF pos=0.331583 v=-0.000314052 LB pos=-0.441359 v=0.000579063 RB pos=-0.463097 v=-0.000423261[0m
-[0m[INFO] [1764500574.022150690, 467.386000000]: ????????????????????? LF pos=0.569824 v=0.000224804 RF pos=0.331588 v=-0.00035065 LB pos=-0.441326 v=0.000568532 RB pos=-0.463136 v=-0.000435685[0m
-[0m[INFO] [1764500574.226492877, 468.388000000]: ????????????????????? LF pos=0.569827 v=0.000231299 RF pos=0.331594 v=-0.000310781 LB pos=-0.441293 v=0.000570691 RB pos=-0.463175 v=-0.000415656[0m
-[0m[INFO] [1764500574.442637706, 469.390000000]: ????????????????????? LF pos=0.569829 v=0.000221999 RF pos=0.331599 v=-0.000347297 LB pos=-0.44126 v=0.000560172 RB pos=-0.463214 v=-0.000428043[0m
-[0m[INFO] [1764500574.853243748, 471.394000000]: ????????????????????? LF pos=0.569834 v=0.000218986 RF pos=0.331611 v=-0.000344331 LB pos=-0.441194 v=0.000551938 RB pos=-0.463292 v=-0.000421021[0m
-[0m[INFO] [1764500575.053810794, 472.396000000]: ????????????????????? LF pos=0.569836 v=0.000225841 RF pos=0.331618 v=-0.000296466 LB pos=-0.441161 v=0.00055424 RB pos=-0.463331 v=-0.000399681[0m
-[0m[INFO] [1764500575.261929325, 473.398000000]: ????????????????????? LF pos=0.569839 v=0.00021599 RF pos=0.331623 v=-0.000341325 LB pos=-0.441128 v=0.000543771 RB pos=-0.46337 v=-0.00041399[0m
-[0m[INFO] [1764500575.470920035, 474.400000000]: ????????????????????? LF pos=0.569841 v=0.000223161 RF pos=0.331629 v=-0.000287867 LB pos=-0.441094 v=0.000546087 RB pos=-0.463409 v=-0.000391529[0m
-[0m[INFO] [1764500575.673782465, 475.402000000]: ????????????????????? LF pos=0.569843 v=0.000212993 RF pos=0.331634 v=-0.00033832 LB pos=-0.441061 v=0.000535603 RB pos=-0.463448 v=-0.000406958[0m
-[0m[INFO] [1764500575.875199746, 476.404000000]: ????????????????????? LF pos=0.569846 v=0.000220481 RF pos=0.331641 v=-0.000279268 LB pos=-0.441028 v=0.000537933 RB pos=-0.463487 v=-0.000383375[0m
-[0m[INFO] [1764500576.283991467, 478.408000000]: ????????????????????? LF pos=0.569851 v=0.000217799 RF pos=0.331652 v=-0.000270669 LB pos=-0.440962 v=0.000529779 RB pos=-0.463566 v=-0.000375219[0m
-[0m[INFO] [1764500576.488992089, 479.410000000]: ????????????????????? LF pos=0.569853 v=0.000206997 RF pos=0.331657 v=-0.000332313 LB pos=-0.440929 v=0.000519264 RB pos=-0.463605 v=-0.000392886[0m
-[0m[INFO] [1764500576.699672598, 480.412000000]: ????????????????????? LF pos=0.569855 v=0.000215117 RF pos=0.331664 v=-0.000262069 LB pos=-0.440896 v=0.000521623 RB pos=-0.463644 v=-0.000367061[0m
-[0m[INFO] [1764500576.901982148, 481.414000000]: ????????????????????? LF pos=0.569858 v=0.000203998 RF pos=0.331669 v=-0.000329311 LB pos=-0.440863 v=0.000511094 RB pos=-0.463683 v=-0.000385847[0m
-[0m[INFO] [1764500577.316991842, 483.418000000]: ????????????????????? LF pos=0.569862 v=0.000200998 RF pos=0.331681 v=-0.00032631 LB pos=-0.440797 v=0.000502922 RB pos=-0.463761 v=-0.000378806[0m
-[0m[INFO] [1764500577.527832640, 484.420000000]: ????????????????????? LF pos=0.569865 v=0.000209751 RF pos=0.331688 v=-0.000244869 LB pos=-0.440764 v=0.00050531 RB pos=-0.4638 v=-0.000350739[0m
-[0m[INFO] [1764500577.731578408, 485.422000000]: ????????????????????? LF pos=0.569867 v=0.000197996 RF pos=0.331693 v=-0.00032331 LB pos=-0.440731 v=0.00049475 RB pos=-0.463839 v=-0.000371763[0m
-[0m[INFO] [1764500578.138998796, 487.426000000]: ????????????????????? LF pos=0.569872 v=0.00019504 RF pos=0.331704 v=-0.000320479 LB pos=-0.440665 v=0.000486356 RB pos=-0.463918 v=-0.00036573[0m
-[0m[INFO] [1764500578.353222963, 488.428000000]: ????????????????????? LF pos=0.569874 v=0.000204393 RF pos=0.331711 v=-0.000228418 LB pos=-0.440632 v=0.000489646 RB pos=-0.46[33m[WARN] [1764500578.458111420, 488.914000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500578.869519382, 490.930000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500579.285452513, 492.934000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500579.721313376, 494.950000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500580.138525019, 496.954000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500580.564346572, 498.976000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500580.977431028, 500.980000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500581.381339532, 502.990000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500581.797413119, 505.006000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500582.204824750, 507.010000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500582.610087156, 509.014000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500583.034850504, 511.030000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-3957 v=-0.000331869[0m
-[0m[INFO] [1764500578.565169442, 489.430000000]: ????????????????????? LF pos=0.569877 v=0.000192168 RF pos=0.331716 v=-0.000317881 LB pos=-0.440599 v=0.00047889 RB pos=-0.463996 v=-0.000357948[0m
-[0m[INFO] [1764500578.767499042, 490.432000000]: ????????????????????? LF pos=0.569879 v=0.00020178 RF pos=0.331723 v=-0.000221153 LB pos=-0.440566 v=0.000482211 RB pos=-0.464035 v=-0.000323068[0m
-[0m[INFO] [1764500578.972598122, 491.428000000]: ????????????????????? LF pos=0.569882 v=0.000189298 RF pos=0.331728 v=-0.000315256 LB pos=-0.440533 v=0.000471425 RB pos=-0.464074 v=-0.000350674[0m
-[0m[INFO] [1764500579.176212111, 492.436000000]: ????????????????????? LF pos=0.569884 v=0.000199159 RF pos=0.331735 v=-0.000213757 LB pos=-0.4405 v=0.000474792 RB pos=-0.464113 v=-0.000315141[0m
-[0m[INFO] [1764500579.401604425, 493.438000000]: ????????????????????? LF pos=0.569886 v=0.000186412 RF pos=0.33174 v=-0.000312576 LB pos=-0.440467 v=0.000463955 RB pos=-0.464152 v=-0.000344116[0m
-[0m[INFO] [1764500579.610073718, 494.434000000]: ????????????????????? LF pos=0.569889 v=0.000196533 RF pos=0.331747 v=-0.000206371 LB pos=-0.440434 v=0.000467351 RB pos=-0.464191 v=-0.000307531[0m
-[0m[INFO] [1764500579.827418419, 495.442000000]: ????????????????????? LF pos=0.569891 v=0.000183524 RF pos=0.331752 v=-0.000309898 LB pos=-0.440401 v=0.000456483 RB pos=-0.46423 v=-0.000337559[0m
-[0m[INFO] [1764500580.032742214, 496.444000000]: ????????????????????? LF pos=0.569894 v=0.000193907 RF pos=0.331759 v=-0.000198984 LB pos=-0.440368 v=0.000459908 RB pos=-0.464269 v=-0.000299919[0m
-[0m[INFO] [1764500580.250478707, 497.446000000]: ????????????????????? LF pos=0.569896 v=0.000180635 RF pos=0.331764 v=-0.000307221 LB pos=-0.440335 v=0.000449011 RB pos=-0.464308 v=-0.000330999[0m
-[0m[INFO] [1764500580.662554484, 499.450000000]: ????????????????????? LF pos=0.569901 v=0.000181763 RF pos=0.331776 v=-0.000294875 LB pos=-0.440269 v=0.000443331 RB pos=-0.464386 v=-0.000316573[0m
-[0m[INFO] [1764500580.862199675, 500.452000000]: ????????????????????? LF pos=0.569903 v=0.000184842 RF pos=0.331782 v=-0.00028472 LB pos=-0.440236 v=0.00044176 RB pos=-0.464425 v=-0.000307044[0m
-[0m[INFO] [1764500581.073150105, 501.454000000]: ????????????????????? LF pos=0.569906 v=0.000162032 RF pos=0.331789 v=-0.000323424 LB pos=-0.440203 v=0.000429997 RB pos=-0.464464 v=-0.000327957[0m
-[0m[INFO] [1764500581.272887003, 502.456000000]: ????????????????????? LF pos=0.569908 v=0.000182828 RF pos=0.331795 v=-0.000206456 LB pos=-0.44017 v=0.000435859 RB pos=-0.464503 v=-0.000287247[0m
-[0m[INFO] [1764500581.687215145, 504.460000000]: ????????????????????? LF pos=0.569913 v=0.000180719 RF pos=0.331807 v=-0.000257683 LB pos=-0.440104 v=0.00042898 RB pos=-0.464581 v=-0.000275156[0m
-[0m[INFO] [1764500581.889688994, 505.462000000]: ????????????????????? LF pos=0.569916 v=0.000167262 RF pos=0.331813 v=-0.000288587 LB pos=-0.440071 v=0.000418944 RB pos=-0.46462 v=-0.000293473[0m
-[0m[INFO] [1764500582.091007057, 506.464000000]: ????????????????????? LF pos=0.569918 v=0.000178771 RF pos=0.33182 v=-0.000138375 LB pos=-0.440038 v=0.000420249 RB pos=-0.464659 v=-0.000280021[0m
-[0m[INFO] [1764500582.295044464, 507.466000000]: ????????????????????? LF pos=0.56992 v=0.000175628 RF pos=0.331825 v=-0.000210049 LB pos=-0.440005 v=0.000416473 RB pos=-0.464698 v=-0.000271749[0m
-[0m[INFO] [1764500582.499513301, 508.468000000]: ????????????????????? LF pos=0.569923 v=0.000173854 RF pos=0.331831 v=-0.000255999 LB pos=-0.439972 v=0.000411486 RB pos=-0.464737 v=-0.000274268[0m
-[0m[INFO] [1764500582.702229064, 509.470000000]: ????????????????????? LF pos=0.569925 v=0.000166544 RF pos=0.331837 v=-0.000270545 LB pos=-0.439939 v=0.000405707 RB pos=-0.464776 v=-0.000273664[0m
-[0m[INFO] [1764500582.919977815, 510.472000000]: ????????????????????? LF pos=0.569928 v=0.000153516 RF pos=0.331844 v=-0.000303331 LB pos=-0.439906 v=0.000397882 RB pos=-0.464815 v=-0.000291706[0m
-[0m[INFO] [1764500583.122792797, 511.474000000]: ????????????????????? LF pos=0.5699[33m[WARN] [1764500583.434456499, 513.034000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-O] [1764500578.195527117, 487.696000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500578.413110541, 488.710000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500578.624016555, 489.712000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500578.826561414, 490.720000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500579.036352430, 491.740000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500579.242013690, 492.742000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500579.468445990, 493.750000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500579.678379179, 494.752000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500579.895276210, 495.754000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500580.099319617, 496.774000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500580.320380889, 497.794000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500580.526844398, 498.814000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500580.740593249, 499.834000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500580.952389314, 500.854000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500581.154793540, 501.856000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500581.357165503, 502.870000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500581.568645673, 503.872000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500581.770646954, 504.874000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500581.976220587, 505.882000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500582.180240495, 506.890000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500582.381325265, 507.892000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500582.586947546, 508.894000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500582.805295498, 509.914000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500583.016780449, 510.940000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500583.226333914, 511.960000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500583.422246135, 512.974000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500583.633842653, 513.994000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500583.844338775, 515.014000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_t[33m[WARN] [1764500583.850196083, 515.038000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500584.269505213, 517.054000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500584.694335676, 519.082000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500585.160265826, 521.092000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500585.595005833, 523.096000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500586.044187001, 525.112000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500586.463538478, 527.146000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500586.901611976, 529.156000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500587.315343150, 531.172000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500587.770436966, 533.200000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500588.233573103, 535.210000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-3 v=0.000167675 RF pos=0.33185 v=-0.000254387 LB pos=-0.439873 v=0.000399829 RB pos=-0.464854 v=-0.00026363[0m
-[0m[INFO] [1764500583.326288722, 512.476000000]: ????????????????????? LF pos=0.569933 v=0.000168511 RF pos=0.331856 v=-0.000243697 LB pos=-0.43984 v=0.000398177 RB pos=-0.464893 v=-0.00025192[0m
-[0m[INFO] [1764500583.527395867, 513.478000000]: ????????????????????? LF pos=0.569935 v=0.00016712 RF pos=0.331862 v=-0.000216968 LB pos=-0.439807 v=0.000394536 RB pos=-0.464932 v=-0.000248006[0m
-[0m[INFO] [1764500583.944672396, 515.482000000]: ????????????????????? LF pos=0.56994 v=0.00016485 RF pos=0.331875 v=-0.000144311 LB pos=-0.439742 v=0.000386003 RB pos=-0.46501 v=-0.000247078[0m
-[0m[INFO] [1764500584.146432983, 516.484000000]: ????????????????????? LF pos=0.569942 v=0.000162017 RF pos=0.331881 v=-0.00017161 LB pos=-0.439709 v=0.000382066 RB pos=-0.465049 v=-0.000242799[0m
-[0m[INFO] [1764500584.563099062, 518.488000000]: ????????????????????? LF pos=0.569947 v=0.000156634 RF pos=0.331893 v=-0.000258852 LB pos=-0.439643 v=0.000373464 RB pos=-0.465127 v=-0.000241371[0m
-[0m[INFO] [1764500585.028336578, 520.492000000]: ????????????????????? LF pos=0.569952 v=0.000156156 RF pos=0.331905 v=-0.000248725 LB pos=-0.439577 v=0.000367402 RB pos=-0.465205 v=-0.000224326[0m
-[0m[INFO] [1764500585.245091445, 521.494000000]: ????????????????????? LF pos=0.569955 v=0.00015566 RF pos=0.331912 v=-0.000248034 LB pos=-0.439544 v=0.000363586 RB pos=-0.465244 v=-0.000228763[0m
-[0m[INFO] [1764500585.464303347, 522.496000000]: ????????????????????? LF pos=0.569957 v=0.000152875 RF pos=0.331918 v=-0.000230322 LB pos=-0.439511 v=0.000359534 RB pos=-0.465283 v=-0.000220914[0m
-[0m[INFO] [1764500585.689015429, 523.498000000]: ????????????????????? LF pos=0.56996 v=0.000152066 RF pos=0.331924 v=-0.000222061 LB pos=-0.439479 v=0.00035618 RB pos=-0.465322 v=-0.000215972[0m
-[0m[INFO] [1764500585.909432925, 524.500000000]: ????????????????????? LF pos=0.569962 v=0.00015035 RF pos=0.33193 v=-0.000217917 LB pos=-0.439446 v=0.0003523 RB pos=-0.465361 v=-0.000213358[0m
-[0m[INFO] [1764500586.329660443, 526.504000000]: ????????????????????? LF pos=0.569967 v=0.000143786 RF pos=0.331943 v=-0.000247998 LB pos=-0.43938 v=0.000343055 RB pos=-0.465439 v=-0.000212848[0m
-[0m[INFO] [1764500586.536858418, 527.506000000]: ????????????????????? LF pos=0.569969 v=0.000145541 RF pos=0.331949 v=-0.00023139 LB pos=-0.439347 v=0.000340761 RB pos=-0.465478 v=-0.000203353[0m
-[0m[INFO] [1764500586.754308185, 528.502000000]: ????????????????????? LF pos=0.569972 v=0.000143842 RF pos=0.331955 v=-0.000238941 LB pos=-0.439314 v=0.000336665 RB pos=-0.465516 v=-0.000200855[0m
-[0m[INFO] [1764500586.972525456, 529.510000000]: ????????????????????? LF pos=0.569974 v=0.000141755 RF pos=0.331961 v=-0.000238946 LB pos=-0.439282 v=0.000332555 RB pos=-0.465555 v=-0.00019967[0m
-[0m[INFO] [1764500587.180434702, 530.512000000]: ????????????????????? LF pos=0.569977 v=0.00014015 RF pos=0.331968 v=-0.00023777 LB pos=-0.439249 v=0.000328782 RB pos=-0.465594 v=-0.000196155[0m
-[0m[INFO] [1764500587.384406514, 531.508000000]: ????????????????????? LF pos=0.569979 v=0.000139405 RF pos=0.331974 v=-0.000234429 LB pos=-0.439216 v=0.000325306 RB pos=-0.465633 v=-0.00019146[0m
-[0m[INFO] [1764500587.614522426, 532.510000000]: ????????????????????? LF pos=0.569982 v=0.000137669 RF pos=0.33198 v=-0.000229026 LB pos=-0.439183 v=0.000321425 RB pos=-0.465672 v=-0.000188307[0m
-[0m[INFO] [1764500587.841654073, 533.512000000]: ????????????????????? LF pos=0.569984 v=0.000136494 RF pos=0.331986 v=-0.000222232 LB pos=-0.43915 v=0.000317723 RB pos=-0.465711 v=-0.000184691[0m
-[0m[INFO] [1764500588.071483220, 534.520000000]: ????????????????????? LF pos=0.569986 v=0.000134791 RF pos=0.331992 v=-0.000232244 LB pos=-0.439118 v=0.000314045 RB pos=-0.46575 v=-0.000181396[0m
-[0m[INFO] [1764500588.300344052, 535.522000000]: ????????????????????? LF pos=0.569989 v=0.000135142 RF pos=0.331998 v=-0.000226619 LB pos=-0.439085 v=0.000310851 RB pos=-0.465789 v=-0.000176027[0m
-[0m[IN[33m[WARN] [1764500588.682557514, 537.214000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500589.129207412, 539.218000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500589.575096831, 541.234000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-[33m[WARN] [1764500589.984593133, 543.238000000]: yaw_publisher: ????????? odom ?????? (tf stale=1 ok=1)[0m
-f=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500584.057637700, 516.034000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500584.269634063, 517.054000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500584.480078372, 518.062000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500584.694622582, 519.082000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500584.935417784, 520.090000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500585.160404417, 521.092000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500585.381487485, 522.094000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500585.595065153, 523.096000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500585.822327426, 524.110000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500586.044224940, 525.112000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500586.251715553, 526.114000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500586.463642632, 527.146000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500586.676803379, 528.154000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500586.901826043, 529.156000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500587.111055318, 530.170000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500587.315530775, 531.172000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500587.534815533, 532.180000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500587.770562222, 533.200000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500587.998890439, 534.214000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500588.237079958, 535.234000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500588.471232088, 536.236000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500588.690752861, 537.250000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500588.895960053, 538.252000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500589.136313165, 539.254000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500589.376369108, 540.292000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500589.587637162, 541.294000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500589.795254754, 542.314000000]: ????????????: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500590.006125195, 543.334000000]: ??????????[33m[WARN] [1764500590.124247011, 543.892000000]: ?????????????????????????????????[0m
-FO] [1764500588.534568841, 536.524000000]: ????????????????????? LF pos=0.569991 v=0.00013338 RF pos=0.332005 v=-0.000208136 LB pos=-0.439052 v=0.000306799 RB pos=-0.465828 v=-0.00017261[0m
-[0m[INFO] [1764500588.746757430, 537.526000000]: ????????????????????? LF pos=0.569994 v=0.00012934 RF pos=0.332011 v=-0.000206765 LB pos=-0.439019 v=0.00030219 RB pos=-0.465867 v=-0.00017139[0m
-[0m[INFO] [1764500588.948913346, 538.522000000]: ????????????????????? LF pos=0.569996 v=0.000131938 RF pos=0.332017 v=-0.000221158 LB pos=-0.438987 v=0.000299946 RB pos=-0.465906 v=-0.000164119[0m
-[0m[INFO] [1764500589.206851279, 539.524000000]: ????????????????????? LF pos=0.569998 v=0.000124967 RF pos=0.332023 v=-0.000183051 LB pos=-0.438954 v=0.000294124 RB pos=-0.465945 v=-0.000165963[0m
-[0m[INFO] [1764500589.425792971, 540.526000000]: ????????????????????? LF pos=0.570001 v=0.000126874 RF pos=0.332029 v=-0.000231064 LB pos=-0.438921 v=0.000292008 RB pos=-0.465984 v=-0.000159631[0m
-[0m[INFO] [1764500589.633753373, 541.534000000]: ????????????????????? LF pos=0.570003 v=0.000128611 RF pos=0.332035 v=-0.000185191 LB pos=-0.438888 v=0.000288814 RB pos=-0.466023 v=-0.000152827[0m
-[0m[INFO] [1764500589.838984162, 542.536000000]: ????????????????????? LF pos=0.570006 v=0.000124299 RF pos=0.332042 v=-0.000164416 LB pos=-0.438856 v=0.000283699 RB pos=-0.466062 v=-0.000151976[0m
-[0m[INFO] [1764500590.045954297, 543.538000000]: ????????????????????? LF pos=0.570008 v=0.000121937 RF pos=0.332048 v=-0.000224169 LB pos=-0.438823 v=0.000280534 RB pos=-0.466101 v=-0.00014973[0m
-[0m[INFO] [1764500590.126301369, 543.910000000]: ?????????????????????[0m
-[0m[INFO] [1764500590.126375566, 543.910000000]: ?????????????????????: ????????????=0.007 (a=6371985.887, b=0.274, c=-300.000)[0m
-[0m[INFO] [1764500590.250592054, 544.420000000]: ?????????????????????: ????????????=0.659 (a=503.184, b=122.150, c=-298.979)[0m
-[0m[INFO] [1764500590.274668845, 544.540000000]: ????????????????????? LF pos=3.45935 v=5.31302 RF pos=3.44181 v=6.72929 LB pos=2.01056 v=7.47555 RB pos=1.85747 v=9.4767[0m
-[0m[INFO] [1764500590.368318933, 544.960000000]: ?????????????????????: ????????????=0.880 (a=305.415, b=71.020, c=-299.305)[0m
-[0m[INFO] [1764500590.472955579, 545.470000000]: ?????????????????????: ????????????=0.337 (a=1858.873, b=257.761, c=-298.731)[0m
-[0m[INFO] [1764500590.487854048, 545.542000000]: ????????????????????? LF pos=8.73153 v=7.81125 RF pos=9.5391 v=7.12837 LB pos=7.57126 v=6.84123 RB pos=7.96104 v=6.32378[0m
-[0m[INFO] [1764500590.580575856, 545.974000000]: ?????????????????????: ????????????=0.896 (a=325.118, b=43.536, c=-299.739)[0m
-[0m[INFO] [1764500590.685894808, 546.484000000]: ?????????????????????: ????????????=0.956 (a=247.079, b=76.691, c=-299.146)[0m
-[0m[INFO] [1764500590.698721880, 546.544000000]: ????????????????????? LF pos=13.5253 v=6.28344 RF pos=15.3169 v=8.00155 LB pos=12.435 v=-16.9388 RB pos=14.637 v=9.17764[0m
-[0m[INFO] [1764500590.787145006, 546.988000000]: ?????????????????????: ????????????=0.894 (a=336.394, b=34.190, c=-299.565)[0m
-[0m[INFO] [1764500590.892887129, 547.492000000]: ?????????????????????: ????????????=0.431 (a=1467.898, b=63.290, c=-299.570)[0m
-[0m[INFO] [1764500590.999720287, 547.996000000]: ?????????????????????: ????????????=0.851 (a=353.776, b=50.522, c=-299.477)[0m
-[0m[INFO] [1764500591.103582878, 548.506000000]: ?????????????????????: ????????????=0.993 (a=275.862, b=27.702, c=-299.653)[0m
-[0m[INFO] [1764500591.112799910, 548.548000000]: ????????????????????? LF pos=24.7223 v=4.02824 RF pos=26.9371 v=4.67396 LB pos=23.9941 v=4.11526 RB pos=25.5154 v=5.0315[0m
-[0m[INFO] [1764500591.211448514, 549.010000000]: ?????????????????????: ????????????=0.953 (a=251.327, b=74.658, c=-299.252)[0m
-[0m[INFO] [1764500591.325399601, 549.520000000]: ?????????????????????: ????????????=0.768 (a=393.292, b=87.284, c=-299.332)[0m
-[0m[INFO] [1764500591.332662738, 549.550000000]: ????????????????????? LF pos=30.1343 v=4.77904 RF pos=32.6496 v=4.61324 LB pos=29.742 v=6.29436 RB pos=30.6438 v=7.3[33m[WARN] [1764500593.469875141, 559.270000000]: ?????????????????????????????????[0m
-0358[0m
-[0m[INFO] [1764500591.457507550, 550.054000000]: ?????????????????????: ????????????=0.855 (a=331.825, b=66.355, c=-299.464)[0m
-[0m[INFO] [1764500591.566339372, 550.552000000]: ????????????????????? LF pos=35.4764 v=6.55359 RF pos=38.4489 v=5.50057 LB pos=35.5767 v=8.33769 RB pos=36.0807 v=6.49876[0m
-[0m[INFO] [1764500591.566432062, 550.552000000]: ?????????????????????: ????????????=0.867 (a=298.940, b=85.908, c=-299.112)[0m
-[0m[INFO] [1764500591.682256093, 551.074000000]: ?????????????????????: ????????????=0.923 (a=310.735, b=38.228, c=-299.710)[0m
-[0m[INFO] [1764500591.787540312, 551.554000000]: ????????????????????? LF pos=41.2846 v=5.70153 RF pos=44.8221 v=5.41541 LB pos=41.0823 v=3.37622 RB pos=41.0253 v=3.18997[0m
-[0m[INFO] [1764500591.791752829, 551.578000000]: ?????????????????????: ????????????=0.996 (a=260.630, b=41.401, c=-299.716)[0m
-[0m[INFO] [1764500591.905756814, 552.094000000]: ?????????????????????: ????????????=0.321 (a=2530.706, b=118.558, c=-299.478)[0m
-[0m[INFO] [1764500592.012616030, 552.556000000]: ????????????????????? LF pos=46.4911 v=6.20089 RF pos=50.3614 v=6.0991 LB pos=46.6322 v=9.01278 RB pos=46.2021 v=6.90449[0m
-[0m[INFO] [1764500592.022773024, 552.592000000]: ?????????????????????: ????????????=0.775 (a=467.700, b=24.675, c=-299.677)[0m
-[0m[INFO] [1764500592.135648802, 553.108000000]: ?????????????????????: ????????????=0.751 (a=387.562, b=106.701, c=-299.030)[0m
-[0m[INFO] [1764500592.232070388, 553.558000000]: ????????????????????? LF pos=52.0624 v=3.05684 RF pos=55.4972 v=3.24708 LB pos=52.7929 v=3.73086 RB pos=51.4232 v=3.70902[0m
-[0m[INFO] [1764500592.247251314, 553.612000000]: ?????????????????????: ????????????=0.843 (a=304.652, b=97.644, c=-299.057)[0m
-[0m[INFO] [1764500592.356656025, 554.128000000]: ?????????????????????: ????????????=0.844 (a=318.779, b=85.587, c=-299.295)[0m
-[0m[INFO] [1764500592.447011401, 554.560000000]: ????????????????????? LF pos=57.2128 v=6.67459 RF pos=61.5381 v=6.76148 LB pos=58.676 v=16.1507 RB pos=57.2955 v=6.24313[0m
-[0m[INFO] [1764500592.463021256, 554.638000000]: ?????????????????????: ????????????=0.782 (a=366.312, b=96.241, c=-299.076)[0m
-[0m[INFO] [1764500592.575227419, 555.160000000]: ?????????????????????: ????????????=0.839 (a=370.582, b=46.657, c=-299.763)[0m
-[0m[INFO] [1764500592.663480479, 555.562000000]: ????????????????????? LF pos=62.6124 v=9.78179 RF pos=67.6399 v=1.91302 LB pos=63.9045 v=10.6046 RB pos=63.3096 v=6.60287[0m
-[0m[INFO] [1764500592.686005366, 555.664000000]: ?????????????????????: ????????????=0.097 (a=15376.813, b=1542.952, c=-295.356)[0m
-[0m[INFO] [1764500592.808378116, 556.168000000]: ?????????????????????: ????????????=0.933 (a=303.507, b=38.126, c=-299.708)[0m
-[0m[INFO] [1764500592.889644803, 556.564000000]: ????????????????????? LF pos=68.0969 v=7.35689 RF pos=73.7838 v=5.74968 LB pos=70.1084 v=4.0717 RB pos=68.9736 v=1.4652[0m
-[0m[INFO] [1764500592.911782361, 556.672000000]: ?????????????????????: ????????????=0.091 (a=19922.126, b=1434.203, c=-296.606)[0m
-[0m[INFO] [1764500593.016027524, 557.182000000]: ?????????????????????: ????????????=0.792 (a=350.610, b=100.176, c=-299.054)[0m
-[0m[INFO] [1764500593.104358415, 557.566000000]: ????????????????????? LF pos=73.6075 v=7.66325 RF pos=80.1049 v=4.61492 LB pos=76.557 v=5.95105 RB pos=73.8448 v=1.10265[0m
-[0m[INFO] [1764500593.130595920, 557.686000000]: ?????????????????????: ????????????=0.880 (a=344.920, b=36.770, c=-299.710)[0m
-[0m[INFO] [1764500593.239330982, 558.190000000]: ?????????????????????: ????????????=0.928 (a=259.112, b=81.974, c=-299.123)[0m
-[0m[INFO] [1764500593.321359603, 558.568000000]: ????????????????????? LF pos=78.7418 v=2.19621 RF pos=85.7471 v=4.71506 LB pos=82.5335 v=4.36531 RB pos=79.6334 v=5.3564[0m
-[0m[INFO] [1764500593.347930728, 558.694000000]: ?????????????????????: ????????????=0.818 (a=413.356, b=28.317, c=-299.683)[0m
-[0m[INFO] [1764500593.452175086, 559.198000000]: ?????????????????????: ????????????=0.087 (a=17445.366, b=1880.262, c=-294.053)[0m
-[0m[INFO] [1764500593.535877993, 559.570000000]: ????????????????????? LF pos=84.5541 v=6.14914 RF pos=92.1964 v=4.63855 LB pos=88.1591 v=5.84187 RB pos=85.3729 v=3.63353[0m
-[0m[INFO] [1764500593.569744885, 559.696000000]: ?????????????????????: ????????????=0.728 (a=457.257, b=78.628, c=-299.314)[0m
-[0m[INFO] [1764500593.693009217, 560.206000000]: ?????????????????????: ????????????=0.908 (a=326.005, b=33.669, c=-299.637)[0m
-[0m[INFO] [1764500593.775263149, 560.572000000]: ????????????????????? LF pos=89.5019 v=5.63485 RF pos=97.415 v=3.52158 LB pos=93.515 v=4.96262 RB pos=90.8816 v=4.6871[0m
-[0m[INFO] [1764500593.808373666, 560.716000000]: ?????????????????????: ????????????=0.770 (a=459.518, b=35.536, c=-299.711)[0m
-[0m[INFO] [1764500593.921620827, 561.214000000]: ?????????????????????: ????????????=0.651 (a=670.152, b=23.590, c=-299.647)[0m
-[0m[INFO] [1764500593.997027789, 561.574000000]: ????????????????????? LF pos=95.1696 v=5.04772 RF pos=102.362 v=6.11356 LB pos=98.3721 v=5.7927 RB pos=96.1444 v=9.67123[0m
-[0m[INFO] [1764500594.028901662, 561.724000000]: ?????????????????????: ????????????=0.772 (a=455.418, b=36.753, c=-299.656)[0m
-[0m[INFO] [1764500594.136860372, 562.228000000]: ?????????????????????: ????????????=0.862 (a=357.557, b=39.550, c=-299.611)[0m
-[0m[INFO] [1764500594.213234118, 562.576000000]: ????????????????????? LF pos=100.583 v=4.65252 RF pos=107.602 v=4.00909 LB pos=103.641 v=2.84757 RB pos=101.409 v=2.13622[0m
-[0m[INFO] [1764500594.250850644, 562.732000000]: ?????????????????????: ????????????=0.863 (a=294.140, b=92.694, c=-299.079)[0m
-[0m[INFO] [1764500594.363876821, 563.236000000]: ?????????????????????: ????????????=0.597 (a=612.381, b=135.758, c=-298.936)[0m
-[0m[INFO] [1764500594.430469201, 563.578000000]: ????????????????????? LF pos=105.864 v=5.7215 RF pos=112.698 v=6.59291 LB pos=108.74 v=6.39785 RB pos=106.682 v=9.69413[0m
-[0m[INFO] [1764500594.463469998, 563.746000000]: ?????????????????????: ????????????=0.648 (a=524.289, b=121.300, c=-298.988)[0m
-[0m[INFO] [1764500594.571389583, 564.244000000]: ?????????????????????: ????????????=0.755 (a=473.475, b=39.813, c=-299.645)[0m
-[0m[INFO] [1764500594.653550751, 564.580000000]: ????????????????????? LF pos=111.26 v=3.95589 RF pos=117.93 v=4.55846 LB pos=113.941 v=1.51444 RB pos=111.879 v=2.76334[0m
-[0m[INFO] [1764500594.694996209, 564.754000000]: ?????????????????????: ????????????=0.659 (a=518.476, b=111.975, c=-299.032)[0m
-[0m[INFO] [1764500594.809883308, 565.264000000]: ?????????????????????: ????????????=0.773 (a=456.717, b=35.022, c=-299.630)[0m
-[0m[INFO] [1764500594.878640426, 565.582000000]: ????????????????????? LF pos=116.692 v=5.00961 RF pos=123.163 v=6.64214 LB pos=119.206 v=4.98664 RB pos=117.214 v=9.6443[0m
-[0m[INFO] [1764500594.927914208, 565.774000000]: ?????????????????????: ????????????=0.942 (a=247.563, b=84.169, c=-299.112)[0m
-[0m[INFO] [1764500595.043293293, 566.284000000]: ?????????????????????: ????????????=0.955 (a=289.073, b=37.455, c=-299.704)[0m
-[0m[INFO] [1764500595.104591005, 566.584000000]: ????????????????????? LF pos=121.995 v=5.82623 RF pos=128.283 v=3.85896 LB pos=124.306 v=4.5664 RB pos=122.44 v=0.117031[0m
-[0m[INFO] [1764500595.149012681, 566.788000000]: ?????????????????????: ????????????=0.642 (a=686.067, b=26.071, c=-299.679)[0m
-[0m[INFO] [1764500595.249194647, 567.292000000]: ?????????????????????: ????????????=0.760 (a=465.418, b=41.008, c=-299.757)[0m
-[0m[INFO] [1764500595.312794212, 567.586000000]: ????????????????????? LF pos=127.436 v=5.07191 RF pos=133.557 v=6.30217 LB pos=129.539 v=5.86964 RB pos=127.743 v=9.4876[0m
-[0m[INFO] [1764500595.356106412, 567.796000000]: ?????????????????????: ????????????=0.808 (a=419.821, b=32.036, c=-299.654)[0m
-[0m[INFO] [1764500595.457670900, 568.300000000]: ?????????????????????: ????????????=0.770 (a=464.823, b=31.457, c=-299.628)[0m
-[0m[INFO] [1764500595.516795320, 568.588000000]: ????????????????????? LF pos=132.774 v=5.82635 RF pos=138.787 v=3.61229 LB pos=134.735 v=4.78276 RB pos=133.01 v=1.13951[0m
-[0m[INFO] [1764500595.56182??: src=auto yaw=0.082 (tf_ok=1 tf_stale=1 yaw_tf=0.082 have_odom=1 yaw_odom=0.082)[0m
-[0m[INFO] [1764500590.236727106, 544.354000000]: ????????????: src=auto yaw=0.419 (tf_ok=1 tf_stale=0 yaw_tf=0.419 have_odom=1 yaw_odom=0.377)[0m
-[0m[INFO] [1764500590.456016160, 545.374000000]: ????????????: src=auto yaw=1.543 (tf_ok=1 tf_stale=0 yaw_tf=1.543 have_odom=1 yaw_odom=1.543)[0m
-[0m[INFO] [1764500590.664872326, 546.376000000]: ????????????: src=auto yaw=2.686 (tf_ok=1 tf_stale=0 yaw_tf=2.686 have_odom=1 yaw_odom=2.686)[0m
-[0m[INFO] [1764500590.873383925, 547.390000000]: ????????????: src=auto yaw=-2.509 (tf_ok=1 tf_stale=0 yaw_tf=-2.509 have_odom=1 yaw_odom=-2.627)[0m
-[0m[INFO] [1764500591.080336998, 548.392000000]: ????????????: src=auto yaw=-1.392 (tf_ok=1 tf_stale=0 yaw_tf=-1.392 have_odom=1 yaw_odom=-1.461)[0m
-[0m[INFO] [1764500591.300345828, 549.394000000]: ????????????: src=auto yaw=-0.289 (tf_ok=1 tf_stale=0 yaw_tf=-0.289 have_odom=1 yaw_odom=-0.317)[0m
-[0m[INFO] [1764500591.539664165, 550.414000000]: ????????????: src=auto yaw=0.809 (tf_ok=1 tf_stale=0 yaw_tf=0.809 have_odom=1 yaw_odom=0.809)[0m
-[0m[INFO] [1764500591.757945843, 551.416000000]: ????????????: src=auto yaw=1.942 (tf_ok=1 tf_stale=0 yaw_tf=1.942 have_odom=1 yaw_odom=1.854)[0m
-[0m[INFO] [1764500591.982550391, 552.418000000]: ????????????: src=auto yaw=3.008 (tf_ok=1 tf_stale=0 yaw_tf=3.008 have_odom=1 yaw_odom=2.939)[0m
-[0m[INFO] [1764500592.204546743, 553.432000000]: ????????????: src=auto yaw=-2.194 (tf_ok=1 tf_stale=0 yaw_tf=-2.194 have_odom=1 yaw_odom=-2.194)[0m
-[0m[INFO] [1764500592.423500778, 554.440000000]: ????????????: src=auto yaw=-1.057 (tf_ok=1 tf_stale=0 yaw_tf=-1.057 have_odom=1 yaw_odom=-1.159)[0m
-[0m[INFO] [1764500592.637416368, 555.454000000]: ????????????: src=auto yaw=0.095 (tf_ok=1 tf_stale=0 yaw_tf=0.095 have_odom=1 yaw_odom=0.052)[0m
-[0m[INFO] [1764500592.872429420, 556.474000000]: ????????????: src=auto yaw=1.256 (tf_ok=1 tf_stale=0 yaw_tf=1.256 have_odom=1 yaw_odom=1.099)[0m
-[0m[INFO] [1764500593.088102205, 557.494000000]: ????????????: src=auto yaw=2.404 (tf_ok=1 tf_stale=0 yaw_tf=2.404 have_odom=1 yaw_odom=2.281)[0m
-[0m[INFO] [1764500593.309764789, 558.514000000]: ????????????: src=auto yaw=-2.745 (tf_ok=1 tf_stale=0 yaw_tf=-2.745 have_odom=1 yaw_odom=-2.825)[0m
-[0m[INFO] [1764500593.525468383, 559.516000000]: ????????????: src=auto yaw=-1.583 (tf_ok=1 tf_stale=0 yaw_tf=-1.583 have_odom=1 yaw_odom=-1.652)[0m
-[0m[INFO] [1764500593.767913338, 560.530000000]: ????????????: src=auto yaw=-2.392 (tf_ok=1 tf_stale=0 yaw_tf=-2.392 have_odom=1 yaw_odom=-2.392)[0m
-[0m[INFO] [1764500593.989673748, 561.532000000]: ????????????: src=auto yaw=2.872 (tf_ok=1 tf_stale=0 yaw_tf=2.872 have_odom=1 yaw_odom=2.952)[0m
-[0m[INFO] [1764500594.203385826, 562.534000000]: ????????????: src=auto yaw=1.829 (tf_ok=1 tf_stale=0 yaw_tf=1.829 have_odom=1 yaw_odom=1.872)[0m
-[0m[INFO] [1764500594.423812576, 563.536000000]: ????????????: src=auto yaw=0.807 (tf_ok=1 tf_stale=0 yaw_tf=0.807 have_odom=1 yaw_odom=0.815)[0m
-[0m[INFO] [1764500594.648314562, 564.556000000]: ????????????: src=auto yaw=-0.256 (tf_ok=1 tf_stale=0 yaw_tf=-0.256 have_odom=1 yaw_odom=-0.131)[0m
-[0m[INFO] [1764500594.874442924, 565.552000000]: ????????????: src=auto yaw=-1.294 (tf_ok=1 tf_stale=0 yaw_tf=-1.294 have_odom=1 yaw_odom=-1.251)[0m
-[0m[INFO] [1764500595.100061910, 566.554000000]: ????????????: src=auto yaw=-2.323 (tf_ok=1 tf_stale=0 yaw_tf=-2.323 have_odom=1 yaw_odom=-2.273)[0m
-[0m[INFO] [1764500595.307731905, 567.556000000]: ????????????: src=auto yaw=2.914 (tf_ok=1 tf_stale=0 yaw_tf=2.914 have_odom=1 yaw_odom=2.931)[0m
-[0m[INFO] [1764500595.514507393, 568.570000000]: ????????????: src=auto yaw=1.861 (tf_ok=1 tf_stale=0 yaw_tf=1.861 have_odom=1 yaw_odom=1.947)[0m
-[0m[INFO] [1764500595.741548381, 569.572000000]: ????????????: src=auto yaw=0.833 (tf_ok=1 tf_stale=0 yaw_tf=0.833 have_odom=1 yaw_odom=0.898)[0m
-[0m[INFO] [1764500595.964889585, 570.574000000]: ????????????: src=auto yaw=-0.215 (tf_ok=1 tf_stale=0 yaw_tf=-0.215 have_odom
+[0m[1;32m[0m[0m[INFO] [1764592962.319126658]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[INFO] [1764592962.340819088, 317.914000000]: Physics dynamic reconfigure ready.[0m
+[0m[INFO] [1764592962.800121952, 319.948000000]: Loading gazebo_ros_control plugin[0m
+[0m[INFO] [1764592962.800219385, 319.948000000]: Starting gazebo_ros_control plugin in namespace: /[0m
+[0m[INFO] [1764592962.801176340, 319.948000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [robot_description] on the ROS param server.[0m
+[0m[INFO] [1764592962.916972613, 319.948000000]: Loaded gazebo_ros_control.[0m
+[0m[INFO] [1764592963.218330038, 321.754000000]: WheelPidController: Init pivot PID 'pivot_fl' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764592963.221231397, 321.772000000]: WheelPidController: Init pivot PID 'pivot_fr' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764592963.223287595, 321.784000000]: WheelPidController: Init pivot PID 'pivot_rl' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764592963.225873956, 321.802000000]: WheelPidController: Init pivot PID 'pivot_rr' p=2.000 i=0.000 d=0.000 i_clamp=0.000[0m
+[0m[INFO] [1764592963.228489673, 321.820000000]: WheelPidController: Init wheel PID 'wheel_fl' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
+[0m[INFO] [1764592963.230834288, 321.832000000]: WheelPidController: Init wheel PID 'wheel_fr' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
+[0m[INFO] [1764592963.233513178, 321.850000000]: WheelPidController: Init wheel PID 'wheel_rl' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
+[0m[INFO] [1764592963.235480368, 321.862000000]: WheelPidController: Init wheel PID 'wheel_rr' p=4.000 i=0.200 d=0.000 i_clamp=1.000[0m
+[0m[INFO] [1764592963.294477919, 322.210000000]: WheelPidController: dynamic_reconfigure updated PID gains, mirrored to wheels/* params[0m
+[0m[INFO] [1764592963.318234956, 322.354000000]: Geo-lock pivot angles: FL=135.00?? FR=45.00?? RL=-135.00?? RR=-45.00??[0m
+[0m[INFO] [1764592963.318284994, 322.354000000]: Self-lock: enabled, idle_timeout=0.50s, velocity_deadband=0.050[0m
+[0m[INFO] [1764592963.318302728, 322.354000000]:   Position lock=disabled (P=8.0 D=1.00), Geo-lock=enabled (wheel_brake=yes)[0m
+[0m[INFO] [1764592963.320717725, 322.372000000]: WheelPidController initialized (enhanced state feedback)[0m
+[0m[INFO] [1764592963.320738198, 322.372000000]: Velocity mode: global (local=base_link, global=odom)[0m
+[0m[INFO] [1764592963.328665415, 322.420000000]: Joint state: LF pos=0.269741 v=0.00671762 RF pos=-0.0514107 v=0.00430889 LB pos=-0.468506 v=-0.00113212 RB pos=-0.176056 v=0.00447518[0m
+[0m[INFO] [1764592963.329541587, 322.426000000]: Power limit triggered: scaling=0.711 (a=531.245, b=44.270, c=-299.894)[0m
+[0m[INFO] [1764592963.401692742, 322.858000000]: Self-lock activated (geo-lock): pivot angles [135.0??, 45.0??, -135.0??, -45.0??], wheel_brake=yes[0m
+[0m[INFO] [1764592963.507745567, 323.422000000]: Joint state: LF pos=1.18903 v=-0.000596968 RF pos=0.182113 v=-0.00255381 LB pos=-0.460144 v=-0.0046791 RB pos=-1.31839 v=-0.000382687[0m
+[0m[INFO] [1764592963.674313554, 324.424000000]: Joint state: LF pos=1.18616 v=-0.00487817 RF pos=0.183955 v=0.00192399 LB pos=-0.460026 v=0.00373107 RB pos=-1.31989 v=-0.00221086[0m
+[0m[INFO] [1764592963.847984272, 325.426000000]: Joint state: LF pos=1.18007 v=-0.00678605 RF pos=0.185615 v=0.0011786 LB [33m[WARN] [1764592963.989305674, 326.284000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592964.388242510, 328.294000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592965.186200881, 330.298000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592965.687014123, 332.302000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592966.190490921, 334.318000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592966.685870440, 336.340000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592967.188985347, 338.356000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592967.667857606, 340.378000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592968.179485710, 342.394000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592968.690833993, 344.398000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592969.168645998, 346.414000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[0m[INFO] [1764592962.569249732, 319.258000000]: Yaw monitor: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
+[0m[INFO] [1764592962.972246615, 320.284000000]: Yaw monitor: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
+[0m[INFO] [1764592963.143466771, 321.310000000]: Yaw monitor: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
+[0m[INFO] [1764592963.315722639, 322.342000000]: Yaw monitor: src=auto yaw=0.000 (tf_ok=0 tf_stale=1 yaw_tf=0.000 have_odom=0 yaw_odom=0.000)[0m
+[0m[INFO] [1764592963.496807708, 323.356000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=0 yaw_tf=-0.092 have_odom=0 yaw_odom=0.000)[0m
+[0m[INFO] [1764592963.664333623, 324.364000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592963.841751114, 325.384000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592964.008958321, 326.398000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592964.184067229, 327.418000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592964.418398442, 328.438000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592964.790051128, 329.458000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592965.231336285, 330.478000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592965.503133048, 331.498000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592965.747062213, 332.530000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592966.007653791, 333.538000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592966.256055248, 334.558000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592966.501698568, 335.578000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592966.746503135, 336.604000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592967.014361751, 337.618000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592967.254908190, 338.644000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592967.493718911, 339.658000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592967.745605615, 340.690000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592968.001615842, 341.698000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592968.264336528, 342.718000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592968.526651107, 343.738000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592968.763537010, 344.758000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592969.015610469, 345.760000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592969.251911009, 346.774000000]: Yaw monit[33m[WARN] [1764592969.700600476, 348.418000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+[33m[WARN] [1764592970.173545468, 350.434000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+pos=-0.454379 v=0.00675267 RB pos=-1.32245 v=-0.00263816[0m
+[0m[INFO] [1764592964.013139035, 326.428000000]: Joint state: LF pos=1.17483 v=-0.00335767 RF pos=0.18575 v=-7.19232e-05 LB pos=-0.448661 v=0.00429317 RB pos=-1.3249 v=-0.00202781[0m
+[0m[INFO] [1764592964.185718146, 327.430000000]: Joint state: LF pos=1.174 v=-0.000110935 RF pos=0.185552 v=-0.000410217 LB pos=-0.448116 v=-0.000208162 RB pos=-1.32627 v=-0.000734851[0m
+[0m[INFO] [1764592964.413743522, 328.432000000]: Joint state: LF pos=1.17386 v=-0.000137064 RF pos=0.185241 v=-0.000382168 LB pos=-0.448382 v=-0.000219807 RB pos=-1.32657 v=6.9203e-05[0m
+[0m[INFO] [1764592964.763306198, 329.434000000]: Joint state: LF pos=1.17374 v=-0.000107572 RF pos=0.18504 v=-0.000232279 LB pos=-0.448583 v=-0.000137635 RB pos=-1.32631 v=0.000388404[0m
+[0m[INFO] [1764592965.488272569, 331.438000000]: Joint state: LF pos=1.17361 v=-4.29753e-05 RF pos=0.184978 v=-2.5738e-05 LB pos=-0.448731 v=4.43192e-06 RB pos=-1.32565 v=0.000191174[0m
+[0m[INFO] [1764592965.718814048, 332.434000000]: Joint state: LF pos=1.17359 v=-3.04718e-05 RF pos=0.185039 v=3.11325e-06 LB pos=-0.44873 v=2.72678e-05 RB pos=-1.32555 v=3.37475e-05[0m
+[0m[INFO] [1764592965.983555602, 333.436000000]: Joint state: LF pos=1.17356 v=-2.91683e-05 RF pos=0.185109 v=-2.14753e-06 LB pos=-0.448719 v=2.59076e-05 RB pos=-1.32557 v=-5.81945e-05[0m
+[0m[INFO] [1764592966.224089783, 334.444000000]: Joint state: LF pos=1.17354 v=-3.26497e-05 RF pos=0.185168 v=-1.93966e-05 LB pos=-0.448716 v=1.53857e-05 RB pos=-1.32566 v=-8.89169e-05[0m
+[0m[INFO] [1764592966.467646906, 335.446000000]: Joint state: LF pos=1.17351 v=-3.65219e-05 RF pos=0.185211 v=-3.51873e-05 LB pos=-0.448723 v=5.20052e-06 RB pos=-1.32575 v=-8.31382e-05[0m
+[0m[INFO] [1764592966.711083397, 336.448000000]: Joint state: LF pos=1.17348 v=-3.88819e-05 RF pos=0.185243 v=-4.46734e-05 LB pos=-0.448739 v=-9.98218e-07 RB pos=-1.32583 v=-6.45058e-05[0m
+[0m[INFO] [1764592966.972723117, 337.450000000]: Joint state: LF pos=1.17345 v=-3.95675e-05 RF pos=0.18527 v=-4.82788e-05 LB pos=-0.448759 v=-3.21762e-06 RB pos=-1.32589 v=-4.79258e-05[0m
+[0m[INFO] [1764592967.209092491, 338.446000000]: Joint state: LF pos=1.17342 v=-3.90312e-05 RF pos=0.185295 v=-4.80893e-05 LB pos=-0.448779 v=-2.83342e-06 RB pos=-1.32594 v=-3.75824e-05[0m
+[0m[INFO] [1764592967.446193664, 339.454000000]: Joint state: LF pos=1.17339 v=-3.80345e-05 RF pos=0.18532 v=-4.67099e-05 LB pos=-0.448799 v=-1.54896e-06 RB pos=-1.32598 v=-3.33926e-05[0m
+[0m[INFO] [1764592967.684303062, 340.456000000]: Joint state: LF pos=1.17336 v=-3.69835e-05 RF pos=0.185347 v=-4.5712e-05 LB pos=-0.448817 v=-3.03755e-07 RB pos=-1.32602 v=-3.30043e-05[0m
+[0m[INFO] [1764592967.939066676, 341.458000000]: Joint state: LF pos=1.17333 v=-3.61586e-05 RF pos=0.185375 v=-4.50612e-05 LB pos=-0.448834 v=5.43083e-07 RB pos=-1.32606 v=-3.41569e-05[0m
+[0m[INFO] [1764592968.449457786, 343.444000000]: Joint state: LF pos=1.17328 v=-3.5009e-05 RF pos=0.18543 v=-4.53501e-05 LB pos=-0.448866 v=1.14615e-06 RB pos=-1.32615 v=-3.58473e-05[0m
+[0m[INFO] [1764592968.701392834, 344.464000000]: Joint state: LF pos=1.17325 v=-3.45651e-05 RF pos=0.185457 v=-4.58263e-05 LB pos=-0.448882 v=1.19999e-06 RB pos=-1.32619 v=-3.57021e-05[0m
+[0m[INFO] [1764592968.940627430, 345.466000000]: Joint state: LF pos=1.17322 v=-3.41372e-05 RF pos=0.185484 v=-4.62924e-05 LB pos=-0.448898 v=1.24686e-06 RB pos=-1.32623 v=-3.51222e-05[0m
+[0m[INFO] [1764592969.178798115, 346.468000000]: Joint state: LF pos=1.1732 v=-3.37019e-05 RF pos=0.18551 v=-4.66866e-05 LB pos=-0.448914 v=1.33251e-06 RB pos=-1.32627 v=-3.4369e-05[0m
+[0m[INFO] [1764592969.437636239, 347.464000000]: Joint state: LF pos=1.17317 v=-3.32552e-05 RF pos=0.185536 v=-4.70079e-05 LB pos=-0.448929 v=1.46082e-06 RB pos=-1.32631 v=-3.36183e-05[0m
+[0m[INFO] [1764592969.709251926, 348.472000000]: Joint state: LF pos=1.17314 v=-3.28024e-05 RF pos=0.185561 v=-4.72811e-05 LB pos=-0.448944 v=1.61683e-06 RB pos=-1.32635 v=-3.29458e-05[0m
+[0m[INFO] [1764592970.182728947, 350.476000000]: Joint state[33m[WARN] [1764592970.675572940, 352.438000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+: LF pos=1.1731 v=-3.19054e-05 RF pos=0.185611 v=-4.77797e-05 LB pos=-0.448975 v=1.94811e-06 RB pos=-1.32643 v=-3.18268e-05[0m
+[0m[INFO] [1764592970.416918290, 351.472000000]: Joint state: LF pos=1.17307 v=-3.14692e-05 RF pos=0.185635 v=-4.80298e-05 LB pos=-0.448989 v=2.10618e-06 RB pos=-1.32647 v=-3.13257e-05[0m
+[0m[INFO] [1764592970.684277646, 352.480000000]: Joint state: LF pos=1.17305 v=-3.10424e-05 RF pos=0.18566 v=-4.82833e-05 LB pos=-0.449004 v=2.2569e-06 RB pos=-1.32651 v=-3.08336e-05[0m
+[0m[INFO] [1764592970.926503106, 353.482000000]: Joint state: LF pos=1.17302 v=-3.06242e-05 RF pos=0.185684 v=-4.85378e-05 LB pos=-0.449019 v=2.40189e-06 RB pos=-1.32655 v=-3.03415e-05[0m
+[0m[INFO] [1764592971.081761342, 354.196000000]: Self-lock released[0m
+[0m[INFO] [1764592971.081824492, 354.196000000]: Power limit triggered: scaling=0.006 (a=7321620.977, b=0.054, c=-300.000)[0m
+[0m[INFO] [1764592971.149988698, 354.484000000]: Joint state: LF pos=2.98424 v=0.0503238 RF pos=2.04058 v=1.90992 LB pos=-0.238034 v=7.06843 RB pos=-0.621313 v=-0.797006[0m
+[0m[INFO] [1764592971.206347695, 354.706000000]: Power limit triggered: scaling=0.987 (a=276.689, b=30.545, c=-299.679)[0m
+[0m[INFO] [1764592971.322027469, 355.210000000]: Power limit triggered: scaling=0.915 (a=323.388, b=31.425, c=-299.654)[0m
+[0m[INFO] [1764592971.445550227, 355.720000000]: Power limit triggered: scaling=0.764 (a=472.581, b=31.331, c=-299.599)[0m
+[0m[INFO] [1764592971.561876427, 356.224000000]: Power limit triggered: scaling=0.800 (a=429.452, b=31.321, c=-299.641)[0m
+[0m[INFO] [1764592971.624400196, 356.488000000]: Joint state: LF pos=13.7865 v=5.48569 RF pos=12.2017 v=5.74799 LB pos=10.1554 v=6.46897 RB pos=9.83924 v=7.88228[0m
+[0m[INFO] [1764592971.678101686, 356.734000000]: Power limit triggered: scaling=0.205 (a=5426.741, b=348.787, c=-299.025)[0m
+[0m[INFO] [1764592971.790917750, 357.238000000]: Power limit triggered: scaling=0.953 (a=296.539, b=31.755, c=-299.655)[0m
+[0m[INFO] [1764592971.849515809, 357.490000000]: Joint state: LF pos=19.1651 v=5.45408 RF pos=17.1596 v=3.77617 LB pos=15.4731 v=3.7419 RB pos=15.2439 v=0.818934[0m
+[0m[INFO] [1764592971.911877528, 357.742000000]: Power limit triggered: scaling=0.986 (a=271.780, b=35.834, c=-299.618)[0m
+[0m[INFO] [1764592972.029671606, 358.246000000]: Power limit triggered: scaling=0.588 (a=571.383, b=171.178, c=-297.871)[0m
+[0m[INFO] [1764592972.089176279, 358.492000000]: Joint state: LF pos=24.8189 v=10.8455 RF pos=23.2696 v=8.65226 LB pos=21.6582 v=9.1239 RB pos=21.752 v=7.69272[0m
+[0m[INFO] [1764592972.145141043, 358.744000000]: Power limit triggered: scaling=0.072 (a=21270.302, b=2498.525, c=-290.293)[0m
+[0m[INFO] [1764592972.264701691, 359.248000000]: Power limit triggered: scaling=0.717 (a=400.879, b=128.727, c=-298.729)[0m
+[0m[INFO] [1764592972.318461481, 359.494000000]: Joint state: LF pos=34.955 v=8.33511 RF pos=33.6864 v=8.52281 LB pos=31.5753 v=8.05511 RB pos=32.1928 v=8.26026[0m
+[0m[INFO] [1764592972.380286676, 359.764000000]: Power limit triggered: scaling=0.543 (a=564.051, b=241.355, c=-296.986)[0m
+[0m[INFO] [1764592972.497760311, 360.262000000]: Power limit triggered: scaling=0.976 (a=213.831, b=97.408, c=-298.542)[0m
+[0m[INFO] [1764592972.552312012, 360.496000000]: Joint state: LF pos=45.7554 v=12.5019 RF pos=44.3337 v=11.8734 LB pos=42.0341 v=12.5408 RB pos=42.5849 v=12.6698[0m
+[0m[INFO] [1764592972.614657088, 360.772000000]: Power limit triggered: scaling=0.629 (a=428.628, b=203.343, c=-297.141)[0m
+[0m[INFO] [1764592972.729713976, 361.294000000]: Power limit triggered: scaling=0.940 (a=231.144, b=100.427, c=-298.560)[0m
+[0m[INFO] [1764592972.774364789, 361.498000000]: Joint state: LF pos=56.4461 v=9.09711 RF pos=54.6398 v=9.19372 LB pos=51.496 v=8.92826 RB pos=52.4736 v=7.65546[0m
+[0m[INFO] [1764592972.839795279, 361.798000000]: Power limit triggered: scaling=0.635 (a=520.656, b=140.490, c=-298.810)[0m
+[0m[INFO] [1764592972.955279061, 362.302000000]: Power limit triggered: scaling=0.762 (a=297.386, b=163.698, c=-297.305)[0m
+[0m[INFO] [1764592973.003042818, 362.500000000]: Joint state: LF pos=67.45 v=8.78718 RF pos=64.6749 v=8.08896 LB pos=61.3497 v=8.23698 RB pos=61.8939 v=6.93406[0m
+[0m[INFO] [1764592973.083003586, 362.812000000]: Power limit triggered: scaling=0.639 (a=417.624, b=198.640, c=-297.161)[0m
+[0m[INFO] [1764592973.210461701, 363.322000000]: Power limit triggered: scaling=0.265 (a=2351.110, b=493.299, c=-296.134)[0m
+[0m[INFO] [1764592973.256963547, 363.502000000]: Joint state: LF pos=78.1687 v=6.19791 RF pos=74.7499 v=4.67198 LB pos=70.2872 v=6.80896 RB pos=71.4666 v=3.45381[0m
+[0m[INFO] [1764592973.334745752, 363.826000000]: Power limit triggered: scaling=0.876 (a=265.298, b=108.192, c=-298.604)[0m
+[0m[INFO] [1764592973.451626123, 364.342000000]: Power limit triggered: scaling=0.927 (a=241.268, b=98.196, c=-298.551)[0m
+[0m[INFO] [1764592973.486843672, 364.504000000]: Joint state: LF pos=88.5575 v=12.6546 RF pos=85.1809 v=11.5899 LB pos=80.674 v=12.3977 RB pos=82.1603 v=12.2829[0m
+[0m[INFO] [1764592973.561192893, 364.852000000]: Power limit triggered: scaling=0.627 (a=431.542, b=202.811, c=-297.144)[0m
+[0m[INFO] [1764592973.674086719, 365.362000000]: Power limit triggered: scaling=0.827 (a=305.632, b=108.320, c=-298.612)[0m
+[0m[INFO] [1764592973.799393628, 365.872000000]: Power limit triggered: scaling=0.652 (a=402.943, b=192.839, c=-297.186)[0m
+[0m[INFO] [1764592973.913845544, 366.382000000]: Power limit triggered: scaling=0.903 (a=253.855, b=101.140, c=-298.568)[0m
+[0m[INFO] [1764592973.942214438, 366.508000000]: Joint state: LF pos=108.865 v=12.4481 RF pos=104.904 v=11.2959 LB pos=102.299 v=12.4921 RB pos=103.281 v=12.1582[0m
+[0m[INFO] [1764592974.028791173, 366.892000000]: Power limit triggered: scaling=0.622 (a=438.517, b=204.827, c=-297.136)[0m
+[0m[INFO] [1764592974.151653509, 367.402000000]: Power limit triggered: scaling=0.872 (a=272.662, b=104.330, c=-298.587)[0m
+[0m[INFO] [1764592974.174309817, 367.510000000]: Joint state: LF pos=119.159 v=8.02039 RF pos=114.884 v=8.4167 LB pos=113.089 v=9.32339 RB pos=113.788 v=8.95188[0m
+[0m[INFO] [1764592974.271143118, 367.918000000]: Power limit triggered: scaling=0.755 (a=310.865, b=158.892, c=-297.331)[0m
+[0m[INFO] [1764592974.398123366, 368.440000000]: Power limit triggered: scaling=0.980 (a=210.279, b=98.779, c=-298.548)[0m
+[0m[INFO] [1764592974.413849618, 368.512000000]: Joint state: LF pos=129.058 v=12.1666 RF pos=124.653 v=10.6613 LB pos=124.384 v=10.9613 RB pos=123.486 v=10.5616[0m
+[0m[INFO] [1764592974.522696721, 368.956000000]: Power limit triggered: scaling=0.554 (a=543.645, b=235.557, c=-297.009)[0m
+[0m[INFO] [1764592974.639185392, 369.454000000]: Power limit triggered: scaling=0.557 (a=537.575, b=234.019, c=-297.016)[0m
+[0m[INFO] [1764592974.654436096, 369.514000000]: Joint state: LF pos=139.473 v=8.637 RF pos=135.258 v=9.00635 LB pos=135.311 v=9.27545 RB pos=133.934 v=8.29201[0m
+[0m[INFO] [1764592974.755135744, 369.958000000]: Power limit triggered: scaling=0.556 (a=538.246, b=234.820, c=-297.012)[0m
+[0m[INFO] [1764592974.871393604, 370.468000000]: Power limit triggered: scaling=0.554 (a=542.406, b=236.257, c=-297.006)[0m
+[0m[INFO] [1764592974.881992449, 370.510000000]: Joint state: LF pos=150.204 v=12.9136 RF pos=145.866 v=12.2336 LB pos=145.974 v=12.1621 RB pos=144.487 v=12.6541[0m
+[0m[INFO] [1764592974.983504800, 370.972000000]: Power limit triggered: scaling=0.554 (a=540.902, b=235.762, c=-297.008)[0m
+[0m[INFO] [1764592975.106016585, 371.488000000]: Power limit triggered: scaling=0.786 (a=331.723, b=119.622, c=-298.672)[0m
+[0m[INFO] [1764592975.114254210, 371.518000000]: Joint state: LF pos=160.531 v=12.189 RF pos=156.519 v=11.9506 LB pos=156.522 v=11.753 RB pos=154.728 v=11.5637[0m
+[0m[INFO] [1764592975.222535560, 371.992000000]: Power limit triggered: scaling=0.641 (a=409.221, b=200.843, c=-297.149)[0m
+[0m[INFO] [1764592975.337478144, 372.502000000]: Power limit triggered: scaling=0.853 (a=280.526, b=110.851, c=-298.620)[0m
+[0m[INFO] [1764592975.340803620, 372.520000000]: Joint state: LF pos=170.817 v=10.0418 RF pos=or: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592969.521813991, 347.776000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592969.784690113, 348.778000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592970.031497473, 349.804000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592970.260573015, 350.818000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592970.518916077, 351.820000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592970.774221597, 352.834000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592971.005723464, 353.836000000]: Yaw monitor: src=auto yaw=-0.092 (tf_ok=1 tf_stale=1 yaw_tf=-0.092 have_odom=1 yaw_odom=-0.092)[0m
+[0m[INFO] [1764592971.237213416, 354.838000000]: Yaw monitor: src=auto yaw=-0.482 (tf_ok=1 tf_stale=0 yaw_tf=-0.482 have_odom=1 yaw_odom=-0.371)[0m
+[0m[INFO] [1764592971.471461391, 355.840000000]: Yaw monitor: src=auto yaw=-1.525 (tf_ok=1 tf_stale=0 yaw_tf=-1.525 have_odom=1 yaw_odom=-1.521)[0m
+[0m[INFO] [1764592971.707631792, 356.854000000]: Yaw monitor: src=auto yaw=-2.567 (tf_ok=1 tf_stale=0 yaw_tf=-2.567 have_odom=1 yaw_odom=-2.493)[0m
+[0m[INFO] [1764592971.940541113, 357.856000000]: Yaw monitor: src=auto yaw=2.687 (tf_ok=1 tf_stale=0 yaw_tf=2.687 have_odom=1 yaw_odom=2.738)[0m
+[0m[INFO] [1764592972.171263641, 358.858000000]: Yaw monitor: src=auto yaw=2.344 (tf_ok=1 tf_stale=0 yaw_tf=2.344 have_odom=1 yaw_odom=2.344)[0m
+[0m[INFO] [1764592972.422223852, 359.920000000]: Yaw monitor: src=auto yaw=2.348 (tf_ok=1 tf_stale=0 yaw_tf=2.348 have_odom=1 yaw_odom=2.349)[0m
+[0m[INFO] [1764592972.650253755, 360.934000000]: Yaw monitor: src=auto yaw=2.277 (tf_ok=1 tf_stale=0 yaw_tf=2.277 have_odom=1 yaw_odom=2.277)[0m
+[0m[INFO] [1764592972.871874992, 361.942000000]: Yaw monitor: src=auto yaw=2.126 (tf_ok=1 tf_stale=0 yaw_tf=2.126 have_odom=1 yaw_odom=2.130)[0m
+[0m[INFO] [1764592973.117430100, 362.944000000]: Yaw monitor: src=auto yaw=2.010 (tf_ok=1 tf_stale=0 yaw_tf=2.010 have_odom=1 yaw_odom=2.014)[0m
+[0m[INFO] [1764592973.366584609, 363.964000000]: Yaw monitor: src=auto yaw=1.802 (tf_ok=1 tf_stale=0 yaw_tf=1.802 have_odom=1 yaw_odom=1.801)[0m
+[0m[INFO] [1764592973.589898443, 364.984000000]: Yaw monitor: src=auto yaw=1.877 (tf_ok=1 tf_stale=0 yaw_tf=1.877 have_odom=1 yaw_odom=1.876)[0m
+[0m[INFO] [1764592973.831074231, 366.004000000]: Yaw monitor: src=auto yaw=1.988 (tf_ok=1 tf_stale=0 yaw_tf=1.988 have_odom=1 yaw_odom=1.988)[0m
+[0m[INFO] [1764592974.061154002, 367.024000000]: Yaw monitor: src=auto yaw=2.090 (tf_ok=1 tf_stale=0 yaw_tf=2.090 have_odom=1 yaw_odom=2.089)[0m
+[0m[INFO] [1764592974.298266401, 368.026000000]: Yaw monitor: src=auto yaw=2.109 (tf_ok=1 tf_stale=0 yaw_tf=2.109 have_odom=1 yaw_odom=2.109)[0m
+[0m[INFO] [1764592974.544961507, 369.040000000]: Yaw monitor: src=auto yaw=2.088 (tf_ok=1 tf_stale=0 yaw_tf=2.088 have_odom=1 yaw_odom=2.054)[0m
+[0m[INFO] [1764592974.773960590, 370.048000000]: Yaw monitor: src=auto yaw=2.146 (tf_ok=1 tf_stale=0 yaw_tf=2.146 have_odom=1 yaw_odom=2.145)[0m
+[0m[INFO] [1764592975.008844761, 371.062000000]: Yaw monitor: src=auto yaw=2.211 (tf_ok=1 tf_stale=0 yaw_tf=2.211 have_odom=1 yaw_odom=2.212)[0m
+[0m[INFO] [1764592975.239448098, 372.064000000]: Yaw monitor: src=auto yaw=2.350 (tf_ok=1 tf_stale=0 yaw_tf=2.350 have_odom=1 yaw_odom=2.347)[0m
+[0m[INFO] [1764592975.470989466, 373.084000000]: Yaw monitor: src=auto yaw=2.387 (tf_ok=1 tf_stale=0 yaw_tf=2.387 have_odom=1 yaw_odom=2.387)[0m
+[0m[INFO] [1764592975.708967258, 374.104000000]: Yaw monitor: src=auto yaw=2.353 (tf_ok=1 tf_stale=0 yaw_tf=2.353 have_odom=1 yaw_odom=2.356)[0m
+[0m[I167.773 v=30.0074 LB pos=165.07 v=10.2442 RB pos=165.205 v=9.69816[0m
+[0m[INFO] [1764592975.455078441, 373.024000000]: Power limit triggered: scaling=0.974 (a=210.328, b=101.580, c=-298.561)[0m
+[0m[INFO] [1764592975.574944556, 373.522000000]: Joint state: LF pos=181.154 v=12.7234 RF pos=179.275 v=12.3107 LB pos=174.606 v=12.9699 RB pos=175.702 v=11.9402[0m
+[0m[INFO] [1764592975.576897522, 373.534000000]: Power limit triggered: scaling=0.551 (a=549.497, b=236.722, c=-297.005)[0m
+[0m[INFO] [1764592975.692004905, 374.038000000]: Power limit triggered: scaling=0.543 (a=563.687, b=241.216, c=-296.986)[0m
+[0m[INFO] [1764592975.798927737, 374.524000000]: Joint state: LF pos=191.995 v=8.80965 RF pos=189.937 v=9.05868 LB pos=185.255 v=8.44912 RB pos=186.174 v=8.80449[0m
+[0m[INFO] [1764592975.801948553, 374.542000000]: Power limit triggered: scaling=0.546 (a=557.615, b=239.649, c=-296.993)[0m
+[0m[INFO] [1764592975.918892862, 375.058000000]: Power limit triggered: scaling=0.542 (a=566.226, b=241.721, c=-296.984)[0m
+[0m[INFO] [1764592976.045372748, 375.526000000]: Joint state: LF pos=202.667 v=7.41189 RF pos=200.618 v=8.13366 LB pos=195.968 v=7.04137 RB pos=196.707 v=6.94952[0m
+[0m[INFO] [1764592976.058180987, 375.556000000]: Power limit triggered: scaling=0.814 (a=286.559, b=132.367, c=-297.453)[0m
+[0m[INFO] [1764592976.177104744, 376.072000000]: Power limit triggered: scaling=0.568 (a=521.691, b=226.041, c=-297.051)[0m
+[0m[INFO] [1764592976.287413247, 376.528000000]: Joint state: LF pos=214.088 v=8.27142 RF pos=210.727 v=8.97875 LB pos=206.445 v=7.91271 RB pos=206.376 v=8.47808[0m
+[0m[INFO] [1764592976.299592852, 376.576000000]: Power limit triggered: scaling=0.081 (a=18097.299, b=2113.409, c=-291.849)[0m
+[0m[INFO] [1764592976.421868200, 377.080000000]: Power limit triggered: scaling=0.370 (a=1672.538, b=188.485, c=-299.271)[0m
+[0m[INFO] [1764592976.541081274, 377.608000000]: Power limit triggered: scaling=0.359 (a=1810.687, b=184.458, c=-299.279)[0m
+[0m[INFO] [1764592976.663888186, 378.112000000]: Power limit triggered: scaling=0.867 (a=283.540, b=98.615, c=-298.561)[0m
+[0m[INFO] [1764592976.764396432, 378.532000000]: Joint state: LF pos=237.44 v=12.2429 RF pos=231.268 v=11.9344 LB pos=227.72 v=11.5757 RB pos=226.267 v=11.1521[0m
+[0m[INFO] [1764592976.790180063, 378.622000000]: Power limit triggered: scaling=0.168 (a=8507.359, b=354.442, c=-298.102)[0m
+[0m[INFO] [1764592976.904524958, 379.132000000]: Power limit triggered: scaling=0.724 (a=328.301, b=172.511, c=-297.269)[0m
+[0m[INFO] [1764592976.997266802, 379.534000000]: Joint state: LF pos=248.86 v=8.46697 RF pos=241.43 v=9.00033 LB pos=238.088 v=8.53148 RB pos=235.401 v=8.28218[0m
+[0m[INFO] [1764592977.020507578, 379.642000000]: Power limit triggered: scaling=0.142 (a=10986.560, b=542.832, c=-297.623)[0m
+[0m[INFO] [1764592977.137639632, 380.152000000]: Power limit triggered: scaling=0.900 (a=215.809, b=136.214, c=-297.421)[0m
+[0m[INFO] [1764592977.224887426, 380.536000000]: Joint state: LF pos=257.78 v=2.70581 RF pos=250.389 v=3.50209 LB pos=246.796 v=4.59898 RB pos=243.143 v=3.99003[0m
+[0m[INFO] [1764592977.257797818, 380.692000000]: Power limit triggered: scaling=0.988 (a=280.336, b=26.174, c=-299.651)[0m
+[0m[INFO] [1764592977.371585398, 381.208000000]: Power limit triggered: scaling=0.634 (a=550.910, b=122.181, c=-299.074)[0m
+[0m[INFO] [1764592977.451442722, 381.538000000]: Joint state: LF pos=263.238 v=2.71359 RF pos=255.793 v=2.38404 LB pos=251.849 v=4.93671 RB pos=248.557 v=5.46184[0m
+[0m[INFO] [1764592977.495090974, 381.724000000]: Power limit triggered: scaling=0.949 (a=291.491, b=39.433, c=-299.725)[0m
+[0m[INFO] [1764592977.603776187, 382.222000000]: Power limit triggered: scaling=0.840 (a=318.172, b=88.925, c=-299.127)[0m
+[0m[INFO] [1764592977.684337521, 382.534000000]: Joint state: LF pos=268.761 v=5.56702 RF pos=261.637 v=6.66712 LB pos=257.53 v=7.45702 RB pos=254.362 v=9.37884[0m
+[0m[INFO] [1764592977.731088678, 382.726000000]: Power limit triggered: scaling=0.946 (a=255.984, b=73.944, c=-299.174)[0m
+[0m[INFO] [1764592977.849799919, 383.236000000]: Power limit triggered: scaling=0.121 (a=10775.734, b=1155.706, c=-296.085)[0m
+[0m[INFO] [1764592977.923185930, 383.542000000]: Joint state: LF pos=274.881 v=5.64026 RF pos=268.045 v=7.20623 LB pos=262.962 v=6.2525 RB pos=259.889 v=8.1834[0m
+[0m[INFO] [1764592977.978271412, 383.746000000]: Power limit triggered: scaling=0.099 (a=19457.543, b=1082.615, c=-298.156)[0m
+[0m[INFO] [1764592978.093739827, 384.256000000]: Power limit triggered: scaling=0.564 (a=525.258, b=230.403, c=-297.031)[0m
+[0m[INFO] [1764592978.163576768, 384.544000000]: Joint state: LF pos=284.912 v=13.0091 RF pos=278.111 v=11.5744 LB pos=273.002 v=12.9249 RB pos=269.667 v=12.1273[0m
+[0m[INFO] [1764592978.215624893, 384.760000000]: Power limit triggered: scaling=0.671 (a=377.986, b=189.767, c=-297.196)[0m
+[0m[INFO] [1764592978.329285206, 385.264000000]: Power limit triggered: scaling=0.848 (a=242.199, b=145.418, c=-297.382)[0m
+[0m[INFO] [1764592978.440718906, 385.768000000]: Power limit triggered: scaling=0.535 (a=581.846, b=243.238, c=-296.980)[0m
+[0m[INFO] [1764592978.556211446, 386.278000000]: Power limit triggered: scaling=0.526 (a=604.497, b=247.146, c=-296.966)[0m
+[0m[INFO] [1764592978.620707355, 386.548000000]: Joint state: LF pos=306.005 v=8.06637 RF pos=299.528 v=8.61846 LB pos=292.253 v=7.60688 RB pos=289.468 v=8.25158[0m
+[0m[INFO] [1764592978.673824585, 386.782000000]: Power limit triggered: scaling=0.782 (a=292.932, b=151.629, c=-297.499)[0m
+[0m[INFO] [1764592978.782418800, 387.292000000]: Power limit triggered: scaling=0.631 (a=427.559, b=201.568, c=-297.149)[0m
+[0m[INFO] [1764592978.839904363, 387.550000000]: Joint state: LF pos=317.315 v=8.37261 RF pos=309.734 v=8.76405 LB pos=302.122 v=7.84429 RB pos=298.687 v=8.46134[0m
+[0m[INFO] [1764592978.902423788, 387.796000000]: Power limit triggered: scaling=0.657 (a=396.011, b=192.394, c=-297.187)[0m
+[0m[INFO] [1764592979.020715676, 388.306000000]: Power limit triggered: scaling=0.753 (a=326.155, b=149.537, c=-297.379)[0m
+[0m[INFO] [1764592979.079723949, 388.552000000]: Joint state: LF pos=327.442 v=8.60126 RF pos=319.948 v=8.46283 LB pos=311.421 v=8.21351 RB pos=309.206 v=8.25406[0m
+[0m[INFO] [1764592979.134967588, 388.810000000]: Power limit triggered: scaling=0.595 (a=473.151, b=218.367, c=-297.078)[0m
+[0m[INFO] [1764592979.252150675, 389.314000000]: Power limit triggered: scaling=0.590 (a=479.530, b=220.429, c=-297.069)[0m
+[0m[INFO] [1764592979.304736534, 389.554000000]: Joint state: LF pos=338.156 v=12.7999 RF pos=330.584 v=12.3006 LB pos=321.952 v=12.3119 RB pos=319.654 v=12.1542[0m
+[0m[INFO] [1764592979.366650379, 389.830000000]: Power limit triggered: scaling=0.584 (a=490.637, b=222.664, c=-297.061)[0m
+[0m[INFO] [1764592979.473478034, 390.334000000]: Power limit triggered: scaling=0.580 (a=496.174, b=224.886, c=-297.051)[0m
+[0m[INFO] [1764592979.525099957, 390.556000000]: Joint state: LF pos=348.845 v=8.57592 RF pos=341.211 v=8.95723 LB pos=332.498 v=8.7634 RB pos=330.128 v=8.71132[0m
+[0m[INFO] [1764592979.587904328, 390.838000000]: Power limit triggered: scaling=0.582 (a=492.917, b=223.881, c=-297.055)[0m
+[0m[INFO] [1764592979.705331664, 391.348000000]: Power limit triggered: scaling=0.579 (a=497.391, b=225.275, c=-297.050)[0m
+[0m[INFO] [1764592979.752329800, 391.558000000]: Joint state: LF pos=359.572 v=12.8105 RF pos=351.815 v=12.3019 LB pos=343.066 v=12.2887 RB pos=340.614 v=12.1629[0m
+[0m[INFO] [1764592979.823033809, 391.858000000]: Power limit triggered: scaling=0.579 (a=496.984, b=225.037, c=-297.051)[0m
+[0m[INFO] [1764592979.942738444, 392.362000000]: Power limit triggered: scaling=0.163 (a=5848.184, b=858.081, c=-295.082)[0m
+[0m[INFO] [1764592979.988725046, 392.560000000]: Joint state: LF pos=369.176 v=-11.8456 RF pos=361.52 v=10.8486 LB pos=353.706 v=11.7069 RB pos=351.031 v=10.5736[0m
+[0m[INFO] [1764592980.066702374, 392.878000000]: Power limit triggered: scaling=0.582 (a=496.503, b=221.207, c=-297.069)[0m
+[0m[INFO] [1764592980.186755981, 393.394000000]: Power limit triggered: s[33m[WARN] [1764592980.401547746, 394.264000000]: yaw_publisher: fallback to odom yaw (tf stale=1 ok=1)[0m
+NFO] [1764592975.938035157, 375.124000000]: Yaw monitor: src=auto yaw=2.314 (tf_ok=1 tf_stale=0 yaw_tf=2.314 have_odom=1 yaw_odom=2.317)[0m
+[0m[INFO] [1764592976.194977118, 376.144000000]: Yaw monitor: src=auto yaw=2.299 (tf_ok=1 tf_stale=0 yaw_tf=2.299 have_odom=1 yaw_odom=2.304)[0m
+[0m[INFO] [1764592976.439392608, 377.164000000]: Yaw monitor: src=auto yaw=2.233 (tf_ok=1 tf_stale=0 yaw_tf=2.233 have_odom=1 yaw_odom=2.267)[0m
+[0m[INFO] [1764592976.682682172, 378.184000000]: Yaw monitor: src=auto yaw=2.243 (tf_ok=1 tf_stale=0 yaw_tf=2.243 have_odom=1 yaw_odom=2.240)[0m
+[0m[INFO] [1764592976.919149821, 379.186000000]: Yaw monitor: src=auto yaw=2.324 (tf_ok=1 tf_stale=0 yaw_tf=2.324 have_odom=1 yaw_odom=2.323)[0m
+[0m[INFO] [1764592977.149649623, 380.200000000]: Yaw monitor: src=auto yaw=2.240 (tf_ok=1 tf_stale=0 yaw_tf=2.240 have_odom=1 yaw_odom=2.241)[0m
+[0m[INFO] [1764592977.370749884, 381.202000000]: Yaw monitor: src=auto yaw=-3.094 (tf_ok=1 tf_stale=0 yaw_tf=-3.094 have_odom=1 yaw_odom=3.091)[0m
+[0m[INFO] [1764592977.599467130, 382.204000000]: Yaw monitor: src=auto yaw=-2.008 (tf_ok=1 tf_stale=0 yaw_tf=-2.008 have_odom=1 yaw_odom=-2.095)[0m
+[0m[INFO] [1764592977.848917612, 383.230000000]: Yaw monitor: src=auto yaw=-0.836 (tf_ok=1 tf_stale=0 yaw_tf=-0.836 have_odom=1 yaw_odom=-0.894)[0m
+[0m[INFO] [1764592978.092381136, 384.244000000]: Yaw monitor: src=auto yaw=-0.486 (tf_ok=1 tf_stale=0 yaw_tf=-0.486 have_odom=1 yaw_odom=-0.482)[0m
+[0m[INFO] [1764592978.329583233, 385.264000000]: Yaw monitor: src=auto yaw=-0.443 (tf_ok=1 tf_stale=0 yaw_tf=-0.443 have_odom=1 yaw_odom=-0.450)[0m
+[0m[INFO] [1764592978.558994120, 386.284000000]: Yaw monitor: src=auto yaw=-0.454 (tf_ok=1 tf_stale=0 yaw_tf=-0.454 have_odom=1 yaw_odom=-0.448)[0m
+[0m[INFO] [1764592978.786927499, 387.304000000]: Yaw monitor: src=auto yaw=-0.505 (tf_ok=1 tf_stale=0 yaw_tf=-0.505 have_odom=1 yaw_odom=-0.504)[0m
+[0m[INFO] [1764592979.027862318, 388.330000000]: Yaw monitor: src=auto yaw=-0.407 (tf_ok=1 tf_stale=0 yaw_tf=-0.407 have_odom=1 yaw_odom=-0.410)[0m
+[0m[INFO] [1764592979.258681503, 389.344000000]: Yaw monitor: src=auto yaw=-0.433 (tf_ok=1 tf_stale=0 yaw_tf=-0.433 have_odom=1 yaw_odom=-0.433)[0m
+[0m[INFO] [1764592979.480457530, 390.364000000]: Yaw monitor: src=auto yaw=-0.466 (tf_ok=1 tf_stale=0 yaw_tf=-0.466 have_odom=1 yaw_odom=-0.466)[0m
+[0m[INFO] [1764592979.718439077, 391.396000000]: Yaw monitor: src=auto yaw=-0.502 (tf_ok=1 tf_stale=0 yaw_tf=-0.502 have_odom=1 yaw_odom=-0.502)[0m
+[0m[INFO] [1764592979.951204854, 392.404000000]: Yaw monitor: src=auto yaw=-0.504 (tf_ok=1 tf_stale=0 yaw_tf=-0.504 have_odom=1 yaw_odom=-0.486)[0m
+[0m[INFO] [1764592980.196027593, 393.424000000]: Yaw monitor: src=auto yaw=-0.517 (tf_ok=1 tf_stale=0 yaw_tf=-0.517 have_odom=1 yaw_odom=-0.517)[0m
+[0m[INFO] [1764592980.447636971, 394.444000000]: Yaw monitor: src=auto yaw=-0.517 (tf_ok=1 tf_stale=1 yaw_tf=-0.517 have_odom=1 yaw_odom=-0.517)[0m
+[0m[INFO] [1764592980.684990570, 395.464000000]: Yaw monitor: src=auto yaw=-0.516 (tf_ok=1 tf_stale=0 yaw_tf=-0.516 have_odom=1 yaw_odom=-0.522)[0m
+[0m[INFO] [1764592980.920322948, 396.484000000]: Yaw monitor: src=auto yaw=-0.518 (tf_ok=1 tf_stale=0 yaw_tf=-0.518 have_odom=1 yaw_odom=-0.518)[0m
+[0m[INFO] [1764592981.157640179, 397.504000000]: Yaw monitor: src=auto yaw=-0.483 (tf_ok=1 tf_stale=0 yaw_tf=-0.483 have_odom=1 yaw_odom=-0.483)[0m
+[0m[INFO] [1764592981.383315203, 398.524000000]: Yaw monitor: src=auto yaw=-0.486 (tf_ok=1 tf_stale=0 yaw_tf=-0.486 have_odom=1 yaw_odom=-0.487)[0m
+[0m[INFO] [1764592981.617129639, 399.550000000]: Yaw monitor: src=auto yaw=-0.484 (tf_ok=1 tf_stale=0 yaw_tf=-0.484 have_odom=1 yaw_odom=-0.483)[0m
+[0m[INFO] [1764592981.846449772, 400.564000000]: Yaw monitor: src=auto yaw=0.373 (tf_ok=1 tf_stale=0 yaw_tf=0.373 have_odom=1 yaw_odom=0.321)[0m
+[0m[INFO] [1764592982.078877273, 401.584000000]: Yaw monitor: src=auto yaw=1.524 (tf_ok=1 tf_stale=0 yaw_tf=1.524 have_odom=1 yaw_odom=1.492)[0m
+[0m[INFO] [1764592982.305739740, 402.604000000]: Yaw monitor: src=auto yaw=2caling=0.582 (a=497.471, b=221.549, c=-297.067)[0m
+[0m[INFO] [1764592980.312771915, 393.922000000]: Power limit triggered: scaling=0.582 (a=497.322, b=221.496, c=-297.068)[0m
+[0m[INFO] [1764592980.444787548, 394.438000000]: Power limit triggered: scaling=0.582 (a=496.402, b=221.249, c=-297.069)[0m
+[0m[INFO] [1764592980.475289471, 394.564000000]: Joint state: LF pos=390.058 v=8.87547 RF pos=382.765 v=9.31171 LB pos=374.587 v=8.72466 RB pos=372.185 v=8.2076[0m
+[0m[INFO] [1764592980.563562916, 394.942000000]: Power limit triggered: scaling=0.582 (a=496.593, b=221.346, c=-297.068)[0m
+[0m[INFO] [1764592980.681792264, 395.446000000]: Power limit triggered: scaling=0.610 (a=564.789, b=144.696, c=-298.839)[0m
+[0m[INFO] [1764592980.710083145, 395.566000000]: Joint state: LF pos=400.876 v=12.3948 RF pos=393.16 v=11.7429 LB pos=385.144 v=12.4567 RB pos=382.79 v=12.0828[0m
+[0m[INFO] [1764592980.794744959, 395.956000000]: Power limit triggered: scaling=0.938 (a=235.311, b=97.765, c=-298.548)[0m
+[0m[INFO] [1764592980.910738832, 396.454000000]: Power limit triggered: scaling=0.553 (a=551.550, b=232.687, c=-297.025)[0m
+[0m[INFO] [1764592980.937529755, 396.568000000]: Joint state: LF pos=411.435 v=9.33662 RF pos=403.396 v=9.1345 LB pos=395.72 v=8.45311 RB pos=393.36 v=8.34075[0m
+[0m[INFO] [1764592981.027625388, 396.970000000]: Power limit triggered: scaling=0.553 (a=552.912, b=232.001, c=-297.028)[0m
+[0m[INFO] [1764592981.146598300, 397.480000000]: Power limit triggered: scaling=0.556 (a=545.571, b=230.744, c=-297.033)[0m
+[0m[INFO] [1764592981.169893940, 397.570000000]: Joint state: LF pos=422.088 v=9.23348 RF pos=413.867 v=9.12052 LB pos=406.302 v=8.40235 RB pos=404.003 v=8.26163[0m
+[0m[INFO] [1764592981.266443880, 397.996000000]: Power limit triggered: scaling=0.563 (a=535.563, b=226.715, c=-297.050)[0m
+[0m[INFO] [1764592981.376099977, 398.500000000]: Power limit triggered: scaling=0.554 (a=548.056, b=231.885, c=-297.028)[0m
+[0m[INFO] [1764592981.495725157, 399.016000000]: Power limit triggered: scaling=0.553 (a=550.546, b=233.131, c=-297.022)[0m
+[0m[INFO] [1764592981.610844802, 399.520000000]: Power limit triggered: scaling=0.559 (a=539.910, b=229.562, c=-297.037)[0m
+[0m[INFO] [1764592981.624134265, 399.562000000]: Joint state: LF pos=443.264 v=9.26872 RF pos=435.093 v=9.12225 LB pos=427.582 v=8.43264 RB pos=425.316 v=8.42633[0m
+[0m[INFO] [1764592981.736163535, 400.084000000]: Power limit triggered: scaling=0.178 (a=5699.436, b=659.817, c=-297.450)[0m
+[0m[INFO] [1764592981.847651326, 400.576000000]: Joint state: LF pos=449.664 v=5.58719 RF pos=441.487 v=5.4566 LB pos=434.067 v=5.21992 RB pos=430.968 v=4.89238[0m
+[0m[INFO] [1764592981.852228195, 400.600000000]: Power limit triggered: scaling=0.709 (a=507.265, b=62.252, c=-299.510)[0m
+[0m[INFO] [1764592981.973731379, 401.116000000]: Power limit triggered: scaling=0.169 (a=7667.054, b=465.668, c=-298.985)[0m
+[0m[INFO] [1764592982.074901355, 401.578000000]: Joint state: LF pos=455.267 v=2.58391 RF pos=447.312 v=3.73206 LB pos=440.109 v=3.58836 RB pos=436.515 v=4.21036[0m
+[0m[INFO] [1764592982.085759808, 401.614000000]: Power limit triggered: scaling=0.756 (a=377.346, b=109.851, c=-299.025)[0m
+[0m[INFO] [1764592982.199228356, 402.124000000]: Power limit triggered: scaling=0.060 (a=37220.336, b=2697.326, c=-294.111)[0m
+[0m[INFO] [1764592982.298539124, 402.580000000]: Joint state: LF pos=460.576 v=9.22878 RF pos=453.17 v=4.79053 LB pos=445.689 v=6.23267 RB pos=442.382 v=2.999[0m
+[0m[INFO] [1764592982.309998731, 402.622000000]: Power limit triggered: scaling=0.660 (a=530.701, b=103.450, c=-299.253)[0m
+[0m[INFO] [1764592982.428423121, 403.132000000]: Power limit triggered: scaling=0.399 (a=1564.506, b=124.353, c=-299.193)[0m
+[0m[INFO] [1764592982.526850777, 403.582000000]: Joint state: LF pos=465.973 v=3.45487 RF pos=458.499 v=4.50464 LB pos=450.993 v=4.03806 RB pos=447.76 v=5.23432[0m
+[0m[INFO] [1764592982.539902244, 403.630000000]: Power limit triggered: scaling=0.359 (a=1979.715, b=123.704, c=-299.413)[0m
+[0m[INFO] [1764592982.662664512, 404.158000000]: Power limit triggered: scaling=0.069 (a=25278.929, b=2495.994, c=-292.552)[0m
+[0m[INFO] [1764592982.761262209, 404.584000000]: Joint state: LF pos=471.991 v=11.3846 RF pos=464.461 v=11.0169 LB pos=456.125 v=12.216 RB pos=453.573 v=10.5019[0m
+[0m[INFO] [1764592982.780058277, 404.668000000]: Power limit triggered: scaling=0.622 (a=443.017, b=202.072, c=-297.150)[0m
+[0m[INFO] [1764592982.900606023, 405.172000000]: Power limit triggered: scaling=0.738 (a=317.933, b=167.903, c=-297.289)[0m
+[0m[INFO] [1764592983.000573492, 405.586000000]: Joint state: LF pos=482.91 v=8.35268 RF pos=474.18 v=8.10046 LB pos=466.266 v=7.74175 RB pos=463.351 v=7.81103[0m
+[0m[INFO] [1764592983.027334871, 405.688000000]: Power limit triggered: scaling=0.579 (a=502.703, b=222.492, c=-297.064)[0m
+[0m[INFO] [1764592983.143297476, 406.204000000]: Power limit triggered: scaling=0.590 (a=487.890, b=215.692, c=-297.094)[0m
+[0m[INFO] [1764592983.226239371, 406.588000000]: Joint state: LF pos=493.416 v=11.9937 RF pos=484.261 v=11.7752 LB pos=476.778 v=13.2262 RB pos=473.659 v=12.1999[0m
+[0m[INFO] [1764592983.254132688, 406.702000000]: Power limit triggered: scaling=0.584 (a=502.764, b=215.432, c=-297.098)[0m
+[0m[INFO] [1764592983.370909469, 407.206000000]: Power limit triggered: scaling=0.687 (a=445.761, b=128.613, c=-298.592)[0m
+[0m[INFO] [1764592983.451218065, 407.590000000]: Joint state: LF pos=504.368 v=11.7735 RF pos=494.344 v=11.2024 LB pos=487.266 v=11.7072 RB pos=483.676 v=10.8361[0m
+[0m[INFO] [1764592983.480000452, 407.722000000]: Power limit triggered: scaling=0.584 (a=491.337, b=221.206, c=-297.068)[0m
+[0m[INFO] [1764592983.591005536, 408.226000000]: Power limit triggered: scaling=0.561 (a=543.780, b=224.631, c=-297.062)[0m
+[0m[INFO] [1764592983.675417335, 408.592000000]: Joint state: LF pos=515.829 v=12.5522 RF pos=504.084 v=11.4479 LB pos=497.747 v=12.8715 RB pos=492.945 v=11.5472[0m
+[0m[INFO] [1764592983.708312189, 408.730000000]: Power limit triggered: scaling=0.797 (a=276.336, b=153.041, c=-297.352)[0m
+[0m[INFO] [1764592983.830148016, 409.246000000]: Power limit triggered: scaling=0.270 (a=2481.688, b=433.522, c=-297.623)[0m
+[0m[INFO] [1764592983.909534808, 409.594000000]: Joint state: LF pos=526.778 v=-12.6803 RF pos=514.527 v=5.65247 LB pos=507.127 v=11.2049 RB pos=502.675 v=5.98426[0m
+[0m[INFO] [1764592983.944424828, 409.744000000]: Power limit triggered: scaling=0.794 (a=328.206, b=115.193, c=-298.650)[0m
+[0m[INFO] [1764592984.056354157, 410.254000000]: Power limit triggered: scaling=0.831 (a=299.716, b=110.090, c=-298.620)[0m
+[0m[INFO] [1764592984.137710492, 410.596000000]: Joint state: LF pos=538.088 v=9.39455 RF pos=524.866 v=12.3944 LB pos=517.04 v=9.55318 RB pos=510.977 v=12.5008[0m
+[0m[INFO] [1764592984.172101455, 410.752000000]: Power limit triggered: scaling=0.077 (a=21236.574, b=2131.154, c=-292.390)[0m
+[0m[INFO] [1764592984.289794894, 411.262000000]: Power limit triggered: scaling=0.536 (a=743.065, b=158.566, c=-298.305)[0m
+[0m[INFO] [1764592984.369355929, 411.598000000]: Joint state: LF pos=544.933 v=5.11193 RF pos=536.06 v=9.43877 LB pos=524.663 v=7.07333 RB pos=522.772 v=10.9648[0m
+[0m[INFO] [1764592984.409498868, 411.772000000]: Power limit triggered: scaling=0.399 (a=1409.807, b=187.772, c=-299.215)[0m
+[0m[INFO] [1764592984.532994860, 412.276000000]: Power limit triggered: scaling=0.094 (a=14481.942, b=1753.295, c=-292.983)[0m
+[0m[INFO] [1764592984.610691548, 412.600000000]: Joint state: LF pos=553.071 v=9.88524 RF pos=547.729 v=10.5741 LB pos=532.902 v=7.99526 RB pos=533.387 v=9.74634[0m
+[0m[INFO] [1764592984.652115755, 412.792000000]: Power limit triggered: scaling=0.670 (a=473.546, b=129.070, c=-298.746)[0m
+[0m[INFO] [1764592984.764295672, 413.296000000]: Power limit triggered: scaling=0.689 (a=437.370, b=132.199, c=-298.753)[0m
+[0m[INFO] [1764592984.832068195, 413.602000000]: Joint state: LF pos=562.559 v=11.908 RF pos=557.622 v=11.7365 LB pos=543.418 v=11.8852 RB pos=543.952 v=12.5957[0m
+[0m[INFO] [1764592984.879884681, 413.806000000]: Power limit triggered: scaling=0.618 (a=440.880, b=208.196, c=-297.120)[0m
+[0m[INFO] [1764592985.007582460, 414.316000000]: Power limit triggered: scaling=0.994 (a=202.308, b=99.149, c=-298.548)[0m
+[0m[INFO] [1764592985.072663024, 414.604000000]: Joint state: LF pos=572.249 v=10.0086 RF pos=567.998 v=11.0066 LB pos=553.829 v=10.302 RB pos=554.307 v=10.9097[0m
+[0m[INFO] [1764592985.122131748, 414.820000000]: Power limit triggered: scaling=0.768 (a=293.443, b=161.656, c=-297.314)[0m
+[0m[INFO] [1764592985.240536406, 415.330000000]: Power limit triggered: scaling=0.794 (a=323.207, b=119.457, c=-298.669)[0m
+[0m[INFO] [1764592985.300000936, 415.606000000]: Joint state: LF pos=581.901 v=8.56757 RF pos=578.347 v=8.87414 LB pos=564.06 v=8.74703 RB pos=564.596 v=8.67815[0m
+[0m[INFO] [1764592985.350134111, 415.834000000]: Power limit triggered: scaling=0.868 (a=267.508, b=111.985, c=-298.622)[0m
+[0m[INFO] [1764592985.463565491, 416.344000000]: Power limit triggered: scaling=0.608 (a=454.683, b=212.123, c=-297.104)[0m
+[0m[INFO] [1764592985.529041758, 416.608000000]: Joint state: LF pos=591.784 v=7.9361 RF pos=588.1 v=9.05722 LB pos=574.461 v=7.92715 RB pos=574.73 v=7.91142[0m
+[0m[INFO] [1764592985.584230813, 416.848000000]: Power limit triggered: scaling=0.944 (a=225.005, b=104.043, c=-298.576)[0m
+[0m[INFO] [1764592985.697340818, 417.358000000]: Power limit triggered: scaling=0.543 (a=567.373, b=239.344, c=-296.996)[0m
+[0m[INFO] [1764592985.762204237, 417.610000000]: Joint state: LF pos=602.285 v=12.2448 RF pos=598.669 v=12.1428 LB pos=585.163 v=12.6548 RB pos=585.346 v=13.0063[0m
+[0m[INFO] [1764592985.816841448, 417.862000000]: Power limit triggered: scaling=0.541 (a=569.622, b=241.044, c=-296.988)[0m
+[0m[INFO] [1764592985.935159517, 418.360000000]: Power limit triggered: scaling=0.568 (a=518.014, b=229.407, c=-297.034)[0m
+[0m[INFO] [1764592985.991992941, 418.612000000]: Joint state: LF pos=612.839 v=12.8776 RF pos=609.157 v=11.9305 LB pos=595.699 v=12.377 RB pos=595.972 v=12.2415[0m
+[0m[INFO] [1764592986.077347532, 418.894000000]: Power limit triggered: scaling=0.227 (a=3361.633, b=545.725, c=-296.084)[0m
+[0m[INFO] [1764592986.213893113, 419.404000000]: Power limit triggered: scaling=0.960 (a=217.237, b=102.227, c=-298.566)[0m
+[0m[INFO] [1764592986.265776653, 419.614000000]: Joint state: LF pos=622.776 v=6.17579 RF pos=619.254 v=6.05288 LB pos=605.917 v=25.2736 RB pos=606.028 v=8.45726[0m
+[0m[INFO] [1764592986.339163571, 419.908000000]: Power limit triggered: scaling=0.620 (a=608.534, b=104.661, c=-298.655)[0m
+[0m[INFO] [1764592986.456505001, 420.430000000]: Power limit triggered: scaling=0.648 (a=445.472, b=170.165, c=-297.304)[0m
+[0m[INFO] [1764592986.496335741, 420.616000000]: Joint state: LF pos=632.957 v=8.90327 RF pos=629.078 v=9.01928 LB pos=615.408 v=8.04517 RB pos=615.671 v=8.99458[0m
+[0m[INFO] [1764592986.566008693, 420.934000000]: Power limit triggered: scaling=0.604 (a=460.675, b=213.432, c=-297.099)[0m
+[0m[INFO] [1764592986.678290454, 421.432000000]: Power limit triggered: scaling=0.874 (a=265.875, b=109.302, c=-298.609)[0m
+[0m[INFO] [1764592986.717029388, 421.618000000]: Joint state: LF pos=643.808 v=8.92458 RF pos=639.571 v=9.96659 LB pos=625.712 v=9.93273 RB pos=625.432 v=9.50017[0m
+[0m[INFO] [1764592986.794433846, 421.972000000]: Power limit triggered: scaling=0.890 (a=223.531, b=135.141, c=-297.427)[0m
+[0m[INFO] [1764592986.901047680, 422.476000000]: Power limit triggered: scaling=0.866 (a=281.074, b=101.046, c=-298.573)[0m
+[0m[INFO] [1764592986.933457731, 422.614000000]: Joint state: LF pos=655.628 v=11.3723 RF pos=649.798 v=11.4487 LB pos=635.951 v=12.0651 RB pos=634.759 v=12.1087[0m
+[0m[INFO] [1764592987.026167932, 422.998000000]: Power limit triggered: scaling=0.862 (a=271.336, b=112.672, c=-298.626)[0m
+[0m[INFO] [1764592987.158508570, 423.502000000]: Power limit triggered: scaling=0.677 (a=380.821, b=181.105, c=-297.238)[0m
+[0m[INFO] [1764592987.184180675, 423.622000000]: Joint state: LF pos=666.645 v=10.4908 RF pos=659.716 v=33.1845 LB pos=645.589 v=10..656 (tf_ok=1 tf_stale=0 yaw_tf=2.656 have_odom=1 yaw_odom=2.629)[0m
+[0m[INFO] [1764592982.539822052, 403.630000000]: Yaw monitor: src=auto yaw=-2.557 (tf_ok=1 tf_stale=0 yaw_tf=-2.557 have_odom=1 yaw_odom=-2.576)[0m
+[0m[INFO] [1764592982.775808588, 404.644000000]: Yaw monitor: src=auto yaw=-1.516 (tf_ok=1 tf_stale=0 yaw_tf=-1.516 have_odom=1 yaw_odom=-1.523)[0m
+[0m[INFO] [1764592983.021775652, 405.664000000]: Yaw monitor: src=auto yaw=-1.461 (tf_ok=1 tf_stale=0 yaw_tf=-1.461 have_odom=1 yaw_odom=-1.461)[0m
+[0m[INFO] [1764592983.250722094, 406.690000000]: Yaw monitor: src=auto yaw=-1.442 (tf_ok=1 tf_stale=0 yaw_tf=-1.442 have_odom=1 yaw_odom=-1.441)[0m
+[0m[INFO] [1764592983.472054476, 407.686000000]: Yaw monitor: src=auto yaw=-1.361 (tf_ok=1 tf_stale=0 yaw_tf=-1.361 have_odom=1 yaw_odom=-1.371)[0m
+[0m[INFO] [1764592983.702986816, 408.700000000]: Yaw monitor: src=auto yaw=-1.488 (tf_ok=1 tf_stale=0 yaw_tf=-1.488 have_odom=1 yaw_odom=-1.485)[0m
+[0m[INFO] [1764592983.934761409, 409.702000000]: Yaw monitor: src=auto yaw=-1.694 (tf_ok=1 tf_stale=0 yaw_tf=-1.694 have_odom=1 yaw_odom=-1.636)[0m
+[0m[INFO] [1764592984.164300089, 410.704000000]: Yaw monitor: src=auto yaw=-1.622 (tf_ok=1 tf_stale=0 yaw_tf=-1.622 have_odom=1 yaw_odom=-1.640)[0m
+[0m[INFO] [1764592984.400093005, 411.730000000]: Yaw monitor: src=auto yaw=-0.937 (tf_ok=1 tf_stale=0 yaw_tf=-0.937 have_odom=1 yaw_odom=-0.947)[0m
+[0m[INFO] [1764592984.643553743, 412.744000000]: Yaw monitor: src=auto yaw=-0.845 (tf_ok=1 tf_stale=0 yaw_tf=-0.845 have_odom=1 yaw_odom=-0.848)[0m
+[0m[INFO] [1764592984.872803066, 413.764000000]: Yaw monitor: src=auto yaw=-0.801 (tf_ok=1 tf_stale=0 yaw_tf=-0.801 have_odom=1 yaw_odom=-0.801)[0m
+[0m[INFO] [1764592985.114331377, 414.784000000]: Yaw monitor: src=auto yaw=-0.797 (tf_ok=1 tf_stale=0 yaw_tf=-0.797 have_odom=1 yaw_odom=-0.796)[0m
+[0m[INFO] [1764592985.343358691, 415.804000000]: Yaw monitor: src=auto yaw=-0.794 (tf_ok=1 tf_stale=0 yaw_tf=-0.794 have_odom=1 yaw_odom=-0.793)[0m
+[0m[INFO] [1764592985.579190369, 416.824000000]: Yaw monitor: src=auto yaw=-0.856 (tf_ok=1 tf_stale=0 yaw_tf=-0.856 have_odom=1 yaw_odom=-0.854)[0m
+[0m[INFO] [1764592985.815624414, 417.850000000]: Yaw monitor: src=auto yaw=-0.824 (tf_ok=1 tf_stale=0 yaw_tf=-0.824 have_odom=1 yaw_odom=-0.825)[0m
+[0m[INFO] [1764592986.058834957, 418.852000000]: Yaw monitor: src=auto yaw=-0.892 (tf_ok=1 tf_stale=0 yaw_tf=-0.892 have_odom=1 yaw_odom=-0.893)[0m
+[0m[INFO] [1764592986.329165667, 419.860000000]: Yaw monitor: src=auto yaw=-1.025 (tf_ok=1 tf_stale=0 yaw_tf=-1.025 have_odom=1 yaw_odom=-1.012)[0m
+[0m[INFO] [1764592986.551746157, 420.862000000]: Yaw monitor: src=auto yaw=-0.929 (tf_ok=1 tf_stale=0 yaw_tf=-0.929 have_odom=1 yaw_odom=-0.929)[0m
+[0m[INFO] [1764592986.774496307, 421.876000000]: Yaw monitor: src=auto yaw=-0.993 (tf_ok=1 tf_stale=0 yaw_tf=-0.993 have_odom=1 yaw_odom=-0.923)[0m
+[0m[INFO] [1764592986.998426771, 422.884000000]: Yaw monitor: src=auto yaw=-0.947 (tf_ok=1 tf_stale=0 yaw_tf=-0.947 have_odom=1 yaw_odom=-0.942)[0m
+[0m[INFO] [1764592987.257210530, 423.904000000]: Yaw monitor: src=auto yaw=-0.876 (tf_ok=1 tf_stale=0 yaw_tf=-0.876 have_odom=1 yaw_odom=-0.869)[0m
+[0m[INFO] [1764592987.514315455, 424.942000000]: Yaw monitor: src=auto yaw=-0.978 (tf_ok=1 tf_stale=0 yaw_tf=-0.978 have_odom=1 yaw_odom=-0.970)[0m
+[0m[INFO] [1764592987.751666478, 425.944000000]: Yaw monitor: src=auto yaw=-0.983 (tf_ok=1 tf_stale=0 yaw_tf=-0.983 have_odom=1 yaw_odom=-0.978)[0m
+[0m[INFO] [1764592987.984231495, 426.964000000]: Yaw monitor: src=auto yaw=-0.845 (tf_ok=1 tf_stale=0 yaw_tf=-0.845 have_odom=1 yaw_odom=-0.922)[0m
+[0m[INFO] [1764592988.216075464, 427.990000000]: Yaw monitor: src=auto yaw=0.305 (tf_ok=1 tf_stale=0 yaw_tf=0.305 have_odom=1 yaw_odom=0.204)[0m
+[0m[INFO] [1764592988.449752639, 429.004000000]: Yaw monitor: src=auto yaw=1.359 (tf_ok=1 tf_stale=0 yaw_tf=1.359 have_odom=1 yaw_odom=1.284)[0m
+[0m[INFO] [1764592988.692630566, 430.024000000]: Yaw monitor: src=auto yaw=2.533 (tf_ok=1 tf_stale=0 yaw_tf=2.533 have_odom=1 yaw_o3992 RB pos=644.505 v=9.42031[0m
+[0m[INFO] [1764592987.280272800, 424.006000000]: Power limit triggered: scaling=0.583 (a=494.234, b=222.083, c=-297.064)[0m
+[0m[INFO] [1764592987.414275676, 424.516000000]: Power limit triggered: scaling=0.708 (a=419.400, b=125.158, c=-298.716)[0m
+[0m[INFO] [1764592987.442453915, 424.624000000]: Joint state: LF pos=677.368 v=8.77447 RF pos=670.024 v=8.41978 LB pos=655.99 v=7.56001 RB pos=654.47 v=7.30437[0m
+[0m[INFO] [1764592987.531499213, 425.014000000]: Power limit triggered: scaling=0.577 (a=525.236, b=211.495, c=-297.121)[0m
+[0m[INFO] [1764592987.649462810, 425.524000000]: Power limit triggered: scaling=0.535 (a=579.156, b=245.110, c=-296.971)[0m
+[0m[INFO] [1764592987.672549601, 425.626000000]: Joint state: LF pos=687.906 v=9.29538 RF pos=680.53 v=9.05437 LB pos=665.638 v=8.71777 RB pos=664.428 v=7.89957[0m
+[0m[INFO] [1764592987.770947884, 426.034000000]: Power limit triggered: scaling=0.710 (a=412.810, b=127.411, c=-298.726)[0m
+[0m[INFO] [1764592987.882875379, 426.538000000]: Power limit triggered: scaling=0.720 (a=333.292, b=172.773, c=-297.269)[0m
+[0m[INFO] [1764592987.908208247, 426.622000000]: Joint state: LF pos=698.594 v=13.1192 RF pos=690.6 v=9.76206 LB pos=675.28 v=11.7608 RB pos=673.95 v=8.49834[0m
+[0m[INFO] [1764592988.003881018, 427.048000000]: Power limit triggered: scaling=0.624 (a=550.066, b=136.164, c=-298.934)[0m
+[0m[INFO] [1764592988.117799033, 427.546000000]: Power limit triggered: scaling=0.995 (a=275.911, b=26.655, c=-299.625)[0m
+[0m[INFO] [1764592988.136784254, 427.630000000]: Joint state: LF pos=704.61 v=4.0568 RF pos=696.441 v=7.19624 LB pos=680.136 v=4.56595 RB pos=679.787 v=7.47021[0m
+[0m[INFO] [1764592988.232899185, 428.062000000]: Power limit triggered: scaling=0.586 (a=640.147, b=135.284, c=-298.981)[0m
+[0m[INFO] [1764592988.349565676, 428.584000000]: Power limit triggered: scaling=0.492 (a=882.888, b=173.191, c=-298.959)[0m
+[0m[INFO] [1764592988.361079125, 428.632000000]: Joint state: LF pos=710.373 v=5.58457 RF pos=701.82 v=-30.3425 LB pos=685.55 v=5.42176 RB pos=685.803 v=2.54188[0m
+[0m[INFO] [1764592988.469660142, 429.088000000]: Power limit triggered: scaling=0.151 (a=9316.193, b=580.739, c=-298.789)[0m
+[0m[INFO] [1764592988.593828737, 429.592000000]: Power limit triggered: scaling=0.076 (a=22192.977, b=2202.066, c=-293.382)[0m
+[0m[INFO] [1764592988.601877959, 429.628000000]: Joint state: LF pos=715.865 v=2.94576 RF pos=707.283 v=3.78102 LB pos=691.852 v=3.83426 RB pos=691.197 v=4.15003[0m
+[0m[INFO] [1764592988.709515937, 430.096000000]: Power limit triggered: scaling=0.662 (a=494.603, b=124.449, c=-299.021)[0m
+[0m[INFO] [1764592988.829076931, 430.636000000]: Joint state: LF pos=721.224 v=5.63115 RF pos=712.37 v=5.57376 LB pos=697.427 v=5.21965 RB pos=697.311 v=5.27032[0m
+[0m[INFO] [1764592988.836410271, 430.660000000]: Power limit triggered: scaling=0.232 (a=3585.674, b=454.826, c=-298.139)[0m
+[0m[INFO] [1764592988.958378100, 431.170000000]: Power limit triggered: scaling=0.644 (a=527.720, b=123.872, c=-298.988)[0m
+[0m[INFO] [1764592989.065619534, 431.638000000]: Joint state: LF pos=726.572 v=5.01916 RF pos=718.234 v=6.60207 LB pos=702.178 v=6.56652 RB pos=703.356 v=9.45326[0m
+[0m[INFO] [1764592989.073734347, 431.674000000]: Power limit triggered: scaling=0.651 (a=525.606, b=117.519, c=-299.050)[0m
+[0m[INFO] [1764592989.179956281, 432.172000000]: Power limit triggered: scaling=0.998 (a=271.727, b=28.919, c=-299.650)[0m
+[0m[INFO] [1764592989.288159747, 432.640000000]: Joint state: LF pos=731.832 v=5.16877 RF pos=723.632 v=4.81191 LB pos=707.792 v=3.38282 RB pos=708.95 v=2.48877[0m
+[0m[INFO] [1764592989.296755049, 432.682000000]: Power limit triggered: scaling=0.640 (a=542.848, b=119.496, c=-299.014)[0m
+[0m[INFO] [1764592989.414387434, 433.192000000]: Power limit triggered: scaling=0.772 (a=462.015, b=30.992, c=-299.634)[0m
+[0m[INFO] [1764592989.513259816, 433.642000000]: Joint state: LF pos=737.069 v=4.1909 RF pos=728.767 v=5.45138 LB pos=713.477 v=5.73344 RB pos=714.075 v=8.0576[0m
+[0m[INFO]

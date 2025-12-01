@@ -28,6 +28,7 @@
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="false"/>
         <arg name="world_name" value="$(find sentry_chassis_controller)/worlds/2023_v_4_1.world"/>
+        <!--arg name="world_name" value="$(find rm_gazebo)/worlds/empty.world"/ -->
         <arg name="verbose" value="$(arg verbose)"/>
     </include>
 
