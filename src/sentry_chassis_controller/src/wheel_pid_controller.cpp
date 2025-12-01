@@ -41,7 +41,7 @@ namespace sentry_chassis_controller
         }
         catch (const hardware_interface::HardwareInterfaceException &ex)
         {
-            ROS_ERROR("WheelPidController: 获取关节句柄时发生异常：%s", ex.what());
+            ROS_ERROR("WheelPidController: Exception getting joint handle: %s", ex.what());
             return false;
         }
 
@@ -158,7 +158,7 @@ namespace sentry_chassis_controller
         // RR: (-rx, -ry) → 切向 = atan2(-rx, +ry)
         geo_lock_angles_[3] = std::atan2(-rx, ry);   // 约 +2.356 rad (+135°) 或 -0.785
         
-        ROS_INFO("几何自锁舵角预计算：FL=%.2f° FR=%.2f° RL=%.2f° RR=%.2f°",
+        ROS_INFO("Geo-lock pivot angles: FL=%.2f° FR=%.2f° RL=%.2f° RR=%.2f°",
                  geo_lock_angles_[0] * 180.0 / M_PI, geo_lock_angles_[1] * 180.0 / M_PI,
                  geo_lock_angles_[2] * 180.0 / M_PI, geo_lock_angles_[3] * 180.0 / M_PI);
 
@@ -169,11 +169,11 @@ namespace sentry_chassis_controller
             locked_pivot_pos_[i] = 0.0; // 初始锁定舵角为0
             locked_wheel_pos_[i] = 0.0; // 初始锁定轮子位置为0
         }
-        ROS_INFO("底盘自锁功能：%s，空闲超时=%.2fs，速度死区=%.3f",
-                 self_lock_enabled_ ? "启用" : "禁用", idle_timeout_, odom_velocity_deadband_);
-        ROS_INFO("  位置锁定=%s (P=%.1f D=%.2f)，几何自锁=%s (轮子制动=%s)",
-                 lock_pos_enabled_ ? "启用" : "禁用", lock_pos_p_, lock_pos_d_,
-                 geo_lock_enabled_ ? "启用" : "禁用", geo_lock_wheel_brake_ ? "是" : "否");
+        ROS_INFO("Self-lock: %s, idle_timeout=%.2fs, velocity_deadband=%.3f",
+                 self_lock_enabled_ ? "enabled" : "disabled", idle_timeout_, odom_velocity_deadband_);
+        ROS_INFO("  Position lock=%s (P=%.1f D=%.2f), Geo-lock=%s (wheel_brake=%s)",
+                 lock_pos_enabled_ ? "enabled" : "disabled", lock_pos_p_, lock_pos_d_,
+                 geo_lock_enabled_ ? "enabled" : "disabled", geo_lock_wheel_brake_ ? "yes" : "no");
 
         // 里程计发布集成，支持不同速度模式下的里程计计算
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);                // 里程计坐标系
@@ -182,8 +182,8 @@ namespace sentry_chassis_controller
         odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom_controller", 10);                // 里程计发布器
         last_odom_time_ = ros::Time(0);
 
-        ROS_INFO("WheelPidController 已初始化（增强状态反馈）");
-        ROS_INFO("速度模式：%s (local=base_link, global=odom)", speed_mode_.c_str());
+        ROS_INFO("WheelPidController initialized (enhanced state feedback)");
+        ROS_INFO("Velocity mode: %s (local=base_link, global=odom)", speed_mode_.c_str());
         return true;
     }
 
@@ -243,7 +243,7 @@ namespace sentry_chassis_controller
         setPivot("pivot_rl", config.pivot_rl_p, config.pivot_rl_i, config.pivot_rl_d, config.pivot_rl_i_clamp);
         setPivot("pivot_rr", config.pivot_rr_p, config.pivot_rr_i, config.pivot_rr_d, config.pivot_rr_i_clamp);
 
-        ROS_INFO("WheelPidController: dynamic_reconfigure 已更新 PID 增益，并镜像到 wheels/* 参数");
+        ROS_INFO("WheelPidController: dynamic_reconfigure updated PID gains, mirrored to wheels/* params");
     }
 
     /*
@@ -289,13 +289,13 @@ namespace sentry_chassis_controller
                 vx = vel_local.vector.x;
                 vy = vel_local.vector.y;
 
-                ROS_DEBUG_THROTTLE(1.0, "全局模式：odom_vel(%.2f,%.2f) -> 机体_vel(%.2f,%.2f)",
+                ROS_DEBUG_THROTTLE(1.0, "Global mode: odom_vel(%.2f,%.2f) -> body_vel(%.2f,%.2f)",
                                    msg->linear.x, msg->linear.y, vx, vy);
             }
             catch (tf::TransformException &ex)
             {
-                ROS_WARN_THROTTLE(2.0, "全局模式下 TF 变换错误：%s", ex.what());
-                // 回退：按原命令使用（假定为机体系）
+                ROS_WARN_THROTTLE(2.0, "Global mode TF transform error: %s", ex.what());
+                // Fallback: use original command (assume body frame)
                 vx = msg->linear.x;
                 vy = msg->linear.y;
             }
@@ -352,7 +352,7 @@ namespace sentry_chassis_controller
         controller_nh.param(base + "/i_clamp", i_clamp, i_clamp);
         controller_nh.param(base + "/antiwindup", antiwindup, antiwindup);
         pid.initPid(p, i, d, i_clamp, antiwindup);
-        ROS_INFO("WheelPidController: 初始化舵角 PID '%s' p=%.3f i=%.3f d=%.3f i_clamp=%.3f", name.c_str(), p, i, d, i_clamp);
+        ROS_INFO("WheelPidController: Init pivot PID '%s' p=%.3f i=%.3f d=%.3f i_clamp=%.3f", name.c_str(), p, i, d, i_clamp);
     }
 
     /*
@@ -380,7 +380,7 @@ namespace sentry_chassis_controller
         controller_nh.param(base + "/i_clamp", i_clamp, i_clamp);
         controller_nh.param(base + "/antiwindup", antiwindup, antiwindup);
         pid.initPid(p, i, d, i_clamp, antiwindup);
-        ROS_INFO("WheelPidController: 初始化轮向电机 PID '%s' p=%.3f i=%.3f d=%.3f i_clamp=%.3f", name.c_str(), p, i, d, i_clamp);
+        ROS_INFO("WheelPidController: Init wheel PID '%s' p=%.3f i=%.3f d=%.3f i_clamp=%.3f", name.c_str(), p, i, d, i_clamp);
     }
 
     /*
@@ -411,7 +411,7 @@ namespace sentry_chassis_controller
             static ros::Time last_log = ros::Time(0);
             if (time.toSec() - last_log.toSec() > 1.0) // Log every second
             {
-                ROS_INFO_STREAM_THROTTLE(1.0, "关节状态发布："
+                ROS_INFO_STREAM_THROTTLE(1.0, "Joint state:"
                                                   << " LF pos=" << lf_wheel_pos << " v=" << lf_wheel_vel
                                                   << " RF pos=" << rf_wheel_pos << " v=" << rf_wheel_vel
                                                   << " LB pos=" << lb_wheel_pos << " v=" << lb_wheel_vel
@@ -421,7 +421,7 @@ namespace sentry_chassis_controller
         }
         catch (const hardware_interface::HardwareInterfaceException &e)
         {
-            ROS_ERROR_THROTTLE(1.0, "读取关节状态失败：%s", e.what());
+            ROS_ERROR_THROTTLE(1.0, "Failed to read joint states: %s", e.what());
         }
 
         // 确保非零状态（安全回退）
@@ -435,7 +435,7 @@ namespace sentry_chassis_controller
             rf_wheel_pos = synthetic_pos;
             lb_wheel_pos = synthetic_pos;
             rb_wheel_pos = synthetic_pos;
-            ROS_WARN_THROTTLE(2.0, "所有关节位置为零！使用合成备份值");
+            ROS_WARN_THROTTLE(2.0, "All joint positions are zero! Using synthetic fallback values");
         }
 
         // 坑：发布实际关节名称对应关节的状态
@@ -465,7 +465,7 @@ namespace sentry_chassis_controller
             js.position[3] = rb_wheel_pos;
             js.velocity[3] = rb_wheel_vel;
 
-            // 转向架位置（我们也可以发布这些以完整性）
+            // 转向架位置（发布这些以完整性）
             try
             {
                 js.position[4] = front_left_pivot_joint_.getPosition();
@@ -481,8 +481,8 @@ namespace sentry_chassis_controller
                 js.position[7] = 0.0;
             }
 
-            // 通过日志检查当前发布的状态
-            ROS_DEBUG_STREAM_THROTTLE(1.0, "发布关节状态: "
+            // Check current published state via log
+            ROS_DEBUG_STREAM_THROTTLE(1.0, "Publishing joint states: "
                                                << " wheel pos=" << js.position[0] << "," << js.position[1]
                                                << " vel=" << js.velocity[0] << "," << js.velocity[1]
                                                << " pivot pos=" << js.position[4]);
@@ -528,20 +528,20 @@ namespace sentry_chassis_controller
                     // 日志输出当前自锁模式
                     if (geo_lock_enabled_)
                     {
-                        ROS_INFO_THROTTLE(2.0, "底盘自锁已激活(几何自锁)：舵角转到自转切向 [%.1f°, %.1f°, %.1f°, %.1f°]，轮子制动=%s",
+                        ROS_INFO_THROTTLE(2.0, "Self-lock activated (geo-lock): pivot angles [%.1f°, %.1f°, %.1f°, %.1f°], wheel_brake=%s",
                                           geo_lock_angles_[0] * 180.0 / M_PI, geo_lock_angles_[1] * 180.0 / M_PI,
                                           geo_lock_angles_[2] * 180.0 / M_PI, geo_lock_angles_[3] * 180.0 / M_PI,
-                                          geo_lock_wheel_brake_ ? "是" : "否");
+                                          geo_lock_wheel_brake_ ? "yes" : "no");
                     }
                     else if (lock_pos_enabled_)
                     {
-                        ROS_INFO_THROTTLE(2.0, "底盘自锁已激活(位置锁定)：轮位置 [%.2f, %.2f, %.2f, %.2f] rad",
+                        ROS_INFO_THROTTLE(2.0, "Self-lock activated (position lock): wheel pos [%.2f, %.2f, %.2f, %.2f] rad",
                                           locked_wheel_pos_[0], locked_wheel_pos_[1],
                                           locked_wheel_pos_[2], locked_wheel_pos_[3]);
                     }
                     else
                     {
-                        ROS_INFO_THROTTLE(2.0, "底盘自锁已激活(速度锁定)：舵角锁定 [%.2f, %.2f, %.2f, %.2f] rad",
+                        ROS_INFO_THROTTLE(2.0, "Self-lock activated (velocity lock): pivot angles [%.2f, %.2f, %.2f, %.2f] rad",
                                           locked_pivot_pos_[0], locked_pivot_pos_[1],
                                           locked_pivot_pos_[2], locked_pivot_pos_[3]);
                     }
@@ -632,7 +632,7 @@ namespace sentry_chassis_controller
                 if (is_locked_)
                 {
                     is_locked_ = false;
-                    ROS_INFO_THROTTLE(2.0, "底盘自锁已解除");
+                    ROS_INFO_THROTTLE(2.0, "Self-lock released");
                 }
             }
         }
@@ -653,13 +653,13 @@ namespace sentry_chassis_controller
             cmd2 = wheel_cmd_[2] / 1000.0;
             cmd3 = wheel_cmd_[3] / 1000.0;
 
-            // 重置 PID 积分器，防止解锁时产生跳变
+            // Reset PID integrators to prevent spikes when unlocking
             pid_lf_wheel_.reset();
             pid_rf_wheel_.reset();
             pid_lb_wheel_.reset();
             pid_rb_wheel_.reset();
 
-            ROS_DEBUG_THROTTLE(1.0, "位置锁定力矩: [%.2f, %.2f, %.2f, %.2f] Nm", cmd0, cmd1, cmd2, cmd3);
+            ROS_DEBUG_THROTTLE(1.0, "Position lock torque: [%.2f, %.2f, %.2f, %.2f] Nm", cmd0, cmd1, cmd2, cmd3);
         }
         else
         {
@@ -706,7 +706,7 @@ namespace sentry_chassis_controller
                 cmd1 *= scaling_factor;
                 cmd2 *= scaling_factor;
                 cmd3 *= scaling_factor;
-                ROS_INFO_THROTTLE(0.5, "功率限制已触发: 缩放系数=%.3f (a=%.3f, b=%.3f, c=%.3f)", scaling_factor, a, b, c);
+                ROS_INFO_THROTTLE(0.5, "Power limit triggered: scaling=%.3f (a=%.3f, b=%.3f, c=%.3f)", scaling_factor, a, b, c);
             }
 
             if (power_debug_enabled_)
@@ -887,9 +887,9 @@ namespace sentry_chassis_controller
         }
         else
         {
-            // 矩阵奇异（可能原因：四轮舵角共线、传感器故障、初始化阶段等）
-            // 发出警告并使用零速度作为回退（避免发布错误的里程计）
-            ROS_WARN_THROTTLE(1.0, "前向运动学矩阵奇异，使用零速度");
+            // Matrix singular (possible causes: four-wheel pivot angles collinear, sensor failure, initialization phase, etc.)
+            // Issue warning and use zero velocity as fallback (avoid publishing incorrect odometry)
+            ROS_WARN_THROTTLE(1.0, "Forward kinematics matrix singular, using zero velocity");
         }
 
         // ==================== 步骤 4.5: 速度死区滤波（消除静止抖动导致的里程计漂移） ====================

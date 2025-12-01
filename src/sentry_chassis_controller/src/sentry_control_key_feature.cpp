@@ -402,68 +402,34 @@ void TeleopTurtle::keyLoop()
             cur_vy_world *= scale;
         }
 
-        // ==================== 更新底盘航向角（仅使用里程计提供的航向） ====================
-        if (have_odom_yaw_)
-        {
-            yaw_ = yaw_odom_;  // 使用里程计航向
-        }
-        else
-        {
-            yaw_ = 0.0;  // 无里程计数据时默认航向为 0
-            ROS_WARN_THROTTLE(2.0, "没有里程计数据，请检查");
-        }
-
-        // ==================== 发布带时间戳的速度意图（TwistStamped） ====================
+        // ==================== 方案 A：发布原始意图，由控制器负责坐标变换 ====================
+        // velocity_mode 只决定 frame_id，不在此处做坐标变换
+        // 控制器根据 speed_mode 参数决定是否需要将速度从 odom 系转换到 base_link 系
+        
+        // 发布带时间戳的速度意图（TwistStamped）
         geometry_msgs::TwistStamped stamped;
         stamped.header.stamp = ros::Time::now();
         // 根据速度模式选择 frame_id：global 模式为 odom，chassis 模式为 base_link
         stamped.header.frame_id = (velocity_mode_ == "global") ? global_frame_ : base_link_frame_;
 
-        // ==================== 根据模式计算底盘系速度与世界系速度 ====================
-        double body_vx = 0.0, body_vy = 0.0;    // 底盘坐标系速度（最终发布到 /cmd_vel）
-        double world_vx = 0.0, world_vy = 0.0;  // 世界坐标系速度（用于 TwistStamped）
+        // 直接使用按键意图速度（不做坐标变换）
+        // global 模式：按键定义为全局系意图（W=+Y_world, S=-Y_world, A=-X_world, D=+X_world）
+        // chassis 模式：按键定义为底盘系意图（W=+X_body, S=-X_body, A=+Y_body, D=-Y_body）
+        double vx = cur_vx_world;  // 按键意图 X 方向速度
+        double vy = cur_vy_world;  // 按键意图 Y 方向速度
         
-        if (velocity_mode_ == "global")
-        {
-            // ========== Global 模式：按键定义为全局系意图（world frame） ==========
-            // 将按键速度视为世界系速度，需转换到底盘系发布到 /cmd_vel
-            world_vx = cur_vx_world;
-            world_vy = cur_vy_world;
-            
-            // 使用旋转矩阵 R(-yaw) 将世界系速度转换到底盘系
-            // [body_vx; body_vy] = R(-yaw) * [world_vx; world_vy]
-            double cos_yaw = std::cos(yaw_);
-            double sin_yaw = std::sin(yaw_);
-            body_vx = cos_yaw * world_vx + sin_yaw * world_vy;
-            body_vy = -sin_yaw * world_vx + cos_yaw * world_vy;
-            
-            // TwistStamped 中填写世界系速度（frame_id = odom）
-            stamped.twist.linear.x = world_vx;
-            stamped.twist.linear.y = world_vy;
-            
-            ROS_INFO_THROTTLE(1.0, "mode=global frame=%s yaw(odom)=%.3f world=(%.2f,%.2f) -> body=(%.2f,%.2f)",
-                              global_frame_.c_str(), yaw_, world_vx, world_vy, body_vx, body_vy);
-        }
-        else  // ========== Chassis 模式：按键定义为底盘系意图（body frame） ==========
-        {
-            // 按键速度直接映射到底盘系：W/S -> 底盘 x，A/D -> 底盘 y
-            body_vx = cur_vx_world;  // 在 chassis 模式下复用变量名
-            body_vy = cur_vy_world;
-            
-            // TwistStamped 中填写底盘系速度（frame_id = base_link）
-            stamped.twist.linear.x = body_vx;
-            stamped.twist.linear.y = body_vy;
-            
-            ROS_INFO_THROTTLE(1.0, "mode=chassis body=(%.2f,%.2f) yaw(odom)=%.3f", body_vx, body_vy, yaw_);
-        }
-        
-        // ==================== 角速度（机体系）直接使用按键请求 ====================
-        twist.angular.z = cur_omega;
+        // 填写速度意图到 TwistStamped 和 Twist
+        stamped.twist.linear.x = vx;
+        stamped.twist.linear.y = vy;
         stamped.twist.angular.z = cur_omega;
-
-        // ==================== 写入底盘系速度到 Twist 消息（/cmd_vel） ====================
-        twist.linear.x = body_vx;
-        twist.linear.y = body_vy;
+        
+        twist.linear.x = vx;
+        twist.linear.y = vy;
+        twist.angular.z = cur_omega;
+        
+        // 日志输出（调试用）
+        ROS_INFO_THROTTLE(1.0, "Teleop: mode=%s frame=%s vel=(%.2f,%.2f) omega=%.2f",
+                          velocity_mode_.c_str(), stamped.header.frame_id.c_str(), vx, vy, cur_omega);
 
         // ==================== 发布速度消息 ====================
         // 判断是否有运动（用于决定是否发布）
@@ -473,10 +439,10 @@ void TeleopTurtle::keyLoop()
         
         if (any_key_pressed || publish_zero_when_idle_)
         {
-            // 发布带时间戳的速度意图（global 模式为 global_frame_，chassis 模式为 base_link）
+            // 发布带时间戳的速度意图（包含 frame_id，控制器据此判断坐标系）
             twist_stamped_pub_.publish(stamped);
             
-            // 如果有运动或配置允许空闲零发布，发布到 /cmd_vel
+            // 发布到 /cmd_vel（控制器根据自身 speed_mode 处理）
             if (has_motion || publish_zero_when_idle_)
                 twist_pub_.publish(twist);
         }

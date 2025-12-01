@@ -12,7 +12,13 @@ wheel_pid_controller:
   # Do not synthesize fake joint movement by default
   synthetic_fallback: false
   
-  # 速度模式: "local" or "global"
+  # ========== 方案 A：速度坐标系由控制器统一处理 ==========
+  # speed_mode 决定控制器如何处理收到的 /cmd_vel 速度命令：
+  #   - global: 将速度从 odom_frame 转换到 base_link_frame（使用 TF）
+  #             适用于键盘节点 velocity_mode=global 的情况
+  #   - local:  直接使用收到的速度（假定已在 base_link 系中）
+  #             适用于键盘节点 velocity_mode=chassis 的情况
+  # 注意：speed_mode 应与键盘节点的 velocity_mode 保持一致！
   #speed_mode: "local"
   speed_mode: "global"
   # Frame IDs for odometry and TF
