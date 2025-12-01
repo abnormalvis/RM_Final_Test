@@ -131,13 +131,13 @@ namespace sentry_chassis_controller
         controller_nh.param("self_lock/lock_pos_p", lock_pos_p_, 8.0);           // 位置锁定 P 增益
         controller_nh.param("self_lock/lock_pos_i", lock_pos_i_, 0.0);           // 位置锁定 I 增益
         controller_nh.param("self_lock/lock_pos_d", lock_pos_d_, 1.0);           // 位置锁定 D 增益
-        
+
         // ==================== 几何自锁模式参数 ====================
         // 几何自锁：将舵轮转到底盘自转切向方向，形成"X"字布局
         // 原理：轮子滚动方向与任意平移方向垂直，外力只能推动轮子侧滑（滑动摩擦 >> 滚动摩擦）
-        controller_nh.param("self_lock/geo_lock_enabled", geo_lock_enabled_, false);     // 几何自锁开关
+        controller_nh.param("self_lock/geo_lock_enabled", geo_lock_enabled_, false);        // 几何自锁开关
         controller_nh.param("self_lock/geo_lock_wheel_brake", geo_lock_wheel_brake_, true); // 几何自锁时是否锁定轮子
-        
+
         // 预计算几何自锁舵角（基于轮子相对底盘中心的位置）
         // 轮子布局（右手系：x向前，y向左）：
         //   FL: (+wheel_base/2, +wheel_track/2)  →  切向角 = atan2(+rx, -ry) = atan2(+, -)
@@ -146,18 +146,18 @@ namespace sentry_chassis_controller
         //   RR: (-wheel_base/2, -wheel_track/2)  →  切向角 = atan2(-rx, -ry) = atan2(-, +)
         // 切向方向：从轮子位置绕底盘中心逆时针旋转90度的方向
         // 公式：θ = atan2(rx, -ry)  （使轮子滚动方向沿自转切线）
-        double rx = wheel_base_ / 2.0;   // 轴距半值
-        double ry = wheel_track_ / 2.0;  // 轮距半值
-        
+        double rx = wheel_base_ / 2.0;  // 轴距半值
+        double ry = wheel_track_ / 2.0; // 轮距半值
+
         // FL: (+rx, +ry) → 切向 = atan2(+rx, -ry)
-        geo_lock_angles_[0] = std::atan2(rx, -ry);   // 约 -0.785 rad (-45°)
-        // FR: (+rx, -ry) → 切向 = atan2(+rx, +ry)  
-        geo_lock_angles_[1] = std::atan2(rx, ry);    // 约 +0.785 rad (+45°)
+        geo_lock_angles_[0] = std::atan2(rx, -ry); // 约 -0.785 rad (-45°)
+        // FR: (+rx, -ry) → 切向 = atan2(+rx, +ry)
+        geo_lock_angles_[1] = std::atan2(rx, ry); // 约 +0.785 rad (+45°)
         // RL: (-rx, +ry) → 切向 = atan2(-rx, -ry)
-        geo_lock_angles_[2] = std::atan2(-rx, -ry);  // 约 -2.356 rad (-135°) 或 +2.356
+        geo_lock_angles_[2] = std::atan2(-rx, -ry); // 约 -2.356 rad (-135°) 或 +2.356
         // RR: (-rx, -ry) → 切向 = atan2(-rx, +ry)
-        geo_lock_angles_[3] = std::atan2(-rx, ry);   // 约 +2.356 rad (+135°) 或 -0.785
-        
+        geo_lock_angles_[3] = std::atan2(-rx, ry); // 约 +2.356 rad (+135°) 或 -0.785
+
         ROS_INFO("Geo-lock pivot angles: FL=%.2f° FR=%.2f° RL=%.2f° RR=%.2f°",
                  geo_lock_angles_[0] * 180.0 / M_PI, geo_lock_angles_[1] * 180.0 / M_PI,
                  geo_lock_angles_[2] * 180.0 / M_PI, geo_lock_angles_[3] * 180.0 / M_PI);
@@ -181,6 +181,9 @@ namespace sentry_chassis_controller
         controller_nh.param<std::string>("speed_mode", speed_mode_, speed_mode_);                // 速度模式：local 或 global
         odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom_controller", 10);                // 里程计发布器
         last_odom_time_ = ros::Time(0);
+
+        // 初始化 TF 监听器（作为类成员，持续缓存 TF 数据，避免每次回调重新创建）
+        tf_listener_ = std::make_shared<tf::TransformListener>();
 
         ROS_INFO("WheelPidController initialized (enhanced state feedback)");
         ROS_INFO("Velocity mode: %s (local=base_link, global=odom)", speed_mode_.c_str());
@@ -264,40 +267,37 @@ namespace sentry_chassis_controller
         if (speed_mode_ == "global")
         {
             // 将速度从全局（odom）坐标系转换到局部（base_link）坐标系
-            // 在本地创建 tf_listener，避免静态初始化问题
+            // 使用成员变量 tf_listener_，它持续缓存 TF 数据
             try
             {
-                tf::TransformListener tf_listener;                   // 本地tf监听器对象
                 geometry_msgs::Vector3Stamped vel_global, vel_local; // 全局和局部速度向量
                 vel_global.header.frame_id = odom_frame_;            // 全局坐标系
+                vel_global.header.stamp = ros::Time(0);              // 使用最新的变换
                 vel_global.vector.x = vx;                            // 速度在全局坐标系中的x分量
                 vel_global.vector.y = vy;                            // 速度在全局坐标系中的y分量
                 vel_global.vector.z = 0.0;
 
-                // 等待变换并转换
-                /*
-                target_frame – The frame into which to transform
-                source_frame – The frame from which to transform
-                time – The time at which to transform
-                timeout – How long to block before failing
-                polling_sleep_duration – How often to retest if failed
-                */
-                tf_listener.waitForTransform(base_link_frame_, odom_frame_, ros::Time(), ros::Duration(0.1));
-                tf_listener.transformVector(base_link_frame_, vel_global, vel_local);
+                // 使用缓存的 TF 变换（ros::Time(0) 表示最新可用的变换）
+                if (tf_listener_->canTransform(base_link_frame_, odom_frame_, ros::Time(0)))
+                {
+                    tf_listener_->transformVector(base_link_frame_, vel_global, vel_local);
 
-                // 使用转换后的速度
-                vx = vel_local.vector.x;
-                vy = vel_local.vector.y;
+                    // 使用转换后的速度
+                    vx = vel_local.vector.x;
+                    vy = vel_local.vector.y;
 
-                ROS_DEBUG_THROTTLE(1.0, "Global mode: odom_vel(%.2f,%.2f) -> body_vel(%.2f,%.2f)",
-                                   msg->linear.x, msg->linear.y, vx, vy);
+                    ROS_DEBUG_THROTTLE(1.0, "Global mode: odom_vel(%.2f,%.2f) -> body_vel(%.2f,%.2f)",
+                                       msg->linear.x, msg->linear.y, vx, vy);
+                }
+                else
+                {
+                    ROS_WARN_THROTTLE(2.0, "Global mode: TF not available (odom->base_link), using raw velocity");
+                }
             }
             catch (tf::TransformException &ex)
             {
                 ROS_WARN_THROTTLE(2.0, "Global mode TF transform error: %s", ex.what());
                 // Fallback: use original command (assume body frame)
-                vx = msg->linear.x;
-                vy = msg->linear.y;
             }
         }
         // 否则speed_mode_ == "local"，使用原始速度（已在 base_link 坐标系中）
@@ -524,7 +524,7 @@ namespace sentry_chassis_controller
                         // 读取失败时保持上次值
                     }
                     is_locked_ = true;
-                    
+
                     // 日志输出当前自锁模式
                     if (geo_lock_enabled_)
                     {
@@ -555,13 +555,13 @@ namespace sentry_chassis_controller
                     // 效果：任意平移方向的外力都与轮子滚动方向垂直
                     //       轮子只能侧滑（滑动摩擦）而不能滚动（滚动摩擦）
                     //       滑动摩擦系数通常远大于滚动摩擦系数，从而实现结构自锁
-                    
+
                     // 设置舵角为预计算的几何自锁角度
                     for (int i = 0; i < 4; ++i)
                     {
                         pivot_cmd_[i] = geo_lock_angles_[i];
                     }
-                    
+
                     // 轮子控制：可选是否锁定轮子
                     if (geo_lock_wheel_brake_)
                     {
@@ -596,7 +596,7 @@ namespace sentry_chassis_controller
                     {
                         pivot_cmd_[i] = locked_pivot_pos_[i];
                     }
-                    
+
                     // 使用位置 PD 控制器直接计算力矩，绕过速度 PID
                     double wheel_pos[4] = {lf_wheel_pos, rf_wheel_pos, lb_wheel_pos, rb_wheel_pos};
                     double wheel_vel[4] = {lf_wheel_vel, rf_wheel_vel, lb_wheel_vel, rb_wheel_vel};
@@ -618,7 +618,7 @@ namespace sentry_chassis_controller
                     {
                         pivot_cmd_[i] = locked_pivot_pos_[i];
                     }
-                    
+
                     // 将目标速度设为 0，由速度 PID 控制
                     for (int i = 0; i < 4; ++i)
                     {
@@ -644,7 +644,7 @@ namespace sentry_chassis_controller
 
         // 自锁模式下（位置锁定或几何自锁+轮子制动）直接使用预计算的力矩，绕过速度 PID
         bool use_position_lock_torque = is_locked_ && (lock_pos_enabled_ || (geo_lock_enabled_ && geo_lock_wheel_brake_));
-        
+
         if (use_position_lock_torque)
         {
             // wheel_cmd_ 中存储的是位置锁定力矩（乘以1000作为标记）
