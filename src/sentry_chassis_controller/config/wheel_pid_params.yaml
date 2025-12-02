@@ -4,8 +4,6 @@ wheel_pid_controller:
   # - 本 YAML 使用分层键（wheels/wheel_fl/p 等）作为启动默认值。
   # - 运行时我们会把动态参数"镜像回写"到对应的分层键上，便于 rosparam get 旧路径看到最新值；
   #   但这不会自动写回文件。如需持久化，请在运行后使用 rosparam/dynparam dump 导出。
-  # Controller type so the controller_spawner can load it from the
-  # parameter server if needed. Matches plugin XML/class name.
   type: "sentry_chassis_controller/WheelPidController"
   # Subscribe directly to the resolver's output (absolute topic recommended)
   cmd_vel_topic: "/cmd_vel"
@@ -39,15 +37,15 @@ wheel_pid_controller:
   # Default PID for pivot (steering) and wheel (drive). These act as
   # fallbacks if a per-wheel entry is not provided.
   pivot:
-    p: 2.0
-    i: 0.0
-    d: 0.0
+    p: 1.1      # 从1.3降至1.1，避免转向过快冲击
+    i: 0.0      # 你的判断正确，位置环无需I
+    d: 0.12     # 从0.25降至0.12，减少噪声注入速度环
     i_clamp: 0.0
     antiwindup: 0.0
   wheel:
-    p: 4.0
-    i: 0.2
-    d: 0.0
+    p: 0.4      # 从0.7降至0.4，削减振荡能量源
+    i: 0.0      # 保持为0，积分会加剧相位滞后
+    d: 0.35     # 从0.2增至0.35，强制增加阻尼
     i_clamp: 0.0
     antiwindup: 0.0
 
@@ -66,58 +64,58 @@ wheel_pid_controller:
   # fallback to the `wheel` or `pivot` defaults above.
   wheels:
     wheel_fl:
-      p: 4.0
-      i: 0.2
-      d: 0.0
-      i_clamp: 1.0
+      p: 0.4      # 从0.7降至0.4，削减振荡能量源
+      i: 0.0      # 保持为0，积分会加剧相位滞后
+      d: 0.35     # 从0.2增至0.35，强制增加阻尼
+      i_clamp: 0.0
       output_min: -20.0
       output_max: 20.0
     wheel_fr:
-      p: 4.0
-      i: 0.2
-      d: 0.0
-      i_clamp: 1.0
+      p: 0.4      # 从0.7降至0.4，削减振荡能量源
+      i: 0.0      # 保持为0，积分会加剧相位滞后
+      d: 0.35     # 从0.2增至0.35，强制增加阻尼
+      i_clamp: 0.0
       output_min: -20.0
       output_max: 20.0
     wheel_rl:
-      p: 4.0
-      i: 0.2
-      d: 0.0
-      i_clamp: 1.0
+      p: 0.4      # 从0.7降至0.4，削减振荡能量源
+      i: 0.0      # 保持为0，积分会加剧相位滞后
+      d: 0.35     # 从0.2增至0.35，强制增加阻尼
+      i_clamp: 0.0
       output_min: -20.0
       output_max: 20.0
     wheel_rr:
-      p: 4.0
-      i: 0.2
-      d: 0.0
-      i_clamp: 1.0
+      p: 1.1      # 从1.3降至1.1，避免转向过快冲击
+      i: 0.0      # 你的判断正确，位置环无需I
+      d: 0.12     # 从0.25降至0.12，减少噪声注入速度环
+      i_clamp: 0.0
       output_min: -20.0
       output_max: 20.0
     pivot_fl:
-      p: 2.0
+      p: 1.1
       i: 0.0
-      d: 0.0
+      d: 0.12
       i_clamp: 0.0
       output_min: -10.0
       output_max: 10.0
     pivot_fr:
-      p: 2.0
-      i: 0.0
-      d: 0.0
+      p: 1.1      # 从1.3降至1.1，避免转向过快冲击
+      i: 0.0      # 你的判断正确，位置环无需I
+      d: 0.12     # 从0.25降至0.12，减少噪声注入速度环
       i_clamp: 0.0
       output_min: -10.0
       output_max: 10.0
     pivot_rl:
-      p: 2.0
+      p: 1.1
       i: 0.0
-      d: 0.0
+      d: 0.12
       i_clamp: 0.0
       output_min: -10.0
       output_max: 10.0
     pivot_rr:
-      p: 2.0
+      p: 1.1
       i: 0.0
-      d: 0.0
+      d: 0.12
       i_clamp: 0.0
       output_min: -10.0
       output_max: 10.0

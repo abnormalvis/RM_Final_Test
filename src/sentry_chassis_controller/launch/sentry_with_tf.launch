@@ -23,7 +23,7 @@
   
   <!-- IMU 仿真模块：在仿真环境中加载 IMU 传感器 -->
   <!-- 用于 EKF 融合里程计校正 -->
-  <arg name="load_imu" default="true"/>
+  <arg name="load_imu" default="false"/>
 
     <!-- robot_description 使用 package 中的 xacro，传递必要参数 -->
   <param name="robot_description" command="$(find xacro)/xacro /home/idris/final_ws/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro load_chassis:=$(arg load_chassis) use_simulation:=$(arg use_simulation) roller_type:=$(arg roller_type) load_imu:=$(arg load_imu)"/>
@@ -35,8 +35,8 @@
         <arg name="paused" value="$(arg paused)"/>
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="false"/>
-        <arg name="world_name" value="$(find sentry_chassis_controller)/worlds/2023_v_4_1.world"/>
-        <!--arg name="world_name" value="$(find rm_gazebo)/worlds/empty.world"/ -->
+        <!--arg name="world_name" value="$(find sentry_chassis_controller)/worlds/2023_v_4_1.world"/-->
+        <arg name="world_name" value="$(find rm_gazebo)/worlds/empty.world"/>
         <arg name="verbose" value="$(arg verbose)"/>
     </include>
 

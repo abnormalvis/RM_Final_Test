@@ -5,6 +5,12 @@
   <!-- Ground Truth 里程计：使用 Gazebo 真实位姿替代轮式里程计 -->
   <!-- 启用后可消除里程计漂移，适合调试全局速度模式 -->
   <arg name="use_ground_truth_odom" default="false"/>
+  
+  <!-- PID 参数文件选择 -->
+  <!-- 可选: wheel_pid_merged.yaml (融合版，默认) 
+            wheel_pid_params.yaml (基础版) 
+            wheel_pid_state_fix.yaml (状态反馈修复版) -->
+  <arg name="pid_config" default="wheel_pid_merged.yaml"/>
 
   <!-- Start simulation / TF / RViz from existing launch; forward use_simulation arg -->
   <include file="$(find sentry_chassis_controller)/launch/sentry_with_tf.launch">
@@ -13,7 +19,7 @@
   </include>
 
   <!-- Load PID parameter defaults for the controller (synchronous) -->
-  <rosparam file="$(find sentry_chassis_controller)/config/wheel_pid_params.yaml" command="load" />
+  <rosparam file="$(find sentry_chassis_controller)/config/$(arg pid_config)" command="load" />
   
   <!-- 当使用 ground truth 里程计时，禁用控制器的 TF 发布以避免冲突 -->
   <!-- 注意：这个设置会覆盖 YAML 文件中的 publish_tf 值 -->

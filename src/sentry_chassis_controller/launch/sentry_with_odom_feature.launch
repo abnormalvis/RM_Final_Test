@@ -4,7 +4,8 @@
   <arg name="bag_dir" default="/home/idris/final_ws/src/sentry_chassis_controller/bags"/>
   <arg name="inline_resolver" default="true"/>
 
-  <!-- Include PID/controller setup -->
+  <!-- Include PID/controller setup, 使用融合后的 wheel_pid_merged.yaml -->
+  <!-- 默认使用融合版配置，无需额外指定 pid_config -->
   <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
 
   <!-- Load teleop parameters into node namespace -->
