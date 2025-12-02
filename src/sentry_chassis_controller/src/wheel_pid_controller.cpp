@@ -179,6 +179,7 @@ namespace sentry_chassis_controller
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);                // 里程计坐标系
         controller_nh.param<std::string>("base_link_frame", base_link_frame_, base_link_frame_); // 底盘
         controller_nh.param<std::string>("speed_mode", speed_mode_, speed_mode_);                // 速度模式：local 或 global
+        controller_nh.param<bool>("publish_tf", publish_tf_, true);                              // 是否发布 TF（使用 ground truth 时设为 false）
         odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom_controller", 10);                // 里程计发布器
         last_odom_time_ = ros::Time(0);
 
@@ -186,7 +187,8 @@ namespace sentry_chassis_controller
         tf_listener_ = std::make_shared<tf::TransformListener>();
 
         ROS_INFO("WheelPidController initialized (enhanced state feedback)");
-        ROS_INFO("Velocity mode: %s (local=base_link, global=odom)", speed_mode_.c_str());
+        ROS_INFO("Velocity mode: %s (local=base_link, global=odom), TF publish: %s", 
+                 speed_mode_.c_str(), publish_tf_ ? "enabled" : "disabled");
         return true;
     }
 
@@ -948,7 +950,11 @@ namespace sentry_chassis_controller
         t.transform.rotation.w = qtn.getW(); // 四元数 w 分量（实部）
 
         // 广播 TF 变换到 /tf 话题（供 TF 树查询使用）
-        tf_broadcaster_.sendTransform(t);
+        // 当使用 ground truth 里程计时，TF 由 gazebo_odom_bridge 发布，此处禁用避免冲突
+        if (publish_tf_)
+        {
+            tf_broadcaster_.sendTransform(t);
+        }
 
         // ==================== 步骤 7: 发布里程计消息（nav_msgs::Odometry） ====================
         // 创建里程计消息（包含位姿 + 速度信息）

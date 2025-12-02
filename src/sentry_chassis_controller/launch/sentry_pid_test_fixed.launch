@@ -1,14 +1,24 @@
 <launch>
   <!-- Allow selecting simulation mode when launching -->
   <arg name="use_simulation" default="true" />
+  
+  <!-- Ground Truth 里程计：使用 Gazebo 真实位姿替代轮式里程计 -->
+  <!-- 启用后可消除里程计漂移，适合调试全局速度模式 -->
+  <arg name="use_ground_truth_odom" default="false"/>
 
   <!-- Start simulation / TF / RViz from existing launch; forward use_simulation arg -->
   <include file="$(find sentry_chassis_controller)/launch/sentry_with_tf.launch">
     <arg name="use_simulation" value="$(arg use_simulation)" />
+    <arg name="use_ground_truth_odom" value="$(arg use_ground_truth_odom)" />
   </include>
 
   <!-- Load PID parameter defaults for the controller (synchronous) -->
   <rosparam file="$(find sentry_chassis_controller)/config/wheel_pid_params.yaml" command="load" />
+  
+  <!-- 当使用 ground truth 里程计时，禁用控制器的 TF 发布以避免冲突 -->
+  <!-- 注意：这个设置会覆盖 YAML 文件中的 publish_tf 值 -->
+  <param name="wheel_pid_controller/publish_tf" value="false" if="$(arg use_ground_truth_odom)"/>
+  <param name="wheel_pid_controller/publish_tf" value="true" unless="$(arg use_ground_truth_odom)"/>
 
   <!-- Spawn the controller via controller_manager spawner. Params are loaded above. -->
   <node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"

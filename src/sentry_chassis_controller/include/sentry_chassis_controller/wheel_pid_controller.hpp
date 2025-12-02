@@ -140,6 +140,7 @@ namespace sentry_chassis_controller
     tf2_ros::TransformBroadcaster tf_broadcaster_; // TF 变换广播器
     std::string odom_frame_{"odom"};               // 里程计坐标系名称
     std::string base_link_frame_{"base_link"};     // 底盘坐标系名称
+    bool publish_tf_{true};                        // 是否发布 TF（使用 ground truth 时设为 false）
     
     // 里程计状态（位姿累积）
     double odom_x_{0.0};      // 世界系 x 坐标（米）

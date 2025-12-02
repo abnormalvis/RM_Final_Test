@@ -16,9 +16,17 @@
   <arg name="use_simulation" default="true" />
   <!-- 若系统中没有其它 joint_states 发布者，可启用以下节点发布默认 joint_states -->
   <arg name="use_joint_state_publisher" default="true"/>
+  
+  <!-- Ground Truth 里程计：使用 Gazebo 真实位姿替代轮式里程计 -->
+  <!-- 启用后可消除里程计漂移，适合调试全局速度模式 -->
+  <arg name="use_ground_truth_odom" default="false"/>
+  
+  <!-- IMU 仿真模块：在仿真环境中加载 IMU 传感器 -->
+  <!-- 用于 EKF 融合里程计校正 -->
+  <arg name="load_imu" default="true"/>
 
     <!-- robot_description 使用 package 中的 xacro，传递必要参数 -->
-  <param name="robot_description" command="$(find xacro)/xacro /home/idris/final_ws/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro load_chassis:=$(arg load_chassis) use_simulation:=$(arg use_simulation) roller_type:=$(arg roller_type)"/>
+  <param name="robot_description" command="$(find xacro)/xacro /home/idris/final_ws/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro load_chassis:=$(arg load_chassis) use_simulation:=$(arg use_simulation) roller_type:=$(arg roller_type) load_imu:=$(arg load_imu)"/>
 
     <!-- 启动 gazebo，传递参数（可指定 world_name） -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -45,5 +53,16 @@
 
     <group if="$(arg is_open_rviz)">
       <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sentry_chassis_controller)/rviz/sentry_with_tf.rviz" />
+    </group>
+
+    <!-- ==================== Ground Truth 里程计（Gazebo 真实位姿） ==================== -->
+    <!-- 从 /gazebo/model_states 获取真实位姿，发布到 /odom_ground_truth 和 TF -->
+    <!-- 用于消除轮式里程计的累积漂移，特别适合调试全局速度模式 -->
+    <group if="$(arg use_ground_truth_odom)">
+      <node pkg="sentry_chassis_controller" type="gazebo_odom_bridge" name="gazebo_odom_bridge" output="screen">
+        <param name="model_name" value="sentry"/>
+        <param name="base_link_frame" value="base_link"/>
+        <param name="odom_frame" value="odom"/>
+      </node>
     </group>
 </launch>
