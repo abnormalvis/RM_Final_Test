@@ -190,6 +190,26 @@ namespace sentry_chassis_controller
     double pivot_sync_threshold_{0.15};      // 舵角同步阈值（rad，约8.6°）
     double pivot_sync_scale_min_{0.1};       // 最小轮速缩放比例（舵角误差大时）
 
+    // ==================== 方向切换刹车功能 ====================
+    // 问题：从前后运动突然切换到左右运动时，惯性会导致打滑
+    // 方案：检测运动方向变化，先刹车减速再执行新运动
+    bool direction_brake_enabled_{true};     // 方向切换刹车开关
+    double direction_change_threshold_{0.5}; // 方向变化阈值（rad，约28.6°）
+    double brake_decel_{3.0};                // 刹车减速度（m/s²）
+    double brake_release_speed_{0.1};        // 刹车释放速度阈值（m/s）
+    
+    // 刹车状态机
+    enum class BrakeState { IDLE, BRAKING, READY };
+    BrakeState brake_state_{BrakeState::IDLE};
+    double last_cmd_vx_{0.0};                // 上一次命令速度 x
+    double last_cmd_vy_{0.0};                // 上一次命令速度 y
+    double last_cmd_wz_{0.0};                // 上一次命令角速度
+    double current_vx_{0.0};                 // 当前实际速度 x（平滑后）
+    double current_vy_{0.0};                 // 当前实际速度 y（平滑后）
+    double pending_vx_{0.0};                 // 待执行的目标速度 x
+    double pending_vy_{0.0};                 // 待执行的目标速度 y
+    double pending_wz_{0.0};                 // 待执行的目标角速度
+
     // ==================== 动态重配置服务器 ====================
     typedef sentry_chassis_controller::WheelPidConfig Config;
     std::shared_ptr<dynamic_reconfigure::Server<Config>> dyn_server_;

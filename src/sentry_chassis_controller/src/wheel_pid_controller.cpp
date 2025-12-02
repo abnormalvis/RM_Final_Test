@@ -191,6 +191,16 @@ namespace sentry_chassis_controller
                  pivot_sync_enabled_ ? "enabled" : "disabled",
                  pivot_sync_threshold_, pivot_sync_threshold_ * 180.0 / M_PI, pivot_sync_scale_min_);
 
+        // 方向切换刹车功能参数
+        controller_nh.param("direction_brake/enabled", direction_brake_enabled_, true);
+        controller_nh.param("direction_brake/direction_change_threshold", direction_change_threshold_, 0.5);  // rad，约28.6°
+        controller_nh.param("direction_brake/deceleration", brake_decel_, 3.0);                               // m/s²
+        controller_nh.param("direction_brake/release_speed", brake_release_speed_, 0.1);                      // m/s
+        ROS_INFO("Direction brake: %s, threshold=%.2f rad (%.1f°), decel=%.1f m/s², release_speed=%.2f m/s",
+                 direction_brake_enabled_ ? "enabled" : "disabled",
+                 direction_change_threshold_, direction_change_threshold_ * 180.0 / M_PI,
+                 brake_decel_, brake_release_speed_);
+
         // 初始化 TF 监听器（作为类成员，持续缓存 TF 数据，避免每次回调重新创建）
         tf_listener_ = std::make_shared<tf::TransformListener>();
 
@@ -311,6 +321,59 @@ namespace sentry_chassis_controller
             }
         }
         // 否则speed_mode_ == "local"，使用原始速度（已在 base_link 坐标系中）
+
+        // ==================== 方向切换刹车检测 ====================
+        if (direction_brake_enabled_)
+        {
+            // 计算上一次和当前命令的运动方向（仅考虑平移，忽略纯旋转）
+            double last_speed = std::hypot(last_cmd_vx_, last_cmd_vy_);
+            double new_speed = std::hypot(vx, vy);
+            
+            // 只在有明显速度时检测方向变化
+            const double speed_threshold = 0.05;  // 最小速度阈值
+            
+            if (last_speed > speed_threshold && new_speed > speed_threshold)
+            {
+                // 计算方向变化角度
+                double last_angle = std::atan2(last_cmd_vy_, last_cmd_vx_);
+                double new_angle = std::atan2(vy, vx);
+                double angle_diff = new_angle - last_angle;
+                
+                // 归一化到 [-π, π]
+                while (angle_diff > M_PI) angle_diff -= 2.0 * M_PI;
+                while (angle_diff < -M_PI) angle_diff += 2.0 * M_PI;
+                
+                // 如果方向变化超过阈值，触发刹车
+                if (std::abs(angle_diff) > direction_change_threshold_ && brake_state_ == BrakeState::IDLE)
+                {
+                    brake_state_ = BrakeState::BRAKING;
+                    pending_vx_ = vx;
+                    pending_vy_ = vy;
+                    pending_wz_ = wz;
+                    
+                    ROS_INFO_THROTTLE(0.5, "Direction change detected (%.1f°), braking first",
+                                     angle_diff * 180.0 / M_PI);
+                }
+            }
+            
+            // 更新上次命令（即使在刹车中也更新，以便追踪最新目标）
+            if (brake_state_ == BrakeState::BRAKING)
+            {
+                // 刹车中：更新待执行目标，但不执行
+                pending_vx_ = vx;
+                pending_vy_ = vy;
+                pending_wz_ = wz;
+                // 实际速度命令由 update() 中的刹车逻辑控制
+                return;  // 不执行后续的 IK 计算
+            }
+            else
+            {
+                // 正常模式：更新记录
+                last_cmd_vx_ = vx;
+                last_cmd_vy_ = vy;
+                last_cmd_wz_ = wz;
+            }
+        }
 
         // 创建逆运动学对象并计算轮速和舵角
         auto ik = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base_, wheel_track_, wheel_radius_);
@@ -499,6 +562,59 @@ namespace sentry_chassis_controller
 
             joint_states_pub_.publish(js);
             last_state_pub_ = time;
+        }
+
+        // ==================== 方向切换刹车状态机 ====================
+        // 在刹车状态下，使用减速度逐渐降低轮速，直到速度足够低
+        if (direction_brake_enabled_ && brake_state_ == BrakeState::BRAKING)
+        {
+            double dt = period.toSec();
+            
+            // 估算当前底盘速度（基于轮速反馈的前向运动学）
+            // 简化版本：使用平均轮速 × 轮径作为线速度估计
+            double avg_wheel_vel = (std::abs(lf_wheel_vel) + std::abs(rf_wheel_vel) + 
+                                    std::abs(lb_wheel_vel) + std::abs(rb_wheel_vel)) / 4.0;
+            double estimated_speed = avg_wheel_vel * wheel_radius_;
+            
+            // 更新当前平滑速度（用于判断刹车完成）
+            const double smooth_alpha = 0.3;  // 平滑系数
+            current_vx_ = current_vx_ * (1.0 - smooth_alpha) + last_cmd_vx_ * smooth_alpha;
+            current_vy_ = current_vy_ * (1.0 - smooth_alpha) + last_cmd_vy_ * smooth_alpha;
+            
+            // 检查是否刹车完成
+            if (estimated_speed < brake_release_speed_)
+            {
+                // 刹车完成，切换到新方向
+                brake_state_ = BrakeState::IDLE;
+                last_cmd_vx_ = pending_vx_;
+                last_cmd_vy_ = pending_vy_;
+                last_cmd_wz_ = pending_wz_;
+                
+                // 用新命令计算 IK
+                auto ik = sentry_kinematics::inverseKinematics(pending_vx_, pending_vy_, pending_wz_, 
+                                                                wheel_base_, wheel_track_, wheel_radius_);
+                for (int i = 0; i < 4; ++i)
+                {
+                    wheel_cmd_[i] = ik.wheel_angular_vel[i];
+                    pivot_cmd_[i] = ik.steer_angle[i];
+                }
+                
+                ROS_INFO_THROTTLE(0.5, "Brake released, executing new direction (vx=%.2f, vy=%.2f)",
+                                 pending_vx_, pending_vy_);
+            }
+            else
+            {
+                // 刹车中：命令速度为 0（制动）
+                // 舵角保持当前方向（不改变），只是停止驱动
+                for (int i = 0; i < 4; ++i)
+                {
+                    wheel_cmd_[i] = 0.0;
+                    // pivot_cmd_ 保持不变，让舵轮维持当前角度
+                }
+                
+                ROS_DEBUG_THROTTLE(0.2, "Braking: estimated_speed=%.3f m/s, target=%.3f m/s",
+                                  estimated_speed, brake_release_speed_);
+            }
         }
 
         // ==================== 底盘自锁逻辑 ====================
