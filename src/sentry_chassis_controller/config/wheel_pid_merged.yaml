@@ -172,3 +172,12 @@ wheel_pid_controller:
     enabled: true              # 启用舵轮同步检查
     threshold: 0.15            # 舵角同步阈值（rad，约8.6°）
     scale_min: 0.1             # 最小轮速缩放（0.1 = 舵角误差大时只有10%轮速）
+
+  # ==================== 方向切换刹车功能 ====================
+  # 问题：从前后运动突然切换到左右运动时，惯性会导致打滑
+  # 方案：检测运动方向大幅变化时，先刹车减速再执行新方向
+  direction_brake:
+    enabled: false                     # 启用方向切换刹车
+    direction_change_threshold: 0.5   # 方向变化阈值（rad，约28.6°）
+    deceleration: 3.0                 # 刹车减速度（m/s²）
+    release_speed: 0.1                # 刹车释放速度阈值（m/s，速度低于此值时释放刹车）
