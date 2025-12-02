@@ -183,6 +183,13 @@ namespace sentry_chassis_controller
     // 注意：必须在 starting() 或更晚时初始化，不能在构造函数中
     std::shared_ptr<tf::TransformListener> tf_listener_;
 
+    // ==================== 舵轮同步检查（防止偏航） ====================
+    // 问题：如果舵轮未到位就开始驱动轮子，会导致车辆偏航
+    // 方案：检查舵角误差，只有误差足够小时才全功率驱动
+    bool pivot_sync_enabled_{true};          // 舵轮同步检查开关
+    double pivot_sync_threshold_{0.15};      // 舵角同步阈值（rad，约8.6°）
+    double pivot_sync_scale_min_{0.1};       // 最小轮速缩放比例（舵角误差大时）
+
     // ==================== 动态重配置服务器 ====================
     typedef sentry_chassis_controller::WheelPidConfig Config;
     std::shared_ptr<dynamic_reconfigure::Server<Config>> dyn_server_;

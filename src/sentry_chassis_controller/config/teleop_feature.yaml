@@ -23,7 +23,7 @@ cmd_vel_stamped_topic: /cmd_vel_stamped
 
 # Behavior
 publish_zero_when_idle: false
-walk_vel: 0.5
-run_vel: 1.0
-default_omega: 1.0
+walk_vel: 1.5
+run_vel: 2
+default_omega: 2
 hz: 20

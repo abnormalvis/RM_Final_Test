@@ -1,0 +1,174 @@
+wheel_pid_controller:
+  # ====================================================================================
+  # 融合配置文件：wheel_pid_params.yaml + wheel_pid_state_fix.yaml
+  # ====================================================================================
+  # 说明：
+  # - rqt_reconfigure 使用一组扁平的动态参数键（如 wheel_fl_p、pivot_fr_i_clamp）。
+  # - 本 YAML 使用分层键（wheels/wheel_fl/p 等）作为启动默认值。
+  # - 运行时我们会把动态参数"镜像回写"到对应的分层键上，便于 rosparam get 旧路径看到最新值；
+  #   但这不会自动写回文件。如需持久化，请在运行后使用 rosparam/dynparam dump 导出。
+  
+  # ==================== 控制器基础配置 ====================
+  type: "sentry_chassis_controller/WheelPidController"
+  cmd_vel_topic: "/cmd_vel"
+  synthetic_fallback: false
+  
+  # ==================== 速度坐标系配置（方案 A） ====================
+  # speed_mode 决定控制器如何处理收到的 /cmd_vel 速度命令：
+  #   - global: 将速度从 odom_frame 转换到 base_link_frame（使用 TF）
+  #   - local:  直接使用收到的速度（假定已在 base_link 系中）
+  # 注意：speed_mode 应与键盘节点的 velocity_mode 保持一致！
+  speed_mode: "loacl"
+  
+  # 坐标系名称
+  odom_frame: "odom"
+  base_link_frame: "base_link"
+  
+  # TF 发布控制（使用 Ground Truth 或 EKF 时设为 false）
+  publish_tf: true
+  
+  # ==================== 底盘物理参数 ====================
+  wheel_track: 0.36
+  wheel_base: 0.36
+  wheel_radius: 0.05
+
+  # ==================== 状态反馈配置（来自 state_fix） ====================
+  joint_state_controller:
+    publish_rate: 10
+  
+  enable_state_feedback: true
+  joint_names_reported:
+    - left_front_wheel_joint
+    - right_front_wheel_joint
+    - left_back_wheel_joint
+    - right_back_wheel_joint
+    - left_front_pivot_joint
+    - right_front_pivot_joint
+    - left_back_pivot_joint
+    - right_back_pivot_joint
+
+  # ==================== 默认 PID 参数（回退值） ====================
+  # 舵轮（位置控制）
+  pivot:
+    p: 1.3
+    i: 0.02
+    d: 0.25
+    i_clamp: 0.3
+    antiwindup: 0.0
+    output_min: -5.0
+    output_max: 5.0
+  
+  # 驱动轮（速度控制）
+  wheel:
+    p: 0.7
+    i: 0.05
+    d: 0.2
+    i_clamp: 0.2
+    antiwindup: 0.0
+    output_min: -10.0
+    output_max: 10.0
+
+  # ==================== 轮子名称列表 ====================
+  wheel_names:
+    - wheel_fl
+    - wheel_fr
+    - wheel_rl
+    - wheel_rr
+    - pivot_fl
+    - pivot_fr
+    - pivot_rl
+    - pivot_rr
+
+  # ==================== 每轮独立 PID 配置 ====================
+  wheels:
+    # ---------- 驱动轮 PID ----------
+    wheel_fl:
+      p: 0.7
+      i: 0.05
+      d: 0.2
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
+    wheel_fr:
+      p: 0.7
+      i: 0.05
+      d: 0.2
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
+    wheel_rl:
+      p: 0.7
+      i: 0.05
+      d: 0.2
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
+    wheel_rr:
+      p: 0.7
+      i: 0.05
+      d: 0.2
+      i_clamp: 0.2
+      output_min: -10.0
+      output_max: 10.0
+
+    # ---------- 舵轮 PID ----------
+    pivot_fl:
+      p: 1.3
+      i: 0.02
+      d: 0.25
+      i_clamp: 0.3
+      output_min: -5.0
+      output_max: 5.0
+    pivot_fr:
+      p: 1.3
+      i: 0.02
+      d: 0.25
+      i_clamp: 0.3
+      output_min: -5.0
+      output_max: 5.0
+    pivot_rl:
+      p: 1.3
+      i: 0.02
+      d: 0.25
+      i_clamp: 0.3
+      output_min: -5.0
+      output_max: 5.0
+    pivot_rr:
+      p: 1.3
+      i: 0.02
+      d: 0.25
+      i_clamp: 0.3
+      output_min: -5.0
+      output_max: 5.0
+
+  # ==================== 功率限制配置 ====================
+  power_limit: 300.0
+  power:
+    effort_coeff: 6.0
+    velocity_coeff: 0.0048
+    power_offset: 0.0
+  power_debug: true
+
+  # ==================== 底盘自锁功能 ====================
+  self_lock:
+    enabled: true
+    idle_timeout: 0.5
+    velocity_deadband: 0.05
+    
+    # 位置锁定模式
+    lock_position: false
+    lock_pos_p: 8.0
+    lock_pos_i: 0.0
+    lock_pos_d: 1.0
+    
+    # 几何自锁模式（X 字布局）
+    geo_lock_enabled: true
+    geo_lock_wheel_brake: true
+
+  # ==================== 舵轮同步检查（防止偏航） ====================
+  # 问题：舵轮未到位就驱动轮子会导致车辆偏航
+  # 方案：根据舵角误差动态缩放轮速命令
+  pivot_sync:
+    enabled: true              # 启用舵轮同步检查
+    threshold: 0.15            # 舵角同步阈值（rad，约8.6°）
+    scale_min: 0.1             # 最小轮速缩放（0.1 = 舵角误差大时只有10%轮速）

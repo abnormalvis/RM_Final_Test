@@ -183,6 +183,14 @@ namespace sentry_chassis_controller
         odom_pub_ = root_nh.advertise<nav_msgs::Odometry>("odom_controller", 10);                // 里程计发布器
         last_odom_time_ = ros::Time(0);
 
+        // 舵轮同步检查参数（防止舵轮未到位就驱动导致的偏航问题）
+        controller_nh.param("pivot_sync/enabled", pivot_sync_enabled_, true);           // 启用舵轮同步检查
+        controller_nh.param("pivot_sync/threshold", pivot_sync_threshold_, 0.15);       // 舵角同步阈值（rad，约8.6°）
+        controller_nh.param("pivot_sync/scale_min", pivot_sync_scale_min_, 0.1);        // 最小轮速缩放（0.1 = 10%）
+        ROS_INFO("Pivot sync: %s, threshold=%.3f rad (%.1f°), scale_min=%.2f",
+                 pivot_sync_enabled_ ? "enabled" : "disabled",
+                 pivot_sync_threshold_, pivot_sync_threshold_ * 180.0 / M_PI, pivot_sync_scale_min_);
+
         // 初始化 TF 监听器（作为类成员，持续缓存 TF 数据，避免每次回调重新创建）
         tf_listener_ = std::make_shared<tf::TransformListener>();
 
@@ -670,6 +678,59 @@ namespace sentry_chassis_controller
             cmd1 = pid_rf_wheel_.computeCommand(wheel_cmd_[1] - rf_wheel_vel, period);
             cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
             cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
+
+            // ==================== 舵轮同步检查（防止偏航） ====================
+            // 问题：舵轮未到位时驱动轮子会产生错误的推力方向，导致车辆偏航或打滑
+            // 方案：根据舵角误差动态缩放轮速命令
+            //       - 舵角误差小于阈值：全功率驱动
+            //       - 舵角误差较大：按比例降低轮速（最低到 scale_min）
+            if (pivot_sync_enabled_)
+            {
+                // 读取当前舵角位置
+                double pivot_pos[4];
+                try {
+                    pivot_pos[0] = front_left_pivot_joint_.getPosition();
+                    pivot_pos[1] = front_right_pivot_joint_.getPosition();
+                    pivot_pos[2] = back_left_pivot_joint_.getPosition();
+                    pivot_pos[3] = back_right_pivot_joint_.getPosition();
+                } catch (...) {
+                    pivot_pos[0] = pivot_pos[1] = pivot_pos[2] = pivot_pos[3] = 0.0;
+                }
+
+                // 计算每个舵轮的角度误差（归一化到 [-π, π]）
+                double pivot_errors[4];
+                double max_error = 0.0;
+                for (int i = 0; i < 4; ++i)
+                {
+                    double err = pivot_cmd_[i] - pivot_pos[i];
+                    // 归一化到 [-π, π]
+                    while (err > M_PI) err -= 2.0 * M_PI;
+                    while (err < -M_PI) err += 2.0 * M_PI;
+                    pivot_errors[i] = std::abs(err);
+                    if (pivot_errors[i] > max_error) max_error = pivot_errors[i];
+                }
+
+                // 基于最大舵角误差计算轮速缩放因子
+                // 误差 <= threshold: scale = 1.0（全功率）
+                // 误差 > threshold: scale 线性衰减到 scale_min
+                double pivot_sync_scale = 1.0;
+                if (max_error > pivot_sync_threshold_)
+                {
+                    // 线性插值：误差从 threshold 增加到 π 时，scale 从 1.0 降到 scale_min
+                    double t = (max_error - pivot_sync_threshold_) / (M_PI - pivot_sync_threshold_);
+                    t = std::min(1.0, std::max(0.0, t));  // clamp to [0, 1]
+                    pivot_sync_scale = 1.0 - t * (1.0 - pivot_sync_scale_min_);
+                    
+                    ROS_DEBUG_THROTTLE(0.2, "Pivot sync: max_err=%.2f° > threshold, scale=%.2f",
+                                       max_error * 180.0 / M_PI, pivot_sync_scale);
+                }
+
+                // 应用缩放
+                cmd0 *= pivot_sync_scale;
+                cmd1 *= pivot_sync_scale;
+                cmd2 *= pivot_sync_scale;
+                cmd3 *= pivot_sync_scale;
+            }
         }
 
         // 应用功率限制
