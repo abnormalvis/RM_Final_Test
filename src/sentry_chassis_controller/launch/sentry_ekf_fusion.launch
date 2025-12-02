@@ -1,0 +1,53 @@
+<launch>
+  <!-- ==================== 参数配置 ==================== -->
+  <arg name="use_simulation" default="true" />
+  
+  <!-- 里程计模式选择 -->
+  <!-- 三种模式：
+       1. ekf: 使用 EKF 融合 IMU + 轮式里程计（推荐）
+       2. ground_truth: 使用 Gazebo 真实位姿（调试用，无漂移）
+       3. wheel: 使用纯轮式里程计（会有漂移）
+  -->
+  <arg name="odom_mode" default="ekf" doc="odom mode: ekf, ground_truth, wheel"/>
+  
+  <!-- 是否加载 IMU（仅在 ekf 模式下需要） -->
+  <arg name="load_imu" default="true"/>
+
+  <!-- ==================== 仿真环境启动 ==================== -->
+  <include file="$(find sentry_chassis_controller)/launch/sentry_with_tf.launch">
+    <arg name="use_simulation" value="$(arg use_simulation)" />
+    <!-- EKF 模式下不启用 ground truth，由 EKF 节点发布 TF -->
+    <arg name="use_ground_truth_odom" value="$(eval odom_mode == 'ground_truth')" />
+  </include>
+
+  <!-- ==================== 控制器配置 ==================== -->
+  <rosparam file="$(find sentry_chassis_controller)/config/wheel_pid_params.yaml" command="load" />
+  
+  <!-- TF 发布控制：
+       - ekf 模式：控制器不发布 TF，由 EKF 节点发布
+       - ground_truth 模式：控制器不发布 TF，由 gazebo_odom_bridge 发布
+       - wheel 模式：控制器发布 TF
+  -->
+  <param name="wheel_pid_controller/publish_tf" value="$(eval odom_mode == 'wheel')"/>
+
+  <!-- 启动控制器 -->
+  <node pkg="controller_manager" type="spawner" name="spawner_wheel_pid"
+        args="wheel_pid_controller" output="screen" />
+
+  <!-- ==================== EKF 融合节点（仅 ekf 模式） ==================== -->
+  <group if="$(eval odom_mode == 'ekf')">
+    <!-- 加载 EKF 配置 -->
+    <rosparam file="$(find sentry_chassis_controller)/config/ekf_fusion.yaml" command="load" ns="odom_ekf_fusion"/>
+    
+    <!-- 启动 EKF 融合节点 -->
+    <node pkg="sentry_chassis_controller" type="odom_ekf_fusion" name="odom_ekf_fusion" output="screen">
+      <!-- EKF 发布 TF -->
+      <param name="publish_tf" value="true"/>
+    </node>
+  </group>
+
+  <!-- ==================== 调试工具 ==================== -->
+  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
+  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" output="screen" />
+
+</launch>

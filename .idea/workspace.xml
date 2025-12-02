@@ -30,8 +30,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f2fbbb-7db1-45b7-a943-20d173d9bb22" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/imu.urdf.xacro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/config/ekf_fusion.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/EKF里程计融合说明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/gazebo添加imu仿真模块.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/里程计标定与矫正.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/odom_ekf_fusion.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_ekf_fusion.launch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/log/sentry_with_ekf_fusion.launch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/odom_ekf_fusion.cpp" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/simple_chassis_controller/doc/catkin-tools-build-problem.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rm_description_for_task/urdf/common/swerve_drive.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/common/swerve_drive.urdf.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/config/wheel_pid_params.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/config/wheel_pid_params.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/wheel_pid_controller.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/wheel_pid_controller.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_pid_test_fixed.launch" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_pid_test_fixed.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_with_tf.launch" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_with_tf.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/src/wheel_pid_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/wheel_pid_controller.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" afterDir="false" />
     </list>
@@ -75,7 +91,7 @@
     "cf.advertisement.text.has.clang-format": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "develop-selflock",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -160,6 +176,7 @@
       <workItem from="1763729826148" duration="5593000" />
       <workItem from="1763879667154" duration="92000" />
       <workItem from="1764414897858" duration="250000" />
+      <workItem from="1764661796778" duration="595000" />
     </task>
     <servers />
   </component>

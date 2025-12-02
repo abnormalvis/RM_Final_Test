@@ -19,11 +19,17 @@ wheel_pid_controller:
   #   - local:  直接使用收到的速度（假定已在 base_link 系中）
   #             适用于键盘节点 velocity_mode=chassis 的情况
   # 注意：speed_mode 应与键盘节点的 velocity_mode 保持一致！
-  #speed_mode: "local"
-  speed_mode: "global"
+  speed_mode: "local"
+  #speed_mode: "global"
   # Frame IDs for odometry and TF
   odom_frame: "odom"
   base_link_frame: "base_link"
+  
+  # TF Publishing Control（TF 发布控制）
+  # 当使用 Ground Truth 里程计时，TF 由 gazebo_odom_bridge 发布，
+  # 控制器应禁用 TF 发布以避免冲突（设为 false）
+  # 默认 true：控制器自己发布 odom → base_link 的 TF
+  publish_tf: false  # 使用 ground truth 时设为 false
   
   # Physical defaults (can be overridden per-wheel below)
   wheel_track: 0.36

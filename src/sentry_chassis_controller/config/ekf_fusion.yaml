@@ -1,0 +1,34 @@
+# ==================== EKF 里程计融合配置 ====================
+# 融合 IMU + 轮式里程计，输出校正后的里程计
+# 
+# 数据流：
+#   输入: /imu/data (sensor_msgs/Imu) - Gazebo IMU 仿真数据
+#         /odom_controller (nav_msgs/Odometry) - 控制器轮式里程计
+#   输出: /odom_fused (nav_msgs/Odometry) - 融合后的里程计
+#         TF: odom -> base_link（可选）
+
+odom_ekf_fusion:
+  # 坐标系配置
+  odom_frame: "odom"
+  base_link_frame: "base_link"
+  imu_frame: "imu_link"
+  
+  # 发布频率 (Hz)
+  publish_rate: 50.0
+  
+  # 是否发布 TF（使用 EKF 融合时，应禁用控制器和 ground truth 的 TF 发布）
+  publish_tf: true
+  
+  # ==================== EKF 噪声参数 ====================
+  # 过程噪声（越大表示模型越不可信，更依赖观测）
+  process_noise_pos: 0.01      # 位置过程噪声 (m²)
+  process_noise_vel: 0.1       # 速度过程噪声 ((m/s)²)
+  process_noise_yaw: 0.01      # 航向过程噪声 (rad²)
+  
+  # 轮式里程计观测噪声（越大表示观测越不可信）
+  odom_noise_vel: 0.05         # 里程计速度噪声 (m/s)
+  odom_noise_omega: 0.05       # 里程计角速度噪声 (rad/s)
+  
+  # IMU 噪声参数
+  imu_accel_noise: 0.1         # IMU 加速度噪声 (m/s²)
+  imu_gyro_noise: 0.01         # IMU 陀螺仪噪声 (rad/s)
