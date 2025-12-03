@@ -144,53 +144,19 @@ target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
 
-## Test publisher executable (for IK quick-check)
-add_executable(ik_test_publisher src/ik_test_publisher.cpp)
-add_dependencies(ik_test_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(ik_test_publisher ${catkin_LIBRARIES})
-
-add_executable(gazebo_odom_bridge src/gazebo_odom_bridge.cpp)
-add_dependencies(gazebo_odom_bridge ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(gazebo_odom_bridge ${catkin_LIBRARIES})
-
 ## Yaw publisher (decouples yaw acquisition via TF/odom)
 add_executable(yaw_publisher src/yaw_publisher.cpp)
 add_dependencies(yaw_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(yaw_publisher ${catkin_LIBRARIES})
 
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/forward_kinematics_node.cpp")
-  add_executable(forward_kinematics_node src/forward_kinematics_node.cpp)
-  add_dependencies(forward_kinematics_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-  target_link_libraries(forward_kinematics_node ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
-endif()
-
 add_executable(forward_kinematics src/forward_kinematics.cpp)
 add_dependencies(forward_kinematics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(forward_kinematics ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
-
-## Original C++ keyboard teleop node (replicates sentry_sim/sentry_controller behavior)
-add_executable(sentry_control_key src/sentry_control_key.cpp)
-add_dependencies(sentry_control_key ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(sentry_control_key ${catkin_LIBRARIES})
-
-## Optimized C++ keyboard teleop node with improved performance (build only if source exists)
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/sentry_control_key_optimized.cpp")
-  add_executable(sentry_control_key_optimized src/sentry_control_key_optimized.cpp)
-  add_dependencies(sentry_control_key_optimized ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-  target_link_libraries(sentry_control_key_optimized ${catkin_LIBRARIES})
-endif()
 
 ## Feature variant: spinning-top default, quaternion->Euler yaw
 add_executable(sentry_control_key_feature src/sentry_control_key_feature.cpp)
 add_dependencies(sentry_control_key_feature ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sentry_control_key_feature ${catkin_LIBRARIES})
-
-## Dual mode chassis controller for rotation matrix solution
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/dual_mode_chassis_controller.cpp")
-  add_executable(dual_mode_chassis_controller src/dual_mode_chassis_controller.cpp)
-  add_dependencies(dual_mode_chassis_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-  target_link_libraries(dual_mode_chassis_controller ${catkin_LIBRARIES})
-endif()
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -266,23 +232,11 @@ install(FILES
 )
 
 ## Install library
-## Install executables for installation
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
-
-## Install keyboard control executable
-install(TARGETS sentry_control_key
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-if(TARGET sentry_control_key_optimized)
-  install(TARGETS sentry_control_key_optimized
-    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-  )
-endif()
 
 ## Install yaw_publisher executable
 install(TARGETS yaw_publisher

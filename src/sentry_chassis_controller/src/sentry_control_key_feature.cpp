@@ -1,5 +1,5 @@
 /*
- * 舵轮底盘键盘控制节点（Feature 增强版）
+ * 舵轮底盘键盘控制节点
  * 功能：
  *   - 键盘 teleop（遥操作）：通过 WASD 控制平移，QE 控制旋转
  *   - 支持同时平移与旋转（多按键组合）
@@ -107,6 +107,16 @@ private:
     // ==================== 模式标志（未使用） ====================
     bool field_centric_ = true;     // 场地中心模式（保留）
     bool spinning_top_mode_ = true; // 小陀螺模式（保留）
+    // 运动模式：只允许平移或旋转其中一种（互斥）
+    enum class MotionMode { NONE, TRANSLATION, ROTATION };
+    // 当前模式在节点内部维护（由按键切换）
+    MotionMode current_mode_ = MotionMode::NONE;
+    // 用于旋转锁存：按下一次旋转键后持续旋转，直到被其他按键打断
+    bool rotation_latched_ = false;
+    double latched_rotation_value_ = 0.0;
+    // 平移超时（超过此时间未收到新的平移按键，停止平移）
+    double translation_timeout_ = 0.5; // seconds
+    ros::Time last_translation_time_;
 };
 
 // 全局终端守卫对象（用于信号处理时恢复终端设置）
@@ -142,24 +152,17 @@ TeleopTurtle::TeleopTurtle()
 void quit(int sig)
 {
     (void)sig;
-    term_guard.restore();  // 恢复终端到原始设置
+    term_guard.restore(); 
     ros::shutdown();
     exit(0);
 }
-
-/*
- * 主函数：初始化 ROS 节点并启动键盘循环
- */
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "sentry_control_key");  // 初始化节点
-    TeleopTurtle node;  // 创建键盘控制对象
-
+    ros::init(argc, argv, "sentry_control_key");  
+    TeleopTurtle node;  
     signal(SIGINT, quit);  // 注册 Ctrl-C 信号处理函数
-
     node.keyLoop();  // 进入键盘监听主循环
     quit(0);         // 正常退出（实际不会执行到这里）
-
     return 0;
 }
 
@@ -175,12 +178,11 @@ int main(int argc, char **argv)
 void TeleopTurtle::keyLoop()
 {
     // 打印使用说明
-    puts("Reading from keyboard (WASD to move, Q/E rotate, Shift+WASD run, c stop, Ctrl-C quit) [velocity_mode: global|chassis]");
+    puts("Reading from keyboard (WASD to move, Q/E rotate, c stop, Ctrl-C quit) [velocity_mode: global|chassis]");
     term_guard.setup();  // 设置终端为原始模式
 
     // ==================== 读取速度参数 ====================
     double walk_vel = 0.5;        // 步行速度（m/s）
-    double run_vel = 1.0;         // 跑步速度（m/s，Shift 加速）
     double default_omega = 1.0;   // 默认角速度（rad/s）
 
     // 发布频率（Hz）
@@ -188,7 +190,6 @@ void TeleopTurtle::keyLoop()
     
     // 从参数服务器读取（可通过 launch 文件配置）
     nhPrivate_.param("walk_vel", walk_vel, walk_vel);
-    nhPrivate_.param("run_vel", run_vel, run_vel);
     nhPrivate_.param("default_omega", default_omega, default_omega);
     nhPrivate_.param("hz", hz, hz);
 
@@ -209,13 +210,14 @@ void TeleopTurtle::keyLoop()
     // ==================== 按键状态（支持多按键同时按下） ====================
     bool key_w = false, key_s = false, key_a = false, key_d = false;  // 平移按键
     bool key_q = false, key_e = false;  // 旋转按键
-    bool shifted = false;  // Shift 加速标志
 
     ros::Rate rate(hz);  // 发布频率控制
 
     // ==================== 按键超时机制（用于自动清零） ====================
-    ros::Time last_key_time = ros::Time::now();  // 上次按键时间戳
-    double key_timeout = 0.5;  // 超时时间（秒）：0.5秒无新按键则清零所有状态
+    ros::Time last_key_time = ros::Time::now();  // 上次任意按键时间戳（保留）
+    double key_timeout = 0.5;  // 备用超时时间（秒）
+    // translation_timeout_ 在类中定义（默认 0.5s）
+    last_translation_time_ = ros::Time(0);
 
     // ==================== 主循环 ====================
     while (ros::ok())
@@ -230,28 +232,30 @@ void TeleopTurtle::keyLoop()
 
         if (num == 0)  // poll 超时（无新键盘输入）
         {
-            // 检查按键是否需要超时清零
+            // 处理平移超时：如果当前为平移模式且超过 translation_timeout_ 未收到新的平移按键，停止平移
             ros::Time now = ros::Time::now();
-            if ((now - last_key_time).toSec() > key_timeout)
+            if (current_mode_ == MotionMode::TRANSLATION)
             {
-                // 超过 0.5 秒没有新按键，清零所有按键状态
-                key_w = key_s = key_a = key_d = false;
-                key_q = key_e = false;
-            }
-
-            // 根据配置决定是否发布当前速度（可能为零）
-            if (publish_zero_when_idle_)
-            {
-                twist_pub_.publish(twist);
-            }
-            else
-            {
-                // 仅当速度非零时发布（避免不必要的消息）
-                if (std::abs(twist.linear.x) > 1e-9 || std::abs(twist.linear.y) > 1e-9 || std::abs(twist.angular.z) > 1e-9)
+                if ((now - last_translation_time_).toSec() > translation_timeout_)
                 {
-                    twist_pub_.publish(twist);
+                    // 清除平移按键状态并回到 NONE
+                    key_w = key_s = key_a = key_d = false;
+                    current_mode_ = MotionMode::NONE;
                 }
             }
+
+            // 发布逻辑：如果旋转被锁存则持续发布旋转；否则根据 publish_zero_when_idle_ 或 有运动 才发布
+            bool should_publish = false;
+            if (rotation_latched_ && current_mode_ == MotionMode::ROTATION)
+                should_publish = true;
+            else if (publish_zero_when_idle_)
+                should_publish = true;
+            else if (std::abs(twist.linear.x) > 1e-9 || std::abs(twist.linear.y) > 1e-9 || std::abs(twist.angular.z) > 1e-9)
+                should_publish = true;
+
+            if (should_publish)
+                twist_pub_.publish(twist);
+
             rate.sleep();
             continue;
         }
@@ -266,18 +270,6 @@ void TeleopTurtle::keyLoop()
 
         bool any_key_pressed = false;  // 标记本次循环是否有按键输入（用于发布判断）
 
-        // ==================== 处理 Shift 加速键 ====================
-        // 大写字母表示按下 Shift（加速模式）
-        if (c >= 'A' && c <= 'Z')
-        {
-            shifted = true;
-            any_key_pressed = true;
-        }
-        else if (c >= 'a' && c <= 'z')
-        {
-            shifted = false;
-        }
-
         // 统一映射为小写字母（便于后续处理）
         char lower = c;
         if (c >= 'A' && c <= 'Z')
@@ -287,46 +279,68 @@ void TeleopTurtle::keyLoop()
         switch (lower)
         {
         case 'w':  // 前进
+            // 进入平移模式，取消任何旋转锁存
+            current_mode_ = MotionMode::TRANSLATION;
+            rotation_latched_ = false;
             key_w = true;
             key_s = false;  // 前后互斥
+            // 禁止斜向：按前后时清除左右按键
+            key_a = key_d = false;
             any_key_pressed = true;
-            last_key_time = ros::Time::now();  // 更新按键时间戳
+            last_translation_time_ = ros::Time::now();  // 更新平移时间戳
             break;
         case 's':  // 后退
+            current_mode_ = MotionMode::TRANSLATION;
+            rotation_latched_ = false;
             key_s = true;
             key_w = false;  // 前后互斥
+            // 禁止斜向：按前后时清除左右按键
+            key_a = key_d = false;
             any_key_pressed = true;
-            last_key_time = ros::Time::now();
+            last_translation_time_ = ros::Time::now();
             break;
         case 'a':  // 左平移
+            current_mode_ = MotionMode::TRANSLATION;
+            rotation_latched_ = false;
             key_a = true;
             key_d = false;  // 左右互斥
+            // 禁止斜向：按左右时清除前后按键
+            key_w = key_s = false;
             any_key_pressed = true;
-            last_key_time = ros::Time::now();
+            last_translation_time_ = ros::Time::now();
             break;
         case 'd':  // 右平移
+            current_mode_ = MotionMode::TRANSLATION;
+            rotation_latched_ = false;
             key_d = true;
             key_a = false;  // 左右互斥
+            // 禁止斜向：按左右时清除前后按键
+            key_w = key_s = false;
             any_key_pressed = true;
-            last_key_time = ros::Time::now();
+            last_translation_time_ = ros::Time::now();
             break;
-        case 'q':  // 左转
-            key_q = true;
-            key_e = false;  // 左转右转互斥
+        case 'q':  // 左转（锁存）
+            // 进入旋转模式，取消平移按键
+            current_mode_ = MotionMode::ROTATION;
+            key_w = key_s = key_a = key_d = false;
+            rotation_latched_ = true;
+            latched_rotation_value_ = default_omega; // positive for left
             any_key_pressed = true;
-            last_key_time = ros::Time::now();
             break;
-        case 'e':  // 右转
-            key_e = true;
-            key_q = false;  // 左转右转互斥
+        case 'e':  // 右转（锁存）
+            current_mode_ = MotionMode::ROTATION;
+            key_w = key_s = key_a = key_d = false;
+            rotation_latched_ = true;
+            latched_rotation_value_ = -default_omega; // negative for right
             any_key_pressed = true;
-            last_key_time = ros::Time::now();
             break;
         case 'c':  // 立即停止所有运动
             key_w = key_s = key_a = key_d = false;
             key_q = key_e = false;
+            rotation_latched_ = false;
+            latched_rotation_value_ = 0.0;
+            current_mode_ = MotionMode::NONE;
             any_key_pressed = true;
-            last_key_time = ros::Time::now();
             break;
         case '\x03':  // Ctrl-C（退出）
             quit(0);
@@ -335,9 +349,9 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-        // ==================== 根据按键状态计算速度（支持同时平移+旋转） ====================
-        double linear_speed = shifted ? run_vel : walk_vel;  // 根据 Shift 选择速度档位
-        double omega_speed = default_omega;
+    // ==================== 根据按键状态计算速度（支持互斥的平移或旋转） ====================
+    double linear_speed = walk_vel;  // 去掉 Shift 加速，始终使用 walk_vel
+    double omega_speed = default_omega;
 
         double cur_vx_world = 0.0;  // 世界系 x 方向速度（累积）
         double cur_vy_world = 0.0;  // 世界系 y 方向速度（累积）
@@ -353,11 +367,11 @@ void TeleopTurtle::keyLoop()
         if (key_d)
             cur_vy_world -= linear_speed;  // 向右
 
-        // 旋转速度（Q/E 独立于平移，可同时生效）
-        if (key_q)
-            cur_omega += omega_speed;  // 逆时针旋转
-        if (key_e)
-            cur_omega -= omega_speed;  // 顺时针旋转
+        // 旋转速度（Q/E 已改为锁存模式，只在 ROTATION 模式下生效）
+        if (current_mode_ == MotionMode::ROTATION && rotation_latched_)
+        {
+            cur_omega = latched_rotation_value_;
+        }
 
         // ==================== 归一化斜向速度（防止 W+A 时速度变成 √2 倍） ====================
         double speed_magnitude = std::sqrt(cur_vx_world * cur_vx_world + cur_vy_world * cur_vy_world);
@@ -375,9 +389,26 @@ void TeleopTurtle::keyLoop()
         double vx = cur_vx_world;
         double vy = cur_vy_world;
         
-        twist.linear.x = vx;
-        twist.linear.y = vy;
-        twist.angular.z = cur_omega;
+        // 根据互斥模式生成最终命令：只支持 TRANSLATION 或 ROTATION
+        if (current_mode_ == MotionMode::TRANSLATION)
+        {
+            twist.linear.x = vx;
+            twist.linear.y = vy;
+            twist.angular.z = 0.0;
+        }
+        else if (current_mode_ == MotionMode::ROTATION && rotation_latched_)
+        {
+            twist.linear.x = 0.0;
+            twist.linear.y = 0.0;
+            twist.angular.z = latched_rotation_value_;
+        }
+        else
+        {
+            // NONE 或其他情况：零速度
+            twist.linear.x = 0.0;
+            twist.linear.y = 0.0;
+            twist.angular.z = 0.0;
+        }
         
         // 日志输出（调试用）
         ROS_INFO_THROTTLE(1.0, "Teleop: mode=%s vel=(%.2f,%.2f) omega=%.2f",
