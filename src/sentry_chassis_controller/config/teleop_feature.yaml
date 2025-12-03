@@ -25,5 +25,5 @@ cmd_vel_stamped_topic: /cmd_vel_stamped
 publish_zero_when_idle: false
 walk_vel: 1.25
 run_vel: 1.5
-default_omega: 2.1
+default_omega: 3
 hz: 20
