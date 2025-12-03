@@ -16,11 +16,6 @@
 /* ROS 相关头文件 */
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <nav_msgs/Odometry.h>
-#include <std_msgs/Float64.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2/LinearMath/Matrix3x3.h>
 
 /* C++ 相关头文件 */
 #include <stdexcept>
@@ -55,17 +50,17 @@ struct TermiosGuard
         tcgetattr(fd, &cooked);  // 保存当前终端设置
         struct termios raw;
         memcpy(&raw, &cooked, sizeof(struct termios));
-        
+
         // 关闭规范模式（ICANON）和回显（ECHO）
         raw.c_lflag &= ~(ICANON | ECHO);
         raw.c_cc[VEOL] = 1;  // 行结束符
         raw.c_cc[VEOF] = 2;  // 文件结束符
-        
+
         tcsetattr(fd, TCSANOW, &raw);  // 立即应用新设置
         active = true;
 #endif
     }
-    
+
     // 恢复终端到原始设置
     void restore()
     {
@@ -88,23 +83,18 @@ class TeleopTurtle
 public:
     TeleopTurtle();
     void keyLoop();  // 主循环：监听键盘并发布速度命令
-    void odomCb(const nav_msgs::Odometry::ConstPtr &msg);  // 里程计回调：更新航向角
 
 private:
     // ==================== ROS 句柄 ====================
     ros::NodeHandle nh_;         // 公共命名空间句柄
     ros::NodeHandle nhPrivate_ = ros::NodeHandle("~");  // 私有命名空间句柄（用于参数）
-
-    // ==================== 发布器 ====================
+             // 注意：此节点不再订阅里程计或使用 yaw 信息
     // 底盘坐标系速度发布器（/cmd_vel，Twist 消息）
     ros::Publisher twist_pub_;
-
-    // ==================== 参数 ====================
-    // 空闲状态下是否持续发布零速度（用于确保控制器收到停止命令）
     bool publish_zero_when_idle_ = false;
-
     // 速度指令话题名称
     std::string cmd_vel_topic_;          // Twist 话题（默认 /cmd_vel）
+
 
     // ==================== 速度模式与坐标系 ====================
     // velocity_mode_: "global" 表示按键为全局系意图（world/odom frame）
@@ -112,17 +102,7 @@ private:
     std::string velocity_mode_ = "global";
     std::string global_frame_ = "odom";         // 全局参考坐标系名称
     std::string base_link_frame_ = "base_link"; // 底盘坐标系名称
-    std::string odom_topic_ = "/odom";          // 里程计话题名称
-    // 注意：键盘节点仅订阅里程计获取航向，不再查询 TF
-
-    // ==================== 航向角状态 ====================
-    double yaw_ = 0.0;            // 当前使用的航向角（来自 odom）
-    double yaw_odom_ = 0.0;       // 里程计提供的航向角
-    bool have_odom_yaw_ = false;  // 是否已接收到里程计数据
-
-    // ==================== 订阅器 ====================
-    ros::Subscriber odom_sub_;  // 里程计订阅器（用于获取航向角）
-    ros::Subscriber yaw_sub_;   // 航向角订阅器（保留但未使用）
+    // 注意：此节点不再订阅里程计或使用 yaw 信息
     
     // ==================== 模式标志（未使用） ====================
     bool field_centric_ = true;     // 场地中心模式（保留）
@@ -150,14 +130,9 @@ TeleopTurtle::TeleopTurtle()
     nhPrivate_.param("global_frame", global_frame_, global_frame_);
     nhPrivate_.param("base_link_frame", base_link_frame_, base_link_frame_);
 
-    // 读取里程计话题名称
-    nhPrivate_.param("odom_topic", odom_topic_, odom_topic_);
 
     // 创建底盘坐标系速度发布器（Twist 消息，用于控制器订阅）
     twist_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
-
-    // 订阅里程计话题以获取航向角（唯一的 yaw 来源）
-    odom_sub_ = nh_.subscribe<nav_msgs::Odometry>(odom_topic_, 1, &TeleopTurtle::odomCb, this);
 }
 
 /*
@@ -426,20 +401,4 @@ void TeleopTurtle::keyLoop()
 
     term_guard.restore();  // 退出循环后恢复终端设置
     return;
-}
-
-/*
- * 里程计回调函数：更新航向角
- * @param msg: 里程计消息（包含位姿与速度）
- */
-void TeleopTurtle::odomCb(const nav_msgs::Odometry::ConstPtr &msg)
-{
-    // 从四元数中提取欧拉角（roll, pitch, yaw）
-    const auto &q = msg->pose.pose.orientation;
-    tf2::Quaternion quat(q.x, q.y, q.z, q.w);
-    double r, p, y;
-    tf2::Matrix3x3(quat).getRPY(r, p, y);  // 获取 Roll-Pitch-Yaw
-    
-    yaw_odom_ = y;           // 保存航向角（yaw）
-    have_odom_yaw_ = true;   // 标记已收到里程计数据
 }
