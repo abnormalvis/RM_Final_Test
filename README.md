@@ -59,3 +59,7 @@
 15. 完成了底盘控制器 `wheel_pid_controller.cpp` 自锁防止溜坡功能的实现，并进行了测试。。
 
 16. 严肃使用rqt_plot和rqt_reconfigure进行参数调试，但是遇到车子会在前进方向偏移的问题。
+
+17. 调节了线性方向和舵向的PID参数, 但是参数还不够理想。
+![](src/sentry_chassis_controller/pictures/pid_w-4.png)
+![](src/sentry_chassis_controller/pictures/pid-linear-x-2.png)
