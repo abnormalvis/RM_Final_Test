@@ -1,25 +1,21 @@
 # Teleop feature node parameters
 # Loaded into namespace: /sentry_control_key_feature
 
-# ========== 方案 A：键盘节点发布原始意图，控制器负责坐标变换 ==========
+# ========== 键盘节点发布原始意图，控制器负责坐标变换 ==========
 # velocity_mode 只决定发布消息的 frame_id，不在此处做坐标变换
 #   - global:  按键意图为世界系（odom），frame_id = odom
 #              控制器需设置 speed_mode: global 来将速度转换到底盘系
 #   - chassis: 按键意图为底盘系（base_link），frame_id = base_link
 #              控制器需设置 speed_mode: local 直接使用
-# 注意：velocity_mode 应与控制器的 speed_mode 保持一致！
 velocity_mode: global          # global | chassis
-global_frame: odom             # global/world frame id (prefer odom unless you have a proper map->odom chain)
+global_frame: odom             # global/world frame id
 base_link_frame: base_link     # robot base frame id
-
-# Yaw acquisition
 yaw_source: topic              # topic | tf | odom | auto (default topic to decouple from teleop)
 yaw_topic: /robot_yaw          # published by yaw_publisher
 odom_topic: /odom_controller   # controller's odom (not gazebo's ground truth)
 
 # Topics
 cmd_vel_topic: /cmd_vel
-cmd_vel_stamped_topic: /cmd_vel_stamped
 
 # Behavior
 publish_zero_when_idle: false
