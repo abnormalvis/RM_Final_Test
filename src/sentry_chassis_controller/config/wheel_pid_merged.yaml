@@ -10,7 +10,7 @@ wheel_pid_controller:
   
   # ==================== 控制器基础配置 ====================
   type: "sentry_chassis_controller/WheelPidController"
-  cmd_vel_topic: "/cmd_vel"
+  cmd_vel_topic: "/cmd_vel" # 参数服务器中的 cmd_vel 主题
   synthetic_fallback: false
   
   # ==================== 速度坐标系配置（方案 A） ====================

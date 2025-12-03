@@ -20,6 +20,5 @@ cmd_vel_topic: /cmd_vel
 # Behavior
 publish_zero_when_idle: false
 walk_vel: 1.25
-run_vel: 1.5
 default_omega: 2
 hz: 20
