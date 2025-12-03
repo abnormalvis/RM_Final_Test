@@ -63,3 +63,5 @@
 17. 调节了线性方向和舵向的PID参数, 但是参数还不够理想。
 ![](src/sentry_chassis_controller/pictures/pid_w-4.png)
 ![](src/sentry_chassis_controller/pictures/pid-linear-x-2.png)
+
+18. 给速度轮PID控制器添加低通滤波器，并把时间常数加入到动态调参范围内。

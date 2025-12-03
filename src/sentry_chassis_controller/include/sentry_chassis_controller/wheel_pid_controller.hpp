@@ -89,6 +89,13 @@ namespace sentry_chassis_controller
     // 轮速 PID（速度控制）：控制驱动电机到达目标角速度
     control_toolbox::Pid pid_lf_wheel_, pid_rf_wheel_, pid_lb_wheel_, pid_rb_wheel_;
 
+    // ==================== 轮速 PID 低通滤波器 ====================
+    // 一阶低通滤波器用于平滑 PID 输出，减少高频噪声和抖动
+    // 离散形式: y[k] = alpha * x[k] + (1-alpha) * y[k-1]
+    // 其中 alpha = dt / (tau + dt), tau 为时间常数
+    double wheel_lpf_tau_[4]{0.02, 0.02, 0.02, 0.02};  // 四个轮子的滤波器时间常数 (s)
+    double wheel_lpf_output_[4]{0.0, 0.0, 0.0, 0.0};   // 滤波器输出状态（上一次输出）
+
     // ==================== ROS 句柄与参数 ====================
     // 控制器命名空间句柄（用于参数镜像回 YAML 风格键值）
     ros::NodeHandle controller_nh_;
@@ -203,26 +210,6 @@ namespace sentry_chassis_controller
     bool pivot_sync_enabled_{true};          // 舵轮同步检查开关
     double pivot_sync_threshold_{0.15};      // 舵角同步阈值（rad，约8.6°）
     double pivot_sync_scale_min_{0.1};       // 最小轮速缩放比例（舵角误差大时）
-
-    // ==================== 方向切换刹车功能 ====================
-    // 问题：从前后运动突然切换到左右运动时，惯性会导致打滑
-    // 方案：检测运动方向变化，先刹车减速再执行新运动
-    bool direction_brake_enabled_{true};     // 方向切换刹车开关
-    double direction_change_threshold_{0.5}; // 方向变化阈值（rad，约28.6°）
-    double brake_decel_{3.0};                // 刹车减速度（m/s²）
-    double brake_release_speed_{0.1};        // 刹车释放速度阈值（m/s）
-    
-    // 刹车状态机
-    enum class BrakeState { IDLE, BRAKING, READY };
-    BrakeState brake_state_{BrakeState::IDLE};
-    double last_cmd_vx_{0.0};                // 上一次命令速度 x
-    double last_cmd_vy_{0.0};                // 上一次命令速度 y
-    double last_cmd_wz_{0.0};                // 上一次命令角速度
-    double current_vx_{0.0};                 // 当前实际速度 x（平滑后）
-    double current_vy_{0.0};                 // 当前实际速度 y（平滑后）
-    double pending_vx_{0.0};                 // 待执行的目标速度 x
-    double pending_vy_{0.0};                 // 待执行的目标速度 y
-    double pending_wz_{0.0};                 // 待执行的目标角速度
 
     // ==================== 动态重配置服务器 ====================
     typedef sentry_chassis_controller::WheelPidConfig Config;

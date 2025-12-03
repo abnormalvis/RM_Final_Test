@@ -185,11 +185,6 @@ add_executable(sentry_control_key_feature src/sentry_control_key_feature.cpp)
 add_dependencies(sentry_control_key_feature ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sentry_control_key_feature ${catkin_LIBRARIES})
 
-## EKF fusion node: IMU + wheel odometry fusion
-add_executable(odom_ekf_fusion src/odom_ekf_fusion.cpp)
-add_dependencies(odom_ekf_fusion ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(odom_ekf_fusion ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
-
 ## Dual mode chassis controller for rotation matrix solution
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/dual_mode_chassis_controller.cpp")
   add_executable(dual_mode_chassis_controller src/dual_mode_chassis_controller.cpp)
