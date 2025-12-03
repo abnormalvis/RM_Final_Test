@@ -16,7 +16,6 @@
 /* ROS 相关头文件 */
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <geometry_msgs/TwistStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/Float64.h>
 #include <tf2_ros/transform_broadcaster.h>
@@ -99,9 +98,6 @@ private:
     // ==================== 发布器 ====================
     // 底盘坐标系速度发布器（/cmd_vel，Twist 消息）
     ros::Publisher twist_pub_;
-    
-    // 带时间戳的速度发布器（/cmd_vel_stamped，TwistStamped 消息，含坐标系标识）
-    ros::Publisher twist_stamped_pub_;
 
     // ==================== 参数 ====================
     // 空闲状态下是否持续发布零速度（用于确保控制器收到停止命令）
@@ -109,7 +105,6 @@ private:
 
     // 速度指令话题名称
     std::string cmd_vel_topic_;          // Twist 话题（默认 /cmd_vel）
-    std::string cmd_vel_stamped_topic_;  // TwistStamped 话题（默认 /cmd_vel_stamped）
 
     // ==================== 速度模式与坐标系 ====================
     // velocity_mode_: "global" 表示按键为全局系意图（world/odom frame）
@@ -144,7 +139,6 @@ TeleopTurtle::TeleopTurtle()
 {
     // 读取速度指令话题名称（可通过 launch 文件或参数服务器配置）
     nhPrivate_.param("cmd_vel_topic", cmd_vel_topic_, std::string("/cmd_vel"));
-    nhPrivate_.param("cmd_vel_stamped_topic", cmd_vel_stamped_topic_, std::string("/cmd_vel_stamped"));
 
     // 读取空闲状态下是否发布零速度（默认 false，仅在有运动时发布）
     nhPrivate_.param("publish_zero_when_idle", publish_zero_when_idle_, publish_zero_when_idle_);
@@ -161,9 +155,6 @@ TeleopTurtle::TeleopTurtle()
 
     // 创建底盘坐标系速度发布器（Twist 消息，用于控制器订阅）
     twist_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
-
-    // 创建全局坐标系速度发布器（TwistStamped 消息，带坐标系标识）
-    twist_stamped_pub_ = nh_.advertise<geometry_msgs::TwistStamped>(cmd_vel_stamped_topic_, 1);
 
     // 订阅里程计话题以获取航向角（唯一的 yaw 来源）
     odom_sub_ = nh_.subscribe<nav_msgs::Odometry>(odom_topic_, 1, &TeleopTurtle::odomCb, this);
@@ -402,34 +393,20 @@ void TeleopTurtle::keyLoop()
             cur_vy_world *= scale;
         }
 
-        // ==================== 方案 A：发布原始意图，由控制器负责坐标变换 ====================
-        // velocity_mode 只决定 frame_id，不在此处做坐标变换
-        // 控制器根据 speed_mode 参数决定是否需要将速度从 odom 系转换到 base_link 系
-        
-        // 发布带时间戳的速度意图（TwistStamped）
-        geometry_msgs::TwistStamped stamped;
-        stamped.header.stamp = ros::Time::now();
-        // 根据速度模式选择 frame_id：global 模式为 odom，chassis 模式为 base_link
-        stamped.header.frame_id = (velocity_mode_ == "global") ? global_frame_ : base_link_frame_;
-
-        // 直接使用按键意图速度（不做坐标变换）
-        // global 模式：按键定义为全局系意图（W=+Y_world, S=-Y_world, A=-X_world, D=+X_world）
-        // chassis 模式：按键定义为底盘系意图（W=+X_body, S=-X_body, A=+Y_body, D=-Y_body）
-        double vx = cur_vx_world;  // 按键意图 X 方向速度
-        double vy = cur_vy_world;  // 按键意图 Y 方向速度
-        
-        // 填写速度意图到 TwistStamped 和 Twist
-        stamped.twist.linear.x = vx;
-        stamped.twist.linear.y = vy;
-        stamped.twist.angular.z = cur_omega;
+        // ==================== 计算最终速度命令 ====================
+        // 速度模式决定按键语义：
+        // - global 模式：WASD 为全局坐标系意图（控制器负责坐标变换）
+        // - chassis 模式：WASD 为底盘坐标系意图（直接使用）
+        double vx = cur_vx_world;
+        double vy = cur_vy_world;
         
         twist.linear.x = vx;
         twist.linear.y = vy;
         twist.angular.z = cur_omega;
         
         // 日志输出（调试用）
-        ROS_INFO_THROTTLE(1.0, "Teleop: mode=%s frame=%s vel=(%.2f,%.2f) omega=%.2f",
-                          velocity_mode_.c_str(), stamped.header.frame_id.c_str(), vx, vy, cur_omega);
+        ROS_INFO_THROTTLE(1.0, "Teleop: mode=%s vel=(%.2f,%.2f) omega=%.2f",
+                          velocity_mode_.c_str(), vx, vy, cur_omega);
 
         // ==================== 发布速度消息 ====================
         // 判断是否有运动（用于决定是否发布）
@@ -439,9 +416,6 @@ void TeleopTurtle::keyLoop()
         
         if (any_key_pressed || publish_zero_when_idle_)
         {
-            // 发布带时间戳的速度意图（包含 frame_id，控制器据此判断坐标系）
-            twist_stamped_pub_.publish(stamped);
-            
             // 发布到 /cmd_vel（控制器根据自身 speed_mode 处理）
             if (has_motion || publish_zero_when_idle_)
                 twist_pub_.publish(twist);

@@ -88,6 +88,22 @@ namespace sentry_chassis_controller
         initWheel("wheel_rl", pid_lb_wheel_, controller_nh, def_wp, def_wi, def_wd, def_wi_clamp, def_wanti);
         initWheel("wheel_rr", pid_rb_wheel_, controller_nh, def_wp, def_wi, def_wd, def_wi_clamp, def_wanti);
 
+        // ==================== 初始化轮速 PID 低通滤波器 ====================
+        // 读取低通滤波器时间常数（默认 0.02s = 20ms）
+        double def_lpf_tau = 0.02;
+        controller_nh.param("wheel/lpf_tau", def_lpf_tau, 0.02);
+        controller_nh.param("wheels/wheel_fl/lpf_tau", wheel_lpf_tau_[0], def_lpf_tau);
+        controller_nh.param("wheels/wheel_fr/lpf_tau", wheel_lpf_tau_[1], def_lpf_tau);
+        controller_nh.param("wheels/wheel_rl/lpf_tau", wheel_lpf_tau_[2], def_lpf_tau);
+        controller_nh.param("wheels/wheel_rr/lpf_tau", wheel_lpf_tau_[3], def_lpf_tau);
+        // 初始化滤波器输出状态
+        for (int i = 0; i < 4; ++i)
+        {
+            wheel_lpf_output_[i] = 0.0;
+        }
+        ROS_INFO("WheelPidController: LPF time constants [%.3f, %.3f, %.3f, %.3f] s",
+                 wheel_lpf_tau_[0], wheel_lpf_tau_[1], wheel_lpf_tau_[2], wheel_lpf_tau_[3]);
+
         // 初始化控制命令值
         for (int i = 0; i < 4; ++i)
         {
@@ -213,16 +229,6 @@ namespace sentry_chassis_controller
                  pivot_sync_enabled_ ? "enabled" : "disabled",
                  pivot_sync_threshold_, pivot_sync_threshold_ * 180.0 / M_PI, pivot_sync_scale_min_);
 
-        // 方向切换刹车功能参数
-        controller_nh.param("direction_brake/enabled", direction_brake_enabled_, true);
-        controller_nh.param("direction_brake/direction_change_threshold", direction_change_threshold_, 0.5); // rad，约28.6°
-        controller_nh.param("direction_brake/deceleration", brake_decel_, 3.0);                              // m/s²
-        controller_nh.param("direction_brake/release_speed", brake_release_speed_, 0.1);                     // m/s
-        ROS_INFO("Direction brake: %s, threshold=%.2f rad (%.1f°), decel=%.1f m/s², release_speed=%.2f m/s",
-                 direction_brake_enabled_ ? "enabled" : "disabled",
-                 direction_change_threshold_, direction_change_threshold_ * 180.0 / M_PI,
-                 brake_decel_, brake_release_speed_);
-
         // 初始化 TF 监听器（作为类成员，持续缓存 TF 数据，避免每次回调重新创建）
         tf_listener_ = std::make_shared<tf::TransformListener>();
 
@@ -234,17 +240,23 @@ namespace sentry_chassis_controller
 
     /*
      * 动态重配置回调函数
-     * 用于在运行时更新 PID 参数
+     * 用于在运行时更新 PID 参数和低通滤波器时间常数
      * @param config: 配置对象
      * @param level: 级别掩码
      */
     void WheelPidController::reconfigureCallback(Config &config, uint32_t level)
     {
-        // 更新轮向点击 PIDs
+        // 更新轮速 PIDs
         pid_lf_wheel_.initPid(config.wheel_fl_p, config.wheel_fl_i, config.wheel_fl_d, config.wheel_fl_i_clamp, 0.0);
         pid_rf_wheel_.initPid(config.wheel_fr_p, config.wheel_fr_i, config.wheel_fr_d, config.wheel_fr_i_clamp, 0.0);
         pid_lb_wheel_.initPid(config.wheel_rl_p, config.wheel_rl_i, config.wheel_rl_d, config.wheel_rl_i_clamp, 0.0);
         pid_rb_wheel_.initPid(config.wheel_rr_p, config.wheel_rr_i, config.wheel_rr_d, config.wheel_rr_i_clamp, 0.0);
+
+        // 更新轮速 PID 低通滤波器时间常数
+        wheel_lpf_tau_[0] = config.wheel_fl_lpf_tau;
+        wheel_lpf_tau_[1] = config.wheel_fr_lpf_tau;
+        wheel_lpf_tau_[2] = config.wheel_rl_lpf_tau;
+        wheel_lpf_tau_[3] = config.wheel_rr_lpf_tau;
 
         // 更新舵向电机 PIDs
         pid_lf_.initPid(config.pivot_fl_p, config.pivot_fl_i, config.pivot_fl_d, config.pivot_fl_i_clamp, 0.0);
@@ -253,8 +265,8 @@ namespace sentry_chassis_controller
         pid_rb_.initPid(config.pivot_rr_p, config.pivot_rr_i, config.pivot_rr_d, config.pivot_rr_i_clamp, 0.0);
 
         // 把动态调整的PID参数镜像回 wheels/* 结构，方便通过 rosparam get 获取
-        // 函数对象，用于设置单个轮子的 PID 参数
-        auto setWheel = [this](const std::string &name, double p, double i, double d, double i_clamp)
+        // 函数对象，用于设置单个轮子的 PID 参数（包含 LPF 时间常数）
+        auto setWheel = [this](const std::string &name, double p, double i, double d, double i_clamp, double lpf_tau)
         {
             // 参数的命名空间
             const std::string base = std::string("wheels/") + name;
@@ -264,13 +276,14 @@ namespace sentry_chassis_controller
             controller_nh_.setParam(base + "/i", i);
             controller_nh_.setParam(base + "/d", d);
             controller_nh_.setParam(base + "/i_clamp", i_clamp);
+            controller_nh_.setParam(base + "/lpf_tau", lpf_tau);
         };
 
-        // 设置轮速 PID 参数
-        setWheel("wheel_fl", config.wheel_fl_p, config.wheel_fl_i, config.wheel_fl_d, config.wheel_fl_i_clamp);
-        setWheel("wheel_fr", config.wheel_fr_p, config.wheel_fr_i, config.wheel_fr_d, config.wheel_fr_i_clamp);
-        setWheel("wheel_rl", config.wheel_rl_p, config.wheel_rl_i, config.wheel_rl_d, config.wheel_rl_i_clamp);
-        setWheel("wheel_rr", config.wheel_rr_p, config.wheel_rr_i, config.wheel_rr_d, config.wheel_rr_i_clamp);
+        // 设置轮速 PID 参数（包含 LPF）
+        setWheel("wheel_fl", config.wheel_fl_p, config.wheel_fl_i, config.wheel_fl_d, config.wheel_fl_i_clamp, config.wheel_fl_lpf_tau);
+        setWheel("wheel_fr", config.wheel_fr_p, config.wheel_fr_i, config.wheel_fr_d, config.wheel_fr_i_clamp, config.wheel_fr_lpf_tau);
+        setWheel("wheel_rl", config.wheel_rl_p, config.wheel_rl_i, config.wheel_rl_d, config.wheel_rl_i_clamp, config.wheel_rl_lpf_tau);
+        setWheel("wheel_rr", config.wheel_rr_p, config.wheel_rr_i, config.wheel_rr_d, config.wheel_rr_i_clamp, config.wheel_rr_lpf_tau);
 
         // 函数对象，用于设置单个舵向电机的 PID 参数
         auto setPivot = [this](const std::string &name, double p, double i, double d, double i_clamp)
@@ -288,7 +301,8 @@ namespace sentry_chassis_controller
         setPivot("pivot_rl", config.pivot_rl_p, config.pivot_rl_i, config.pivot_rl_d, config.pivot_rl_i_clamp);
         setPivot("pivot_rr", config.pivot_rr_p, config.pivot_rr_i, config.pivot_rr_d, config.pivot_rr_i_clamp);
 
-        ROS_INFO("WheelPidController: dynamic_reconfigure updated PID gains, mirrored to wheels/* params");
+        ROS_INFO("WheelPidController: dynamic_reconfigure updated PID gains and LPF tau [%.3f, %.3f, %.3f, %.3f]",
+                 wheel_lpf_tau_[0], wheel_lpf_tau_[1], wheel_lpf_tau_[2], wheel_lpf_tau_[3]);
     }
 
     /*
@@ -343,61 +357,6 @@ namespace sentry_chassis_controller
             }
         }
         // 否则speed_mode_ == "local"，使用原始速度（已在 base_link 坐标系中）
-
-        // ==================== 方向切换刹车检测 ====================
-        if (direction_brake_enabled_)
-        {
-            // 计算上一次和当前命令的运动方向（仅考虑平移，忽略纯旋转）
-            double last_speed = std::hypot(last_cmd_vx_, last_cmd_vy_);
-            double new_speed = std::hypot(vx, vy);
-
-            // 只在有明显速度时检测方向变化
-            const double speed_threshold = 0.05; // 最小速度阈值
-
-            if (last_speed > speed_threshold && new_speed > speed_threshold)
-            {
-                // 计算方向变化角度
-                double last_angle = std::atan2(last_cmd_vy_, last_cmd_vx_);
-                double new_angle = std::atan2(vy, vx);
-                double angle_diff = new_angle - last_angle;
-
-                // 归一化到 [-π, π]
-                while (angle_diff > M_PI)
-                    angle_diff -= 2.0 * M_PI;
-                while (angle_diff < -M_PI)
-                    angle_diff += 2.0 * M_PI;
-
-                // 如果方向变化超过阈值，触发刹车
-                if (std::abs(angle_diff) > direction_change_threshold_ && brake_state_ == BrakeState::IDLE)
-                {
-                    brake_state_ = BrakeState::BRAKING;
-                    pending_vx_ = vx;
-                    pending_vy_ = vy;
-                    pending_wz_ = wz;
-
-                    ROS_INFO_THROTTLE(0.5, "Direction change detected (%.1f°), braking first",
-                                      angle_diff * 180.0 / M_PI);
-                }
-            }
-
-            // 更新上次命令（即使在刹车中也更新，以便追踪最新目标）
-            if (brake_state_ == BrakeState::BRAKING)
-            {
-                // 刹车中：更新待执行目标，但不执行
-                pending_vx_ = vx;
-                pending_vy_ = vy;
-                pending_wz_ = wz;
-                // 实际速度命令由 update() 中的刹车逻辑控制
-                return; // 不执行后续的 IK 计算
-            }
-            else
-            {
-                // 正常模式：更新记录
-                last_cmd_vx_ = vx;
-                last_cmd_vy_ = vy;
-                last_cmd_wz_ = wz;
-            }
-        }
 
         // 创建逆运动学对象并计算轮速和舵角
         auto ik = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base_, wheel_track_, wheel_radius_);
@@ -588,60 +547,6 @@ namespace sentry_chassis_controller
             last_state_pub_ = time;
         }
 
-        // ==================== 方向切换刹车状态机 ====================
-        // 在刹车状态下，使用减速度逐渐降低轮速，直到速度足够低
-        if (direction_brake_enabled_ && brake_state_ == BrakeState::BRAKING)
-        {
-            double dt = period.toSec();
-
-            // 估算当前底盘速度（基于轮速反馈的前向运动学）
-            // 简化版本：使用平均轮速 × 轮径作为线速度估计
-            double avg_wheel_vel = (std::abs(lf_wheel_vel) + std::abs(rf_wheel_vel) +
-                                    std::abs(lb_wheel_vel) + std::abs(rb_wheel_vel)) /
-                                   4.0;
-            double estimated_speed = avg_wheel_vel * wheel_radius_;
-
-            // 更新当前平滑速度（用于判断刹车完成）
-            const double smooth_alpha = 0.3; // 平滑系数
-            current_vx_ = current_vx_ * (1.0 - smooth_alpha) + last_cmd_vx_ * smooth_alpha;
-            current_vy_ = current_vy_ * (1.0 - smooth_alpha) + last_cmd_vy_ * smooth_alpha;
-
-            // 检查是否刹车完成
-            if (estimated_speed < brake_release_speed_)
-            {
-                // 刹车完成，切换到新方向
-                brake_state_ = BrakeState::IDLE;
-                last_cmd_vx_ = pending_vx_;
-                last_cmd_vy_ = pending_vy_;
-                last_cmd_wz_ = pending_wz_;
-
-                // 用新命令计算 IK
-                auto ik = sentry_kinematics::inverseKinematics(pending_vx_, pending_vy_, pending_wz_,
-                                                               wheel_base_, wheel_track_, wheel_radius_);
-                for (int i = 0; i < 4; ++i)
-                {
-                    wheel_cmd_[i] = ik.wheel_angular_vel[i];
-                    pivot_cmd_[i] = ik.steer_angle[i];
-                }
-
-                ROS_INFO_THROTTLE(0.5, "Brake released, executing new direction (vx=%.2f, vy=%.2f)",
-                                  pending_vx_, pending_vy_);
-            }
-            else
-            {
-                // 刹车中：命令速度为 0（制动）
-                // 舵角保持当前方向（不改变），只是停止驱动
-                for (int i = 0; i < 4; ++i)
-                {
-                    wheel_cmd_[i] = 0.0;
-                    // pivot_cmd_ 保持不变，让舵轮维持当前角度
-                }
-
-                ROS_DEBUG_THROTTLE(0.2, "Braking: estimated_speed=%.3f m/s, target=%.3f m/s",
-                                   estimated_speed, brake_release_speed_);
-            }
-        }
-
         // ==================== 底盘自锁逻辑 ====================
         // 当超时未收到速度命令时，锁定底盘位置以防止滑动/抖动
         // 支持两种自锁模式：
@@ -815,10 +720,36 @@ namespace sentry_chassis_controller
         else
         {
             // 正常模式：使用速度 PID 控制
-            cmd0 = pid_lf_wheel_.computeCommand(wheel_cmd_[0] - lf_wheel_vel, period);
-            cmd1 = pid_rf_wheel_.computeCommand(wheel_cmd_[1] - rf_wheel_vel, period);
-            cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
-            cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
+            double raw_cmd0 = pid_lf_wheel_.computeCommand(wheel_cmd_[0] - lf_wheel_vel, period);
+            double raw_cmd1 = pid_rf_wheel_.computeCommand(wheel_cmd_[1] - rf_wheel_vel, period);
+            double raw_cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
+            double raw_cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
+
+            // ==================== 应用低通滤波器 ====================
+            // 一阶低通滤波器（指数加权移动平均）
+            // 离散形式: y[k] = alpha * x[k] + (1-alpha) * y[k-1]
+            // alpha = dt / (tau + dt), 其中 tau 为时间常数
+            double dt = period.toSec();
+            double raw_cmds[4] = {raw_cmd0, raw_cmd1, raw_cmd2, raw_cmd3};
+            
+            for (int i = 0; i < 4; ++i)
+            {
+                if (wheel_lpf_tau_[i] > 1e-6)  // tau > 0 启用滤波
+                {
+                    double alpha = dt / (wheel_lpf_tau_[i] + dt);
+                    wheel_lpf_output_[i] = alpha * raw_cmds[i] + (1.0 - alpha) * wheel_lpf_output_[i];
+                }
+                else
+                {
+                    // tau = 0 禁用滤波，直接使用原始输出
+                    wheel_lpf_output_[i] = raw_cmds[i];
+                }
+            }
+            
+            cmd0 = wheel_lpf_output_[0];
+            cmd1 = wheel_lpf_output_[1];
+            cmd2 = wheel_lpf_output_[2];
+            cmd3 = wheel_lpf_output_[3];
 
             // ==================== 舵轮同步检查（防止偏航） ====================
             // 问题：舵轮未到位时驱动轮子会产生错误的推力方向，导致车辆偏航或打滑

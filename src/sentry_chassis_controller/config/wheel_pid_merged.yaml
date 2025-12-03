@@ -18,7 +18,7 @@ wheel_pid_controller:
   #   - global: 将速度从 odom_frame 转换到 base_link_frame（使用 TF）
   #   - local:  直接使用收到的速度（假定已在 base_link 系中）
   # 注意：speed_mode 应与键盘节点的 velocity_mode 保持一致！
-  speed_mode: "loacl"
+  speed_mode: "global"
   
   # 坐标系名称
   odom_frame: "odom"
@@ -67,6 +67,7 @@ wheel_pid_controller:
     antiwindup: 0.0
     output_min: -10.0
     output_max: 10.0
+    lpf_tau: 0.02  # 低通滤波器时间常数 (s)，0 禁用
 
   # ==================== 轮子名称列表 ====================
   wheel_names:
@@ -89,6 +90,7 @@ wheel_pid_controller:
       i_clamp: 0.2
       output_min: -10.0
       output_max: 10.0
+      lpf_tau: 0.02  # 低通滤波器时间常数 (s)
     wheel_fr:
       p: 0.7
       i: 0.05
@@ -96,6 +98,7 @@ wheel_pid_controller:
       i_clamp: 0.2
       output_min: -10.0
       output_max: 10.0
+      lpf_tau: 0.02
     wheel_rl:
       p: 0.7
       i: 0.05
@@ -103,6 +106,7 @@ wheel_pid_controller:
       i_clamp: 0.2
       output_min: -10.0
       output_max: 10.0
+      lpf_tau: 0.02
     wheel_rr:
       p: 0.7
       i: 0.05
@@ -110,6 +114,7 @@ wheel_pid_controller:
       i_clamp: 0.2
       output_min: -10.0
       output_max: 10.0
+      lpf_tau: 0.02
 
     # ---------- 舵轮 PID ----------
     pivot_fl:
