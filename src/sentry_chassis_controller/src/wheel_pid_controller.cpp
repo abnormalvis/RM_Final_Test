@@ -121,6 +121,28 @@ namespace sentry_chassis_controller
         last_effort_pub_ = ros::Time(0);
         controller_nh.param("power_debug", power_debug_enabled_, false); // 是否启用功率调试发布
 
+        // ==================== PID 调试发布器初始化（用于 rqt_plot） ====================
+        controller_nh.param("pid_debug", pid_debug_enabled_, true); // 默认启用 PID 调试
+        if (pid_debug_enabled_)
+        {
+            // 舵轮期望位置话题
+            pivot_desired_fl_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/fl/desired", 1);
+            pivot_desired_fr_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/fr/desired", 1);
+            pivot_desired_rl_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/rl/desired", 1);
+            pivot_desired_rr_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/rr/desired", 1);
+            // 舵轮实际位置话题
+            pivot_actual_fl_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/fl/actual", 1);
+            pivot_actual_fr_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/fr/actual", 1);
+            pivot_actual_rl_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/rl/actual", 1);
+            pivot_actual_rr_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/rr/actual", 1);
+            // 舵轮误差话题
+            pivot_error_fl_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/fl/error", 1);
+            pivot_error_fr_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/fr/error", 1);
+            pivot_error_rl_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/rl/error", 1);
+            pivot_error_rr_pub_ = root_nh.advertise<std_msgs::Float64>("pivot_debug/rr/error", 1);
+            ROS_INFO("PID debug publishers initialized under /pivot_debug/*");
+        }
+
         // 底盘自锁功能参数
         controller_nh.param("self_lock/enabled", self_lock_enabled_, true);                // 自锁功能开关
         controller_nh.param("self_lock/idle_timeout", idle_timeout_, 0.5);                 // 空闲超时（秒）
@@ -184,18 +206,18 @@ namespace sentry_chassis_controller
         last_odom_time_ = ros::Time(0);
 
         // 舵轮同步检查参数（防止舵轮未到位就驱动导致的偏航问题）
-        controller_nh.param("pivot_sync/enabled", pivot_sync_enabled_, true);           // 启用舵轮同步检查
-        controller_nh.param("pivot_sync/threshold", pivot_sync_threshold_, 0.15);       // 舵角同步阈值（rad，约8.6°）
-        controller_nh.param("pivot_sync/scale_min", pivot_sync_scale_min_, 0.1);        // 最小轮速缩放（0.1 = 10%）
+        controller_nh.param("pivot_sync/enabled", pivot_sync_enabled_, true);     // 启用舵轮同步检查
+        controller_nh.param("pivot_sync/threshold", pivot_sync_threshold_, 0.15); // 舵角同步阈值（rad，约8.6°）
+        controller_nh.param("pivot_sync/scale_min", pivot_sync_scale_min_, 0.1);  // 最小轮速缩放（0.1 = 10%）
         ROS_INFO("Pivot sync: %s, threshold=%.3f rad (%.1f°), scale_min=%.2f",
                  pivot_sync_enabled_ ? "enabled" : "disabled",
                  pivot_sync_threshold_, pivot_sync_threshold_ * 180.0 / M_PI, pivot_sync_scale_min_);
 
         // 方向切换刹车功能参数
         controller_nh.param("direction_brake/enabled", direction_brake_enabled_, true);
-        controller_nh.param("direction_brake/direction_change_threshold", direction_change_threshold_, 0.5);  // rad，约28.6°
-        controller_nh.param("direction_brake/deceleration", brake_decel_, 3.0);                               // m/s²
-        controller_nh.param("direction_brake/release_speed", brake_release_speed_, 0.1);                      // m/s
+        controller_nh.param("direction_brake/direction_change_threshold", direction_change_threshold_, 0.5); // rad，约28.6°
+        controller_nh.param("direction_brake/deceleration", brake_decel_, 3.0);                              // m/s²
+        controller_nh.param("direction_brake/release_speed", brake_release_speed_, 0.1);                     // m/s
         ROS_INFO("Direction brake: %s, threshold=%.2f rad (%.1f°), decel=%.1f m/s², release_speed=%.2f m/s",
                  direction_brake_enabled_ ? "enabled" : "disabled",
                  direction_change_threshold_, direction_change_threshold_ * 180.0 / M_PI,
@@ -205,7 +227,7 @@ namespace sentry_chassis_controller
         tf_listener_ = std::make_shared<tf::TransformListener>();
 
         ROS_INFO("WheelPidController initialized (enhanced state feedback)");
-        ROS_INFO("Velocity mode: %s (local=base_link, global=odom), TF publish: %s", 
+        ROS_INFO("Velocity mode: %s (local=base_link, global=odom), TF publish: %s",
                  speed_mode_.c_str(), publish_tf_ ? "enabled" : "disabled");
         return true;
     }
@@ -328,21 +350,23 @@ namespace sentry_chassis_controller
             // 计算上一次和当前命令的运动方向（仅考虑平移，忽略纯旋转）
             double last_speed = std::hypot(last_cmd_vx_, last_cmd_vy_);
             double new_speed = std::hypot(vx, vy);
-            
+
             // 只在有明显速度时检测方向变化
-            const double speed_threshold = 0.05;  // 最小速度阈值
-            
+            const double speed_threshold = 0.05; // 最小速度阈值
+
             if (last_speed > speed_threshold && new_speed > speed_threshold)
             {
                 // 计算方向变化角度
                 double last_angle = std::atan2(last_cmd_vy_, last_cmd_vx_);
                 double new_angle = std::atan2(vy, vx);
                 double angle_diff = new_angle - last_angle;
-                
+
                 // 归一化到 [-π, π]
-                while (angle_diff > M_PI) angle_diff -= 2.0 * M_PI;
-                while (angle_diff < -M_PI) angle_diff += 2.0 * M_PI;
-                
+                while (angle_diff > M_PI)
+                    angle_diff -= 2.0 * M_PI;
+                while (angle_diff < -M_PI)
+                    angle_diff += 2.0 * M_PI;
+
                 // 如果方向变化超过阈值，触发刹车
                 if (std::abs(angle_diff) > direction_change_threshold_ && brake_state_ == BrakeState::IDLE)
                 {
@@ -350,12 +374,12 @@ namespace sentry_chassis_controller
                     pending_vx_ = vx;
                     pending_vy_ = vy;
                     pending_wz_ = wz;
-                    
+
                     ROS_INFO_THROTTLE(0.5, "Direction change detected (%.1f°), braking first",
-                                     angle_diff * 180.0 / M_PI);
+                                      angle_diff * 180.0 / M_PI);
                 }
             }
-            
+
             // 更新上次命令（即使在刹车中也更新，以便追踪最新目标）
             if (brake_state_ == BrakeState::BRAKING)
             {
@@ -364,7 +388,7 @@ namespace sentry_chassis_controller
                 pending_vy_ = vy;
                 pending_wz_ = wz;
                 // 实际速度命令由 update() 中的刹车逻辑控制
-                return;  // 不执行后续的 IK 计算
+                return; // 不执行后续的 IK 计算
             }
             else
             {
@@ -569,18 +593,19 @@ namespace sentry_chassis_controller
         if (direction_brake_enabled_ && brake_state_ == BrakeState::BRAKING)
         {
             double dt = period.toSec();
-            
+
             // 估算当前底盘速度（基于轮速反馈的前向运动学）
             // 简化版本：使用平均轮速 × 轮径作为线速度估计
-            double avg_wheel_vel = (std::abs(lf_wheel_vel) + std::abs(rf_wheel_vel) + 
-                                    std::abs(lb_wheel_vel) + std::abs(rb_wheel_vel)) / 4.0;
+            double avg_wheel_vel = (std::abs(lf_wheel_vel) + std::abs(rf_wheel_vel) +
+                                    std::abs(lb_wheel_vel) + std::abs(rb_wheel_vel)) /
+                                   4.0;
             double estimated_speed = avg_wheel_vel * wheel_radius_;
-            
+
             // 更新当前平滑速度（用于判断刹车完成）
-            const double smooth_alpha = 0.3;  // 平滑系数
+            const double smooth_alpha = 0.3; // 平滑系数
             current_vx_ = current_vx_ * (1.0 - smooth_alpha) + last_cmd_vx_ * smooth_alpha;
             current_vy_ = current_vy_ * (1.0 - smooth_alpha) + last_cmd_vy_ * smooth_alpha;
-            
+
             // 检查是否刹车完成
             if (estimated_speed < brake_release_speed_)
             {
@@ -589,18 +614,18 @@ namespace sentry_chassis_controller
                 last_cmd_vx_ = pending_vx_;
                 last_cmd_vy_ = pending_vy_;
                 last_cmd_wz_ = pending_wz_;
-                
+
                 // 用新命令计算 IK
-                auto ik = sentry_kinematics::inverseKinematics(pending_vx_, pending_vy_, pending_wz_, 
-                                                                wheel_base_, wheel_track_, wheel_radius_);
+                auto ik = sentry_kinematics::inverseKinematics(pending_vx_, pending_vy_, pending_wz_,
+                                                               wheel_base_, wheel_track_, wheel_radius_);
                 for (int i = 0; i < 4; ++i)
                 {
                     wheel_cmd_[i] = ik.wheel_angular_vel[i];
                     pivot_cmd_[i] = ik.steer_angle[i];
                 }
-                
+
                 ROS_INFO_THROTTLE(0.5, "Brake released, executing new direction (vx=%.2f, vy=%.2f)",
-                                 pending_vx_, pending_vy_);
+                                  pending_vx_, pending_vy_);
             }
             else
             {
@@ -611,9 +636,9 @@ namespace sentry_chassis_controller
                     wheel_cmd_[i] = 0.0;
                     // pivot_cmd_ 保持不变，让舵轮维持当前角度
                 }
-                
+
                 ROS_DEBUG_THROTTLE(0.2, "Braking: estimated_speed=%.3f m/s, target=%.3f m/s",
-                                  estimated_speed, brake_release_speed_);
+                                   estimated_speed, brake_release_speed_);
             }
         }
 
@@ -804,12 +829,15 @@ namespace sentry_chassis_controller
             {
                 // 读取当前舵角位置
                 double pivot_pos[4];
-                try {
+                try
+                {
                     pivot_pos[0] = front_left_pivot_joint_.getPosition();
                     pivot_pos[1] = front_right_pivot_joint_.getPosition();
                     pivot_pos[2] = back_left_pivot_joint_.getPosition();
                     pivot_pos[3] = back_right_pivot_joint_.getPosition();
-                } catch (...) {
+                }
+                catch (...)
+                {
                     pivot_pos[0] = pivot_pos[1] = pivot_pos[2] = pivot_pos[3] = 0.0;
                 }
 
@@ -820,10 +848,13 @@ namespace sentry_chassis_controller
                 {
                     double err = pivot_cmd_[i] - pivot_pos[i];
                     // 归一化到 [-π, π]
-                    while (err > M_PI) err -= 2.0 * M_PI;
-                    while (err < -M_PI) err += 2.0 * M_PI;
+                    while (err > M_PI)
+                        err -= 2.0 * M_PI;
+                    while (err < -M_PI)
+                        err += 2.0 * M_PI;
                     pivot_errors[i] = std::abs(err);
-                    if (pivot_errors[i] > max_error) max_error = pivot_errors[i];
+                    if (pivot_errors[i] > max_error)
+                        max_error = pivot_errors[i];
                 }
 
                 // 基于最大舵角误差计算轮速缩放因子
@@ -834,9 +865,9 @@ namespace sentry_chassis_controller
                 {
                     // 线性插值：误差从 threshold 增加到 π 时，scale 从 1.0 降到 scale_min
                     double t = (max_error - pivot_sync_threshold_) / (M_PI - pivot_sync_threshold_);
-                    t = std::min(1.0, std::max(0.0, t));  // clamp to [0, 1]
+                    t = std::min(1.0, std::max(0.0, t)); // clamp to [0, 1]
                     pivot_sync_scale = 1.0 - t * (1.0 - pivot_sync_scale_min_);
-                    
+
                     ROS_DEBUG_THROTTLE(0.2, "Pivot sync: max_err=%.2f° > threshold, scale=%.2f",
                                        max_error * 180.0 / M_PI, pivot_sync_scale);
                 }
@@ -908,17 +939,65 @@ namespace sentry_chassis_controller
         back_left_wheel_joint_.setCommand(cmd2);
         back_right_wheel_joint_.setCommand(cmd3);
 
-        // 计算舵角误差并应用 PID -> 力矩命令
-        double p0 = pid_lf_.computeCommand(pivot_cmd_[0] - front_left_pivot_joint_.getPosition(), period);
-        double p1 = pid_rf_.computeCommand(pivot_cmd_[1] - front_right_pivot_joint_.getPosition(), period);
-        double p2 = pid_lb_.computeCommand(pivot_cmd_[2] - back_left_pivot_joint_.getPosition(), period);
-        double p3 = pid_rb_.computeCommand(pivot_cmd_[3] - back_right_pivot_joint_.getPosition(), period);
+        // 读取舵轮当前位置
+        double pivot_pos_fl = front_left_pivot_joint_.getPosition();
+        double pivot_pos_fr = front_right_pivot_joint_.getPosition();
+        double pivot_pos_rl = back_left_pivot_joint_.getPosition();
+        double pivot_pos_rr = back_right_pivot_joint_.getPosition();
+
+        // 计算舵角误差
+        double pivot_err_fl = pivot_cmd_[0] - pivot_pos_fl;
+        double pivot_err_fr = pivot_cmd_[1] - pivot_pos_fr;
+        double pivot_err_rl = pivot_cmd_[2] - pivot_pos_rl;
+        double pivot_err_rr = pivot_cmd_[3] - pivot_pos_rr;
+
+        // 计算舵角 PID 输出
+        double p0 = pid_lf_.computeCommand(pivot_err_fl, period);
+        double p1 = pid_rf_.computeCommand(pivot_err_fr, period);
+        double p2 = pid_lb_.computeCommand(pivot_err_rl, period);
+        double p3 = pid_rb_.computeCommand(pivot_err_rr, period);
 
         // 发送舵角力矩命令到关节
         front_left_pivot_joint_.setCommand(p0);
         front_right_pivot_joint_.setCommand(p1);
         back_left_pivot_joint_.setCommand(p2);
         back_right_pivot_joint_.setCommand(p3);
+
+        // ==================== PID 调试话题发布（用于 rqt_plot） ====================
+        if (pid_debug_enabled_)
+        {
+            std_msgs::Float64 msg;
+
+            // 发布期望位置（单位：rad）
+            msg.data = pivot_cmd_[0];
+            pivot_desired_fl_pub_.publish(msg);
+            msg.data = pivot_cmd_[1];
+            pivot_desired_fr_pub_.publish(msg);
+            msg.data = pivot_cmd_[2];
+            pivot_desired_rl_pub_.publish(msg);
+            msg.data = pivot_cmd_[3];
+            pivot_desired_rr_pub_.publish(msg);
+
+            // 发布实际位置（单位：rad）
+            msg.data = pivot_pos_fl;
+            pivot_actual_fl_pub_.publish(msg);
+            msg.data = pivot_pos_fr;
+            pivot_actual_fr_pub_.publish(msg);
+            msg.data = pivot_pos_rl;
+            pivot_actual_rl_pub_.publish(msg);
+            msg.data = pivot_pos_rr;
+            pivot_actual_rr_pub_.publish(msg);
+
+            // 发布误差（单位：rad）
+            msg.data = pivot_err_fl;
+            pivot_error_fl_pub_.publish(msg);
+            msg.data = pivot_err_fr;
+            pivot_error_fr_pub_.publish(msg);
+            msg.data = pivot_err_rl;
+            pivot_error_rl_pub_.publish(msg);
+            msg.data = pivot_err_rr;
+            pivot_error_rr_pub_.publish(msg);
+        }
 
         // 以约10Hz频率发布应用的力矩
         if (time.toSec() - last_effort_pub_.toSec() > 0.1)

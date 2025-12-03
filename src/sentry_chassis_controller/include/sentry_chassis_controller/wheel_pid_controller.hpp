@@ -23,6 +23,7 @@
 #include <sensor_msgs/JointState.h>
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/Float64.h>
 
 // 动态重配置
 #include <dynamic_reconfigure/server.h>
@@ -134,6 +135,19 @@ namespace sentry_chassis_controller
     // 功率调试发布器（发布 a/b/c/disc/scaling_factor 数组）
     ros::Publisher power_debug_pub_;
     bool power_debug_enabled_{false};  // 是否启用功率调试发布
+
+    // ==================== PID 调试发布器（用于 rqt_plot） ====================
+    // 舵轮期望位置发布器
+    ros::Publisher pivot_desired_fl_pub_, pivot_desired_fr_pub_;
+    ros::Publisher pivot_desired_rl_pub_, pivot_desired_rr_pub_;
+    // 舵轮实际位置发布器
+    ros::Publisher pivot_actual_fl_pub_, pivot_actual_fr_pub_;
+    ros::Publisher pivot_actual_rl_pub_, pivot_actual_rr_pub_;
+    // 舵轮位置误差发布器
+    ros::Publisher pivot_error_fl_pub_, pivot_error_fr_pub_;
+    ros::Publisher pivot_error_rl_pub_, pivot_error_rr_pub_;
+    // PID 调试发布开关
+    bool pid_debug_enabled_{true};
 
     // ==================== 里程计发布（集成到控制器内部） ====================
     ros::Publisher odom_pub_;                      // 里程计消息发布器
