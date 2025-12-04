@@ -26,11 +26,11 @@ namespace sentry_chassis_controller
 
     bool OdomUpdater::solve_least_squares(const double A[4][3], const double b[4], double x[3], double &det)
     {
-        // ==================== 计算 A^T * A (3x3) 和 A^T * b (3x1) ====================
+        //  计算 A^T * A (3x3) 和 A^T * b (3x1) 
         double ATA[3][3] = {{0}}; // A^T * A 的结果矩阵（初始化为零）
         double ATb[3] = {0};      // A^T * b 的结果向量（初始化为零）
 
-        // 双重循环计算矩阵乘法
+        // A是一个4x3的矩阵，无法求逆矩阵 所以通过左乘A的转置来构造一个3x3的矩阵
         for (int i = 0; i < 4; ++i) // 遍历四个轮子（观测）
         {
             for (int j = 0; j < 3; ++j) // 遍历未知数维度（vx/vy/wz）
@@ -38,26 +38,26 @@ namespace sentry_chassis_controller
                 ATb[j] += A[i][j] * b[i]; // A^T * b 的第 j 个元素
                 for (int k = 0; k < 3; ++k)
                 {
-                    ATA[j][k] += A[i][j] * A[i][k]; // A^T * A 的 (j,k) 元素
+                    ATA[j][k] += A[i][j] * A[i][k]; // (A^T * A) 的 (j,k) 元素
                 }
             }
         }
 
-        // ==================== 计算行列式（判断矩阵是否奇异） ====================
-        // 使用萨吕斯法则（对3x3矩阵展开）
+        //  计算行列式进而判断矩阵是否奇异
+        //  计算代数余子式的乘积之和
         det = ATA[0][0] * (ATA[1][1] * ATA[2][2] - ATA[1][2] * ATA[2][1]) -
               ATA[0][1] * (ATA[1][0] * ATA[2][2] - ATA[1][2] * ATA[2][0]) +
               ATA[0][2] * (ATA[1][0] * ATA[2][1] - ATA[1][1] * ATA[2][0]);
 
-        // 判断矩阵是否奇异（行列式绝对值 > 阈值表示可逆）
+        // 判断矩阵是否奇异
         if (std::abs(det) < 1e-9)
         {
-            // 矩阵奇异，可能原因：四轮舵角共线、传感器故障、初始化阶段等
+            // 矩阵奇异
             x[0] = x[1] = x[2] = 0.0;
             return false;
         }
 
-        // ==================== 计算逆矩阵（伴随矩阵法） ====================
+        //  计算逆矩阵（伴随矩阵法） 
         double inv[3][3]; // 存储逆矩阵
 
         // 第一行（对应 vx）
@@ -75,7 +75,7 @@ namespace sentry_chassis_controller
         inv[2][1] = (ATA[0][1] * ATA[2][0] - ATA[0][0] * ATA[2][1]) / det;
         inv[2][2] = (ATA[0][0] * ATA[1][1] - ATA[0][1] * ATA[1][0]) / det;
 
-        // ==================== 求解：x = inv(ATA) * ATb ====================
+        //  求解：x = inv(ATA) * ATb 
         x[0] = inv[0][0] * ATb[0] + inv[0][1] * ATb[1] + inv[0][2] * ATb[2]; // vx
         x[1] = inv[1][0] * ATb[0] + inv[1][1] * ATb[1] + inv[1][2] * ATb[2]; // vy
         x[2] = inv[2][0] * ATb[0] + inv[2][1] * ATb[1] + inv[2][2] * ATb[2]; // wz
@@ -89,7 +89,7 @@ namespace sentry_chassis_controller
                              ros::Publisher &odom_pub,
                              OdomUpdaterOutput &output)
     {
-        // ==================== 步骤 1: 准备前向运动学方程数据 ====================
+        //  步骤 1: 准备前向运动学方程数据 
         // 舵轮前向运动学（FK）：已知每个轮子的舵角和轮速，反推底盘速度 (vx, vy, wz)
         // 模型：对于第 i 个轮子，沿舵向的线速度 v_i 满足
         //   v_i = cos(θ_i)*vx + sin(θ_i)*vy + (-ry_i*cos(θ_i) + rx_i*sin(θ_i))*wz
@@ -129,7 +129,7 @@ namespace sentry_chassis_controller
             b[i] = v_along;
         }
 
-        // ==================== 步骤 2: 最小二乘求解 ====================
+        //  步骤 2: 尝试求解底盘速度矩阵
         double solution[3] = {0.0, 0.0, 0.0}; // vx, vy, wz
         double det = 0.0;
         bool valid = solve_least_squares(A, b, solution, det);
@@ -151,7 +151,7 @@ namespace sentry_chassis_controller
             output.wz = solution[2];
         }
 
-        // ==================== 步骤 3: 速度死区滤波（消除静止抖动） ====================
+        //  步骤 3: 速度死区滤波（消除静止抖动） 
         if (std::abs(output.vx) < input.velocity_deadband)
         {
             output.vx = 0.0;
@@ -165,7 +165,7 @@ namespace sentry_chassis_controller
             output.wz = 0.0;
         }
 
-        // ==================== 步骤 4: 坐标变换与位姿积分 ====================
+        //  步骤 4: 坐标变换与位姿积分 
         double dt = period.toSec(); // 时间步长（秒）
 
         // 将机体坐标系速度 (vx, vy) 旋转到世界坐标系（odom frame）
@@ -174,7 +174,7 @@ namespace sentry_chassis_controller
         double world_vx = output.vx * cos_y - output.vy * sin_y; // 世界系 x 方向速度
         double world_vy = output.vx * sin_y + output.vy * cos_y; // 世界系 y 方向速度
 
-        // 欧拉积分更新位姿
+        // 通过积分计算更新里程计
         odom_x_ += world_vx * dt;
         odom_y_ += world_vy * dt;
         odom_yaw_ += output.wz * dt;
@@ -184,7 +184,7 @@ namespace sentry_chassis_controller
         output.odom_y = odom_y_;
         output.odom_yaw = odom_yaw_;
 
-        // ==================== 步骤 5: 发布 TF 变换 ====================
+        //  步骤 5: 发布 baselink 到 odom 坐标系的 TF 变换 
         if (input.publish_tf)
         {
             geometry_msgs::TransformStamped t;
@@ -207,7 +207,7 @@ namespace sentry_chassis_controller
             tf_broadcaster_.sendTransform(t);
         }
 
-        // ==================== 步骤 6: 发布里程计消息 ====================
+        //  步骤 6: 发布里程计消息 
         nav_msgs::Odometry odom;
         odom.header.stamp = time;
         odom.header.frame_id = input.odom_frame;

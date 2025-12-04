@@ -1,0 +1,23 @@
+<launch>
+  <!-- Launch args -->
+  <arg name="inline_resolver" default="true"/>
+  <include file="$(find sentry_chassis_controller)/launch/sentry_pid_test_fixed.launch"/>
+
+  <!-- Load teleop parameters into node namespace -->
+  <rosparam file="$(find sentry_chassis_controller)/config/teleop_feature.yaml" ns="sentry_control_key_feature" command="load"/>
+
+  <node pkg="sentry_chassis_controller" type="sentry_control_key_modular" name="sentry_control_key_modular" output="screen"/>
+  
+  <!--node pkg="sentry_chassis_controller" type="yaw_publisher" name="yaw_publisher" output="screen">
+    <param name="global_frame" value="odom"/>
+    <param name="base_link_frame" value="base_link"/>
+    <param name="yaw_topic" value="/robot_yaw"/>
+    <param name="source" value="auto"/>
+    <param name="hz" value="50"/>
+    <param name="tf_timeout_sec" value="0.05"/>
+    <param name="stale_sec" value="1.0"/>
+    <param name="odom_topic" value="/odom_controller"/>
+  </node -->
+
+ 
+</launch>

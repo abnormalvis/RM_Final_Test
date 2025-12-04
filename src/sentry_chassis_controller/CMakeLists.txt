@@ -140,6 +140,10 @@ add_library(${PROJECT_NAME}
   src/power_limiter.cpp
   src/low_pass_filter.cpp
   src/geo_lock.cpp
+  src/keyboard_input.cpp
+  src/teleop_state_machine.cpp
+  src/velocity_calculator.cpp
+  src/teleop_node.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
@@ -157,6 +161,11 @@ target_link_libraries(yaw_publisher ${catkin_LIBRARIES})
 add_executable(sentry_control_key_feature src/sentry_control_key_feature.cpp)
 add_dependencies(sentry_control_key_feature ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sentry_control_key_feature ${catkin_LIBRARIES})
+
+## Modular teleop node (refactored with decoupled modules)
+add_executable(sentry_control_key_modular src/sentry_control_key_modular.cpp)
+add_dependencies(sentry_control_key_modular ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sentry_control_key_modular ${PROJECT_NAME} ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

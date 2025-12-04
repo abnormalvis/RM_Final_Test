@@ -79,7 +79,7 @@ public:
     void keyLoop();  // 主循环：监听键盘并发布速度命令
 
 private:
-    // ==================== ROS 句柄 ====================
+    //  ROS 句柄 
     ros::NodeHandle nh_;         // 公共命名空间句柄
     ros::NodeHandle nhPrivate_ = ros::NodeHandle("~");  // 私有命名空间句柄（用于参数）
              // 注意：此节点不再订阅里程计或使用 yaw 信息
@@ -90,17 +90,14 @@ private:
     std::string cmd_vel_topic_;          // Twist 话题（默认 /cmd_vel）
 
 
-    // ==================== 速度模式与坐标系 ====================
+    //  速度模式与坐标系 
     // velocity_mode_: "global" 表示按键为全局系意图（world/odom frame）
     //                 "chassis" 表示按键为底盘系意图（body/base_link frame）
     std::string velocity_mode_ = "global";
-    std::string global_frame_ = "odom";         // 全局参考坐标系名称
-    std::string base_link_frame_ = "base_link"; // 底盘坐标系名称
-    // 注意：此节点不再订阅里程计或使用 yaw 信息
-    
-    // ==================== 模式标志（未使用） ====================
-    bool field_centric_ = true;     // 场地中心模式（保留）
-    bool spinning_top_mode_ = true; // 小陀螺模式（保留）
+    std::string global_frame_ = "odom";         
+    std::string base_link_frame_ = "base_link"; 
+    bool field_centric_ = true;  
+    bool spinning_top_mode_ = true; 
     // 运动模式：只允许平移或旋转其中一种（互斥）
     enum class MotionMode { NONE, TRANSLATION, ROTATION };
     // 当前模式在节点内部维护（由按键切换）
@@ -109,7 +106,7 @@ private:
     bool rotation_latched_ = false;
     double latched_rotation_value_ = 0.0;
     // 平移超时（超过此时间未收到新的平移按键，停止平移）
-    double translation_timeout_ = 0.5; // seconds
+    double translation_timeout_ = 0.5; 
     ros::Time last_translation_time_;
 };
 
@@ -175,7 +172,7 @@ void TeleopTurtle::keyLoop()
     puts("Reading from keyboard (WASD to move, Q/E rotate, c stop, Ctrl-C quit) [velocity_mode: global|chassis]");
     term_guard.setup();  // 设置终端为原始模式
 
-    // ==================== 读取速度参数 ====================
+    //  读取速度参数 
     double walk_vel = 0.5;        // 步行速度（m/s）
     double default_omega = 1.0;   // 默认角速度（rad/s）
 
@@ -187,7 +184,7 @@ void TeleopTurtle::keyLoop()
     nhPrivate_.param("default_omega", default_omega, default_omega);
     nhPrivate_.param("hz", hz, hz);
 
-    // ==================== 初始化速度消息 ====================
+    //  初始化速度消息 
     geometry_msgs::Twist twist;
     twist.linear.x = 0;
     twist.linear.y = 0;
@@ -196,24 +193,24 @@ void TeleopTurtle::keyLoop()
     twist.angular.y = 0;
     twist.angular.z = 0;
 
-    // ==================== 创建 poll 结构体用于监听键盘输入 ====================
+    //  创建 poll 结构体用于监听键盘输入 
     struct pollfd ufd;
     ufd.fd = 0;          // 标准输入（stdin）
     ufd.events = POLLIN; // 监听数据可读事件
 
-    // ==================== 按键状态（支持多按键同时按下） ====================
+    //  按键状态（支持多按键同时按下） 
     bool key_w = false, key_s = false, key_a = false, key_d = false;  // 平移按键
     bool key_q = false, key_e = false;  // 旋转按键
 
     ros::Rate rate(hz);  // 发布频率控制
 
-    // ==================== 按键超时机制（用于自动清零） ====================
+    //  按键超时机制（用于自动清零） 
     ros::Time last_key_time = ros::Time::now();  // 上次任意按键时间戳（保留）
     double key_timeout = 0.5;  // 备用超时时间（秒）
     // translation_timeout_ 在类中定义（默认 0.5s）
     last_translation_time_ = ros::Time(0);
 
-    // ==================== 主循环 ====================
+    //  主循环 
     while (ros::ok())
     {
         // 等待键盘输入，超时时间为 1000/hz 毫秒（例如 100ms @ 10Hz）
@@ -254,7 +251,7 @@ void TeleopTurtle::keyLoop()
             continue;
         }
 
-        // ==================== 读取按键字符 ====================
+        //  读取按键字符 
         char c = 0;
         if (read(0, &c, 1) < 0)
         {
@@ -269,7 +266,7 @@ void TeleopTurtle::keyLoop()
         if (c >= 'A' && c <= 'Z')
             lower = c - 'A' + 'a';
 
-        // ==================== 更新按键状态（按下时设置为 true，互斥处理） ====================
+        //  更新按键状态（按下时设置为 true，互斥处理） 
         switch (lower)
         {
         case 'w':  // 前进
@@ -343,7 +340,7 @@ void TeleopTurtle::keyLoop()
             break;
         }
 
-    // ==================== 根据按键状态计算速度（支持互斥的平移或旋转） ====================
+    //  根据按键状态计算速度（支持互斥的平移或旋转） 
     double linear_speed = walk_vel;  // 去掉 Shift 加速，始终使用 walk_vel
     double omega_speed = default_omega;
 
@@ -367,7 +364,7 @@ void TeleopTurtle::keyLoop()
             cur_omega = latched_rotation_value_;
         }
 
-        // ==================== 归一化斜向速度（防止 W+A 时速度变成 √2 倍） ====================
+        //  归一化斜向速度（防止 W+A 时速度变成 √2 倍） 
         double speed_magnitude = std::sqrt(cur_vx_world * cur_vx_world + cur_vy_world * cur_vy_world);
         if (speed_magnitude > linear_speed * 1.01)  // 允许小误差（浮点精度）
         {
@@ -376,7 +373,7 @@ void TeleopTurtle::keyLoop()
             cur_vy_world *= scale;
         }
 
-        // ==================== 计算最终速度命令 ====================
+        //  计算最终速度命令 
         // 速度模式决定按键语义：
         // - global 模式：WASD 为全局坐标系意图（控制器负责坐标变换）
         // - chassis 模式：WASD 为底盘坐标系意图（直接使用）
@@ -408,7 +405,7 @@ void TeleopTurtle::keyLoop()
         ROS_INFO_THROTTLE(1.0, "Teleop: mode=%s vel=(%.2f,%.2f) omega=%.2f",
                           velocity_mode_.c_str(), vx, vy, cur_omega);
 
-        // ==================== 发布速度消息 ====================
+        //  发布速度消息 
         // 判断是否有运动（用于决定是否发布）
         bool has_motion = (std::abs(twist.linear.x) > 1e-9) || 
                           (std::abs(twist.linear.y) > 1e-9) || 
