@@ -13,7 +13,7 @@ public:
         : nh_(), pnh_("~"), tf_buffer_(ros::Duration(10.0)), tf_listener_(tf_buffer_)
     {
         pnh_.param<std::string>("odom_topic", odom_topic_, "/odom");
-        // 不再对外发布 yaw，仅用于监视
+        // 对外发布 yaw
         pnh_.param<std::string>("global_frame", global_frame_, "odom");
         pnh_.param<std::string>("base_link_frame", base_link_frame_, "base_link");
         pnh_.param<std::string>("source", source_, std::string("auto")); // tf | odom | auto

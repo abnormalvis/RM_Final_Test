@@ -254,10 +254,6 @@ namespace sentry_chassis_controller
                  config.wheel_rl_lpf_tau, config.wheel_rr_lpf_tau);
     }
 
-    /*
-     * 订阅 cmd_vel 话题的回调函数
-     * @param msg: 速度指令消息
-     */
     void WheelPidController::cmdVelCallback(const geometry_msgs::TwistConstPtr &msg)
     {
         // 更新命令时间戳（用于自锁功能的空闲检测）
@@ -267,8 +263,6 @@ namespace sentry_chassis_controller
         double vx = msg->linear.x;
         double vy = msg->linear.y;
         double wz = msg->angular.z;
-
-        // 速度模式转换（类似 hero_chassis_controller）
         if (speed_mode_ == "global")
         {
             // 将速度从全局（odom）坐标系转换到局部（base_link）坐标系
@@ -285,6 +279,12 @@ namespace sentry_chassis_controller
                 // 使用缓存的 TF 变换（ros::Time(0) 表示最新可用的变换）
                 if (tf_listener_->canTransform(base_link_frame_, odom_frame_, ros::Time(0)))
                 {
+                    /*
+                    Transform a Stamped Vector Message into the target frame This can throw all that lookupTransform can throw as well as tf::InvalidTransform
+                    */
+                    /*
+                    void tf::TransformListener::transformVector(const std::string &target_frame, const geometry_msgs::Vector3Stamped &stamped_in, geometry_msgs::Vector3Stamped &stamped_out) const
+                    */
                     tf_listener_->transformVector(base_link_frame_, vel_global, vel_local);
 
                     // 使用转换后的速度
