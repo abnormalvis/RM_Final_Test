@@ -89,10 +89,6 @@ namespace sentry_chassis_controller
         wheel_lpf_.set_tau(1, lpf_tau_fr);
         wheel_lpf_.set_tau(2, lpf_tau_rl);
         wheel_lpf_.set_tau(3, lpf_tau_rr);
-
-        ROS_INFO("WheelPidController: LPF time constants [%.3f, %.3f, %.3f, %.3f] s",
-                 lpf_tau_fl, lpf_tau_fr, lpf_tau_rl, lpf_tau_rr);
-
         // 初始化控制命令值
         for (int i = 0; i < 4; ++i)
         {
@@ -391,10 +387,10 @@ namespace sentry_chassis_controller
             if (time.toSec() - last_log.toSec() > 1.0) // Log every second
             {
                 ROS_INFO_STREAM_THROTTLE(1.0, "Joint state:"
-                                                  << " LF pos=" << lf_wheel_pos << " v=" << lf_wheel_vel
-                                                  << " RF pos=" << rf_wheel_pos << " v=" << rf_wheel_vel
-                                                  << " LB pos=" << lb_wheel_pos << " v=" << lb_wheel_vel
-                                                  << " RB pos=" << rb_wheel_pos << " v=" << rb_wheel_vel);
+                << " LF pos=" << lf_wheel_pos << " v=" << lf_wheel_vel
+                << " RF pos=" << rf_wheel_pos << " v=" << rf_wheel_vel
+                << " LB pos=" << lb_wheel_pos << " v=" << lb_wheel_vel
+                << " RB pos=" << rb_wheel_pos << " v=" << rb_wheel_vel);
                 last_log = time;
             }
         }
@@ -461,10 +457,9 @@ namespace sentry_chassis_controller
 
             // Check current published state via log
             ROS_DEBUG_STREAM_THROTTLE(1.0, "Publishing joint states: "
-                                               << " wheel pos=" << js.position[0] << "," << js.position[1]
-                                               << " vel=" << js.velocity[0] << "," << js.velocity[1]
-                                               << " pivot pos=" << js.position[4]);
-
+            << " wheel pos=" << js.position[0] << "," << js.position[1]
+            << " vel=" << js.velocity[0] << "," << js.velocity[1]
+            << " pivot pos=" << js.position[4]);
             joint_states_pub_.publish(js);
             last_state_pub_ = time;
         }
@@ -505,9 +500,9 @@ namespace sentry_chassis_controller
             {
                 wheel_cmd_[i] = geo_output.wheel_commands[i];
             }
-        }        // 计算轮子速度误差并应用 PID -> 力矩命令
-        /* Set the PID error and compute the PID command with nonuniform time step size. The derivative error is computed from the change in the error and the timestep dt.
-         */
+        }    
+
+        // 计算轮子速度误差并应用 PID -> 力矩命令
         double cmd0, cmd1, cmd2, cmd3;
 
         // 自锁模式下（轮子刹车）直接使用预计算的力矩，绕过速度 PID
@@ -535,7 +530,7 @@ namespace sentry_chassis_controller
             double raw_cmd2 = pid_lb_wheel_.computeCommand(wheel_cmd_[2] - lb_wheel_vel, period);
             double raw_cmd3 = pid_rb_wheel_.computeCommand(wheel_cmd_[3] - rb_wheel_vel, period);
 
-            // ==================== 应用低通滤波器（解耦到 low_pass_filter 模块） ====================
+            // 低通滤波器
             double dt = period.toSec();
             double raw_cmds[4] = {raw_cmd0, raw_cmd1, raw_cmd2, raw_cmd3};
             double filtered_cmds[4];
@@ -547,7 +542,7 @@ namespace sentry_chassis_controller
             cmd2 = filtered_cmds[2];
             cmd3 = filtered_cmds[3];
 
-            // ==================== 舵轮同步检查（防止偏航） ====================
+            // 舵轮同步检查防止偏航
             // 问题：舵轮未到位时驱动轮子会产生错误的推力方向，导致车辆偏航或打滑
             // 方案：根据舵角误差动态缩放轮速命令
             //       - 舵角误差小于阈值：全功率驱动

@@ -79,3 +79,19 @@
 19. 对控制器中涉及到的功能进行了解耦操作，解耦到了 `geo_lock.cpp` `inverse_kinematics.cpp` `low_pass_filter.cpp` `odom_updater.cpp` `power_limiter.cpp`。
 
 ---
+
+## 附图与资源
+
+- rqt_reconfigure / rqt_plot 示例图：
+  ![](src/sentry_chassis_controller/pictures/rqt_reconfigure_plot_demo.png)
+
+- odom 与仿真运行图：
+  ![](src/sentry_chassis_controller/pictures/sentry_with_odom_running.png)
+
+- PID 参数调试图：
+  ![](src/sentry_chassis_controller/pictures/pid_w-4.png)
+  ![](src/sentry_chassis_controller/pictures/pid-linear-x-2.png)
+
+---
+
+> 注：更多实现细节、代码分析与 pluginlib 学习笔记见 `doc/simple_chassis_controller_explanation.md`.
