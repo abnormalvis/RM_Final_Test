@@ -1,15 +1,10 @@
 <launch>
-  <!-- Allow selecting simulation mode when launching -->
   <arg name="use_simulation" default="true" />
-  
   <!-- Ground Truth 里程计：使用 Gazebo 真实位姿替代轮式里程计 -->
   <!-- 启用后可消除里程计漂移，适合调试全局速度模式 -->
   <arg name="use_ground_truth_odom" default="false"/>
   
   <!-- PID 参数文件选择 -->
-  <!-- 可选: wheel_pid_merged.yaml (融合版，默认) 
-            wheel_pid_params.yaml (基础版) 
-            wheel_pid_state_fix.yaml (状态反馈修复版) -->
   <arg name="pid_config" default="wheel_pid_merged.yaml"/>
 
   <!-- Start simulation / TF / RViz from existing launch; forward use_simulation arg -->
@@ -33,14 +28,6 @@
   <!-- rqt_reconfigure for dynamic PID tuning -->
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"
         output="screen" />
-
-    <!-- rqt_plot for visualization removed to avoid XML line-wrapping issues in the args attribute.
-       If you need rqt_plot, re-add a single-line args attribute or reference a launch arg for the topics. -->
-
-
-  <!-- Optional: Start rqt_gui for accessing multiple plugins -->
-  <!-- Removed perspective-file to avoid launch failure when the perspective file is missing
-        If you want a saved layout, ensure the perspective file exists and restore this arg. -->
   <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" output="screen" />
 
 </launch>
