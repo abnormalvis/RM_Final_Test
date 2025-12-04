@@ -136,6 +136,10 @@ include_directories(
 add_library(${PROJECT_NAME}
   src/wheel_pid_controller.cpp
   src/inverse_kinematics.cpp
+  src/odom_updater.cpp
+  src/power_limiter.cpp
+  src/low_pass_filter.cpp
+  src/geo_lock.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
@@ -148,10 +152,6 @@ target_link_libraries(${PROJECT_NAME}
 add_executable(yaw_publisher src/yaw_publisher.cpp)
 add_dependencies(yaw_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(yaw_publisher ${catkin_LIBRARIES})
-
-add_executable(forward_kinematics src/forward_kinematics.cpp)
-add_dependencies(forward_kinematics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(forward_kinematics ${catkin_LIBRARIES} ${EIGEN3_LIBRARIES})
 
 ## Feature variant: spinning-top default, quaternion->Euler yaw
 add_executable(sentry_control_key_feature src/sentry_control_key_feature.cpp)

@@ -31,12 +31,19 @@
 
 // 自定义工具
 #include <sentry_chassis_controller/inverse_kinematics.hpp>
+#include <sentry_chassis_controller/odom_updater.hpp>
+#include <sentry_chassis_controller/low_pass_filter.hpp>
+#include <sentry_chassis_controller/power_limiter.hpp>
+#include <sentry_chassis_controller/geo_lock.hpp>
 
 // TF 相关
 #include "tf/tf.h"
 #include "tf/transform_listener.h"
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/LinearMath/Quaternion.h>
+
+// C++ 标准库
+#include <memory>
 
 namespace sentry_chassis_controller
 {
@@ -89,12 +96,9 @@ namespace sentry_chassis_controller
     // 轮速 PID（速度控制）：控制驱动电机到达目标角速度
     control_toolbox::Pid pid_lf_wheel_, pid_rf_wheel_, pid_lb_wheel_, pid_rb_wheel_;
 
-    // ==================== 轮速 PID 低通滤波器 ====================
+    // ==================== 轮速 PID 低通滤波器（解耦到 low_pass_filter 模块） ====================
     // 一阶低通滤波器用于平滑 PID 输出，减少高频噪声和抖动
-    // 离散形式: y[k] = alpha * x[k] + (1-alpha) * y[k-1]
-    // 其中 alpha = dt / (tau + dt), tau 为时间常数
-    double wheel_lpf_tau_[4]{0.02, 0.02, 0.02, 0.02};  // 四个轮子的滤波器时间常数 (s)
-    double wheel_lpf_output_[4]{0.0, 0.0, 0.0, 0.0};   // 滤波器输出状态（上一次输出）
+    MultiChannelLowPassFilter wheel_lpf_{4, 0.02}; // 四通道滤波器，默认时间常数 0.02s
 
     // ==================== ROS 句柄与参数 ====================
     // 控制器命名空间句柄（用于参数镜像回 YAML 风格键值）
@@ -156,44 +160,17 @@ namespace sentry_chassis_controller
     // PID 调试发布开关
     bool pid_debug_enabled_{true};
 
-    // ==================== 里程计发布（集成到控制器内部） ====================
+    // ==================== 里程计发布（集成到控制器内部，解耦到 OdomUpdater） ====================
     ros::Publisher odom_pub_;                      // 里程计消息发布器
-    tf2_ros::TransformBroadcaster tf_broadcaster_; // TF 变换广播器
+    OdomUpdater odom_updater_;                     // 里程计更新器（封装最小二乘FK和位姿积分）
     std::string odom_frame_{"odom"};               // 里程计坐标系名称
     std::string base_link_frame_{"base_link"};     // 底盘坐标系名称
     bool publish_tf_{true};                        // 是否发布 TF（使用 ground truth 时设为 false）
-    
-    // 里程计状态（位姿累积）
-    double odom_x_{0.0};      // 世界系 x 坐标（米）
-    double odom_y_{0.0};      // 世界系 y 坐标（米）
-    double odom_yaw_{0.0};    // 航向角（弧度）
     ros::Time last_odom_time_;
 
-    // ==================== 底盘自锁功能参数 ====================
-    // 自锁功能：当无速度命令时，主动锁定轮子位置以防止滑动/抖动
-    bool self_lock_enabled_{true};         // 自锁功能开关（默认启用）
-    double idle_timeout_{0.5};             // 空闲超时阈值（秒），超时后进入自锁
+    // ==================== 底盘自锁功能（几何自锁模式） ====================
+    std::shared_ptr<GeoLock> geo_lock_;    // 几何自锁管理器
     ros::Time last_cmd_time_;              // 上次接收速度命令的时间戳
-    double locked_pivot_pos_[4]{};         // 自锁时记录的舵角位置
-    double locked_wheel_pos_[4]{};         // 自锁时记录的轮子位置（用于位置锁定）
-    bool is_locked_{false};                // 当前是否处于自锁状态
-    
-    // 位置锁定模式开关和参数
-    bool lock_pos_enabled_{true};          // 启用位置锁定模式（true=位置锁定，false=速度锁定）
-    double lock_pos_p_{8.0};               // 位置锁定 P 增益
-    double lock_pos_i_{0.0};               // 位置锁定 I 增益（通常为 0）
-    double lock_pos_d_{1.0};               // 位置锁定 D 增益（阻尼）
-    
-    // ==================== 几何自锁模式 ====================
-    // 几何自锁：将舵轮转到底盘自转切向方向，形成"X"字布局
-    // 原理：轮子滚动方向与任意平移方向垂直，外力只能推动轮子侧滑（滑动摩擦 > 滚动摩擦）
-    // 舵角计算：θ_i = atan2(rx_i, ry_i) 使轮子指向底盘中心切向
-    bool geo_lock_enabled_{false};         // 几何自锁模式开关（默认关闭，使用位置锁定）
-    double geo_lock_angles_[4]{};          // 几何自锁时的目标舵角（预计算）
-    bool geo_lock_wheel_brake_{true};      // 几何自锁时是否同时锁定轮子（true=锁定，false=自由滚动）
-    
-    // 里程计速度死区（消除静止时抖动导致的漂移）
-    double odom_velocity_deadband_{0.05};  // 速度死区阈值（m/s 和 rad/s），增大以过滤震荡
 
     // ==================== 速度模式（坐标系选择） ====================
     // "local" (base_link): cmd_vel 中的速度在底盘坐标系下解释
@@ -259,15 +236,6 @@ namespace sentry_chassis_controller
      * @param vx_body/vy_body/wz: 机体坐标系速度
      */
     void publishOdometry_(const ros::Time &stamp, double vx_body, double vy_body, double wz);
-    
-    /**
-     * 里程计更新与发布（主函数）
-     * 功能：基于四轮反馈计算底盘速度与位姿，发布 TF 与 Odometry
-     * 详细说明见文档：docs/里程计更新原理详解.md
-     * @param time: 当前时间戳
-     * @param period: 时间间隔（用于积分）
-     */
-    void odom_update(const ros::Time &time, const ros::Duration &period);
   };
 
 } // namespace sentry_chassis_controller

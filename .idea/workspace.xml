@@ -10,18 +10,7 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated>
-      <config projectName="rm_description" targetName="gtest" />
-      <config projectName="rm_description" targetName="gmock_main" />
-      <config projectName="rm_description" targetName="gmock" />
-      <config projectName="rm_description" targetName="clean_test_results" />
-      <config projectName="rm_description" targetName="doxygen" />
-      <config projectName="rm_description" targetName="gtest_main" />
-      <config projectName="rm_description" targetName="run_tests" />
-      <config projectName="rm_description" targetName="download_extra_data" />
-      <config projectName="rm_description" targetName="_catkin_empty_exported_target" />
-      <config projectName="rm_description" targetName="tests" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -30,24 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f2fbbb-7db1-45b7-a943-20d173d9bb22" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/imu.urdf.xacro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/config/ekf_fusion.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/EKF里程计融合说明.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/gazebo添加imu仿真模块.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/里程计标定与矫正.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/odom_ekf_fusion.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_ekf_fusion.launch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/log/sentry_with_ekf_fusion.launch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/odom_ekf_fusion.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/.~答辩ppt.pptx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/答辩ppt.pptx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/simple_chassis_controller/doc/catkin-tools-build-problem.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rm_description_for_task/urdf/common/swerve_drive.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/common/swerve_drive.urdf.xacro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/config/wheel_pid_params.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/config/wheel_pid_params.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/wheel_pid_controller.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/wheel_pid_controller.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_pid_test_fixed.launch" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_pid_test_fixed.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_with_tf.launch" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/launch/sentry_with_tf.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/src/wheel_pid_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/wheel_pid_controller.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/final_ws.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" afterDir="false" />
     </list>
@@ -97,73 +73,16 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="CMake 应用程序.download_extra_data">
-    <configuration name="_catkin_empty_exported_target" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="_catkin_empty_exported_target" CONFIG_NAME="Debug">
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="clean_test_results" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="clean_test_results" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="download_extra_data" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="download_extra_data" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="doxygen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="doxygen" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="gmock" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="gtest" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="run_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="run_tests" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rm_description" TARGET_NAME="tests" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="CMake 应用程序.download_extra_data" />
-      <item itemvalue="CMake 应用程序._catkin_empty_exported_target" />
-      <item itemvalue="CMake 应用程序.clean_test_results" />
-      <item itemvalue="CMake 应用程序.run_tests" />
-      <item itemvalue="CMake 应用程序.tests" />
-      <item itemvalue="CMake 应用程序.doxygen" />
-      <item itemvalue="CMake 应用程序.gmock" />
-      <item itemvalue="CMake 应用程序.gmock_main" />
-      <item itemvalue="CMake 应用程序.gtest" />
-      <item itemvalue="CMake 应用程序.gtest_main" />
-    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -177,6 +96,7 @@
       <workItem from="1763879667154" duration="92000" />
       <workItem from="1764414897858" duration="250000" />
       <workItem from="1764661796778" duration="595000" />
+      <workItem from="1764761322679" duration="802000" />
     </task>
     <servers />
   </component>

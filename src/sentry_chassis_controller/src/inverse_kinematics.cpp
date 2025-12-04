@@ -18,13 +18,15 @@ namespace sentry_kinematics
         // 轮子接触点相对于 base_link 的位置 (x 向前, y 向左)
         // 前轮的 x = +wheel_base/2, 后轮的 x = -wheel_base/2
         // 左轮的 y = +wheel_track/2, 右轮的 y = -wheel_track/2
-        const std::array<std::pair<double, double>, 4> wheel_pos = {{{wheel_base / 2.0, wheel_track / 2.0}, // FL
-
-                                                                     {wheel_base / 2.0, -wheel_track / 2.0}, // FR
-
-                                                                     {-wheel_base / 2.0, wheel_track / 2.0}, // RL
-
-                                                                     {-wheel_base / 2.0, -wheel_track / 2.0}}}; // RR
+        const std::array<std::pair<double, double>, 4> wheel_pos = 
+        {
+            {
+                {wheel_base / 2.0, wheel_track / 2.0},  // FL
+                {wheel_base / 2.0, -wheel_track / 2.0}, // FR
+                {-wheel_base / 2.0, wheel_track / 2.0}, // RL
+                {-wheel_base / 2.0, -wheel_track / 2.0} // RR
+            }
+        }; 
         for (size_t i = 0; i < 4; ++i)
         {
             double rx = wheel_pos[i].first;
