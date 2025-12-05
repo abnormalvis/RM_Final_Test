@@ -1,8 +1,3 @@
-// Copyright (c) 2025 sentry_chassis_controller
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-//
 // 几何自锁模块：利用轮子滚动方向与平移方向垂直的特性，通过将轮子转到特定角度
 // 形成"X"字布局，使外力只能推动轮子侧滑（滑动摩擦远大于滚动摩擦），从而抵抗外力
 
@@ -21,7 +16,7 @@ namespace sentry_chassis_controller
     {
         bool enabled{true};             // 几何自锁功能开关
         double idle_timeout{0.5};       // 空闲超时时间（秒），超过此时间无命令则进入自锁
-        bool wheel_brake{true};         // 自锁时是否同时锁定轮子（true=锁定，false=自由滚动）
+        bool wheel_brake{false};         // 自锁时是否同时锁定轮子（true=锁定，false=自由滚动）
         double velocity_deadband{0.05}; // 速度死区阈值（m/s），用于判断是否静止
 
         // 轮子位置锁定 PD 参数（仅在 wheel_brake=true 时使用）

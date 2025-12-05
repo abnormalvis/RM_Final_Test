@@ -1,8 +1,3 @@
-// Copyright (c) 2025 sentry_chassis_controller
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-
 #include "sentry_chassis_controller/geo_lock.hpp"
 #include <ros/console.h>
 #include <cmath>
