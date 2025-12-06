@@ -1,7 +1,7 @@
 wheel_pid_controller:
-  # ====================================================================================
+  # ====
   # 融合配置文件：wheel_pid_params.yaml + wheel_pid_state_fix.yaml
-  # ====================================================================================
+  # ====
   # 说明：
   # - rqt_reconfigure 使用一组扁平的动态参数键（如 wheel_fl_p、pivot_fr_i_clamp）。
   # - 本 YAML 使用分层键（wheels/wheel_fl/p 等）作为启动默认值。
@@ -15,7 +15,7 @@ wheel_pid_controller:
   # speed_mode 决定控制器如何处理收到的 /cmd_vel 速度命令：
   #   - global: 将速度从 odom_frame 转换到 base_link_frame（使用 TF）
   #   - local:  直接使用收到的速度（假定已在 base_link 系中）
-  speed_mode: "global"
+  speed_mode: "local"
   
   # 坐标系名称
   odom_frame: "odom"
@@ -24,12 +24,12 @@ wheel_pid_controller:
   # TF 发布控制（使用gazebo中的Ground Truth插件或使用到imu时设为 false）
   publish_tf: true
   
-  # ==================== 底盘物理参数 ====================
+  #  底盘物理参数 
   wheel_track: 0.36
   wheel_base: 0.36
   wheel_radius: 0.05
 
-  # ==================== 状态反馈配置（来自 state_fix） ====================
+  #  状态反馈配置（来自 state_fix） 
   joint_state_controller:
     publish_rate: 10
   
@@ -44,7 +44,7 @@ wheel_pid_controller:
     - left_back_pivot_joint
     - right_back_pivot_joint
 
-  # ==================== 默认 PID 参数（回退值） ====================
+  #  默认 PID 参数（回退值） 
   pivot:
     p: 1.3
     i: 0.02
@@ -63,7 +63,7 @@ wheel_pid_controller:
     output_max: 10.0
     lpf_tau: 0.02  # 低通滤波器时间常数 (s)，0表示默认禁用
 
-  # ==================== 轮子名称列表 ====================
+  #  轮子名称列表 
   wheel_names:
     - wheel_fl
     - wheel_fr
@@ -74,7 +74,7 @@ wheel_pid_controller:
     - pivot_rl
     - pivot_rr
 
-  # ==================== 每轮独立 PID 配置 ====================
+  #  每轮独立 PID 配置 
   wheels:
     # ---------- 驱动轮 PID ----------
     wheel_fl:
@@ -140,15 +140,18 @@ wheel_pid_controller:
       output_min: -5.0
       output_max: 5.0
 
-  # ==================== 功率限制配置 ====================
-  power_limit: 300.0
+  # 若要让 s=1 成为“边界”（即在当前命令下恰触发限制），需满足 a + b + c = 0，因 b 与 # c 已由观测近似给出，所以需要把 a 调整为：
+  # a_needed = −b − c = −0.0079767 + 299.9999995 = 299.9920228 ≈ 300。
+  # 于是所需的 effort_coeff_new = a_needed / (cmd^2 之和)
+  # 功率限制配置 
+  power_limit: 480.0  # 假设每个电机24V5A 为上限
   power:
-    effort_coeff: 6.0
+    effort_coeff: 93.1
     velocity_coeff: 0.0048
     power_offset: 0.0
   power_debug: true
 
-  # ==================== 底盘自锁功能（几何自锁） ====================
+  #  底盘自锁功能（几何自锁） 
   self_lock:
     enabled: true
     idle_timeout: 0.5
@@ -162,7 +165,7 @@ wheel_pid_controller:
     lock_pos_d: 1.0
     max_lock_torque: 30.0
 
-  # ==================== 舵轮同步检查（防止偏航） ====================
+  #  舵轮同步检查（防止偏航） 
   # 问题：舵轮未到位就驱动轮子会导致车辆偏航
   # 方案：根据舵角误差动态缩放轮速命令
   pivot_sync:
@@ -170,7 +173,7 @@ wheel_pid_controller:
     threshold: 0.15            # 舵角同步阈值（rad，约8.6°）
     scale_min: 0.1             # 最小轮速缩放（0.1 = 舵角误差大时只有10%轮速）
 
-  # ==================== 方向切换刹车功能 ====================
+  #  方向切换刹车功能 
   # 问题：从前后运动突然切换到左右运动时，惯性会导致打滑
   # 方案：检测运动方向大幅变化时，先刹车减速再执行新方向
   direction_brake:

@@ -15,15 +15,27 @@
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="catkin-build-release" ENABLED="true" GENERATION_DIR="&lt;WORKSPACE_DIRECTORY&gt;/build" GENERATION_OPTIONS="-DCATKIN_DEVEL_PREFIX:PATH=&lt;WORKSPACE_DIRECTORY&gt;/devel" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f2fbbb-7db1-45b7-a943-20d173d9bb22" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/.~答辩ppt.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/答辩ppt.pptx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/simple_chassis_controller/doc/catkin-tools-build-problem.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/final_ws.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/.~答辩ppt.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/答辩ppt.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/答辩ppt.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/config/wheel_pid_merged.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/config/wheel_pid_merged.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/doc/quick_debug_workflow.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/power_limiter_usage.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/docs/power_limiter_usage.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/geo_lock.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/include/sentry_chassis_controller/geo_lock.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/pictures/key_test.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/pictures/odom_debug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/pictures/test_selfspin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/src/geo_lock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/geo_lock.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/src/power_limiter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/power_limiter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sentry_chassis_controller/src/wheel_pid_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sentry_chassis_controller/src/wheel_pid_controller.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/include/simple_chassis_controller/simple_chassis_controller.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/simple_chassis_controller/src/simple_chassis_controller.cpp" afterDir="false" />
     </list>
@@ -68,19 +80,20 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/idris/final_ws/src/sentry_chassis_controller",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "CMakeSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -97,6 +110,7 @@
       <workItem from="1764414897858" duration="250000" />
       <workItem from="1764661796778" duration="595000" />
       <workItem from="1764761322679" duration="802000" />
+      <workItem from="1764852574291" duration="1244000" />
     </task>
     <servers />
   </component>
@@ -110,6 +124,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -7,12 +7,6 @@
 
 namespace sentry_chassis_controller
 {
-
-    /**
-     * @brief 里程计更新器输入数据
-     *
-     * 包含四个舵轮的反馈数据和底盘几何参数
-     */
     struct OdomUpdaterInput
     {
         // 四个轮子的反馈数据（索引：0=FL, 1=FR, 2=RL, 3=RR）
@@ -35,11 +29,6 @@ namespace sentry_chassis_controller
         double velocity_deadband{0.05}; // 速度死区阈值 (m/s 或 rad/s)
     };
 
-    /**
-     * @brief 里程计更新器输出数据
-     *
-     * 包含求解的底盘速度和调试信息
-     */
     struct OdomUpdaterOutput
     {
         // 底盘速度（机体坐标系）
@@ -69,14 +58,7 @@ namespace sentry_chassis_controller
     class OdomUpdater
     {
     public:
-        /**
-         * @brief 构造函数
-         */
         OdomUpdater();
-
-        /**
-         * @brief 析构函数
-         */
         ~OdomUpdater();
 
         /**

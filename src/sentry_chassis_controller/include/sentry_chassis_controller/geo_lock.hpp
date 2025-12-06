@@ -1,11 +1,3 @@
-// Copyright (c) 2025 sentry_chassis_controller
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-//
-// 几何自锁模块：利用轮子滚动方向与平移方向垂直的特性，通过将轮子转到特定角度
-// 形成"X"字布局，使外力只能推动轮子侧滑（滑动摩擦远大于滚动摩擦），从而抵抗外力
-
 #ifndef SENTRY_CHASSIS_CONTROLLER_GEO_LOCK_HPP
 #define SENTRY_CHASSIS_CONTROLLER_GEO_LOCK_HPP
 
@@ -13,15 +5,11 @@
 
 namespace sentry_chassis_controller
 {
-
-    /**
-     * @brief 几何自锁配置参数
-     */
     struct GeoLockConfig
     {
         bool enabled{true};             // 几何自锁功能开关
         double idle_timeout{0.5};       // 空闲超时时间（秒），超过此时间无命令则进入自锁
-        bool wheel_brake{true};         // 自锁时是否同时锁定轮子（true=锁定，false=自由滚动）
+        bool wheel_brake{false};         // 自锁时是否同时锁定轮子（true=锁定，false=自由滚动）
         double velocity_deadband{0.05}; // 速度死区阈值（m/s），用于判断是否静止
 
         // 轮子位置锁定 PD 参数（仅在 wheel_brake=true 时使用）
@@ -33,10 +21,6 @@ namespace sentry_chassis_controller
         double wheel_base{0.36};  // 轴距（m）
         double wheel_track{0.36}; // 轮距（m）
     };
-
-    /**
-     * @brief 几何自锁输入数据
-     */
     struct GeoLockInput
     {
         ros::Time current_time;  // 当前时间
@@ -48,9 +32,6 @@ namespace sentry_chassis_controller
         double pivot_positions[4];  // 当前舵角位置（rad）
     };
 
-    /**
-     * @brief 几何自锁输出数据
-     */
     struct GeoLockOutput
     {
         bool is_locked{false}; // 是否处于自锁状态
@@ -61,22 +42,9 @@ namespace sentry_chassis_controller
         bool use_position_control{false}; // true=wheel_commands 是力矩，false=wheel_commands 是速度
     };
 
-    /**
-     * @brief 几何自锁管理器
-     *
-     * 功能：
-     * 1. 监测底盘空闲状态（超时未收到速度命令）
-     * 2. 计算几何自锁舵角（X字布局）
-     * 3. 生成自锁状态下的舵角和轮子控制命令
-     * 4. 可选择轮子刹车或自由滚动
-     */
     class GeoLock
     {
     public:
-        /**
-         * @brief 构造函数
-         * @param config 几何自锁配置参数
-         */
         explicit GeoLock(const GeoLockConfig &config);
 
         /**
@@ -96,23 +64,12 @@ namespace sentry_chassis_controller
          * @brief 重置自锁状态（手动解锁）
          */
         void reset();
-
-        /**
-         * @brief 更新配置参数
-         * @param config 新的配置参数
-         */
         void set_config(const GeoLockConfig &config);
+        const GeoLockConfig &get_config() const 
+        { 
+            return config_; 
+        }
 
-        /**
-         * @brief 获取当前配置
-         * @return 当前配置参数
-         */
-        const GeoLockConfig &get_config() const { return config_; }
-
-        /**
-         * @brief 获取几何自锁角度（调试用）
-         * @param angles 输出数组（长度至少为4）
-         */
         void get_lock_angles(double angles[4]) const;
 
     private:
@@ -146,4 +103,4 @@ namespace sentry_chassis_controller
 
 } // namespace sentry_chassis_controller
 
-#endif // SENTRY_CHASSIS_CONTROLLER_GEO_LOCK_HPP
+#endif 

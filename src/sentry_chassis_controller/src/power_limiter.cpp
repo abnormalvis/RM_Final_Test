@@ -74,23 +74,48 @@ namespace sentry_chassis_controller
             {
                 output.cmd[i] = input.cmd[i] * scaling_factor;
             }
-
-            ROS_INFO_THROTTLE(0.5,
-                              "Power limit triggered: scaling=%.3f (a=%.3f, b=%.3f, c=%.3f)",
-                              scaling_factor, a, b, c);
         }
 
-        // 发布调试信息（如果启用且提供了发布器）
+        // 发布调试信息
         if (config.debug_enabled && debug_pub && debug_pub->getNumSubscribers() > 0)
         {
             std_msgs::Float64MultiArray dbg;
-            dbg.data.resize(5);
-            dbg.data[0] = a;
-            dbg.data[1] = b;
-            dbg.data[2] = c;
-            dbg.data[3] = disc;
-            dbg.data[4] = scaling_factor;
+            dbg.data.resize(12);
+            dbg.data[0] = a;                    // 系数 a
+            dbg.data[1] = b;                    // 系数 b
+            dbg.data[2] = c;                    // 系数 c
+            dbg.data[3] = disc;                 // 判别式
+            dbg.data[4] = scaling_factor;       // 缩放因子
+            dbg.data[5] = a + b + c;            // F(1) = a + b + c
+            
+            // 计算 sum_cmd_squared 和 sum_vel_squared
+            double sum_cmd_squared = sq(input.cmd[0]) + sq(input.cmd[1]) + 
+                                     sq(input.cmd[2]) + sq(input.cmd[3]);
+            double sum_vel_squared = sq(input.vel[0]) + sq(input.vel[1]) + 
+                                     sq(input.vel[2]) + sq(input.vel[3]);
+            dbg.data[6] = sum_cmd_squared;      // Σ(cmd²)
+            dbg.data[7] = sum_vel_squared;      // Σ(vel²)
+            
+            // 计算方程的两个根（如果存在）
+            double r1 = 0.0, r2 = 0.0;
+            if (disc >= 0.0 && a != 0.0)
+            {
+                r1 = (-b + std::sqrt(disc)) / (2.0 * a);  // 较大的根
+                r2 = (-b - std::sqrt(disc)) / (2.0 * a);  // 较小的根
+            }
+            dbg.data[8] = r1;                   // 根 r1（较大）
+            dbg.data[9] = r2;                   // 根 r2（较小）
+            dbg.data[10] = output.limited ? 1.0 : 0.0;  // 是否限制功率
+            dbg.data[11] = b;                   // b系数（重复，用于单独绘图）
+            
             debug_pub->publish(dbg);
+            
+            if (output.limited)
+            {
+                ROS_INFO_THROTTLE(0.5,
+                                  "Power limit triggered: scaling=%.3f, F(1)=%.3f (a=%.3f, b=%.3f, c=%.3f)",
+                                  scaling_factor, a + b + c, a, b, c);
+            }
         }
     }
 

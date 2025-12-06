@@ -16,39 +16,26 @@
 
 namespace sentry_chassis_controller
 {
-
-    /*
-     * 遥操作节点类
-     * 整合键盘输入、状态机、速度计算，负责ROS通信
-     */
+    /*整合键盘输入、状态机、速度计算，负责ROS通信*/
     class TeleopNode
     {
     public:
         TeleopNode();
         ~TeleopNode();
 
-        /*
-         * 主循环：监听键盘并发布速度命令
-         */
+        // 主循环监听键盘并发布速度命令
         void run();
 
-        /*
-         * 打印使用说明
-         */
+        // 打印使用说明
         void print_usage();
 
     private:
-        // ROS 句柄
         ros::NodeHandle nh_;
         ros::NodeHandle nh_private_;
-
-        // 发布器
         ros::Publisher twist_pub_;
-
-        // 模块
-        std::unique_ptr<KeyboardInput> keyboard_input_;
-        std::unique_ptr<TeleopStateMachine> state_machine_;
-        std::unique_ptr<VelocityCalculator> velocity_calc_;
+        std::unique_ptr<KeyboardInput> keyboard_input_;     // 键盘输入
+        std::unique_ptr<TeleopStateMachine> state_machine_; // 状态机
+        std::unique_ptr<VelocityCalculator> velocity_calc_; // 速度计算
 
         // 参数
         std::string cmd_vel_topic_;
@@ -64,4 +51,4 @@ namespace sentry_chassis_controller
 
 } // namespace sentry_chassis_controller
 
-#endif // SENTRY_CHASSIS_CONTROLLER_TELEOP_NODE_HPP
+#endif

@@ -15,6 +15,7 @@ namespace sentry_chassis_controller
         try
         {
             // 速度轮关节
+            /*Resource associated to name. If the resource name is not found, an exception is thrown.*/
             front_left_wheel_joint_ = effort_joint_interface->getHandle("left_front_wheel_joint");
             front_right_wheel_joint_ = effort_joint_interface->getHandle("right_front_wheel_joint");
             back_left_wheel_joint_ = effort_joint_interface->getHandle("left_back_wheel_joint");
@@ -73,7 +74,7 @@ namespace sentry_chassis_controller
         initWheel("wheel_rl", pid_lb_wheel_, controller_nh, def_wp, def_wi, def_wd, def_wi_clamp, def_wanti);
         initWheel("wheel_rr", pid_rb_wheel_, controller_nh, def_wp, def_wi, def_wd, def_wi_clamp, def_wanti);
 
-        // ==================== 初始化轮速 PID 低通滤波器（解耦到 low_pass_filter 模块） ====================
+        //  初始化轮速 PID 低通滤波器
         // 读取低通滤波器时间常数
         double def_lpf_tau = 0.02;
         controller_nh.param("wheel/lpf_tau", def_lpf_tau, 0.02);
@@ -120,9 +121,9 @@ namespace sentry_chassis_controller
         applied_effort_pub_ = root_nh.advertise<sensor_msgs::JointState>("applied_wheel_efforts", 1); // 力矩传感器输出
         power_debug_pub_ = root_nh.advertise<std_msgs::Float64MultiArray>("power_debug", 1);          // 发布功率调试信息
         last_effort_pub_ = ros::Time(0);
-        controller_nh.param("power_debug", power_debug_enabled_, false); // 是否启用功率调试发布
+        controller_nh.param("power_debug", power_debug_enabled_, true); // 是否启用功率调试发布
 
-        // ==================== PID 调试发布器初始化（用于 rqt_plot） ====================
+        //  PID 调试发布器初始化（用于 rqt_plot） 
         controller_nh.param("pid_debug", pid_debug_enabled_, true); // 默认启用 PID 调试
         if (pid_debug_enabled_)
         {
@@ -144,7 +145,7 @@ namespace sentry_chassis_controller
             ROS_INFO("PID debug publishers initialized under /pivot_debug/*");
         }
 
-        // ==================== 底盘自锁功能参数（几何自锁） ====================
+        //  底盘自锁功能参数
         GeoLockConfig geo_config;
         controller_nh.param("self_lock/enabled", geo_config.enabled, true);
         controller_nh.param("self_lock/idle_timeout", geo_config.idle_timeout, 0.5);
@@ -154,14 +155,15 @@ namespace sentry_chassis_controller
         controller_nh.param("self_lock/lock_pos_d", geo_config.lock_pos_d, 1.0);
         controller_nh.param("self_lock/max_lock_torque", geo_config.max_lock_torque, 30.0);
         
-        // 底盘尺寸参数（复用已有配置）
+        // 底盘尺寸参数
         geo_config.wheel_base = wheel_base_;
         geo_config.wheel_track = wheel_track_;
         
         // 初始化几何自锁模块
         geo_lock_ = std::make_shared<GeoLock>(geo_config);
         
-        last_cmd_time_ = ros::Time::now(); // 初始化命令时间戳        // 里程计发布集成，支持不同速度模式下的里程计计算
+        last_cmd_time_ = ros::Time::now(); // 初始化命令时间戳        
+        // 里程计发布集成，支持不同速度模式下的里程计计算
         controller_nh.param<std::string>("odom_frame", odom_frame_, odom_frame_);                // 里程计坐标系
         controller_nh.param<std::string>("base_link_frame", base_link_frame_, base_link_frame_); // 底盘
         controller_nh.param<std::string>("speed_mode", speed_mode_, speed_mode_);                // 速度模式：local 或 global
@@ -200,7 +202,7 @@ namespace sentry_chassis_controller
         pid_lb_wheel_.initPid(config.wheel_rl_p, config.wheel_rl_i, config.wheel_rl_d, config.wheel_rl_i_clamp, 0.0);
         pid_rb_wheel_.initPid(config.wheel_rr_p, config.wheel_rr_i, config.wheel_rr_d, config.wheel_rr_i_clamp, 0.0);
 
-        // 更新轮速 PID 低通滤波器时间常数（解耦到 low_pass_filter 模块）
+        // 更新轮速 PID 低通滤波器时间常数
         wheel_lpf_.set_tau(0, config.wheel_fl_lpf_tau);
         wheel_lpf_.set_tau(1, config.wheel_fr_lpf_tau);
         wheel_lpf_.set_tau(2, config.wheel_rl_lpf_tau);
@@ -249,9 +251,18 @@ namespace sentry_chassis_controller
         setPivot("pivot_rl", config.pivot_rl_p, config.pivot_rl_i, config.pivot_rl_d, config.pivot_rl_i_clamp);
         setPivot("pivot_rr", config.pivot_rr_p, config.pivot_rr_i, config.pivot_rr_d, config.pivot_rr_i_clamp);
 
+        // 更新功率限制参数
+        effort_coeff_ = config.effort_coeff;
+        velocity_coeff_ = config.velocity_coeff;
+        power_limit_ = config.power_limit;
+        power_offset_ = config.power_offset;
+        power_limit_enabled_ = (effort_coeff_ != 0.0 || velocity_coeff_ != 0.0);
+
         ROS_INFO("WheelPidController: dynamic_reconfigure updated PID gains and LPF tau [%.3f, %.3f, %.3f, %.3f]",
                  config.wheel_fl_lpf_tau, config.wheel_fr_lpf_tau,
                  config.wheel_rl_lpf_tau, config.wheel_rr_lpf_tau);
+        ROS_INFO("WheelPidController: Power limiter updated - effort_coeff=%.2f, velocity_coeff=%.4f, power_limit=%.1fW, power_offset=%.1fW",
+                 effort_coeff_, velocity_coeff_, power_limit_, power_offset_);
     }
 
     void WheelPidController::cmdVelCallback(const geometry_msgs::TwistConstPtr &msg)
@@ -399,12 +410,13 @@ namespace sentry_chassis_controller
             ROS_ERROR_THROTTLE(1.0, "Failed to read joint states: %s", e.what());
         }
 
-        // 确保非零状态（安全回退）
+        // 确保非零状态，里程计不会停止发布
         // 如果所有位置都是零（模拟传感器故障），报告最小移动
         double min_movement = 0.001; // 最小非零值以防止除以零
         if (fabs(lf_wheel_pos) + fabs(rf_wheel_pos) + fabs(lb_wheel_pos) + fabs(rb_wheel_pos) < min_movement * 4)
         {
-            // 提供最小的合成移动以保持里程计活跃（仅在有命令时）
+            // 提供最小的合成移动以保持里程计活跃
+            /*避免数值异常、话题卡死与上游滤波器的突发重置*/
             double synthetic_pos = min_movement * wheel_cmd_[0] * 0.01; // 基于命令的微小偏转
             lf_wheel_pos = synthetic_pos;
             rf_wheel_pos = synthetic_pos;
@@ -455,7 +467,7 @@ namespace sentry_chassis_controller
                 js.position[7] = 0.0;
             }
 
-            // Check current published state via log
+            // 检查发布的关节状态
             ROS_DEBUG_STREAM_THROTTLE(1.0, "Publishing joint states: "
             << " wheel pos=" << js.position[0] << "," << js.position[1]
             << " vel=" << js.velocity[0] << "," << js.velocity[1]
@@ -464,7 +476,7 @@ namespace sentry_chassis_controller
             last_state_pub_ = time;
         }
 
-        // ==================== 底盘自锁逻辑（几何自锁） ====================
+        //  底盘自锁逻辑
         // 准备输入数据
         GeoLockInput geo_input;
         geo_input.current_time = time;
@@ -508,13 +520,13 @@ namespace sentry_chassis_controller
         // 自锁模式下（轮子刹车）直接使用预计算的力矩，绕过速度 PID
         if (geo_output.is_locked && geo_output.use_position_control)
         {
-            // wheel_cmd_ 中存储的是位置锁定力矩（乘以1000作为标记）
+            // wheel_cmd_ 中存储的是位置锁定力矩，通过乘以1000表示同一数组的数据下的编码）
             cmd0 = wheel_cmd_[0] / 1000.0;
             cmd1 = wheel_cmd_[1] / 1000.0;
             cmd2 = wheel_cmd_[2] / 1000.0;
             cmd3 = wheel_cmd_[3] / 1000.0;
 
-            // Reset PID integrators to prevent spikes when unlocking
+            // 自锁的时候重置 PID 积分器，防止误差累积导致积分爆炸
             pid_lf_wheel_.reset();
             pid_rf_wheel_.reset();
             pid_lb_wheel_.reset();
@@ -580,18 +592,14 @@ namespace sentry_chassis_controller
                 }
 
                 // 基于最大舵角误差计算轮速缩放因子
-                // 误差 <= threshold: scale = 1.0（全功率）
-                // 误差 > threshold: scale 线性衰减到 scale_min
                 double pivot_sync_scale = 1.0;
                 if (max_error > pivot_sync_threshold_)
                 {
-                    // 线性插值：误差从 threshold 增加到 π 时，scale 从 1.0 降到 scale_min
+                    // 线性插值 把舵角误差映射到[0, 1]这个区间
                     double t = (max_error - pivot_sync_threshold_) / (M_PI - pivot_sync_threshold_);
-                    t = std::min(1.0, std::max(0.0, t)); // clamp to [0, 1]
+                    // (1 - t) * 1.0 + t * pivot_sync_scale_min_
+                    t = std::min(1.0, std::max(0.0, t));
                     pivot_sync_scale = 1.0 - t * (1.0 - pivot_sync_scale_min_);
-
-                    ROS_DEBUG_THROTTLE(0.2, "Pivot sync: max_err=%.2f° > threshold, scale=%.2f",
-                                       max_error * 180.0 / M_PI, pivot_sync_scale);
                 }
 
                 // 应用缩放
@@ -660,7 +668,7 @@ namespace sentry_chassis_controller
         back_left_pivot_joint_.setCommand(p2);
         back_right_pivot_joint_.setCommand(p3);
 
-        // ==================== PID 调试话题发布（用于 rqt_plot） ====================
+        //  PID 调试话题发布（用于 rqt_plot） 
         if (pid_debug_enabled_)
         {
             std_msgs::Float64 msg;
@@ -714,7 +722,7 @@ namespace sentry_chassis_controller
             last_effort_pub_ = time;
         }
 
-        // 封装的里程计更新与发布（解耦到 OdomUpdater 模块）
+        // 封装的里程计更新与发布
         {
             // 准备输入数据
             OdomUpdaterInput odom_input;

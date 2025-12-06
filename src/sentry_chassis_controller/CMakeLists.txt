@@ -23,6 +23,10 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
 )
 
+#set(catkin_DIR /opt/ros/noetic/share/catkin/cmake) #DIR后面是catkinconfig路径
+#find_package(catkin REQUIRED)
+#include_directories(${catkin_DIR})
+
 ## System dependencies are found with CMake's conventions
 # Find Boost properly using CMake's FindBoost
 find_package(Boost REQUIRED)

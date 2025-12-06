@@ -1,9 +1,3 @@
-/*
- * KeyboardInput - 键盘输入抽象层
- * 功能：封装终端设置、非阻塞按键读取、跨平台支持
- * 用途：将底层终端操作与上层业务逻辑解耦
- */
-
 #ifndef SENTRY_CHASSIS_CONTROLLER_KEYBOARD_INPUT_HPP
 #define SENTRY_CHASSIS_CONTROLLER_KEYBOARD_INPUT_HPP
 
@@ -35,7 +29,7 @@ namespace sentry_chassis_controller
 
     private:
 #ifndef _WIN32
-        struct termios original_settings_;
+        struct termios original_settings_;  // 原始终端设置
 #endif
         bool active_;
     };
@@ -50,24 +44,8 @@ namespace sentry_chassis_controller
         KeyboardInput();
         ~KeyboardInput();
 
-        /*
-         * 轮询键盘输入
-         * @param key 输出参数：读取到的按键字符
-         * @param timeout_ms 超时时间（毫秒），-1表示永久等待
-         * @return true 有按键输入，false 超时或错误
-         */
         bool poll_key(char &key, int timeout_ms);
-
-        /*
-         * 检查是否有按键可读（不消耗按键）
-         * @param timeout_ms 超时时间（毫秒）
-         * @return true 有按键可读
-         */
         bool has_key(int timeout_ms);
-
-        /*
-         * 将字符转换为小写
-         */
         static char to_lower(char c);
 
     private:
@@ -76,4 +54,4 @@ namespace sentry_chassis_controller
 
 } // namespace sentry_chassis_controller
 
-#endif // SENTRY_CHASSIS_CONTROLLER_KEYBOARD_INPUT_HPP
+#endif

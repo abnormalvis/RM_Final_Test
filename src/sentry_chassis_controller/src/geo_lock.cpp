@@ -1,8 +1,3 @@
-// Copyright (c) 2025 sentry_chassis_controller
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-
 #include "sentry_chassis_controller/geo_lock.hpp"
 #include <ros/console.h>
 #include <cmath>
@@ -37,10 +32,10 @@ void GeoLock::compute_lock_angles()
     
     // 切向方向：使轮子滚动方向沿底盘自转切线
     // 公式：θ = atan2(rx, -ry)
-    lock_angles_[0] = std::atan2(rx, -ry);   // FL: (+rx, +ry) → atan2(+rx, -ry) ≈ -45°
-    lock_angles_[1] = std::atan2(rx, ry);    // FR: (+rx, -ry) → atan2(+rx, +ry) ≈ +45°
-    lock_angles_[2] = std::atan2(-rx, -ry);  // RL: (-rx, +ry) → atan2(-rx, -ry) ≈ -135°
-    lock_angles_[3] = std::atan2(-rx, ry);   // RR: (-rx, -ry) → atan2(-rx, +ry) ≈ +135°
+    lock_angles_[0] = std::atan2(rx, -ry);   // FL: (+rx, +ry) → atan2(+rx, -ry) = -45°
+    lock_angles_[1] = std::atan2(rx, ry);    // FR: (+rx, -ry) → atan2(+rx, +ry) = +45°
+    lock_angles_[2] = std::atan2(-rx, -ry);  // RL: (-rx, +ry) → atan2(-rx, -ry) = -135°
+    lock_angles_[3] = std::atan2(-rx, ry);   // RR: (-rx, -ry) → atan2(-rx, +ry) = +135°
 }
 
 void GeoLock::update(const GeoLockInput& input, GeoLockOutput& output)
@@ -62,19 +57,12 @@ void GeoLock::update(const GeoLockInput& input, GeoLockOutput& output)
         // 进入或保持自锁状态
         if (!is_locked_)
         {
-            // 首次进入自锁：记录当前轮子位置（用于位置锁定）
+            // 首次进入自锁：记录当前轮子位置
             for (int i = 0; i < 4; ++i)
             {
                 locked_wheel_pos_[i] = input.wheel_positions[i];
             }
             is_locked_ = true;
-            
-            ROS_INFO_THROTTLE(2.0, "GeoLock activated: wheel_brake=%s, angles=[%.1f°, %.1f°, %.1f°, %.1f°]",
-                              config_.wheel_brake ? "yes" : "no",
-                              lock_angles_[0] * 180.0 / M_PI,
-                              lock_angles_[1] * 180.0 / M_PI,
-                              lock_angles_[2] * 180.0 / M_PI,
-                              lock_angles_[3] * 180.0 / M_PI);
         }
         
         // 设置输出状态
@@ -89,12 +77,12 @@ void GeoLock::update(const GeoLockInput& input, GeoLockOutput& output)
         // 根据配置选择轮子控制模式
         if (config_.wheel_brake)
         {
-            // 模式 1：轮子刹车（位置锁定）
+            // 轮子位置锁定）
             apply_wheel_brake(input, output);
         }
         else
         {
-            // 模式 2：轮子自由滚动（目标速度=0，依靠几何结构抵抗外力）
+            // 轮子可以滚动
             output.use_position_control = false;
             for (int i = 0; i < 4; ++i)
             {
@@ -138,7 +126,6 @@ void GeoLock::apply_wheel_brake(const GeoLockInput& input, GeoLockOutput& output
 void GeoLock::reset()
 {
     is_locked_ = false;
-    ROS_INFO("GeoLock manually reset");
 }
 
 void GeoLock::set_config(const GeoLockConfig& config)
