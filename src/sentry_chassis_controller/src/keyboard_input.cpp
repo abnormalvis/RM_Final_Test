@@ -1,9 +1,4 @@
-/*
- * KeyboardInput - 键盘输入抽象层实现
- */
-
 #include "sentry_chassis_controller/keyboard_input.hpp"
-
 #ifndef _WIN32
 #include <unistd.h>
 #include <poll.h>
@@ -29,22 +24,23 @@ namespace sentry_chassis_controller
         if (active_)
             return;
 
-        int fd = 0; // stdin
+        int fd = 0; // 读取终端设置
         if (tcgetattr(fd, &original_settings_) < 0)
         {
             throw std::runtime_error("Failed to get terminal attributes");
         }
 
-        struct termios raw;
+        struct termios raw; // 获取到raw终端设置副本
         std::memcpy(&raw, &original_settings_, sizeof(struct termios));
 
         // 关闭规范模式和回显
-        raw.c_lflag &= ~(ICANON | ECHO);
+        raw.c_lflag &= ~(ICANON | ECHO);    // 把相关位置为0
         raw.c_cc[VEOL] = 1;
         raw.c_cc[VEOF] = 2;
 
         if (tcsetattr(fd, TCSANOW, &raw) < 0)
         {
+            // 配置终端失败
             throw std::runtime_error("Failed to set terminal attributes");
         }
 
@@ -57,6 +53,7 @@ namespace sentry_chassis_controller
 #ifndef _WIN32
         if (active_)
         {
+            // 恢复终端设置
             tcsetattr(0, TCSANOW, &original_settings_);
             active_ = false;
         }
@@ -65,19 +62,25 @@ namespace sentry_chassis_controller
     //  KeyboardInput 实现 
     KeyboardInput::KeyboardInput()
     {
-        // 构造时 TerminalGuard 已自动 setup
     }
     KeyboardInput::~KeyboardInput()
     {
-        // 析构时 TerminalGuard 会自动 restore
     }
+    // 获取输入按键
     bool KeyboardInput::poll_key(char &key, int timeout_ms)
     {
 #ifndef _WIN32
+        /* Data structure describing a polling request.  */
+        // struct pollfd
+        // {
+        //     int fd;			/* File descriptor to poll.  */
+        //     short int events;		/* Types of events poller cares about.  */
+        //     short int revents;		/* Types of events that actually occurred.  */
+        // };
         struct pollfd ufd;
         ufd.fd = 0; // stdin
         ufd.events = POLLIN;
-
+        // 通过 poll 非阻塞式检测是否有按键可读
         int result = poll(&ufd, 1, timeout_ms);
 
         if (result < 0)

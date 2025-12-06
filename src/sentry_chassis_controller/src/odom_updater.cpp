@@ -5,9 +5,7 @@
 
 namespace sentry_chassis_controller
 {
-
-    OdomUpdater::OdomUpdater()
-        : odom_x_(0.0), odom_y_(0.0), odom_yaw_(0.0)
+    OdomUpdater::OdomUpdater() : odom_x_(0.0), odom_y_(0.0), odom_yaw_(0.0)
     {
         ROS_INFO("OdomUpdater initialized");
     }
@@ -57,8 +55,8 @@ namespace sentry_chassis_controller
             return false;
         }
 
-        //  计算逆矩阵（伴随矩阵法） 
-        double inv[3][3]; // 存储逆矩阵
+        //  计算逆矩阵，先求伴随矩阵
+        double inv[3][3]; // 逆矩阵初始化
 
         // 第一行（对应 vx）
         inv[0][0] = (ATA[1][1] * ATA[2][2] - ATA[1][2] * ATA[2][1]) / det;
@@ -75,7 +73,7 @@ namespace sentry_chassis_controller
         inv[2][1] = (ATA[0][1] * ATA[2][0] - ATA[0][0] * ATA[2][1]) / det;
         inv[2][2] = (ATA[0][0] * ATA[1][1] - ATA[0][1] * ATA[1][0]) / det;
 
-        //  求解：x = inv(ATA) * ATb 
+        //  求x = inv(ATA) * ATb 
         x[0] = inv[0][0] * ATb[0] + inv[0][1] * ATb[1] + inv[0][2] * ATb[2]; // vx
         x[1] = inv[1][0] * ATb[0] + inv[1][1] * ATb[1] + inv[1][2] * ATb[2]; // vy
         x[2] = inv[2][0] * ATb[0] + inv[2][1] * ATb[1] + inv[2][2] * ATb[2]; // wz
@@ -111,7 +109,7 @@ namespace sentry_chassis_controller
 
         // 循环构造每个轮子的方程（i = 0..3，对应 FL/FR/RL/RR）
         for (int i = 0; i < 4; ++i)
-        {
+        { 
             double theta = input.pivot_angles[i]; // 当前轮子的舵角（弧度）
             double cos_t = std::cos(theta);       // 舵角的余弦（舵向 x 分量）
             double sin_t = std::sin(theta);       // 舵角的正弦（舵向 y 分量）

@@ -15,6 +15,7 @@ namespace sentry_chassis_controller
         try
         {
             // 速度轮关节
+            /*Resource associated to name. If the resource name is not found, an exception is thrown.*/
             front_left_wheel_joint_ = effort_joint_interface->getHandle("left_front_wheel_joint");
             front_right_wheel_joint_ = effort_joint_interface->getHandle("right_front_wheel_joint");
             back_left_wheel_joint_ = effort_joint_interface->getHandle("left_back_wheel_joint");
@@ -409,12 +410,13 @@ namespace sentry_chassis_controller
             ROS_ERROR_THROTTLE(1.0, "Failed to read joint states: %s", e.what());
         }
 
-        // 确保非零状态（安全回退）
+        // 确保非零状态，里程计不会停止发布
         // 如果所有位置都是零（模拟传感器故障），报告最小移动
         double min_movement = 0.001; // 最小非零值以防止除以零
         if (fabs(lf_wheel_pos) + fabs(rf_wheel_pos) + fabs(lb_wheel_pos) + fabs(rb_wheel_pos) < min_movement * 4)
         {
-            // 提供最小的合成移动以保持里程计活跃（仅在有命令时）
+            // 提供最小的合成移动以保持里程计活跃
+            /*避免数值异常、话题卡死与上游滤波器的突发重置*/
             double synthetic_pos = min_movement * wheel_cmd_[0] * 0.01; // 基于命令的微小偏转
             lf_wheel_pos = synthetic_pos;
             rf_wheel_pos = synthetic_pos;
@@ -465,7 +467,7 @@ namespace sentry_chassis_controller
                 js.position[7] = 0.0;
             }
 
-            // Check current published state via log
+            // 检查发布的关节状态
             ROS_DEBUG_STREAM_THROTTLE(1.0, "Publishing joint states: "
             << " wheel pos=" << js.position[0] << "," << js.position[1]
             << " vel=" << js.velocity[0] << "," << js.velocity[1]
@@ -474,7 +476,7 @@ namespace sentry_chassis_controller
             last_state_pub_ = time;
         }
 
-        //  底盘自锁逻辑（几何自锁） 
+        //  底盘自锁逻辑
         // 准备输入数据
         GeoLockInput geo_input;
         geo_input.current_time = time;
@@ -518,13 +520,13 @@ namespace sentry_chassis_controller
         // 自锁模式下（轮子刹车）直接使用预计算的力矩，绕过速度 PID
         if (geo_output.is_locked && geo_output.use_position_control)
         {
-            // wheel_cmd_ 中存储的是位置锁定力矩（乘以1000作为标记）
+            // wheel_cmd_ 中存储的是位置锁定力矩，通过乘以1000表示同一数组的数据下的编码）
             cmd0 = wheel_cmd_[0] / 1000.0;
             cmd1 = wheel_cmd_[1] / 1000.0;
             cmd2 = wheel_cmd_[2] / 1000.0;
             cmd3 = wheel_cmd_[3] / 1000.0;
 
-            // Reset PID integrators to prevent spikes when unlocking
+            // 自锁的时候重置 PID 积分器，防止误差累积导致积分爆炸
             pid_lf_wheel_.reset();
             pid_rf_wheel_.reset();
             pid_lb_wheel_.reset();
@@ -590,18 +592,14 @@ namespace sentry_chassis_controller
                 }
 
                 // 基于最大舵角误差计算轮速缩放因子
-                // 误差 <= threshold: scale = 1.0（全功率）
-                // 误差 > threshold: scale 线性衰减到 scale_min
                 double pivot_sync_scale = 1.0;
                 if (max_error > pivot_sync_threshold_)
                 {
-                    // 线性插值：误差从 threshold 增加到 π 时，scale 从 1.0 降到 scale_min
+                    // 线性插值 把舵角误差映射到[0, 1]这个区间
                     double t = (max_error - pivot_sync_threshold_) / (M_PI - pivot_sync_threshold_);
-                    t = std::min(1.0, std::max(0.0, t)); // clamp to [0, 1]
+                    // (1 - t) * 1.0 + t * pivot_sync_scale_min_
+                    t = std::min(1.0, std::max(0.0, t));
                     pivot_sync_scale = 1.0 - t * (1.0 - pivot_sync_scale_min_);
-
-                    ROS_DEBUG_THROTTLE(0.2, "Pivot sync: max_err=%.2f° > threshold, scale=%.2f",
-                                       max_error * 180.0 / M_PI, pivot_sync_scale);
                 }
 
                 // 应用缩放
@@ -724,7 +722,7 @@ namespace sentry_chassis_controller
             last_effort_pub_ = time;
         }
 
-        // 封装的里程计更新与发布（解耦到 OdomUpdater 模块）
+        // 封装的里程计更新与发布
         {
             // 准备输入数据
             OdomUpdaterInput odom_input;

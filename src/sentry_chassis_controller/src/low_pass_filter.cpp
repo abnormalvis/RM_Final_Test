@@ -3,11 +3,8 @@
 
 namespace sentry_chassis_controller
 {
-
-    // ==================== LowPassFilter 实现 ====================
-
-    LowPassFilter::LowPassFilter(double tau)
-        : tau_(tau), output_(0.0)
+    // 低通滤波器
+    LowPassFilter::LowPassFilter(double tau) : tau_(tau), output_(0.0)
     {
         if (tau < 0.0)
         {
@@ -37,7 +34,7 @@ namespace sentry_chassis_controller
         }
         else
         {
-            // tau ≈ 0 禁用滤波，直接使用输入
+            // tau = 0 禁用滤波，直接使用输入
             output_ = input;
         }
 
@@ -69,10 +66,8 @@ namespace sentry_chassis_controller
         return output_;
     }
 
-    // ==================== MultiChannelLowPassFilter 实现 ====================
-
-    MultiChannelLowPassFilter::MultiChannelLowPassFilter(int num_channels, double tau)
-        : num_channels_(num_channels)
+    // 多通道低通滤波器
+    MultiChannelLowPassFilter::MultiChannelLowPassFilter(int num_channels, double tau) : num_channels_(num_channels)
     {
         if (num_channels <= 0)
         {

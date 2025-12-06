@@ -18,13 +18,12 @@ namespace sentry_chassis_controller
      */
     struct TeleopConfig
     {
-        double walk_vel;            // 步行速度 (m/s)
-        double default_omega;       // 默认角速度 (rad/s)
-        double translation_timeout; // 平移超时时间 (s)
+        double walk_vel;            // 步行速度 (m/s)，可通过 u/i 键调节
+        double default_omega;       // 默认角速度 (rad/s)，可通过 o/p 键调节
         std::string velocity_mode;  // "global" 或 "chassis"
 
         TeleopConfig()
-            : walk_vel(0.5), default_omega(1.0), translation_timeout(0.5), velocity_mode("global")
+            : walk_vel(0.5), default_omega(1.0), velocity_mode("global")
         {
         }
     };
@@ -78,12 +77,6 @@ namespace sentry_chassis_controller
         bool process_key(char key, double current_time);
 
         /*
-         * 更新状态（处理超时等）
-         * @param current_time 当前时间（秒）
-         */
-        void update(double current_time);
-
-        /*
          * 获取当前输出状态
          */
         const TeleopOutput &get_output() const { return output_; }
@@ -119,9 +112,6 @@ namespace sentry_chassis_controller
         bool rotation_latched_;
         double latched_rotation_value_;
 
-        // 时间戳
-        double last_translation_time_;
-
         // 输出状态
         TeleopOutput output_;
 
@@ -129,6 +119,10 @@ namespace sentry_chassis_controller
         void clear_translation_keys();
         void clear_rotation_keys();
         void compute_output();
+        
+        // 速度调节方法
+        void adjust_walk_vel(double delta);     // 调节平移速度
+        void adjust_default_omega(double delta); // 调节角速度
     };
 
 } // namespace sentry_chassis_controller

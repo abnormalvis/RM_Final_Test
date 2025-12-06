@@ -1,0 +1,1 @@
+rqt_plot /power_debug/data[4]:label=scaling_factor

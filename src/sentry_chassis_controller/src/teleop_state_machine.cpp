@@ -9,7 +9,7 @@ namespace sentry_chassis_controller
 {
 
     TeleopStateMachine::TeleopStateMachine(const TeleopConfig &config)
-        : config_(config), key_w_(false), key_s_(false), key_a_(false), key_d_(false), key_q_(false), key_e_(false), current_mode_(MotionMode::NONE), rotation_latched_(false), latched_rotation_value_(0.0), last_translation_time_(0.0)
+        : config_(config), key_w_(false), key_s_(false), key_a_(false), key_d_(false), key_q_(false), key_e_(false), current_mode_(MotionMode::NONE), rotation_latched_(false), latched_rotation_value_(0.0)
     {
     }
 
@@ -21,7 +21,6 @@ namespace sentry_chassis_controller
         current_mode_ = MotionMode::NONE;
         rotation_latched_ = false;
         latched_rotation_value_ = 0.0;
-        last_translation_time_ = 0.0;
         output_.reset();
     }
 
@@ -52,7 +51,6 @@ namespace sentry_chassis_controller
             key_w_ = true;
             key_s_ = false;          // 前后互斥
             key_a_ = key_d_ = false; // 禁止斜向
-            last_translation_time_ = current_time;
             processed = true;
             break;
 
@@ -62,7 +60,6 @@ namespace sentry_chassis_controller
             key_s_ = true;
             key_w_ = false;
             key_a_ = key_d_ = false;
-            last_translation_time_ = current_time;
             processed = true;
             break;
 
@@ -72,7 +69,6 @@ namespace sentry_chassis_controller
             key_a_ = true;
             key_d_ = false;
             key_w_ = key_s_ = false;
-            last_translation_time_ = current_time;
             processed = true;
             break;
 
@@ -82,7 +78,6 @@ namespace sentry_chassis_controller
             key_d_ = true;
             key_a_ = false;
             key_w_ = key_s_ = false;
-            last_translation_time_ = current_time;
             processed = true;
             break;
 
@@ -109,6 +104,26 @@ namespace sentry_chassis_controller
             processed = true;
             break;
 
+        case 'u': // 增加平移速度
+            adjust_walk_vel(0.1);
+            processed = true;
+            break;
+
+        case 'i': // 减小平移速度
+            adjust_walk_vel(-0.1);
+            processed = true;
+            break;
+
+        case 'o': // 增加角速度
+            adjust_default_omega(0.1);
+            processed = true;
+            break;
+
+        case 'p': // 减小角速度
+            adjust_default_omega(-0.1);
+            processed = true;
+            break;
+
         default:
             break;
         }
@@ -119,20 +134,6 @@ namespace sentry_chassis_controller
         }
 
         return processed;
-    }
-
-    void TeleopStateMachine::update(double current_time)
-    {
-        // 处理平移超时
-        if (current_mode_ == MotionMode::TRANSLATION)
-        {
-            if ((current_time - last_translation_time_) > config_.translation_timeout)
-            {
-                clear_translation_keys();
-                current_mode_ = MotionMode::NONE;
-                compute_output();
-            }
-        }
     }
 
     void TeleopStateMachine::compute_output()
@@ -191,6 +192,36 @@ namespace sentry_chassis_controller
         // 判断是否有运动
         output_.has_motion = (std::abs(output_.vx) > 1e-9) ||
         (std::abs(output_.vy) > 1e-9) || (std::abs(output_.omega) > 1e-9);
+    }
+
+    void TeleopStateMachine::adjust_walk_vel(double delta)
+    {
+        config_.walk_vel += delta;
+        // 限制范围在 0.1 到 5.0 之间
+        if (config_.walk_vel > 5.0)
+            config_.walk_vel = 5.0;
+        if (config_.walk_vel < 0.1)
+            config_.walk_vel = 0.1;
+        
+        // 重新计算输出（如果当前有运动）
+        compute_output();
+    }
+
+    void TeleopStateMachine::adjust_default_omega(double delta)
+    {
+        config_.default_omega += delta;
+        // 限制范围在 0.1 到 5.0 之间
+        if (config_.default_omega > 5.0)
+            config_.default_omega = 5.0;
+        if (config_.default_omega < 0.1)
+            config_.default_omega = 0.1;
+        
+        // 如果当前正在旋转锁存，同步更新锁存值
+        if (rotation_latched_)
+        {
+            latched_rotation_value_ = (latched_rotation_value_ > 0) ? config_.default_omega : -config_.default_omega;
+            compute_output();
+        }
     }
 
 } // namespace sentry_chassis_controller

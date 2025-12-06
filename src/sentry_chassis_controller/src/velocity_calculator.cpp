@@ -1,7 +1,3 @@
-/*
- * VelocityCalculator - 速度计算器实现
- */
-
 #include "sentry_chassis_controller/velocity_calculator.hpp"
 #include <cmath>
 #include <algorithm>
