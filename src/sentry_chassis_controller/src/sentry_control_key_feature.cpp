@@ -150,7 +150,7 @@ TeleopTurtle::TeleopTurtle()
 void quit(int sig)
 {
     (void)sig;
-    term_guard.restore();
+    term_guard.restore(); 
     ros::shutdown();
     exit(0);
 }
