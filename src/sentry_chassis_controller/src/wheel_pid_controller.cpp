@@ -276,8 +276,8 @@ namespace sentry_chassis_controller
         double wz = msg->angular.z;
         if (speed_mode_ == "global")
         {
-            // 将速度从全局（odom）坐标系转换到局部（base_link）坐标系
-            // 使用成员变量 tf_listener_，它持续缓存 TF 数据
+            // 将速度发布给全局坐标系，再通过transformVector转换到局部坐标系
+            // 使用成员变量 tf_listener_缓存 TF 数据
             try
             {
                 geometry_msgs::Vector3Stamped vel_global, vel_local; // 全局和局部速度向量
@@ -313,10 +313,10 @@ namespace sentry_chassis_controller
             catch (tf::TransformException &ex)
             {
                 ROS_WARN_THROTTLE(2.0, "Global mode TF transform error: %s", ex.what());
-                // Fallback: use original command (assume body frame)
+                // 失败，使用原始速度发布给 base_link 坐标系
             }
         }
-        // 否则speed_mode_ == "local"，使用原始速度（已在 base_link 坐标系中）
+        // 否则speed_mode_ == "local"，使用原始速度发布给 base_link 坐标系
 
         // 创建逆运动学对象并计算轮速和舵角
         auto ik = sentry_kinematics::inverseKinematics(vx, vy, wz, wheel_base_, wheel_track_, wheel_radius_);
@@ -328,7 +328,7 @@ namespace sentry_chassis_controller
             pivot_cmd_[i] = ik.steer_angle[i];
         }
 
-        // 发布期望命令以供检查
+        // 发布期望的轮速和舵角状态
         sensor_msgs::JointState js; // 期望关节状态消息
         js.header.stamp = ros::Time::now();
         js.name = {"wheel_fl", "wheel_fr", "wheel_rl", "wheel_rr"};
@@ -339,7 +339,6 @@ namespace sentry_chassis_controller
             js.position[i] = pivot_cmd_[i];
             js.velocity[i] = wheel_cmd_[i];
         }
-        // 发布期望的轮速和舵角状态
         desired_pub_.publish(js);
     }
     void WheelPidController::initPivot(const std::string &name, control_toolbox::Pid &pid,

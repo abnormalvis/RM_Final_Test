@@ -1,16 +1,12 @@
-/*
- * TeleopStateMachine - 遥操作状态机实现
- */
-
 #include "sentry_chassis_controller/teleop_state_machine.hpp"
 #include <cmath>
 
 namespace sentry_chassis_controller
 {
 
-    TeleopStateMachine::TeleopStateMachine(const TeleopConfig &config)
-        : config_(config), key_w_(false), key_s_(false), key_a_(false), key_d_(false), key_q_(false), key_e_(false), current_mode_(MotionMode::NONE), rotation_latched_(false), latched_rotation_value_(0.0)
+    TeleopStateMachine::TeleopStateMachine(const TeleopConfig &config) : config_(config), key_w_(false), key_s_(false), key_a_(false), key_d_(false), key_q_(false), key_e_(false), current_mode_(MotionMode::NONE), rotation_latched_(false), latched_rotation_value_(0.0)
     {
+
     }
 
     /* 复位运动状态 */

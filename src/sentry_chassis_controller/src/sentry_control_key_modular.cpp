@@ -1,8 +1,3 @@
-/*
- * 重构后的键盘控制节点主程序
- * 调用模块：KeyboardInput, TeleopStateMachine, VelocityCalculator, TeleopNode
- */
-
 #include <ros/ros.h>
 #include "sentry_chassis_controller/teleop_node.hpp"
 
